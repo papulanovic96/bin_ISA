@@ -1,21 +1,28 @@
 package com.bin448.backend.beans;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import javax.persistence.*;
+
+@Entity
+@Table(name = "user")
+@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 public class User {
-    private String nema;
+    @Column
+    private String name;
+    @Column
     private String lastName;
+    @Column
     private String email;
+    @Id
+    @Column(nullable = false)
+    private Long id;
+    @Column
     private String username;
+    @Column
     private String city;
+    @Column
     private String telephone;
-
-
-    public String getNema() {
-        return nema;
-    }
-
-    public void setNema(String nema) {
-        this.nema = nema;
-    }
 
     public String getLastName() {
         return lastName;
