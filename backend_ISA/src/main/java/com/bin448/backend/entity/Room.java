@@ -1,4 +1,4 @@
-package com.bin448.backend.beans;
+package com.bin448.backend.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 

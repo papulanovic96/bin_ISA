@@ -2,15 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="af95edb5-0dc8-4b1f-9069-34c1b420500a" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/bin_ISA.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/bin_ISA.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend_ISA/src/main/java/com/bin448/backend/beans/Airline.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend_ISA/src/main/java/com/bin448/backend/entity/Airline.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend_ISA/src/main/java/com/bin448/backend/beans/Car.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend_ISA/src/main/java/com/bin448/backend/entity/Car.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend_ISA/src/main/java/com/bin448/backend/beans/CarService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend_ISA/src/main/java/com/bin448/backend/entity/CarService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend_ISA/src/main/java/com/bin448/backend/beans/Flight.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend_ISA/src/main/java/com/bin448/backend/entity/Flight.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend_ISA/src/main/java/com/bin448/backend/beans/Hotel.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend_ISA/src/main/java/com/bin448/backend/entity/Hotel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend_ISA/src/main/java/com/bin448/backend/beans/PlaneTicket.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend_ISA/src/main/java/com/bin448/backend/entity/PlaneTicket.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend_ISA/src/main/java/com/bin448/backend/beans/Room.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend_ISA/src/main/java/com/bin448/backend/entity/Room.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend_ISA/src/main/java/com/bin448/backend/beans/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend_ISA/src/main/java/com/bin448/backend/entity/User.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -19,12 +13,12 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/backend_ISA/src/main/java/com/bin448/backend/entity/Airline.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="8" column="7" lean-forward="true" selection-start-line="8" selection-start-column="7" selection-end-line="8" selection-end-column="7" />
+            <state relative-caret-position="136">
+              <caret line="12" selection-start-line="12" selection-end-line="12" />
             </state>
           </provider>
         </entry>
@@ -36,105 +30,35 @@
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-95" />
-    <option name="y" value="192" />
-    <option name="width" value="1347" />
-    <option name="height" value="689" />
+    <option name="y" value="190" />
+    <option name="width" value="1349" />
+    <option name="height" value="690" />
   </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <flattenPackages ProjectPane="false" />
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="ProjectPane" />
       <pane id="PackagesPane" />
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="bin_ISA" type="b2602c69:ProjectViewProjectNode" />
-              <item name="bin_ISA" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="bin_ISA" type="b2602c69:ProjectViewProjectNode" />
-              <item name="bin_ISA" type="462c0819:PsiDirectoryNode" />
-              <item name="backend_ISA" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="bin_ISA" type="b2602c69:ProjectViewProjectNode" />
-              <item name="bin_ISA" type="462c0819:PsiDirectoryNode" />
-              <item name="backend_ISA" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="bin_ISA" type="b2602c69:ProjectViewProjectNode" />
-              <item name="bin_ISA" type="462c0819:PsiDirectoryNode" />
-              <item name="backend_ISA" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="bin_ISA" type="b2602c69:ProjectViewProjectNode" />
-              <item name="bin_ISA" type="462c0819:PsiDirectoryNode" />
-              <item name="backend_ISA" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="bin_ISA" type="b2602c69:ProjectViewProjectNode" />
-              <item name="bin_ISA" type="462c0819:PsiDirectoryNode" />
-              <item name="backend_ISA" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="com" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="bin_ISA" type="b2602c69:ProjectViewProjectNode" />
-              <item name="bin_ISA" type="462c0819:PsiDirectoryNode" />
-              <item name="backend_ISA" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="com" type="462c0819:PsiDirectoryNode" />
-              <item name="bin448" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="bin_ISA" type="b2602c69:ProjectViewProjectNode" />
-              <item name="bin_ISA" type="462c0819:PsiDirectoryNode" />
-              <item name="backend_ISA" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="com" type="462c0819:PsiDirectoryNode" />
-              <item name="bin448" type="462c0819:PsiDirectoryNode" />
-              <item name="backend" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="bin_ISA" type="b2602c69:ProjectViewProjectNode" />
-              <item name="bin_ISA" type="462c0819:PsiDirectoryNode" />
-              <item name="backend_ISA" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="com" type="462c0819:PsiDirectoryNode" />
-              <item name="bin448" type="462c0819:PsiDirectoryNode" />
-              <item name="backend" type="462c0819:PsiDirectoryNode" />
-              <item name="entity" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
       <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="Downloaded.Files.Path.Enabled" value="false" />
     <property name="ExpandSpringBootJavaOptionsPanel" value="true" />
+    <property name="Repository.Attach.Annotations" value="false" />
+    <property name="Repository.Attach.JavaDocs" value="false" />
+    <property name="Repository.Attach.Sources" value="false" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1547505151259" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1547509450271" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/backend_ISA" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.2" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -169,16 +93,18 @@
       <updated>1544869815395</updated>
       <workItem from="1544869852207" duration="205000" />
       <workItem from="1547503278657" duration="991000" />
+      <workItem from="1547509350490" duration="113000" />
+      <workItem from="1547545310963" duration="73000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1196000" />
+    <option name="totallyTimeSpent" value="1382000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.16979866" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.1738255" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -214,10 +140,85 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/backend_ISA/src/main/java/com/bin448/backend/entity/Airline.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="8" column="7" lean-forward="true" selection-start-line="8" selection-start-column="7" selection-end-line="8" selection-end-column="7" />
+        <state relative-caret-position="136">
+          <caret line="12" selection-start-line="12" selection-end-line="12" />
         </state>
       </provider>
     </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ArtifactsStructureConfigurable.UI">
+        <settings>
+          <artifact-editor />
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="FacetStructureConfigurable.UI">
+        <settings>
+          <last-edited>No facets are configured</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="GlobalLibrariesConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="JdkListConfigurable.UI">
+        <settings>
+          <last-edited>1.8</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ModuleStructureConfigurable.UI">
+        <settings>
+          <last-edited>bin_ISA</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+                <option value="0.6" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectLibrariesConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
   </component>
 </project>
