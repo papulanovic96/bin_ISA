@@ -1,6 +1,8 @@
 package com.bin448.backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 
 import javax.persistence.*;
@@ -25,10 +27,13 @@ public class Airline {
     private String description;
     @Column
     private String officeDestination;
+    @JsonManagedReference
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "airline", cascade = CascadeType.MERGE)
     private Collection<Flight> flightList;
+    @JsonManagedReference
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "airline", cascade = CascadeType.MERGE)
     private Collection<PlaneTicket> dicountTicket;
+    @JsonManagedReference
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "airline", cascade = CascadeType.MERGE)
     private Collection<PlaneSeat> planeSeats;
     @Column
