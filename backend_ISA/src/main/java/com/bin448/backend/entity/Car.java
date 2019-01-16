@@ -8,15 +8,36 @@ import javax.persistence.*;
 @Table(name = "cars")
 @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 public class Car {
-
-
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column
+    @Column(nullable = false)
     private Long carId;
 
     private Double avgGrade;
     @ManyToOne
     private CarService carService;
+
+    public Long getCarId() {
+        return carId;
+    }
+
+    public void setCarId(Long carId) {
+        this.carId = carId;
+    }
+
+    public Double getAvgGrade() {
+        return avgGrade;
+    }
+
+    public void setAvgGrade(Double avgGrade) {
+        this.avgGrade = avgGrade;
+    }
+
+    public CarService getCarService() {
+        return carService;
+    }
+
+    public void setCarService(CarService carService) {
+        this.carService = carService;
+    }
 }

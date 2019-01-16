@@ -5,33 +5,27 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "tickets")
+@Table(name = "seats")
 @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
-public class PlaneTicket {
+public class PlaneSeat {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(nullable = false)
-    private Long id;
+    private Long seatId;
 
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "ticket",cascade = CascadeType.MERGE)
-    private PlaneSeat seat;
     @ManyToOne
     private Airline airline;
 
-    public Long getId() {
-        return id;
+    @OneToOne
+    private PlaneTicket ticket;
+
+    public Long getSeatId() {
+        return seatId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public PlaneSeat getSeat() {
-        return seat;
-    }
-
-    public void setSeat(PlaneSeat seat) {
-        this.seat = seat;
+    public void setSeatId(Long seatId) {
+        this.seatId = seatId;
     }
 
     public Airline getAirline() {
@@ -40,5 +34,13 @@ public class PlaneTicket {
 
     public void setAirline(Airline airline) {
         this.airline = airline;
+    }
+
+    public PlaneTicket getTicket() {
+        return ticket;
+    }
+
+    public void setTicket(PlaneTicket ticket) {
+        this.ticket = ticket;
     }
 }

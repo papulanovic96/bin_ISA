@@ -19,4 +19,35 @@ public class Room {
     private Double pricePerNight;
     private Double avgGrade;
 
+    public Long getNumber() {
+        return number;
+    }
+
+    public void setNumber(Long number) {
+        this.number = number;
+    }
+
+    public Hotel getHotel() {
+        return hotel;
+    }
+
+    public void setHotel(Hotel hotel) {
+        this.hotel = hotel;
+    }
+
+    public Double getPricePerNight() {
+        return pricePerNight;
+    }
+
+    public void setPricePerNight(Double pricePerNight) {
+        this.pricePerNight = pricePerNight;
+    }
+
+    public Double getAvgGrade() {
+        return avgGrade;
+    }
+
+    public void setAvgGrade(Double avgGrade) {
+        this.avgGrade = avgGrade;
+    }
 }
