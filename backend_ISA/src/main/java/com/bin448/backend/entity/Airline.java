@@ -27,13 +27,10 @@ public class Airline {
     private String description;
     @Column
     private String officeDestination;
-    @JsonManagedReference
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "airline", cascade = CascadeType.MERGE)
     private Collection<Flight> flightList;
-    @JsonManagedReference
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "airline", cascade = CascadeType.MERGE)
-    private Collection<PlaneTicket> dicountTicket;
-    @JsonManagedReference
+    private Collection<PlaneTicket> discountTicket;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "airline", cascade = CascadeType.MERGE)
     private Collection<PlaneSeat> planeSeats;
     @Column
@@ -81,11 +78,11 @@ public class Airline {
     }
 
     public Collection<PlaneTicket> getDicountTicket() {
-        return dicountTicket;
+        return discountTicket;
     }
 
     public void setDicountTicket(List<PlaneTicket> dicountTicket) {
-        this.dicountTicket = dicountTicket;
+        this.discountTicket = dicountTicket;
     }
 
     public Collection<Flight> getFlightList() {

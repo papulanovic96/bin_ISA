@@ -9,4 +9,5 @@ public interface SeatService {
     void delete(PlaneSeat seat);
     List<PlaneSeat> findAll();
     PlaneSeat findById(Long id);
+    boolean modifySeat(PlaneSeat seat);
 }

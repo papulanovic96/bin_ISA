@@ -4,6 +4,7 @@ import com.bin448.backend.entity.PlaneSeat;
 import com.bin448.backend.repository.SeatRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -19,7 +20,8 @@ public class SeatServiceImpl implements SeatService{
 
     @Override
     public void delete(PlaneSeat seat) {
-        seatRepository.deleteById(seat.getSeatId());
+        PlaneSeat newSeat = findById(seat.getSeatId());
+        seatRepository.deleteById(newSeat.getSeatId());
     }
 
     @Override
@@ -31,5 +33,18 @@ public class SeatServiceImpl implements SeatService{
     @Override
     public PlaneSeat findById(Long id) {
         return seatRepository.findById(id).orElse(null);
+    }
+    @Transactional
+    @Override
+    public boolean modifySeat(PlaneSeat seat) {
+        PlaneSeat newSeat = findById(seat.getSeatId());
+        if(newSeat == null) {
+            return false;
+        } else if (newSeat.getReserved()) {
+            return false;
+        }
+            seatRepository.modifySeat(newSeat.getSeatId(), newSeat.getAirline(), newSeat.getTicket());
+            return true;
+
     }
 }
