@@ -1,6 +1,8 @@
 package com.bin448.backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 
@@ -13,10 +15,10 @@ public class PlaneSeat {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(nullable = false)
     private Long seatId;
-
+    @Column
+    private boolean reserved;
     @ManyToOne
     private Airline airline;
-
     @OneToOne
     private PlaneTicket ticket;
 
@@ -42,5 +44,13 @@ public class PlaneSeat {
 
     public void setTicket(PlaneTicket ticket) {
         this.ticket = ticket;
+    }
+
+    public boolean getReserved() {
+        return reserved;
+    }
+
+    public void setReserved(boolean reserved) {
+        this.reserved = reserved;
     }
 }
