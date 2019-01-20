@@ -25,7 +25,7 @@ public class CarService {
     @Column
     private HashMap<String, Double> carServiceMenu;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "carService", cascade = CascadeType.MERGE)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "carService", cascade = CascadeType.ALL)
     private Collection<Car> carsCollection;
     @Column
     private String carServiceLocation;

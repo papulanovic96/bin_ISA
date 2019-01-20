@@ -24,7 +24,7 @@ public class Hotel {
     @Column
     private HashMap<String, Double> menu;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "hotel", cascade = CascadeType.MERGE)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "hotel", cascade = CascadeType.ALL)
     private Collection<Room> configuration;
 
     private Double avgGrade;

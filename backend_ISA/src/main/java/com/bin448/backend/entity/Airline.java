@@ -27,11 +27,11 @@ public class Airline {
     private String description;
     @Column
     private String officeDestination;
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "airline", cascade = CascadeType.MERGE)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "airline", cascade = CascadeType.ALL)
     private Collection<Flight> flightList;
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "airline", cascade = CascadeType.MERGE)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "airline", cascade = CascadeType.ALL)
     private Collection<PlaneTicket> discountTicket;
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "airline", cascade = CascadeType.MERGE)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "airline", cascade = CascadeType.ALL)
     private Collection<PlaneSeat> planeSeats;
     @Column
     private HashMap<String, Double> luggagePrice;
@@ -81,7 +81,7 @@ public class Airline {
         return discountTicket;
     }
 
-    public void setDicountTicket(List<PlaneTicket> dicountTicket) {
+    public void setDicountTicket(Collection<PlaneTicket> dicountTicket) {
         this.discountTicket = dicountTicket;
     }
 
@@ -89,7 +89,7 @@ public class Airline {
         return flightList;
     }
 
-    public void setFlightList(List<Flight> flightList) {
+    public void setFlightList(Collection<Flight> flightList) {
         this.flightList = flightList;
     }
 
@@ -105,7 +105,7 @@ public class Airline {
         return planeSeats;
     }
 
-    public void setPlaneSeats(List<PlaneSeat> planeSeats) {
+    public void setPlaneSeats(Collection<PlaneSeat> planeSeats) {
         this.planeSeats = planeSeats;
     }
 }

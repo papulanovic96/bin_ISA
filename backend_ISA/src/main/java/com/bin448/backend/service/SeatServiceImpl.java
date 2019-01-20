@@ -1,5 +1,7 @@
 package com.bin448.backend.service;
 
+import com.bin448.backend.converter.PlaneSeatConverter;
+import com.bin448.backend.entity.DTOentity.PlaneSeatDTO;
 import com.bin448.backend.entity.PlaneSeat;
 import com.bin448.backend.repository.SeatRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,33 +16,38 @@ public class SeatServiceImpl implements SeatService{
     private SeatRepository seatRepository;
 
     @Override
-    public PlaneSeat save(PlaneSeat seat) {
-        return seatRepository.save(seat);
+    public PlaneSeat save(PlaneSeatDTO seat) {
+        PlaneSeat seatNew = PlaneSeatConverter.toEntity(seat);
+        return seatRepository.save(seatNew);
     }
 
     @Override
-    public void delete(PlaneSeat seat) {
-        PlaneSeat newSeat = findById(seat.getSeatId());
+    public void delete(PlaneSeatDTO seat) {
+        PlaneSeat newSeat = PlaneSeatConverter.toEntity(seat);
         seatRepository.deleteById(newSeat.getSeatId());
     }
 
     @Override
-    public List<PlaneSeat> findAll() {
+    public List<PlaneSeatDTO> findAll() {
         List<PlaneSeat> planeSeatList = seatRepository.findAll();
-        return planeSeatList;
+        List<PlaneSeatDTO> planeSeatDTOList = PlaneSeatConverter.fromEntityList(planeSeatList, e -> PlaneSeatConverter.fromEntity(e));
+        return planeSeatDTOList;
     }
 
     @Override
-    public PlaneSeat findById(Long id) {
-        return seatRepository.findById(id).orElse(null);
+    public PlaneSeatDTO findById(Long id) {
+        PlaneSeat newSeat = seatRepository.findById(id).orElse(null);
+        PlaneSeatDTO newSeatDTO = PlaneSeatConverter.fromEntity(newSeat);
+        return newSeatDTO;
     }
     @Transactional
     @Override
-    public boolean modifySeat(PlaneSeat seat) {
-        PlaneSeat newSeat = findById(seat.getSeatId());
-        if(newSeat == null) {
+    public boolean modifySeat(PlaneSeatDTO seat) {
+        PlaneSeat newSeat = PlaneSeatConverter.toEntity(seat);
+        PlaneSeat newSeatForUse = seatRepository.findById(newSeat.getSeatId()).orElse(null);
+        if(newSeatForUse == null) {
             return false;
-        } else if (newSeat.getReserved()) {
+        } else if (newSeatForUse.getReserved()) {
             return false;
         }
             seatRepository.modifySeat(newSeat.getSeatId(), newSeat.getAirline(), newSeat.getTicket());

@@ -1,5 +1,6 @@
 package com.bin448.backend.controller;
 
+import com.bin448.backend.entity.DTOentity.PlaneSeatDTO;
 import com.bin448.backend.entity.PlaneSeat;
 import com.bin448.backend.service.SeatService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,27 +21,27 @@ public class SeatController {
     private SeatService seatService;
 
     @RequestMapping( value = "/findAll", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<PlaneSeat>> findAll() {
-        List<PlaneSeat> allSeats = seatService.findAll();
-        return new ResponseEntity<List<PlaneSeat>>(allSeats, HttpStatus.OK);
+    public ResponseEntity<List<PlaneSeatDTO>> findAll() {
+        List<PlaneSeatDTO> allSeats = seatService.findAll();
+        return new ResponseEntity<List<PlaneSeatDTO>>(allSeats, HttpStatus.OK);
     }
 
     @RequestMapping( value = "/findById/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public  ResponseEntity<PlaneSeat> findById(@PathVariable Long id) {
-        PlaneSeat ps = seatService.findById(id);
-        return new ResponseEntity<PlaneSeat>(ps, HttpStatus.OK);
+    public  ResponseEntity<PlaneSeatDTO> findById(@PathVariable Long id) {
+        PlaneSeatDTO ps = seatService.findById(id);
+        return new ResponseEntity<PlaneSeatDTO>(ps, HttpStatus.OK);
     }
 
-    @RequestMapping( value = "/addSeat", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> addSeat(@RequestBody PlaneSeat planeSeat) {
+    @RequestMapping( value = "/addSeat", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> addSeat(@RequestBody PlaneSeatDTO planeSeat) {
         seatService.save(planeSeat);
-        return new ResponseEntity<String>("Seat with ID: " + planeSeat.getSeatId() + " added!", HttpStatus.OK);
+        return new ResponseEntity<String>("Seat with ID: " + planeSeat.getId() + " added!", HttpStatus.OK);
     }
 
     @RequestMapping(value = "/deleteSeat/{id}", method = RequestMethod.DELETE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> deleteSeat(@PathVariable Long id) {
-        PlaneSeat newSeat = seatService.findById(id);
-        if(newSeat.getReserved()) {
+        PlaneSeatDTO newSeat = seatService.findById(id);
+        if(newSeat.isReserved()) {
             return  new ResponseEntity<String>("Seat may be reserved.", HttpStatus.METHOD_NOT_ALLOWED);
         } else {
             seatService.delete(newSeat);
@@ -49,8 +50,8 @@ public class SeatController {
     }
 
     @RequestMapping(value = "/modifySeat/{id}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> modifySeat(@PathVariable Long id, @RequestBody PlaneSeat seat) {
-        seat.setSeatId(id);
+    public ResponseEntity<String> modifySeat(@PathVariable Long id, @RequestBody PlaneSeatDTO seat) {
+        seat.setId(id);
         boolean modifyYes = seatService.modifySeat(seat);
         if(modifyYes) {
             return new ResponseEntity<String>("Seat with ID: " + id + " modified!", HttpStatus.OK);
