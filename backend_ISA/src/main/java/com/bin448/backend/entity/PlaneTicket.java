@@ -1,9 +1,5 @@
 package com.bin448.backend.entity;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 import javax.persistence.*;
 
 @Entity
@@ -15,7 +11,7 @@ public class PlaneTicket {
     @Column(nullable = false)
     private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "ticket",cascade = CascadeType.MERGE)
+    @OneToOne(fetch = FetchType.EAGER, mappedBy = "ticket",cascade = CascadeType.ALL)
     private PlaneSeat seat;
     @ManyToOne
     private Airline airline;
