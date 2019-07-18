@@ -23,29 +23,29 @@ public class SeatController {
     @RequestMapping( value = "/findAll", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<PlaneSeatDTO>> findAll() {
         List<PlaneSeatDTO> allSeats = seatService.findAll();
-        return new ResponseEntity<List<PlaneSeatDTO>>(allSeats, HttpStatus.OK);
+        return new ResponseEntity<>(allSeats, HttpStatus.OK);
     }
 
     @RequestMapping( value = "/findById/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public  ResponseEntity<PlaneSeatDTO> findById(@PathVariable Long id) {
         PlaneSeatDTO ps = seatService.findById(id);
-        return new ResponseEntity<PlaneSeatDTO>(ps, HttpStatus.OK);
+        return new ResponseEntity<>(ps, HttpStatus.OK);
     }
 
     @RequestMapping( value = "/addSeat", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> addSeat(@RequestBody PlaneSeatDTO planeSeat) {
         seatService.save(planeSeat);
-        return new ResponseEntity<String>("Seat with ID: " + planeSeat.getId() + " added!", HttpStatus.OK);
+        return new ResponseEntity<>("Seat with ID: " + planeSeat.getId() + " added!", HttpStatus.OK);
     }
 
     @RequestMapping(value = "/deleteSeat/{id}", method = RequestMethod.DELETE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> deleteSeat(@PathVariable Long id) {
         PlaneSeatDTO newSeat = seatService.findById(id);
         if(newSeat.isReserved()) {
-            return  new ResponseEntity<String>("Seat may be reserved.", HttpStatus.METHOD_NOT_ALLOWED);
+            return  new ResponseEntity<>("Seat may be reserved.", HttpStatus.METHOD_NOT_ALLOWED);
         } else {
             seatService.delete(newSeat);
-            return new ResponseEntity<String>("Seat with ID: " + id +" deleted!", HttpStatus.OK);
+            return new ResponseEntity<>("Seat with ID: " + id +" deleted!", HttpStatus.OK);
         }
     }
 
@@ -54,9 +54,9 @@ public class SeatController {
         seat.setId(id);
         boolean modifyYes = seatService.modifySeat(seat);
         if(modifyYes) {
-            return new ResponseEntity<String>("Seat with ID: " + id + " modified!", HttpStatus.OK);
+            return new ResponseEntity<>("Seat with ID: " + id + " modified!", HttpStatus.OK);
         } else {
-            return new ResponseEntity<String>("Seat not found or it's reserved!", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("Seat not found or it's reserved!", HttpStatus.NOT_FOUND);
         }
     }
 }
