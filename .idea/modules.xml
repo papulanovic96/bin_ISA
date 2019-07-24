@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/backend_ISA/backend.iml" filepath="$PROJECT_DIR$/backend_ISA/backend.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/bin_ISA.iml" filepath="$PROJECT_DIR$/.idea/bin_ISA.iml" />
     </modules>
   </component>
