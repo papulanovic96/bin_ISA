@@ -1,10 +1,12 @@
 package com.bin448.backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 
 @Entity
 @Table(name = "carService")
@@ -14,9 +16,9 @@ public class CarService {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(nullable = false)
-    private Long carService_id;
+    private Long carServiceId;
 
-    @Column
+    @Column(unique = true, nullable = false)
     private String carServiceName;
     @Column
     private String carServiceAddress;
@@ -26,18 +28,18 @@ public class CarService {
     private HashMap<String, Double> carServiceMenu;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "carService", cascade = CascadeType.ALL)
-    private Collection<Car> carsCollection;
+    private List<Car> carsCollection;
     @Column
     private String carServiceLocation;
-
+    @Transient
     private Double avgGrade;
 
     public Long getCarService_id() {
-        return carService_id;
+        return carServiceId;
     }
 
-    public void setCarService_id(Long carService_id) {
-        this.carService_id = carService_id;
+    public void setCarService_id(Long carServiceId) {
+        this.carServiceId = carServiceId;
     }
 
     public String getCarServiceName() {
@@ -72,11 +74,11 @@ public class CarService {
         this.carServiceMenu = carServiceMenu;
     }
 
-    public Collection<Car> getCarsCollection() {
+    public List<Car> getCarsCollection() {
         return carsCollection;
     }
 
-    public void setCarsCollection(Collection<Car> carsCollection) {
+    public void setCarsCollection(List<Car> carsCollection) {
         this.carsCollection = carsCollection;
     }
 

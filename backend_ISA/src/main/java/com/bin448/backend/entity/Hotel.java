@@ -8,14 +8,14 @@ import java.util.HashMap;
 
 @Entity
 @Table(name = "hotel")
-@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Hotel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(nullable = false)
     private Long hotel_id;
-    @Column
+    @Column(unique = true, nullable = false)
     private String name;
     @Column
     private String address;
@@ -31,7 +31,7 @@ public class Hotel {
     private Boolean TV;
     private Boolean WiFi;
     private Boolean roomService;
-    private Boolean restorant;
+    private Boolean restaurant;
     private Boolean pool;
 
     public Long getHotel_id() {
@@ -114,12 +114,12 @@ public class Hotel {
         this.roomService = roomService;
     }
 
-    public Boolean getRestorant() {
-        return restorant;
+    public Boolean getRestaurant() {
+        return restaurant;
     }
 
-    public void setRestorant(Boolean restorant) {
-        this.restorant = restorant;
+    public void setRestaurant(Boolean restaurant) {
+        this.restaurant = restaurant;
     }
 
     public Boolean getPool() {
