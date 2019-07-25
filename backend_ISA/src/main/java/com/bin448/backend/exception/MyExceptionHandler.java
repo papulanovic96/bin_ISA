@@ -22,6 +22,11 @@ public class MyExceptionHandler {
         return createResponseEntity(createExceptionWrapper(nfe.getMessage(), HttpStatus.NOT_FOUND));
     }
 
+    @ExceptionHandler(value = ForeignKeyConstraintException.class)
+    public ResponseEntity<ExceptionWrapper> handleForeignKeyConstraintException(ForeignKeyConstraintException fkce) {
+        return createResponseEntity(createExceptionWrapper(fkce.getMessage(), HttpStatus.BAD_REQUEST));
+    }
+
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
     public ResponseEntity<ExceptionWrapper> handleNotValidException(MethodArgumentNotValidException mnve) {
         String errorMessage = mnve.getBindingResult().getAllErrors().stream()

@@ -10,4 +10,5 @@ public interface HotelService {
 
     void changeHotel(HotelDTO hotelDTO, Long id);
 
+    void checkIfHotelExsists(Long id);
 }

@@ -3,11 +3,13 @@ package com.bin448.backend.converter;
 import com.bin448.backend.entity.DTOentity.HotelDTO;
 import com.bin448.backend.entity.Hotel;
 import com.bin448.backend.entity.Room;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+@Component
 public class HotelConverter extends AbstractConverter {
 
     public static HotelDTO fromEntity(Hotel e) {
