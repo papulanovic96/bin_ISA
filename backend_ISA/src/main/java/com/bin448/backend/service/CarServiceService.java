@@ -11,5 +11,8 @@ import org.springframework.stereotype.Service;
 public interface CarServiceService {
 
     void addCarService(CarServiceDTO cs);
+    void removeCarService(String ime);
+    void removeCarService(Long id);
+    CarServiceDTO findCarService(String name);
 
 }

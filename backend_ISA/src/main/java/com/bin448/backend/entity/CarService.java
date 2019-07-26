@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 
 @Entity
-@Table(name = "carService")
+@Table(name = "carService",uniqueConstraints={@UniqueConstraint(columnNames={"carServiceName"})})
 @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 public class CarService {
 
@@ -18,7 +18,7 @@ public class CarService {
     @Column(nullable = false)
     private Long carServiceId;
 
-    @Column(unique = true, nullable = false)
+    @Column(name="carServiceName")
     private String carServiceName;
     @Column
     private String carServiceAddress;
