@@ -6,7 +6,9 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface UserService {
+
     boolean modify(UserDTO oldUser);
     void deleteFriend(UserDTO friend);
     User addFriend(UserDTO friend);
+
 }

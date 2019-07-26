@@ -9,5 +9,7 @@ import org.springframework.stereotype.Repository;
 public interface CarServiceRepository extends JpaRepository<CarService,String> {
 
     CarService getCarServiceByCarServiceName(String name);
-     CarService getCarServiceByCarServiceId(Long id);
+    CarService getCarServiceByCarServiceId(Long id);
+    void deleteCarServiceByCarServiceName(String name);
+    void deleteCarServiceByCarServiceId(Long id);
 }

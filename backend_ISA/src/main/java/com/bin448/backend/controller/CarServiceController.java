@@ -6,10 +6,7 @@ import com.bin448.backend.service.CarServiceServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/carService")
@@ -25,6 +22,17 @@ public class CarServiceController {
     public ResponseEntity<String> addCarService(@RequestBody CarServiceDTO carService){
         css.addCarService(carService);
         return ResponseEntity.ok("Success");
+    }
+    @PostMapping("/remove/{name}")
+    public ResponseEntity<String> removeCarService(@PathVariable String name){
+
+        css.removeCarService(name);
+        return ResponseEntity.ok("Succcess");
+    }
+
+    @GetMapping("/find/{name}")
+    public ResponseEntity<Object> findCarService(@PathVariable String name){
+        return ResponseEntity.ok(css.findCarService(name));
     }
 
 }

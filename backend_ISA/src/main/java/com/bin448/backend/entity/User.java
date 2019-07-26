@@ -18,8 +18,10 @@ public class User {
     @Id
     @Column(nullable = false)
     private Long id;
-    @Column
+    @Column(nullable = false)
     private String username;
+    @Column(nullable = false)
+    private String password;
     @Column
     private String city;
     @Column
@@ -79,6 +81,14 @@ public class User {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
 }
