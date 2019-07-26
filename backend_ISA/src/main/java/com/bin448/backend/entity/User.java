@@ -3,6 +3,7 @@ package com.bin448.backend.entity;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "user")
@@ -89,4 +90,5 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
+
 }
