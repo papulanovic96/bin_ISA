@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "room")
-@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Room {
 
     @Id
@@ -17,7 +17,12 @@ public class Room {
     private Hotel hotel;
     @Column
     private Double pricePerNight;
+
     private Double avgGrade;
+
+    private Boolean reserved;
+
+    private Boolean deleted;
 
     public Long getNumber() {
         return number;
@@ -49,5 +54,21 @@ public class Room {
 
     public void setAvgGrade(Double avgGrade) {
         this.avgGrade = avgGrade;
+    }
+
+    public Boolean getReserved() {
+        return reserved;
+    }
+
+    public void setReserved(Boolean reserved) {
+        this.reserved = reserved;
+    }
+
+    public Boolean getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        this.deleted = deleted;
     }
 }

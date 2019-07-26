@@ -2,6 +2,7 @@ package com.bin448.backend.service;
 
 import com.bin448.backend.converter.HotelConverter;
 import com.bin448.backend.entity.DTOentity.HotelDTO;
+import com.bin448.backend.exception.ForeignKeyConstraintException;
 import com.bin448.backend.repository.HotelRepository;
 import org.springframework.stereotype.Service;
 
@@ -27,5 +28,11 @@ public class HotelServiceImpl implements HotelService {
     @Override
     public void changeHotel(HotelDTO hotelDTO, Long id) {
 
+    }
+
+    @Override
+    public void checkIfHotelExsists(Long id) {
+        hotelRepository.findById(id)
+                .orElseThrow(() -> new ForeignKeyConstraintException(String.format("Hotel with id %s not found", id)));
     }
 }
