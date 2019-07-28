@@ -1,7 +1,6 @@
 package com.bin448.backend.converter;
 
 import com.bin448.backend.entity.Airline;
-import com.bin448.backend.entity.DTOentity.AirlineDTO;
 import com.bin448.backend.entity.DTOentity.FlightDTO;
 import com.bin448.backend.entity.Flight;
 
