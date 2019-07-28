@@ -1,0 +1,24 @@
+<div class="col-5">
+    <table class="table table-fixed table-hover">
+        <thead>
+          <tr>
+            <th scope="col-xs-1">id</th>
+            <th scope="col-1">Reserved</th>
+            <th scope="col-xs-1">AirlineID</th>
+            <th scope="col-1">TicketID</th>
+            <th scope="col-xs-1" colspan="2"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor = 'let ss of listOfSeats'>
+            <td>{{ ss.id }}</td>
+            <td>{{ ss.reserved }}</td>
+            <td>{{ ss.airlineID }}</td>
+            <td>{{ ss.ticketID }}</td>
+            <td><a><button class="btn btn-outline-warning"><i class="fa fa-edit"></i> Modify</button></a></td>
+            <td><button type="button" class="btn btn-outline-danger"><i class="fa fa-close"></i> Delete</button></td>
+          </tr>
+        </tbody>
+      </table>
+</div>
+   

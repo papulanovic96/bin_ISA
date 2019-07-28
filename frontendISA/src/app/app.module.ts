@@ -1,16 +1,28 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
+import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { PlaneSeatComponent } from './plane-seat/plane-seat.component';
+import { RouterModule } from '@angular/router';
+import { AirlineComponent } from './airline/airline.component';
+import { PlaneTicketComponent } from './plane-ticket/plane-ticket.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    PlaneSeatComponent,
+    AirlineComponent,
+    PlaneTicketComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    HttpClientModule,
+    AppRoutingModule,
+    RouterModule.forRoot([
+      {path: 'planeseats', component: PlaneSeatComponent},
+      {path: 'airlines', component: AirlineComponent}
+    ], {useHash: true})
   ],
   providers: [],
   bootstrap: [AppComponent]

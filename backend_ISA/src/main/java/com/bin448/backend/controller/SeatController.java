@@ -20,7 +20,7 @@ public class SeatController {
     @Autowired
     private SeatService seatService;
 
-    @RequestMapping( value = "/findAll", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping( value = "/findAll", method = RequestMethod.GET)
     public ResponseEntity<List<PlaneSeatDTO>> findAll() {
         List<PlaneSeatDTO> allSeats = seatService.findAll();
         return new ResponseEntity<>(allSeats, HttpStatus.OK);

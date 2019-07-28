@@ -1,0 +1,26 @@
+<div class="col-5">
+    <table class="table table-fixed table-hover">
+        <thead>
+          <tr>
+            <th scope="col-xs-1">id</th>
+            <th scope="col-1">address</th>
+            <th scope="col-xs-1">description</th>
+            <th scope="col-1">name</th>
+            <th scope="col-1">office_destination</th>
+            <th scope="col-xs-1" colspan="2"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor = 'let a of listOfAirline'>
+            <td>{{ a.id }}</td>
+            <td>{{ a.address }}</td>
+            <td>{{ a.description }}</td>
+            <td>{{ a.name }}</td>
+            <td>{{ a.office_destination }}</td>
+            <td><a><button class="btn btn-outline-warning"><i class="fa fa-edit"></i> Modify</button></a></td>
+            <td><button type="button" class="btn btn-outline-danger"><i class="fa fa-close"></i> Delete</button></td>
+          </tr>
+        </tbody>
+      </table>
+</div>
+   

@@ -15,7 +15,7 @@ public class CarServiceConverter {
     public CarServiceConverter(CarRepository cr){
         carR = cr;
     }
-    public static CarServiceDTO fromEntity(@org.jetbrains.annotations.NotNull CarService cs){
+    public static CarServiceDTO fromEntity(/*@org.jetbrains.annotations.NotNull*/ CarService cs){
         CarServiceDTO csDTO = new CarServiceDTO();
         List<String> listaReg = new ArrayList<>();
         csDTO.setCarServiceAddress(cs.getCarServiceAddress());
@@ -32,7 +32,7 @@ public class CarServiceConverter {
 
 
     }
-    public static CarService toEntity(@org.jetbrains.annotations.NotNull CarServiceDTO csDTO){
+    public static CarService toEntity(/*@org.jetbrains.annotations.NotNull*/ CarServiceDTO csDTO){
         CarService cs = new CarService();
         cs.setAvgGrade(csDTO.getAvgGrade());
         List<Car> listaAuta = new ArrayList<>();
