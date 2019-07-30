@@ -15,6 +15,7 @@ public abstract class FlightConverter extends AbstractConverter{
         newFlight.setFlightTravelTime(e.getFlightTravelTime());
         newFlight.setTicketPrice(e.getTicketPrice());
         newFlight.setTransferLocation(e.getTransferLocation());
+        newFlight.setTransferNumber(e.getTransferNumber());
         newFlight.setAirline(e.getAirline().getName());
         return newFlight;
     }
@@ -28,6 +29,7 @@ public abstract class FlightConverter extends AbstractConverter{
         newFlight.setTransferLocation(d.getTransferLocation());
         newFlight.setFlightTime(d.getFlightTime());
         newFlight.setFlightTravelTime(d.getFlightTravelTime());
+        newFlight.setTransferNumber(d.getTransferNumber());
         Airline newAirline = new Airline();
         newAirline.setId(d.getId());
         newFlight.setAirline(newAirline);
