@@ -4,9 +4,11 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Entity
-@Table(name = "user")
+@Table(name = "user",uniqueConstraints={@UniqueConstraint(columnNames={"username"})})
+
 @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 public class User {
     @Column
@@ -16,9 +18,10 @@ public class User {
     @Column
     private String email;
     @Id
-    @Column(nullable = false)
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    @Column(name = "id" , nullable = false)
     private Long id;
-    @Column(nullable = false)
+    @Column(nullable = false,name = "username")
     private String username;
     @Column(nullable = false)
     private String password;
@@ -26,6 +29,10 @@ public class User {
     private String city;
     @Column
     private String telephone;
+    private String role;
+    private boolean active;
+
+
 
     public String getLastName() {
         return lastName;
@@ -91,4 +98,20 @@ public class User {
         this.password = password;
     }
 
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
 }
