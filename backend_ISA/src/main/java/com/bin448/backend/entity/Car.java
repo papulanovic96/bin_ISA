@@ -5,7 +5,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "cars")
+
+@Table(name = "cars",uniqueConstraints={@UniqueConstraint(columnNames={"regID"})})
+
 @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 public class Car {
     @Id
@@ -14,7 +16,7 @@ public class Car {
     private Long carId;
     @Column
     private boolean reserved;
-    @Column(unique = true, nullable = false)
+    @Column(name = "regID")
     private String regID;
     @Column
     private Double avgGrade;
