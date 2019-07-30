@@ -5,18 +5,19 @@ import com.bin448.backend.entity.DTOentity.FlightDTO;
 import com.bin448.backend.entity.Flight;
 import com.bin448.backend.repository.FlightRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.stereotype.Service;
 import java.util.List;
 
+@Service
 public class FlightServiceImpl implements FlightService {
 
     @Autowired
     private FlightRepository flightRepository;
 
     @Override
-    public Flight save(FlightDTO newFlight) {
+    public void save(FlightDTO newFlight) {
         Flight nf = FlightConverter.toEntity(newFlight);
-        return flightRepository.save(nf);
+        flightRepository.save(nf);
     }
 
     @Override

@@ -7,13 +7,15 @@ import { PlaneSeatComponent } from './plane-seat/plane-seat.component';
 import { RouterModule } from '@angular/router';
 import { AirlineComponent } from './airline/airline.component';
 import { PlaneTicketComponent } from './plane-ticket/plane-ticket.component';
+import { FlightComponent } from './flight/flight.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PlaneSeatComponent,
     AirlineComponent,
-    PlaneTicketComponent
+    PlaneTicketComponent,
+    FlightComponent
   ],
   imports: [
     BrowserModule,
