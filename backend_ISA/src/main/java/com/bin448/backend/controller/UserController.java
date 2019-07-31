@@ -8,6 +8,7 @@ import com.bin448.backend.entity.DTOentity.UserDTO;
 import com.bin448.backend.entity.Flight;
 import com.bin448.backend.entity.User;
 import com.bin448.backend.repository.ConfirmationTokenRepository;
+import com.bin448.backend.service.AirlineService;
 import com.bin448.backend.service.EmailSenderService;
 import com.bin448.backend.service.UserService;
 import org.springframework.http.HttpMethod;
@@ -35,11 +36,13 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 public class UserController {
 
     private UserService us;
+    private AirlineService as;
     private ConfirmationTokenRepository confirmationTokenRepository;
     private EmailSenderService emailSenderService;
 
 
-    public UserController(UserService us,EmailSenderService em,ConfirmationTokenRepository c) {
+    public UserController(AirlineService as, UserService us,EmailSenderService em,ConfirmationTokenRepository c) {
+        this.as = as;
         this.us = us;
         this.confirmationTokenRepository = c;
         this.emailSenderService = em;
@@ -47,12 +50,6 @@ public class UserController {
     }
 
 
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public boolean loginPage(@RequestBody UserDTO user) {
-
-        return us.logIn(user.getUsername(),user.getPassword());
-
-    }
 
 
 
@@ -69,13 +66,15 @@ public class UserController {
     {
        return emailSenderService.accountConfimation(modelAndView,confirmationToken);
     }
-/*
+
     @RequestMapping(value = "/user/getAirlines", method = GET)
     public ResponseEntity<List<AirlineDTO>> getAirline(){
 
+        return ResponseEntity.ok(as.findAll());
 
     }
-*/
+
+
 }
 
 

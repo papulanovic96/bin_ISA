@@ -2,9 +2,10 @@ package com.bin448.backend.entity.DTOentity;
 
 public class CarDTO {
     private String regID;
-    private Double avgGrade;
-    private Long idService;
-    private Long carId;
+    private String serviceName;
+    private String model;
+
+
 
     public String getRegID() {
         return regID;
@@ -14,27 +15,21 @@ public class CarDTO {
         this.regID = regID;
     }
 
-    public Double getAvgGrade() {
-        return avgGrade;
+
+
+    public String getServiceName() {
+        return serviceName;
     }
 
-    public void setAvgGrade(Double avgGrade) {
-        this.avgGrade = avgGrade;
+    public void setServiceName(String serviceName) {
+        this.serviceName = serviceName;
     }
 
-    public Long getIdService() {
-        return idService;
+    public String getModel() {
+        return model;
     }
 
-    public void setIdService(Long idService) {
-        this.idService = idService;
-    }
-
-    public Long getCarId() {
-        return carId;
-    }
-
-    public void setCarId(Long carId) {
-        this.carId = carId;
+    public void setModel(String model) {
+        this.model = model;
     }
 }

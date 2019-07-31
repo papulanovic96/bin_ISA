@@ -12,7 +12,7 @@ import java.util.ConcurrentModificationException;
 import java.util.List;
 
 @Service
-@Transactional
+
 public class CarServiceImpl implements CarService {
     private CarRepository cr;
     public CarServiceImpl(CarRepository cr){
@@ -37,11 +37,16 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public List<CarDTO> findAll(Long id) {
-        List <Car> auti = cr.findAllByCarService_CarServiceId(id);
+    public List<CarDTO> findAll(String serviceName) {
+        List <Car> auti = cr.findAllByCarService_CarServiceName(serviceName);
         List<CarDTO> cardto = new ArrayList<>();
         for(int i =0;i<auti.size();i++)
             cardto.add(CarConverter.fromEntity(auti.get(i)));
         return cardto;
+    }
+
+    @Override
+    public void modifyReserved(boolean r, String reg) {
+        cr.modifyReserved(r,reg);
     }
 }

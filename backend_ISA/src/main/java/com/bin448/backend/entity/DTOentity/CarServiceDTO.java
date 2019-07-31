@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class CarServiceDTO {
-    private Long carService_id;
+
     private String carServiceName;
     private String carServiceAddress;
     private String carServiceDescription;
@@ -17,13 +17,7 @@ public class CarServiceDTO {
     private HashMap<String, Double> carServiceMenu;
 
 
-    public Long getCarService_id() {
-        return carService_id;
-    }
 
-    public void setCarService_id(Long carService_id) {
-        this.carService_id = carService_id;
-    }
 
     public String getCarServiceName() {
         return carServiceName;

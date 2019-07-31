@@ -9,15 +9,16 @@ import org.springframework.stereotype.Component;
 @Component
 public class CarConverter extends AbstractConverter{
     private static CarServiceRepository cr;
-    public CarConverter(CarServiceRepository cr){
+    private static CarRepository cRep;
+    public CarConverter(CarServiceRepository cr,CarRepository c){
+        cRep = c;
         this.cr=cr;
     }
 
     public static CarDTO fromEntity(Car c){
         CarDTO cDTO = new CarDTO();
-        cDTO.setAvgGrade(c.getAvgGrade());
-        cDTO.setIdService(c.getCarService().getCarService_id());
-        cDTO.setCarId(c.getCarId());
+        cDTO.setModel(c.getModel());
+        cDTO.setServiceName(c.getCarService().getCarServiceName());
         cDTO.setRegID(c.getRegID());
         return cDTO;
     }
@@ -25,10 +26,9 @@ public class CarConverter extends AbstractConverter{
     public static Car toEntity(CarDTO cDTO){
         Car car = new Car();
         car.setRegID(cDTO.getRegID());
-        car.setAvgGrade(cDTO.getAvgGrade());
-        car.setCarId(cDTO.getCarId());
+        car.setModel(cDTO.getModel());
         car.setReserved(false);
-        car.setCarService(cr.getCarServiceByCarServiceId(cDTO.getIdService()));
+        car.setCarService(cr.getCarServiceByCarServiceName(cDTO.getServiceName()));
         return car;
     }
 
