@@ -9,5 +9,6 @@ public interface CarService {
     void addCar(CarDTO car);
     void removeCar(String reg);
     CarDTO getCar(String reg);
-    List<CarDTO> findAll(Long id);
+    List<CarDTO> findAll(String serviceName);
+    void modifyReserved(boolean r, String reg);
 }

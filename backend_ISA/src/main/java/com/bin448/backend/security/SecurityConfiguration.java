@@ -37,8 +37,16 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
-                http.authorizeRequests()
-
+                http.httpBasic().and().authorizeRequests()
+                        .antMatchers("/user/getAirlines").permitAll()
+                        .antMatchers("/Car/add").hasAnyRole("CAR_ADMIN","SYSTEM_ADMIN")
+                        .antMatchers("/Car/remove/**").hasAnyRole("CAR_ADMIN","SYSTEM_ADMIN")
+                        .antMatchers("/Car/reserve").hasAnyRole("USER","CAR_ADMIN")
+                        .antMatchers("/Car/unreserve").hasAnyRole("CAR_ADMIN","USER")
+                        .antMatchers("/Car/find/**","Car/findAll/**").permitAll()
+                        .antMatchers("/carService/add").hasAnyRole("CAR_ADMIN","SYSTEM_ADMIN")
+                        .antMatchers("/carService/remove/**").hasAnyRole("CAR_ADMIN","SYSTEM_ADMIN")
+                        .antMatchers("/carService/find/**").permitAll()
                 .and()
                 .formLogin()
                 .successHandler(new Redirect(us))
@@ -49,6 +57,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                  .deleteCookies("JSESSIONID")
                 .logoutUrl("/logout")
                 .permitAll();
+
+
 
 
     }

@@ -27,11 +27,9 @@ public class CarService {
     @Column
     private HashMap<String, Double> carServiceMenu;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "carService", cascade = CascadeType.ALL)
-    private List<Car> carsCollection;
     @Column
     private String carServiceLocation;
-    @Transient
+    @Column
     private Double avgGrade;
 
     public Long getCarService_id() {
@@ -74,14 +72,6 @@ public class CarService {
         this.carServiceMenu = carServiceMenu;
     }
 
-    public List<Car> getCarsCollection() {
-        return carsCollection;
-    }
-
-    public void setCarsCollection(List<Car> carsCollection) {
-        this.carsCollection = carsCollection;
-    }
-
     public String getCarServiceLocation() {
         return carServiceLocation;
     }
@@ -97,4 +87,5 @@ public class CarService {
     public void setAvgGrade(Double avgGrade) {
         this.avgGrade = avgGrade;
     }
+
 }
