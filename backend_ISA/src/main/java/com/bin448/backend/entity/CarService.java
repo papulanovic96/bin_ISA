@@ -25,9 +25,6 @@ public class CarService {
     @Column
     private String carServiceDescription;
     @Column
-    private HashMap<String, Double> carServiceMenu;
-
-    @Column
     private String carServiceLocation;
     @Column
     private Double avgGrade;
@@ -64,13 +61,6 @@ public class CarService {
         this.carServiceDescription = carServiceDescription;
     }
 
-    public HashMap<String, Double> getCarServiceMenu() {
-        return carServiceMenu;
-    }
-
-    public void setCarServiceMenu(HashMap<String, Double> carServiceMenu) {
-        this.carServiceMenu = carServiceMenu;
-    }
 
     public String getCarServiceLocation() {
         return carServiceLocation;

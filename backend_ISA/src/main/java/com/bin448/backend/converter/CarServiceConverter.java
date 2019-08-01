@@ -18,28 +18,22 @@ public class CarServiceConverter {
         this.crr = crr;
         carR = cr;
     }
-    public static CarServiceDTO fromEntity(/*@org.jetbrains.annotations.NotNull*/ CarService cs){
+    public static CarServiceDTO fromEntity(CarService cs){
         CarServiceDTO csDTO = new CarServiceDTO();
-        List<String> listaReg = new ArrayList<>();
         csDTO.setCarServiceAddress(cs.getCarServiceAddress());
+        csDTO.setId(cs.getCarService_id());
         csDTO.setCarServiceDescription(cs.getCarServiceDescription());
-        csDTO.setCarServiceMenu(cs.getCarServiceMenu());
         csDTO.setCarServiceName(cs.getCarServiceName());
-        List<Car> vozila = carR.findAllByCarService_CarServiceName(cs.getCarServiceName());
-        for (Car c : vozila){
-            listaReg.add(c.getRegID());
-        }
-        csDTO.setCarsCollection(listaReg);
         return csDTO;
 
 
     }
-    public static CarService toEntity(/*@org.jetbrains.annotations.NotNull*/ CarServiceDTO csDTO){
+    public static CarService toEntity(CarServiceDTO csDTO){
         CarService cs = new CarService();
+        cs.setCarService_id(csDTO.getId());
         cs.setAvgGrade(csDTO.getAvgGrade());
         cs.setCarServiceAddress(csDTO.getCarServiceAddress());
         cs.setCarServiceDescription(csDTO.getCarServiceDescription());
-        cs.setCarServiceMenu(csDTO.getCarServiceMenu());
         cs.setCarServiceLocation(csDTO.getCarServiceLocation());
         cs.setCarServiceName(csDTO.getCarServiceName());
         return cs;
