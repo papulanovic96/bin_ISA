@@ -7,14 +7,13 @@ import java.util.HashMap;
 import java.util.List;
 
 public class CarServiceDTO {
-
+    private Long id;
     private String carServiceName;
     private String carServiceAddress;
     private String carServiceDescription;
     private String carServiceLocation;
-    private List<String> carsCollection;
     private Double avgGrade;
-    private HashMap<String, Double> carServiceMenu;
+
 
 
 
@@ -43,22 +42,6 @@ public class CarServiceDTO {
         this.carServiceDescription = carServiceDescription;
     }
 
-    public List<String> getCarsCollection() {
-        return carsCollection;
-    }
-
-    public void setCarsCollection(List<String> carsCollection) {
-        this.carsCollection = carsCollection;
-    }
-
-    public HashMap<String, Double> getCarServiceMenu() {
-        return carServiceMenu;
-    }
-
-    public void setCarServiceMenu(HashMap<String, Double> carServiceMenu) {
-        this.carServiceMenu = carServiceMenu;
-    }
-
     public Double getAvgGrade() {
         return avgGrade;
     }
@@ -73,5 +56,13 @@ public class CarServiceDTO {
 
     public void setCarServiceLocation(String carServiceLocation) {
         this.carServiceLocation = carServiceLocation;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

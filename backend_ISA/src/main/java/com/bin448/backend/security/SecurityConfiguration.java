@@ -45,6 +45,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                         .antMatchers("/Car/unreserve").hasAnyRole("CAR_ADMIN","USER")
                         .antMatchers("/Car/find/**","Car/findAll/**").permitAll()
                         .antMatchers("/carService/add").hasAnyRole("CAR_ADMIN","SYSTEM_ADMIN")
+                        .antMatchers("/carService/addItem").hasAnyRole("CAR_ADMIN","SYSTEM_ADMIN")
+                        .antMatchers("/carService/deleteItem/**").hasAnyRole("CAR_ADMIN","SYSTEM_ADMIN")
+                        .antMatchers("/carService/modifyItem/**").hasAnyRole("CAR_ADMIN","SYSTEM_ADMIN")
+                        //mozda cak staviti u webignoring
+                        .antMatchers("/carService/getAllItems/**").hasAnyRole("CAR_ADMIN","USER","SYSTEM_ADMIN")
                         .antMatchers("/carService/remove/**").hasAnyRole("CAR_ADMIN","SYSTEM_ADMIN")
                         .antMatchers("/carService/find/**").permitAll()
                 .and()

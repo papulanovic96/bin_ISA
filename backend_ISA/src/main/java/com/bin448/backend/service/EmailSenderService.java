@@ -12,6 +12,8 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.UUID;
+
 @Service
 public class EmailSenderService {
     private JavaMailSender javaMailSender;
@@ -40,19 +42,23 @@ public class EmailSenderService {
         }
         else
         {
-            us.addUser(user);
+     /*       us.addUser(user);
             User u = UserConverter.toEntity(user);
             User izbaze = us.getUserByUsername(user.getUsername());
             ConfirmationToken confirmationToken = new ConfirmationToken(izbaze);
 
             confirmationTokenRepository.save(confirmationToken);
-
+*/
+            String uid = UUID.randomUUID().toString();
             SimpleMailMessage mailMessage = new SimpleMailMessage();
-            mailMessage.setTo(izbaze.getEmail());
+            mailMessage.setTo(user.getEmail());
             mailMessage.setSubject("Complete Registration!");
             mailMessage.setFrom("goodbyetravelagency.com");
             mailMessage.setText("To confirm your account, please click here : "
-                    +"http://localhost:8080/user/confirm-account?token="+confirmationToken.getToken());
+                    +"http://localhost:8080/user/confirm-account?token="+uid+"'"+
+                    user.getCity()+"'"+user.getEmail()+"'"+user.getLastName()+"'"+user.getName()+"'"+user.getPassword()+
+                    "'"+user.getRole()+"'"+user.getTelephone()+"'"+user.getUsername()
+                    );
 
             sendEmail(mailMessage);
 
@@ -65,14 +71,28 @@ public class EmailSenderService {
 
     }
     public ModelAndView accountConfimation(ModelAndView modelAndView, String tokenConf){
-        ConfirmationToken token = confirmationTokenRepository.findByToken(tokenConf);
 
-        if(token != null)
+        UserDTO newUser = new UserDTO();
+        String []parts = tokenConf.split("'");
+
+        String Token =parts[0];
+        newUser.setCity(parts[1]);
+        newUser.setActive(true);
+        newUser.setPassword(parts[5]);
+        newUser.setRole("ROLE_USER");
+        newUser.setEmail(parts[2]);
+        newUser.setLastName(parts[3]);
+        newUser.setName(parts[4]);
+        newUser.setTelephone(parts[7]);
+        newUser.setUsername(parts[8]);
+
+
+        if(Token != null)
         {
-            User user = us.getUserByUsername(token.getUser().getUsername());
-            UserDTO u = UserConverter.fromEntity(user);
-            us.modifyUser(true,token.getUser().getUsername());
-
+            us.addUser(newUser);
+            User baseUser = us.getUserByUsername(newUser.getUsername());
+            ConfirmationToken ct = new ConfirmationToken(baseUser);
+            confirmationTokenRepository.save(ct);
             modelAndView.setViewName("accountVerified");
         }
         else
