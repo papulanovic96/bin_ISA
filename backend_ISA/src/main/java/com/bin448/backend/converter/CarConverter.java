@@ -20,6 +20,9 @@ public class CarConverter extends AbstractConverter{
         cDTO.setModel(c.getModel());
         cDTO.setServiceName(c.getCarService().getCarServiceName());
         cDTO.setRegID(c.getRegID());
+        cDTO.setConvertible(c.isConvertible());
+        cDTO.setType(c.getType());
+        cDTO.setYear(c.getYear());
         return cDTO;
     }
 
@@ -29,6 +32,10 @@ public class CarConverter extends AbstractConverter{
         car.setModel(cDTO.getModel());
         car.setReserved(false);
         car.setCarService(cr.getCarServiceByCarServiceName(cDTO.getServiceName()));
+        car.setModel(cDTO.getModel());
+        car.setConvertible(cDTO.isConvertible());
+        car.setType(cDTO.getType());
+        car.setYear(cDTO.getYear());
         return car;
     }
 
