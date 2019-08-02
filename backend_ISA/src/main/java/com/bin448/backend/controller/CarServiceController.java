@@ -4,6 +4,7 @@ import com.bin448.backend.converter.CarServicePriceListConverter;
 import com.bin448.backend.entity.CarServicePriceList;
 import com.bin448.backend.entity.DTOentity.CarServiceDTO;
 import com.bin448.backend.entity.DTOentity.CarServicePriceListDTO;
+import com.bin448.backend.entity.DTOentity.CarServiceRateDTO;
 import com.bin448.backend.service.CarServiceService;
 import com.bin448.backend.service.CarServiceServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +47,7 @@ public class CarServiceController {
     }
 
     @PostMapping("/addItem")
+
     public ResponseEntity<String> addItem(@RequestBody CarServicePriceListDTO csDTO){
         CarServicePriceList cs = CarServicePriceListConverter.toEntity(csDTO);
         return ResponseEntity.ok(css.addItem(cs));
@@ -59,5 +61,15 @@ public class CarServiceController {
     @PostMapping("/modifyItem/{Ime},{Cena},{Id}")
     public ResponseEntity<String> modifyItem(@PathVariable String Ime,@PathVariable Double Cena, @PathVariable Long Id){
         return ResponseEntity.ok(css.changeItem(Ime,Cena,Id));
+    }
+
+    @PostMapping("/rateCarService")
+    public ResponseEntity<String> rateCarService(@RequestBody CarServiceRateDTO csr){
+        return ResponseEntity.ok(css.carServiceRate(csr));
+    }
+
+    @GetMapping("/getAvgGrade/{name}")
+    public ResponseEntity<Double> getAvgRate(@PathVariable String name){
+        return ResponseEntity.ok(css.getAvgGrade(name));
     }
 }

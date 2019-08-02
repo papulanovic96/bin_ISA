@@ -2,8 +2,10 @@ package com.bin448.backend.controller;
 
 
 import com.bin448.backend.entity.Car;
+import com.bin448.backend.entity.CarRate;
 import com.bin448.backend.entity.CarReservation;
 import com.bin448.backend.entity.DTOentity.CarDTO;
+import com.bin448.backend.entity.DTOentity.CarRateDTO;
 import com.bin448.backend.entity.DTOentity.CarReservationDTO;
 import com.bin448.backend.entity.DTOentity.CarServiceDTO;
 
@@ -30,6 +32,7 @@ public class CarController {
 
     @PostMapping("/add")
     public ResponseEntity<String> addCar(@RequestBody CarDTO car){
+
         css.addCar(car);
         return ResponseEntity.ok("Success");
     }
@@ -38,6 +41,14 @@ public class CarController {
         css.removeCar(regID);
         return ResponseEntity.ok("Succcess");
     }
+
+/*    @PostMapping("/rate/{regID},{rate}")
+    public ResponseEntity<String> rateCar(@PathVariable String regID, @PathVariable Double rate){
+        Car c = css.getCar(regID);
+        c.getRates().add(rate);
+        css.
+    }
+*/
 //ovu mogu svi
     @GetMapping("/find/{regID}")
     public ResponseEntity<CarDTO> findCarbyregID(@PathVariable String regID){
@@ -61,4 +72,18 @@ public class CarController {
         return  ResponseEntity.ok(crs.deleteReservation(cr.getRegID(),cr.getUsername()));
     }
 
+    @PostMapping("/modifyCar/{model},{type},{year},{conv},{id}")
+    public ResponseEntity<String> modifyCars(@PathVariable String model,@PathVariable String type,@PathVariable Integer year,@PathVariable Boolean conv,@PathVariable String regID){
+    return ResponseEntity.ok(css.modifyCar(model,type,year,conv,regID));
+    }
+
+    @PostMapping("/rateCar")
+    public ResponseEntity<String> rateCar(@RequestBody CarRateDTO cr){
+        return ResponseEntity.ok(css.rateCar(cr));
+    }
+
+    @GetMapping("/getAvgGrade/{regID}")
+    public ResponseEntity<Double> getAvgRate(@PathVariable String regID){
+        return ResponseEntity.ok(css.getAvgGrade(regID));
+    }
 }

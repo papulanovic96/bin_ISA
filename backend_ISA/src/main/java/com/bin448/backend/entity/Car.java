@@ -3,6 +3,8 @@ package com.bin448.backend.entity;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 
@@ -15,13 +17,17 @@ public class Car {
     @Column(nullable = false)
     private Long carId;
     @Column
-    private boolean reserved;
+    private Boolean reserved;
     @Column(name = "regID",nullable = false)
     private String regID;
     @Column
     private Double avgGrade;
     @Column
     private String model;
+    private Integer year;
+    private String typeC;
+    private Boolean convertible;
+
 
     @ManyToOne(fetch = FetchType.EAGER, targetEntity = CarService.class)
     @JoinColumn(name = "idService", nullable = false)
@@ -44,11 +50,11 @@ public class Car {
     }
 
 
-    public boolean isReserved() {
+    public Boolean isReserved() {
         return reserved;
     }
 
-    public void setReserved(boolean reserved) {
+    public void setReserved(Boolean reserved) {
         this.reserved = reserved;
     }
 
@@ -76,4 +82,30 @@ public class Car {
     public void setModel(String model) {
         this.model = model;
     }
+
+    public Integer getYear() {
+        return year;
+    }
+
+    public void setYear(Integer year) {
+        this.year = year;
+    }
+
+    public String getType() {
+        return typeC;
+    }
+
+    public void setType(String type) {
+        this.typeC = type;
+    }
+
+    public Boolean isConvertible() {
+        return convertible;
+    }
+
+    public void setConvertible(Boolean convertible) {
+        this.convertible = convertible;
+    }
+
+
 }
