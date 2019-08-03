@@ -31,7 +31,8 @@ public class User {
     private String telephone;
     private String role;
     private boolean active;
-
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<User> friends;
 
 
     public String getLastName() {
@@ -113,5 +114,13 @@ public class User {
 
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+    public List<User> getFriends() {
+        return friends;
+    }
+
+    public void setFriends(List<User> friends) {
+        this.friends = friends;
     }
 }

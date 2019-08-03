@@ -1,28 +1,36 @@
 package com.bin448.backend.service;
 
 import com.bin448.backend.converter.UserConverter;
-import com.bin448.backend.entity.Airline;
 import com.bin448.backend.entity.DTOentity.UserDTO;
 import com.bin448.backend.entity.User;
-import com.bin448.backend.exception.NotFoundException;
 import com.bin448.backend.repository.UserRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.sql.SQLException;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class UserServiceImpl implements UserService {
-     private UserRepository ur;
+
+    private UserRepository ur;
 
     public UserServiceImpl(UserRepository ur){
         this.ur=ur;
     }
+
+    @Transactional
     @Override
     public boolean modify(UserDTO oldUser) {
-        User newUser = null;
-        return false;
+        User newUser = UserConverter.toEntity(oldUser);
+        User newUserUseIt = ur.getUserByUsername(newUser.getUsername());
+        if(newUserUseIt == null) {
+            return false;
+        } else {
+            ur.modifyUser(newUserUseIt.getCity(), newUserUseIt.getEmail(),
+                    newUserUseIt.getLastName(), newUserUseIt.getName(),
+                    newUserUseIt.getTelephone(), newUserUseIt.getUsername());
+            return true;
+        }
     }
 
     @Override
