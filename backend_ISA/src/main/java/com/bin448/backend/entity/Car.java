@@ -1,6 +1,7 @@
 package com.bin448.backend.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -27,9 +28,9 @@ public class Car {
     private Integer year;
     private String typeC;
     private Boolean convertible;
+    private Boolean deleted;
 
-
-    @ManyToOne(fetch = FetchType.EAGER, targetEntity = CarService.class)
+    @ManyToOne
     @JoinColumn(name = "idService", nullable = false)
     private CarService carService;
 
@@ -108,4 +109,11 @@ public class Car {
     }
 
 
+    public Boolean getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        this.deleted = deleted;
+    }
 }

@@ -24,6 +24,7 @@ public class CarServiceConverter {
         csDTO.setId(cs.getCarService_id());
         csDTO.setCarServiceDescription(cs.getCarServiceDescription());
         csDTO.setCarServiceName(cs.getCarServiceName());
+        csDTO.setDeleted(cs.isDeleted());
         return csDTO;
 
 
@@ -36,6 +37,7 @@ public class CarServiceConverter {
         cs.setCarServiceDescription(csDTO.getCarServiceDescription());
         cs.setCarServiceLocation(csDTO.getCarServiceLocation());
         cs.setCarServiceName(csDTO.getCarServiceName());
+        cs.setDeleted(csDTO.isDeleted());
         return cs;
     }
 }

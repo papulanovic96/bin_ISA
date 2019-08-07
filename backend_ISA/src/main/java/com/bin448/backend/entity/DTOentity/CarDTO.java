@@ -7,6 +7,7 @@ public class CarDTO {
     private Integer year;
     private String type;
     private Boolean convertible;
+    private Boolean deleted;
 
 
     public String getRegID() {
@@ -66,5 +67,13 @@ public class CarDTO {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public Boolean getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        this.deleted = deleted;
     }
 }

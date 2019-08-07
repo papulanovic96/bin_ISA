@@ -8,12 +8,13 @@ import com.sun.org.apache.xpath.internal.operations.Bool;
 import java.util.List;
 
 public interface CarService {
-    void addCar(CarDTO car);
-    void removeCar(String reg);
+    String addCar(CarDTO car);
+    String removeCar(String reg);
     CarDTO getCar(String reg);
     List<CarDTO> findAll(String serviceName);
-    void modifyReserved(boolean r, String reg);
+    String modifyReserved(boolean r, String reg);
     String modifyCar(String model, String type, Integer year, Boolean convert, String regID);
     String rateCar(CarRateDTO cr);
     Double getAvgGrade(String regID);
+    List<CarDTO> getAllCars();
 }

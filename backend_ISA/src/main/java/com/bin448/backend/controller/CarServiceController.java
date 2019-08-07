@@ -5,6 +5,7 @@ import com.bin448.backend.entity.CarServicePriceList;
 import com.bin448.backend.entity.DTOentity.CarServiceDTO;
 import com.bin448.backend.entity.DTOentity.CarServicePriceListDTO;
 import com.bin448.backend.entity.DTOentity.CarServiceRateDTO;
+import com.bin448.backend.repository.CarServiceRepository;
 import com.bin448.backend.service.CarServiceService;
 import com.bin448.backend.service.CarServiceServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,21 +20,23 @@ import java.util.List;
 public class CarServiceController {
 
     private CarServiceService css;
-    public CarServiceController(CarServiceService css){
+    private CarServiceRepository csr;
+    public CarServiceController(CarServiceService css, CarServiceRepository csr){
         this.css = css;
+        this.csr = csr;
 
     }
 
     @PostMapping("/add")
-    public ResponseEntity<String> addCarService(@RequestBody CarServiceDTO carService){
-        css.addCarService(carService);
-        return ResponseEntity.ok("Success");
+    public String addCarService(@RequestBody CarServiceDTO carService){
+        return css.addCarService(carService);
+
     }
 
     @PostMapping("/remove/{name}")
-    public ResponseEntity<String> removeCarService(@PathVariable String name){
-        css.removeCarService(name);
-        return ResponseEntity.ok("Succcess");
+    public String removeCarService(@PathVariable String name){
+       return css.logicRemoveCarService(name);
+
     }
 
     @GetMapping("/find/{name}")
@@ -71,5 +74,9 @@ public class CarServiceController {
     @GetMapping("/getAvgGrade/{name}")
     public ResponseEntity<Double> getAvgRate(@PathVariable String name){
         return ResponseEntity.ok(css.getAvgGrade(name));
+    }
+    @GetMapping("/getAllCarServices")
+    public List<CarServiceDTO>getCarServices(){
+        return css.getAll();
     }
 }
