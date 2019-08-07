@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <div style="text-align:center">
   <nav class="navbar navbar-expand navbar-dark bg-primary">
     <ul class = "nav navbar-nav">
@@ -8,15 +9,26 @@
           <a class="dropdown-item"></a>
         </div>
       </li>
-      <li class='nav-item dropdown'><a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >Airline</a>
+      <li class='nav-item dropdown'><a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >Airline</a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <a class="dropdown-item" [routerLink]="['/airlines']" routerLinkActive="router-link-active" >Airlines</a>
             <a class="dropdown-item" [routerLink]="['/planeseats']" routerLinkActive="router-link-active" >Seats</a>
-          </div>
-       
+</div>
+
+      <li><a *ngIf="loginService.isUserLoggedIn()"  routerLink="/cars" class="nav-link">Cars</a></li>
+      <li><a *ngIf="!loginService.isUserLoggedIn()" routerLink="/login" class="nav-link">Login</a></li>
+      <li><a *ngIf="loginService.isUserLoggedIn()" routerLink="/logout" class="nav-link">LogOut</a></li>
+      <li><a  routerLink="/register" class="nav-link">Register</a></li>
+
     </ul>
+ <div style="margin-left: 15cm">
+   <label style="margin-top: 9px;color: lightsalmon;alignment: right" id="LogLab" *ngIf="loginService.isUserLoggedIn()"> Current user : [{{loginService.getLogged()}}] </label>
+
+ </div>
   </nav>
   <br><br>
+
+
 </div>
 
 <div style="text-align:center">

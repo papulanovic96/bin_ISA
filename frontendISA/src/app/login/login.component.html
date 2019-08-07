@@ -1,0 +1,21 @@
+
+<form ngNativeValidate (ngSubmit)="checkLogin()" >
+  <div class="md-form pb-3">
+    <input placeholder="Username" required type="text"  class="form-control"  name="username" [(ngModel)]="username">
+  </div>
+
+  <div class="md-form pb-3">
+    <input placeholder="Password" required type="password" id="elegantFormPasswordEx"  class="form-control" name="pass" [(ngModel)]="password">
+
+  </div>
+  <div class="text-center mb-3">
+    <button type="submit" mdbBtn gradient="blue"  rounded="true" class="z-depth-1a waves-light" mdbWavesEffect>Sign in</button>
+  </div>
+</form>
+
+  <div class="modal-footer mx-5 pt-3 mb-1">
+    <p class="font-small grey-text d-flex justify-content-end">Not a member?
+      <a routerLink="/register" class="blue-text ml-1"> Sign Up</a>
+    </p>
+  </div>
+

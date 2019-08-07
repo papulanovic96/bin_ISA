@@ -1,0 +1,201 @@
+
+<mdb-navbar SideClass="navbar navbar-expand-lg navbar-dark bg-primary" [containerInside]="false">
+
+  <!-- Navbar brand -->
+  <mdb-navbar-brand><a class="navbar-brand" href="#">CARS</a></mdb-navbar-brand>
+
+  <!-- Collapsible content -->
+  <links>
+
+    <!-- Links -->
+    <ul class="navbar-nav mr-auto">
+
+      <li class="nav-item">
+        <button  mdbBtn gradient="blue" (click)="openModalDialog()" rounded="true"  class="z-depth-1a waves-light" mdbWavesEffect>Add New Car</button>
+      </li>
+      <li class="nav-item">
+        <button  mdbBtn gradient="blue" routerLink="/cars" rounded="true" class="z-depth-1a waves-light" mdbWavesEffect>Home</button>
+
+      </li>
+
+      <!-- Dropdown -->
+
+
+    </ul>
+    <!-- Links -->
+
+    <!-- Search form -->
+
+  </links>
+  <!-- Collapsible content -->
+
+</mdb-navbar>
+
+
+<div class="col-5">
+  <table class="table table-fixed table-hover">
+    <thead>
+    <tr>
+      <th scope="col-xs-1">REGID</th>
+      <th scope="col-1">MODEL</th>
+      <th scope="col-xs-1">YEAR</th>
+      <th scope="col-xs-1">SERVICE OWNER</th>
+      <th scope="col-xs-1">TYPE</th>
+      <th scope="col-xs-1">CONVERTIBLE</th>
+
+
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor = 'let a of listOfCars' ng-if="!a.deleted">
+      <td>{{ a.regID }}</td>
+      <td>{{ a.model }}</td>
+      <td>{{ a.year }}</td>
+      <td>{{ a.serviceName }}</td>
+      <td>{{ a.type }}</td>
+      <td>{{ a.convertible }}</td>
+      <td>
+        <button [id]="a.regID" (click)="deleteCar(a.regID)" mdbBtn type="button" color="elegant" mdbWavesEffect>DELETE</button>
+      <button type="button" mdbBtn (click)="getCarForUpdate(a.regID)" color="success" mdbWavesEffect>Change</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+
+<!-- modal -->
+<div class="modal" tabindex="-1" role="dialog"  [ngStyle]="{'display':display}">
+  <!-- modal-dialog -->
+  <div class="modal-dialog" role="document">
+    <!-- modal-content -->
+    <div class="modal-content">
+      <!-- modal-header -->
+      <div class="modal-header ">
+        <p>Add New Car</p>
+        <button type="button" class="close" aria-label="Close" (click)="closeModalDialog()"><span aria-hidden="true">&times;</span></button>
+        <!-- <h4 class="modal-title">Login</h4> -->
+      </div>
+
+      <!-- modal-body -->
+      <div class="modal-body" >
+        <form  ngNativeValidate (ngSubmit)="addCar()">
+          <div class="md-form pb-3">
+            <select required [(ngModel)]="ime" class="dropdown-header" name="CarServices">
+              <option required name="serviceName" *ngFor="let service of listOfCServices" [ngValue]="service.carServiceName">{{service.carServiceName}}</option>
+            </select>
+          </div>
+          <div class="md-form pb-3">
+            <input required type="text" class="form-control" name="regID"  placeholder="Register number" [(ngModel)]="car.regID" />
+          </div>
+          <div class="md-form pb-3">
+            <input required type="text" class="form-control" name="model" placeholder="Model" [(ngModel)]="car.model" />
+          </div>
+
+          <div class="md-form pb-3">
+            <input required type="number" class="form-control" name="year" placeholder="Year" [(ngModel)]="car.year" >
+          </div>
+          <div class="md-form pb-3">
+            <input type="text" required class="form-control" name="type" placeholder="Type" [(ngModel)]="car.type" >
+          </div>
+
+          <div >
+            <label style="margin-left: 1px">Convertible</label>
+          </div>
+          <div required="required" class="btn-group">
+
+              <label mdbBtn color="primary" name="yes" [(ngModel)]="radioModel" value="Yes" mdbRadio="Yes" mdbWavesEffect>
+              Yes
+            </label>
+            <label mdbBtn color="primary" name="no" [(ngModel)]="radioModel" value="No" mdbRadio="No" mdbWavesEffect>
+              No
+            </label>
+          </div>
+
+          <div>
+            <button  mdbBtn gradient="blue" type="submit"   rounded="true"  class="z-depth-1a waves-light" mdbWavesEffect>Submit</button>
+
+          </div>
+        </form>
+      </div>
+
+      <!-- modal-footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" (click)="closeModalDialog()" >Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<!-- modal -->
+<div class="modal" tabindex="-1" role="dialog"  [ngStyle]="{'display':display2}">
+  <!-- modal-dialog -->
+  <div class="modal-dialog" role="document">
+    <!-- modal-content -->
+    <div class="modal-content">
+      <!-- modal-header -->
+      <div class="modal-header ">
+        <p>Add New Car</p>
+        <button type="button" class="close" aria-label="Close" (click)="closeModalDialog2()"><span aria-hidden="true">&times;</span></button>
+        <!-- <h4 class="modal-title">Login</h4> -->
+      </div>
+
+      <!-- modal-body -->
+      <div class="modal-body" >
+        <form  ngNativeValidate (ngSubmit)="addCarForUpdate()">
+
+          <div class="md-form pb-3">
+            <input required type="text" readonly class="form-control" name="regID"  placeholder="regID" [(ngModel)]="updateCar.regID" >
+          </div>
+          <div >
+            <label style="margin-left: 1px">Model</label>
+          </div>
+          <div class="md-form pb-3">
+            <input required type="text" class="form-control" name="model" placeholder="Model" [(ngModel)]="updateCar.model" />
+          </div>
+          <div >
+            <label style="margin-left: 1px">Year</label>
+          </div>
+          <div class="md-form pb-3">
+            <input required type="number" class="form-control" name="year" placeholder="Year" [(ngModel)]="updateCar.year" >
+          </div>
+          <div >
+            <label style="margin-left: 1px">Type</label>
+          </div>
+          <div class="md-form pb-3">
+            <input type="text" required class="form-control" name="type" placeholder="Type" [(ngModel)]="updateCar.type" >
+          </div>
+
+          <div >
+            <label style="margin-left: 1px">Convertible</label>
+          </div>
+          <div required="required" class="btn-group">
+
+            <label mdbBtn   color="primary" name="yes" [(ngModel)]="radioModel" value="Yes" mdbRadio="Yes" mdbWavesEffect>
+              Yes
+            </label>
+            <label mdbBtn color="primary" name="no" [(ngModel)]="radioModel" value="No" mdbRadio="No" mdbWavesEffect>
+              No
+            </label>
+          </div>
+
+          <div>
+            <button  mdbBtn gradient="blue" type="submit"   rounded="true"  class="z-depth-1a waves-light" mdbWavesEffect>Submit</button>
+
+          </div>
+        </form>
+      </div>
+
+      <!-- modal-footer -->
+      <div class="modal-footer">
+        <h1 style="font-size: 12px">Note*   RegId And CarService cannot be changed!</h1>
+
+        <button type="button" class="btn btn-default" (click)="closeModalDialog2()" >Close</button>
+      </div>
+    </div>
+  </div>
+</div>
