@@ -27,14 +27,39 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public void addCar(CarDTO car) {
-        Car c = CarConverter.toEntity(car);
-        cr.save(c);
-    }
+    public String addCar(CarDTO car) {
+        String ret = "ERROR";
+        try {
+            Car c = CarConverter.toEntity(car);
+            c.setDeleted(false);
+            cr.save(c);
+            ret = "SUCCESS";
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            return  ret;
+        }
+        }
 
     @Override
-    public void removeCar(String reg) {
-        cr.deleteCarByRegID(reg);
+    public String removeCar(String reg) {
+
+        String ret = "ERROR";
+        try {
+            Car c = cr.getCarByRegID(reg);
+            if(!c.isReserved()) {
+                cr.deleteSelectedCar(true, reg);
+                ret = "SUCCESS";
+            }
+            else
+                ret = "CAR IS RESERVED!";
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            return  ret;
+        }
     }
 
     @Override
@@ -48,16 +73,28 @@ public class CarServiceImpl implements CarService {
         List <Car> auti = cr.findAllByCarService_CarServiceName(serviceName);
         if(auti!=null) {
             List<CarDTO> cardto = new ArrayList<>();
-            for (int i = 0; i < auti.size(); i++)
-                cardto.add(CarConverter.fromEntity(auti.get(i)));
-            return cardto;
+            for (int i = 0; i < auti.size(); i++) {
+                if(auti.get(i).getDeleted() == false){
+                    cardto.add(CarConverter.fromEntity(auti.get(i)));
+
+                }
+            }
+                return cardto;
         }
         else return null;
     }
 
     @Override
-    public void modifyReserved(boolean r, String reg) {
-        cr.modifyReserved(r,reg);
+    public String modifyReserved(boolean r, String reg) {
+        String ret = "ERROR";
+        try {
+            cr.modifyReserved(r,reg);
+            ret = "SUCCESS";
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            return ret;
+        }
     }
 
     @Override
@@ -100,4 +137,16 @@ public class CarServiceImpl implements CarService {
         }
         return count/allRates.size();
     }
+
+    @Override
+    public List<CarDTO> getAllCars() {
+        List<Car> all = cr.findAll();
+        List<CarDTO> allDTO = new ArrayList<>();
+        for(Car c : all) {
+            if (c.getDeleted() == false)
+                allDTO.add(CarConverter.fromEntity(c));
+        }
+    return  allDTO;
+    }
+
 }

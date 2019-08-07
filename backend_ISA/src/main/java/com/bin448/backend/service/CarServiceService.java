@@ -16,7 +16,7 @@ import java.util.Optional;
 public interface CarServiceService {
 
     String addCarService(CarServiceDTO cs);
-    String removeCarService(String ime);
+    String logicRemoveCarService(String ime);
     String removeCarService(Long id);
     String addItem(CarServicePriceList cs);
     String deleteItem(Long id);
@@ -25,5 +25,6 @@ public interface CarServiceService {
     String changeItem(String ime,Double cena,Long id);
     String carServiceRate(CarServiceRateDTO csr);
     Double getAvgGrade(String name);
+    List<CarServiceDTO> getAll();
 
 }

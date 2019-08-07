@@ -12,7 +12,11 @@ import java.util.List;
 @Repository
 public interface CarRepository extends JpaRepository<Car,String> {
     Car getCarByRegID(String regId);
+    @Modifying
+    @Transactional
     void deleteCarByRegID(String regId);
+    @Modifying
+    @Transactional
     void deleteAllByCarService_CarServiceId(Long id);
     Car findByCarService_CarServiceName(String name);
     List<Car> findAllByCarService_CarServiceName(String name);
@@ -20,6 +24,12 @@ public interface CarRepository extends JpaRepository<Car,String> {
     @Transactional
     @Query(value = "Update cars set reserved = ?1 where regID = ?2", nativeQuery = true)
     void modifyReserved(boolean reserved, String regID);
+
+    @Modifying
+    @Transactional
+    @Query(value = "Update cars set deleted = ?1 where regID = ?2", nativeQuery = true)
+    void deleteSelectedCar(boolean deleted, String regID);
+
     @Modifying
     @Transactional
     @Query(value = "Update cars set model = ?1, typeC= ?2, year = ?3, convertible = ?4 where regID = ?5",nativeQuery = true)

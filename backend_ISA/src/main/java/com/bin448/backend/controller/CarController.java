@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin("http://localhost:4200")
 @RequestMapping("/Car")
 public class CarController {
 
@@ -31,15 +32,13 @@ public class CarController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<String> addCar(@RequestBody CarDTO car){
+    public String addCar(@RequestBody CarDTO car){
 
-        css.addCar(car);
-        return ResponseEntity.ok("Success");
+       return css.addCar(car);
     }
     @PostMapping("/remove/{regID}")
-    public ResponseEntity<String> removeCar(@PathVariable String regID){
-        css.removeCar(regID);
-        return ResponseEntity.ok("Succcess");
+    public String removeCar(@PathVariable String regID){
+        return css.removeCar(regID);
     }
 
 /*    @PostMapping("/rate/{regID},{rate}")
@@ -51,39 +50,51 @@ public class CarController {
 */
 //ovu mogu svi
     @GetMapping("/find/{regID}")
-    public ResponseEntity<CarDTO> findCarbyregID(@PathVariable String regID){
-        return ResponseEntity.ok(css.getCar(regID));
+    public CarDTO findCarbyregID(@PathVariable String regID){
+        return css.getCar(regID);
     }
 //ovu mogu svi
     @GetMapping("/findAll/{serviceName}")
-    public ResponseEntity<List<CarDTO>> getAllCars(@PathVariable String serviceName){
-        return ResponseEntity.ok(css.findAll(serviceName));
+    public List<CarDTO> getAllCars(@PathVariable String serviceName){
+        return css.findAll(serviceName);
     }
 
     @PostMapping("/reserve")
-    public ResponseEntity<String> reserveCar(@RequestBody CarReservationDTO cr){
+    public String reserveCar(@RequestBody CarReservationDTO cr){
      crs.addReservation(cr);
-     css.modifyReserved(true,cr.getRegID());
-     return  ResponseEntity.ok("Success");
+     return css.modifyReserved(true,cr.getRegID());
+
     }
 
     @PostMapping("/unreserve")
-    public ResponseEntity<String> unreserveCar(@RequestBody CarReservationDTO cr){
-        return  ResponseEntity.ok(crs.deleteReservation(cr.getRegID(),cr.getUsername()));
-    }
+    public String unreserveCar(@RequestBody CarReservationDTO cr){
+        String ret = "ERROR";
+        try {
+            crs.deleteReservation(cr.getRegID(), cr.getUsername());
+            ret = "SUCCESS";
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            return ret;
+        }
+        }
 
-    @PostMapping("/modifyCar/{model},{type},{year},{conv},{id}")
+    @PostMapping("/modifyCar/{model},{type},{year},{conv},{regID}")
     public ResponseEntity<String> modifyCars(@PathVariable String model,@PathVariable String type,@PathVariable Integer year,@PathVariable Boolean conv,@PathVariable String regID){
     return ResponseEntity.ok(css.modifyCar(model,type,year,conv,regID));
     }
 
     @PostMapping("/rateCar")
-    public ResponseEntity<String> rateCar(@RequestBody CarRateDTO cr){
-        return ResponseEntity.ok(css.rateCar(cr));
+    public String rateCar(@RequestBody CarRateDTO cr){
+        return css.rateCar(cr);
     }
 
     @GetMapping("/getAvgGrade/{regID}")
-    public ResponseEntity<Double> getAvgRate(@PathVariable String regID){
-        return ResponseEntity.ok(css.getAvgGrade(regID));
+    public Double getAvgRate(@PathVariable String regID){
+        return css.getAvgGrade(regID);
+    }
+    @GetMapping("/getAllCars")
+    public List<CarDTO> getAll(){
+        return css.getAllCars();
     }
 }
