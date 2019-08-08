@@ -1,7 +1,6 @@
 package com.bin448.backend.controller;
 
 import com.bin448.backend.converter.UserConverter;
-import com.bin448.backend.entity.Client;
 import com.bin448.backend.entity.ConfirmationToken;
 import com.bin448.backend.entity.DTOentity.AirlineDTO;
 import com.bin448.backend.entity.DTOentity.FlightDTO;
