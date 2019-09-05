@@ -9,13 +9,15 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 public class UserServiceImpl implements UserService {
 
     private UserRepository ur;
 
     public UserServiceImpl(UserRepository ur){
-        this.ur=ur;
+        this.ur = ur;
     }
 
     @Transactional
@@ -34,13 +36,28 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteFriend(UserDTO friend) {
-
+    public void deleteFriend(UserDTO user, String friendsUsername) {
+        User userReal = UserConverter.toEntity(user);
+        List<User> users = userReal.getFriends();
+        for(User u : users) {
+            if(u.getUsername().equals(friendsUsername)) {
+                ur.delete(u);
+                break;
+            }
+        }
     }
 
     @Override
-    public User addFriend(UserDTO friend) {
-        return null;
+    public User addFriend(UserDTO user, String friendsUsername) {
+        List<User> allUsers = ur.findAll();
+        User userReal = UserConverter.toEntity(user);
+        for(User u : allUsers) {
+            if(u.getUsername().equals(friendsUsername)) {
+                userReal.getFriends().add(u);
+                break;
+            }
+        }
+        return userReal;
     }
 
     @Override

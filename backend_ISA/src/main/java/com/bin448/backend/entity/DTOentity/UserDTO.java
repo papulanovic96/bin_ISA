@@ -15,6 +15,15 @@ public class UserDTO {
     private String password;
     private String role;
     private boolean active;
+    private List<Long> userID;
+
+    public List<Long> getUserID() {
+        return userID;
+    }
+
+    public void setUserID(List<Long> userID) {
+        this.userID = userID;
+    }
 
     public String getName() {
         return name;

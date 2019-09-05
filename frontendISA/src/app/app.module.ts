@@ -8,6 +8,7 @@ import { RouterModule } from '@angular/router';
 import { AirlineComponent } from './airline/airline.component';
 import { PlaneTicketComponent } from './plane-ticket/plane-ticket.component';
 import { FlightComponent } from './flight/flight.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { FlightComponent } from './flight/flight.component';
   imports: [
     BrowserModule,
     HttpClientModule,
+    FormsModule,
     AppRoutingModule,
     RouterModule.forRoot([
       {path: 'planeseats', component: PlaneSeatComponent},

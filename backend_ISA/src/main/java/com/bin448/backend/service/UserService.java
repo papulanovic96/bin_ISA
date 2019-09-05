@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
 public interface UserService {
 
     boolean modify(UserDTO oldUser);
-    void deleteFriend(UserDTO friend);
-    User addFriend(UserDTO friend);
+    void deleteFriend(UserDTO user, String friendsUsername);
+    User addFriend(UserDTO user, String friendsUsername);
     User getUserByUsername(String username);
     String addUser(UserDTO u);
     boolean logIn(String username,String password);

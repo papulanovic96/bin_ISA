@@ -5,7 +5,7 @@ export class PlaneSeat {
     constructor(
         public id: number,
         public reserved: boolean,
-        public airlineID: Airline,
-        public ticketID: Ticket
+        public airlineID: number,
+        public ticketID: number
     ) {}
 }

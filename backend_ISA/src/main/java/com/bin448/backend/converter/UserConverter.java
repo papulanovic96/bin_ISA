@@ -19,6 +19,12 @@ public abstract class UserConverter extends AbstractConverter{
         newDTOUser.setRole(e.getRole());
         newDTOUser.setPassword(e.getPassword());
         newDTOUser.setActive(e.isActive());
+        List<User> listUser = e.getFriends();
+        List<Long> listIDs = new ArrayList<>();
+        for(User u : listUser) {
+            listIDs.add(u.getId());
+        }
+        newDTOUser.setUserID(listIDs);
         return newDTOUser;
     }
 
@@ -34,6 +40,16 @@ public abstract class UserConverter extends AbstractConverter{
         newUser.setUsername(d.getUsername());
         newUser.setRole(d.getRole());
         newUser.setPassword(d.getPassword());
+        List<Long> listIDs = d.getUserID();
+        List<User> listUser = new ArrayList<>();
+        User userFor = new User();
+        if(listIDs != null) {
+            for(Long key : listIDs) {
+                userFor.setId(key);
+                listUser.add(userFor);
+            }
+        }
+        newUser.setFriends(listUser);
         return newUser;
     }
 }
