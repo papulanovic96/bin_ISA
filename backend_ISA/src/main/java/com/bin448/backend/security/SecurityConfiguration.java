@@ -14,6 +14,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.access.channel.ChannelProcessingFilter;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
@@ -36,13 +37,16 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable();
+       http.csrf().disable();
+        // http.addFilterBefore(new CustomFilter(), ChannelProcessingFilter.class);
+
                 http.httpBasic().and().authorizeRequests()
                         .antMatchers("/user/getAirlines").permitAll()
                         .antMatchers("/Car/add").hasAnyRole("CAR_ADMIN","SYSTEM_ADMIN")
                         .antMatchers("/Car/remove/**").hasAnyRole("CAR_ADMIN","SYSTEM_ADMIN")
                         .antMatchers("/Car/rateCar").hasAnyRole("CAR_ADMIN","SYSTEM_ADMIN")
                         .antMatchers("/Car/reserve").hasAnyRole("USER","CAR_ADMIN")
+                        .antMatchers("/Car/getAllCars").hasAnyRole("CAR_ADMIN")
                         .antMatchers("/Car/unreserve").hasAnyRole("CAR_ADMIN","USER")
                         .antMatchers("/Car/modifyCar/**").hasAnyRole("CAR_ADMIN","SYSTEM_ADMIN")
                         .antMatchers("/Car/getAvgGrade/**").permitAll()
@@ -57,25 +61,31 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                         .antMatchers("/carService/remove/**").hasAnyRole("CAR_ADMIN","SYSTEM_ADMIN")
                         .antMatchers("/carService/find/**").permitAll()
                         .antMatchers("/carService/getAvgGrade/**").permitAll()
-                        .and()
-                .formLogin()
-                .successHandler(new Redirect(us))
-                        .permitAll()
-                .and()
-                .logout()
-                .invalidateHttpSession(true)
-                 .deleteCookies("JSESSIONID")
-                .logoutUrl("/logout")
-                .permitAll();
-
-
+                        .anyRequest()
+                        .fullyAuthenticated()
+              ;
+/*
+       http.addFilterBefore(new CustomFilter(), ChannelProcessingFilter.class);
+        http.authorizeRequests()
+                .antMatchers("/")
+                .permitAll()
+                .anyRequest()
+                //.permitAll()
+                .fullyAuthenticated()
+                .and().httpBasic().and().csrf().disable();
+*/
 
 
     }
 
+
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/user/**");
+        web.ignoring().antMatchers("/user/register");
+        web.ignoring().antMatchers("/user/register/**");
+        web.ignoring().antMatchers("/user/register/");
+        web.ignoring().antMatchers("/validateLogin/**");
+        web.ignoring().antMatchers("/user/getUser/**");
     }
 
     @Bean

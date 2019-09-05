@@ -3,13 +3,12 @@ package com.bin448.backend.service;
 import com.bin448.backend.converter.CarServiceConverter;
 import com.bin448.backend.converter.CarServicePriceListConverter;
 import com.bin448.backend.converter.CarServiceRateConverter;
-import com.bin448.backend.entity.CarRate;
+import com.bin448.backend.entity.*;
 import com.bin448.backend.entity.CarService;
-import com.bin448.backend.entity.CarServicePriceList;
-import com.bin448.backend.entity.CarServiceRate;
 import com.bin448.backend.entity.DTOentity.CarServiceDTO;
 import com.bin448.backend.entity.DTOentity.CarServicePriceListDTO;
 import com.bin448.backend.entity.DTOentity.CarServiceRateDTO;
+import com.bin448.backend.repository.CarRepository;
 import com.bin448.backend.repository.CarServicePriceListRepository;
 import com.bin448.backend.repository.CarServiceRateRepository;
 import com.bin448.backend.repository.CarServiceRepository;
@@ -27,12 +26,14 @@ import java.util.Optional;
 public class CarServiceServiceImpl implements CarServiceService {
 
     private CarServiceRepository csr;
+    private CarRepository cr;
     private CarServicePriceListRepository csPrice;
     private CarServiceRateRepository csrr;
-    public CarServiceServiceImpl(CarServiceRateRepository csrr, CarServicePriceListRepository csPrice, CarServiceRepository csr){
+    public CarServiceServiceImpl(CarRepository cr,CarServiceRateRepository csrr, CarServicePriceListRepository csPrice, CarServiceRepository csr){
         this.csrr = csrr;
         this.csPrice = csPrice;
         this.csr=csr;
+        this.cr = cr;
     }
 
 
@@ -43,8 +44,9 @@ public class CarServiceServiceImpl implements CarServiceService {
         String ret = "ADDING FAILED!";
         try {
             CarService cService = CarServiceConverter.toEntity(cs);
+            cService.setDeleted(false);
             csr.save(cService);
-            ret = "CAR HAS BEEN SUCCESSFULLY ADDED";
+            ret = "CAR SERVICE HAS BEEN SUCCESSFULLY ADDED";
         }
         catch (Exception e){
           e.printStackTrace();
@@ -55,10 +57,16 @@ public class CarServiceServiceImpl implements CarServiceService {
         }
 
     @Override
-    public String removeCarService(String ime) {
+    public String logicRemoveCarService(String ime) {
         String ret = "REMOVING FAILED!";
         try {
-            csr.deleteCarServiceByCarServiceName(ime);
+            List<Car> cars  = cr.findAllByCarService_CarServiceName(ime);
+            if(cars!=null){
+               for(Car c:cars){
+                   cr.deleteSelectedCar(true,c.getRegID());
+               }
+            }
+            csr.logicalDeleting(true,ime);
             ret = "SUCCESS";
         }catch (Exception e){
            e.printStackTrace();
@@ -112,7 +120,7 @@ public class CarServiceServiceImpl implements CarServiceService {
 
     @Override
     public CarServiceDTO findCarService(String name) {
-        if(csr.getCarServiceByCarServiceName(name)!=null)
+        if(csr.getCarServiceByCarServiceName(name)!=null || !csr.getCarServiceByCarServiceName(name).isDeleted())
         return CarServiceConverter.fromEntity(csr.getCarServiceByCarServiceName(name));
         else
             return  null;
@@ -167,6 +175,17 @@ public class CarServiceServiceImpl implements CarServiceService {
             count+=cr.getRate();
         }
         return count/allRates.size();
+    }
+
+    @Override
+    public List<CarServiceDTO> getAll() {
+        List<CarService> base = csr.findAll();
+        List<CarServiceDTO> newList = new ArrayList<>();
+        for(CarService cs : base) {
+        if(!cs.isDeleted())
+            newList.add(CarServiceConverter.fromEntity(cs));
+        }
+            return  newList;
     }
 
 }

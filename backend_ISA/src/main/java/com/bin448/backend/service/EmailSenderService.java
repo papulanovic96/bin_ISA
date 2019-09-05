@@ -32,14 +32,17 @@ public class EmailSenderService {
         javaMailSender.send(email);
     }
 
-    public ModelAndView mailSendWhenRegister(ModelAndView modelAndView, UserDTO user){
+    public boolean mailSendWhenRegister(ModelAndView modelAndView, UserDTO user){
 
         User existingUser = us.getUserByUsername(user.getUsername());
         if(existingUser != null)
-        {
+        {/*
             modelAndView.addObject("message","This email already exists!");
             modelAndView.setViewName("error");
+            */
+            return false;
         }
+
         else
         {
      /*       us.addUser(user);
@@ -64,10 +67,13 @@ public class EmailSenderService {
 
             modelAndView.addObject("emailId", user.getUsername());
 
+
             modelAndView.setViewName("successfulRegisteration");
+
+            return true;
         }
 
-        return modelAndView;
+
 
     }
     public ModelAndView accountConfimation(ModelAndView modelAndView, String tokenConf){

@@ -1,5 +1,7 @@
 package com.bin448.backend.entity;
 
+import org.hibernate.annotations.Cascade;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
@@ -12,7 +14,7 @@ public class CarRate {
     @NotNull
     private Double rate;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name = "carId", nullable = false)
     private Car car;
 

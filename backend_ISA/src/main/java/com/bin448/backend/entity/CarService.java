@@ -18,6 +18,8 @@ public class CarService {
     @Column(nullable = false)
     private Long carServiceId;
 
+    private Boolean deleted;
+
     @Column(name="carServiceName")
     private String carServiceName;
     @Column
@@ -78,4 +80,11 @@ public class CarService {
         this.avgGrade = avgGrade;
     }
 
+    public Boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        this.deleted = deleted;
+    }
 }

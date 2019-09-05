@@ -23,6 +23,7 @@ public class CarConverter extends AbstractConverter{
         cDTO.setConvertible(c.isConvertible());
         cDTO.setType(c.getType());
         cDTO.setYear(c.getYear());
+        cDTO.setDeleted(c.getDeleted());
         return cDTO;
     }
 
@@ -36,6 +37,7 @@ public class CarConverter extends AbstractConverter{
         car.setConvertible(cDTO.isConvertible());
         car.setType(cDTO.getType());
         car.setYear(cDTO.getYear());
+        car.setDeleted(cDTO.getDeleted());
         return car;
     }
 

@@ -13,6 +13,7 @@ public class CarServiceDTO {
     private String carServiceDescription;
     private String carServiceLocation;
     private Double avgGrade;
+    private Boolean deleted;
 
 
 
@@ -64,5 +65,13 @@ public class CarServiceDTO {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        this.deleted = deleted;
     }
 }
