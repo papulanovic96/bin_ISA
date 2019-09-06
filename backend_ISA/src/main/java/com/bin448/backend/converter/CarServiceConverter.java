@@ -22,8 +22,10 @@ public class CarServiceConverter {
         CarServiceDTO csDTO = new CarServiceDTO();
         csDTO.setCarServiceAddress(cs.getCarServiceAddress());
         csDTO.setId(cs.getCarService_id());
+        csDTO.setAvgGrade(cs.getAvgGrade());
         csDTO.setCarServiceDescription(cs.getCarServiceDescription());
         csDTO.setCarServiceName(cs.getCarServiceName());
+        csDTO.setCarServiceLocation(cs.getCarServiceLocation());
         csDTO.setDeleted(cs.isDeleted());
         return csDTO;
 

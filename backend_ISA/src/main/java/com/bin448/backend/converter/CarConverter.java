@@ -17,22 +17,31 @@ public class CarConverter extends AbstractConverter{
 
     public static CarDTO fromEntity(Car c){
         CarDTO cDTO = new CarDTO();
+        cDTO.setNos(c.getNumOfSeats());
         cDTO.setModel(c.getModel());
-        cDTO.setServiceName(c.getCarService().getCarServiceName());
+        cDTO.setServiceId(c.getCarService().getCarService_id());
         cDTO.setRegID(c.getRegID());
         cDTO.setConvertible(c.isConvertible());
         cDTO.setType(c.getType());
         cDTO.setYear(c.getYear());
+        cDTO.setServiceName(c.getCarService().getCarServiceName());
+        cDTO.setId(c.getCarId());
+        cDTO.setAvgGrade(c.getAvgGrade());
         cDTO.setDeleted(c.getDeleted());
+        cDTO.setReserved(c.isReserved());
         return cDTO;
     }
 
     public static Car toEntity(CarDTO cDTO){
         Car car = new Car();
+        car.setAvgGrade(cDTO.getAvgGrade());
         car.setRegID(cDTO.getRegID());
         car.setModel(cDTO.getModel());
+        car.setCarId(cDTO.getId());
+        car.setNumOfSeats(cDTO.getNos());
+        car.setReserved(cDTO.getReserved());
         car.setReserved(false);
-        car.setCarService(cr.getCarServiceByCarServiceName(cDTO.getServiceName()));
+        car.setCarService(cr.getCarServiceByCarServiceId(cDTO.getServiceId()));
         car.setModel(cDTO.getModel());
         car.setConvertible(cDTO.isConvertible());
         car.setType(cDTO.getType());

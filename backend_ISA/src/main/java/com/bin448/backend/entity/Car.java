@@ -25,6 +25,7 @@ public class Car {
     private Double avgGrade;
     @Column
     private String model;
+    private Integer numOfSeats;
     private Integer year;
     private String typeC;
     private Boolean convertible;
@@ -115,5 +116,13 @@ public class Car {
 
     public void setDeleted(Boolean deleted) {
         this.deleted = deleted;
+    }
+
+    public Integer getNumOfSeats() {
+        return numOfSeats;
+    }
+
+    public void setNumOfSeats(Integer numOfSeats) {
+        this.numOfSeats = numOfSeats;
     }
 }

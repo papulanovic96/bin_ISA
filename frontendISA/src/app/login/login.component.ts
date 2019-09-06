@@ -31,10 +31,13 @@ export class LoginComponent implements OnInit {
 
             sessionStorage.setItem("username",this.username);
             sessionStorage.setItem("password",this.password);
+
             (this.getRole.getLoggedUser(this.username).subscribe(
-              data=>
-                sessionStorage.setItem("role",data.role),
-              error1 => alert("Error when trying to get ROLL OF USER!")
+              data=> {
+                sessionStorage.setItem("role", String(data.role)),
+                  sessionStorage.setItem("id", String(data.id))
+              },
+                    error1 => alert("Error when trying to get ROLE OF USER!")
             ));
 
 

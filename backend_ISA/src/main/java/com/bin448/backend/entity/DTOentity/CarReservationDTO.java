@@ -5,8 +5,9 @@ import java.util.Date;
 public class CarReservationDTO {
     private Date startDate;
     private Date endDate;
-    private String username;
-    private String regID;
+    private Long userId;
+    private Long carId;
+    private Long id;
 
 
     public Date getStartDate() {
@@ -25,21 +26,30 @@ public class CarReservationDTO {
         this.endDate = endDate;
     }
 
-    public String getUsername() {
-        return username;
+
+
+
+    public Long getCarId() {
+        return carId;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setCarId(Long carId) {
+        this.carId = carId;
     }
 
-    public String getRegID() {
-        return regID;
+    public Long getId() {
+        return id;
     }
 
-    public void setRegID(String regID) {
-        this.regID = regID;
+    public void setId(Long id) {
+        this.id = id;
     }
 
+    public Long getUserId() {
+        return userId;
+    }
 
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
 }

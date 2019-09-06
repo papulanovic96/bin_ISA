@@ -22,7 +22,6 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @RestController
-@CrossOrigin
 @RequestMapping("/user")
 public class UserController {
 
@@ -62,6 +61,10 @@ public class UserController {
 
     }
 
+    @GetMapping("/get/{username}")
+    public UserDTO findUser(@PathVariable String username){
+        return UserConverter.fromEntity(us.getUserByUsername(username));
+    }
 
     @RequestMapping(value="/confirm-account", method= {RequestMethod.GET, RequestMethod.POST})
     public ModelAndView confirmUserAccount(ModelAndView modelAndView, @RequestParam("token")String confirmationToken)
@@ -75,10 +78,12 @@ public class UserController {
         return ResponseEntity.ok(as.findAll());
 
     }
+
     @RequestMapping(value = "/getUser/{username}")
     public ResponseEntity<UserDTO> getUser(@PathVariable String username){
         return new ResponseEntity<>(UserConverter.fromEntity(us.getUserByUsername(username)), HttpStatus.OK);
     }
+
 
     @RequestMapping(value = "/sendFriendRequest/{username}", method = POST)
     public ResponseEntity<String> sendFriendRequest(@PathVariable String username){

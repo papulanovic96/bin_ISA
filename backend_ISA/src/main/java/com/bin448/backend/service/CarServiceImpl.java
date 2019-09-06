@@ -63,6 +63,26 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
+    public List<CarDTO> search(String model, String type, Integer from, Integer to, Integer nos) {
+        if(nos!=-5) {
+            List<Car> cars = cr.search(model, type, from, to, nos);
+            List<CarDTO> carDTOS = new ArrayList<>();
+            for (Car c : cars)
+                carDTOS.add(CarConverter.fromEntity(c));
+            return carDTOS;
+
+        }
+        else{
+            List<Car> cars = cr.searchWithoutSeats(model, type, from, to);
+            List<CarDTO> carDTOS = new ArrayList<>();
+            for (Car c : cars)
+                carDTOS.add(CarConverter.fromEntity(c));
+            return carDTOS;
+
+        }
+        }
+
+    @Override
     public CarDTO getCar(String reg) {
     CarDTO c = CarConverter.fromEntity(cr.getCarByRegID(reg));
     return c;
@@ -71,24 +91,23 @@ public class CarServiceImpl implements CarService {
     @Override
     public List<CarDTO> findAll(String serviceName) {
         List <Car> auti = cr.findAllByCarService_CarServiceName(serviceName);
-        if(auti!=null) {
-            List<CarDTO> cardto = new ArrayList<>();
+        List<CarDTO> cardto = new ArrayList<>();
+
             for (int i = 0; i < auti.size(); i++) {
-                if(auti.get(i).getDeleted() == false){
+
                     cardto.add(CarConverter.fromEntity(auti.get(i)));
 
-                }
+
             }
                 return cardto;
-        }
-        else return null;
+
     }
 
     @Override
-    public String modifyReserved(boolean r, String reg) {
+    public String modifyReserved(boolean r, Long id) {
         String ret = "ERROR";
         try {
-            cr.modifyReserved(r,reg);
+            cr.modifyReserved(r,id);
             ret = "SUCCESS";
         }catch (Exception e){
             e.printStackTrace();
@@ -98,10 +117,10 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public String modifyCar(String model, String type, Integer year, Boolean convert, String regID) {
+    public String modifyCar(String model, String type, Integer year, Boolean convert, String regID,Long serviceID,Long carID) {
         String ret = "ERROR!";
         try {
-            cr.modifyCar(model,type,year,convert,regID);
+            cr.modifyCar(model,type,year,convert,regID,serviceID,carID);
             ret = "SUCCESS";
         }catch (Exception e){
             e.printStackTrace();
@@ -114,8 +133,11 @@ public class CarServiceImpl implements CarService {
     public String rateCar(CarRateDTO cra) {
         String ret = "ERROR!";
         try {
-            CarRate cr = CarRateConverter.toEntity(cra);
-            crr.save(cr);
+            CarRate crA = CarRateConverter.toEntity(cra);
+            crr.save(crA);
+            Double avg = crr.getAvgRate(cra.getCarID());
+            cr.rateSelectedCar(avg,cra.getCarID());
+
             ret = "SUCCESS!";
         }catch (Exception e){
             e.printStackTrace();
@@ -129,24 +151,32 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public Double getAvgGrade(String regID) {
-        Double count = 0D;
-        List<CarRate> allRates= crr.findAllByCar_RegID(regID);
-        for(CarRate cr : allRates){
-            count+=cr.getRate();
-        }
-        return count/allRates.size();
-    }
-
-    @Override
     public List<CarDTO> getAllCars() {
         List<Car> all = cr.findAll();
         List<CarDTO> allDTO = new ArrayList<>();
         for(Car c : all) {
-            if (c.getDeleted() == false)
+
                 allDTO.add(CarConverter.fromEntity(c));
         }
     return  allDTO;
+    }
+
+    @Override
+    public boolean isUserRated(Long id, Long userId) {
+        List<CarRate> rates = crr.findAllByCar_CarIdAndUser_Id(id,userId);
+        if (rates.size()>0)
+            return true;
+      return false;
+    }
+
+    @Override
+    public List<CarDTO> getAllReservedCars(Long userID) {
+        List<Car> cars = cr.getReservedCars(userID);
+        List<CarDTO> carsDTO = new ArrayList<>();
+        for(int i=0;i<cars.size();i++){
+            carsDTO.add(CarConverter.fromEntity(cars.get(i)));
+        }
+        return carsDTO;
     }
 
 }

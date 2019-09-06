@@ -25,6 +25,7 @@ public abstract class UserConverter extends AbstractConverter{
         newDTOUser.setPassword(e.getPassword());
         newDTOUser.setActive(e.isActive());
 
+
         List<Friendship> listUser = e.getFriends();
         List<String> listUserNames = new ArrayList<>();
         User newUser;

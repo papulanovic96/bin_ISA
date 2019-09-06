@@ -3,7 +3,7 @@ package com.bin448.backend.entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "carpricelist",uniqueConstraints={@UniqueConstraint(columnNames={"name"})})
+@Table(name = "carpricelist")
 public class CarServicePriceList {
 
     @Id

@@ -1,1 +1,509 @@
-<p>rent-acar works!</p>
+<html>
+<head>
+  <title>
+
+  </title>
+  <link rel="stylesheet" href="https://unpkg.com/ngx-bootstrap/datepicker/bs-datepicker.css">
+</head>
+<body>
+<mdb-navbar *ngIf="loginService.isUserADMIN()" SideClass="navbar navbar-expand-lg navbar-dark bg-primary" [containerInside]="false">
+
+  <!-- Navbar brand -->
+  <mdb-navbar-brand><a class="navbar-brand" href="#">Rent a Car Service</a></mdb-navbar-brand>
+
+  <!-- Collapsible content -->
+  <links>
+
+    <!-- Links -->
+    <ul class="navbar-nav mr-auto">
+
+      <li class="nav-item">
+        <button  (click)="openModalDialog()"  class="btn-outline-info">Add New Service</button>
+      </li>
+      <li class="nav-item">
+
+      </li>
+
+    </ul>
+    <!-- Links -->
+
+    <!-- Search form -->
+
+  </links>
+  <!-- Collapsible content -->
+
+</mdb-navbar>
+
+<mdb-navbar  SideClass="navbar navbar-expand-lg navbar-dark bg-primary" [containerInside]="false">
+
+  <!-- Navbar brand -->
+  <mdb-navbar-brand><a class="navbar-brand" href="#">Rent a Car Service</a></mdb-navbar-brand>
+
+  <!-- Collapsible content -->
+  <links>
+    <div style="margin-left: 12.5cm">
+    <input  (keyup)="onKey($event)" class="form-control-sm" type="text" placeholder="Search address">
+    <input (keyup)="onKey2($event)" class="form-control-sm" type="text" placeholder="Search name">
+    <button style="margin-right: 3cm" class="btn btn-outline-success" type="button" (click)="search()">Search</button>
+    </div>
+
+  </links>
+  <!-- Collapsible content -->
+
+</mdb-navbar>
+
+<div *ngIf="loginService.isUserADMIN()" class="col-5">
+  <table class="table table-primary table-hover">
+    <thead>
+    <tr>
+      <th scope="col-xs-1">SERVICE NAME</th>
+      <th scope="col-1">SERVICE ADDRESS</th>
+      <th scope="col-xs-1">SERVICE DESC</th>
+      <th scope="col-xs-1">SERVICE LOCATION</th>
+      <th scope="col-xs-1">SERVICE RATE</th>
+
+
+
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor = 'let a of listOfCarServices' ng-if="!a.deleted">
+      <td>{{ a.carServiceName }}</td>
+      <td>{{ a.carServiceAddress }}</td>
+      <td>{{ a.carServiceDescription }}</td>
+      <td>{{ a.carServiceLocation }}</td>
+      <td>{{ a.avgGrade }}</td>
+      <td>
+        <button [id]="a.regID" (click)="(deleteCarService(a.id))" mdbBtn type="button" color="elegant" mdbWavesEffect>DELETE</button>
+      </td>
+      <td>
+        <button type="button" mdbBtn (click)="getCarServiceForUpdate(a.id)" color="success" mdbWavesEffect>CHANGE</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+
+
+
+
+<div *ngIf="loginService.isUserUSER()">
+
+  <div style="margin-left: 6cm;width: 1500px" *ngFor="let cs of listOfCarServices" class="flex-center">
+    <figure style="width: 900px" class="snip1174 navy col-md-4">
+      <img src="https://cdn1.imggmi.com/uploads/2019/9/1/df16214a19180a1bba33f8d9b857361e-full.jpg" alt="sq-sample33" />
+      <figcaption>
+        <h2>{{cs.carServiceName}}</h2>
+<br>
+        <h2>Rate {{cs.avgGrade}}</h2>
+        <p>
+
+        </p>
+        <a (click)="getCars(cs.carServiceName,cs.id)">See Cars</a>
+        <p>
+
+        </p>
+        <a (click)="getCarService(cs.id)">See Info</a>
+        <p>
+
+        </p>
+        <a (click)="tryToRateService(cs.id)">Rate</a>
+
+      </figcaption>
+    </figure>
+  </div>
+</div>
+
+
+
+
+
+<!-- modal -->
+<div class="modal-backdrop" tabindex="1"  role="dialog"  [ngStyle]="{'display':display3}">
+  <!-- modal-dialog -->
+  <div class="modal-dialog modal-lg modal-dialog-centered" role="document"  style="width: 25cm">
+    <!-- modal-content -->
+    <div class="modal-content" style="width: 25cm" >
+      <!-- modal-header -->
+      <div class="modal-header ">
+        <p>Cars</p>
+        <button type="button" class="close" aria-label="Close" (click)="closeModalDialog3()"><span aria-hidden="true">&times;</span></button>
+        <!-- <h4 class="modal-title">Login</h4> -->
+        <div style="margin-left: 1cm">
+          <input  (keyup)="onKeyM($event)" class="form-control-sm" type="text" placeholder="Search Model">
+          <input (keyup)="onKeyT($event)" class="form-control-sm" type="text" placeholder="Search Type">
+          <input (keyup)="onKeyF($event)" class="form-control-sm" type="number" placeholder="Year from">
+          <input (keyup)="onKeyTo($event)" class="form-control-sm" type="number" placeholder="Year to">
+          <input (keyup)="onKeyN($event)" class="form-control-sm" type="number" placeholder="Num of seats">
+
+          <button style="margin-right: 3cm" class="btn btn-outline-success" type="button" (click)="searchCars()">Search</button>
+        </div>
+      </div>
+
+      <!-- modal-body -->
+      <div class="modal-body" style="width: 25cm" >
+
+
+        <table class="table table-fixed table-hover tab">
+        <thead>
+
+        <tr><th>REGID</th><th>Num of seats</th><th>Model</th><th>Year</th><th>Type</th><th>Convertible</th><th>AvgGrade</th></tr>
+        </thead>
+          <tbody *ngFor = 'let a of listOfCars'>
+
+          <tr *ngIf="!a.reserved && !a.deleted ">
+            <td>
+              {{a.regID}}
+            </td>
+            <td>
+              {{a.nos}}
+            </td>
+            <td>
+              {{a.model}}
+            </td>
+            <td>
+              {{a.year}}
+            </td>
+            <td>
+              {{a.type}}
+            </td>
+            <td>
+              {{a.convertible}}
+            </td>
+            <td>
+              {{a.avgGrade}}
+            </td>
+            <td>
+                <button  mdbBtn gradient="blue"  (click)="middleWear(a.id)"   rounded="true"  class="z-depth-1a waves-light" mdbWavesEffect>Reserve</button>
+            </td>
+
+
+
+
+          </tr>
+
+          </tbody>
+        </table>
+
+
+      </div>
+
+      <!-- modal-footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" (click)="closeModalDialog3()" >Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- modal -->
+<div class="modal-backdrop" tabindex="1"  role="dialog"  [ngStyle]="{'display':display4}">
+  <!-- modal-dialog -->
+  <div class="modal-dialog modal-lg modal-dialog-centered" role="document"  style="width: 25cm">
+    <!-- modal-content -->
+    <div class="modal-content" style="width: 25cm" >
+      <!-- modal-header -->
+      <div class="modal-header ">
+        <p>Pick a period of time</p>
+        <button type="button" class="close" aria-label="Close" (click)="closeModalDialog4()"><span aria-hidden="true">&times;</span></button>
+        <!-- <h4 class="modal-title">Login</h4> -->
+      </div>
+
+      <!-- modal-body -->
+      <div class="modal-body" style="width: 25cm" >
+
+        <div class="row">
+          <div class="form-group">
+            <input readonly required [(ngModel)]="startDate" type="text"
+                   placeholder="START DATE"
+                   class="form-control"
+                   [bsConfig]="{ dateInputFormat: 'MMMM Do YYYY' }"
+                   [minDate]="today"
+                   bsDatepicker>
+          </div>
+
+          <div class="row">
+            <div class="form-group">
+              <input readonly required [(ngModel)]="endDate" type="text"
+                     placeholder="END DATE"
+                     class="form-control"
+                     [bsConfig]="{ dateInputFormat: 'MMMM Do YYYY' }"
+                     [minDate]="startDate"
+                     bsDatepicker>
+            </div>
+            <div class="form-select-button">
+              <button  mdbBtn gradient="blue" (click)="setReseravtion(idCar)"  rounded="true"  class="z-depth-1a waves-light" mdbWavesEffect>Reserve</button>
+              <button type="button" class="btn btn-default" (click)="closeModalDialog4()" >Close</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- modal-footer -->
+      <div class="modal-footer">
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- modal -->
+<div class="modal" tabindex="-1" role="dialog"  [ngStyle]="{'display':display}">
+  <!-- modal-dialog -->
+  <div class="modal-dialog" role="document">
+    <!-- modal-content -->
+    <div class="modal-content">
+      <!-- modal-header -->
+      <div class="modal-header ">
+        <p>Add New Rent a Car Service</p>
+        <button type="button" class="close" aria-label="Close" (click)="closeModalDialog()"><span aria-hidden="true">&times;</span></button>
+        <!-- <h4 class="modal-title">Login</h4> -->
+      </div>
+
+      <!-- modal-body -->
+      <div class="modal-body" >
+        <form  ngNativeValidate (ngSubmit)="addCarService()">
+
+          <div class="md-form pb-3">
+            <input required type="text" class="form-control" name="name"  placeholder="Service name" [(ngModel)]="newCarService.carServiceName" />
+          </div>
+          <div class="md-form pb-3">
+            <input required type="text" class="form-control" name="address" placeholder="Service address" [(ngModel)]="newCarService.carServiceAddress" />
+          </div>
+
+          <div class="md-form pb-3">
+            <input required type="text" class="form-control" name="descript" placeholder="Service description" [(ngModel)]="newCarService.carServiceDescription" >
+          </div>
+          <div class="md-form pb-3">
+            <input type="text" required class="form-control" name="location" placeholder="Service location" [(ngModel)]="newCarService.carServiceLocation" >
+          </div>
+
+          <div>
+            <button  mdbBtn gradient="blue" type="submit"   rounded="true"  class="z-depth-1a waves-light" mdbWavesEffect>Submit</button>
+
+          </div>
+        </form>
+      </div>
+
+      <!-- modal-footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" (click)="closeModalDialog()" >Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<!-- modal -->
+<div class="modal" tabindex="-1" role="dialog"  [ngStyle]="{'display':display2}">
+  <!-- modal-dialog -->
+  <div class="modal-dialog" role="document">
+    <!-- modal-content -->
+    <div class="modal-content">
+      <!-- modal-header -->
+      <div class="modal-header ">
+        <p>Edit Rent A Car</p>
+        <button type="button" class="close" aria-label="Close" (click)="closeModalDialog2()"><span aria-hidden="true">&times;</span></button>
+        <!-- <h4 class="modal-title">Login</h4> -->
+      </div>
+
+      <!-- modal-body -->
+      <div class="modal-body" >
+        <form  ngNativeValidate (ngSubmit)="addCarServiceForUpdate()">
+          <div >
+            <label style="margin-left: 1px">Name</label>
+          </div>
+          <div class="md-form pb-3">
+            <input required type="text"  class="form-control" name="name"  placeholder="Service name" [(ngModel)]="updateCarService.carServiceName" >
+          </div>
+          <div >
+            <label style="margin-left: 1px">Address</label>
+          </div>
+          <div class="md-form pb-3">
+            <input required type="text" class="form-control" name="address" placeholder="Address" [(ngModel)]="updateCarService.carServiceAddress" />
+          </div>
+          <div >
+            <label style="margin-left: 1px">Description</label>
+          </div>
+          <div class="md-form pb-3">
+            <input required type="text" class="form-control" name="descr" placeholder="Description" [(ngModel)]="updateCarService.carServiceDescription" >
+          </div>
+          <div >
+            <label style="margin-left: 1px">Location</label>
+          </div>
+          <div class="md-form pb-3">
+            <input type="text" required class="form-control" name="location" placeholder="Location" [(ngModel)]="updateCarService.carServiceLocation" >
+          </div>
+
+
+          <div>
+            <button  mdbBtn gradient="blue" type="submit"   rounded="true"  class="z-depth-1a waves-light" mdbWavesEffect>Submit</button>
+
+          </div>
+        </form>
+      </div>
+
+      <!-- modal-footer -->
+      <div class="modal-footer">
+
+
+        <button type="button" class="btn btn-default" (click)="closeModalDialog2()" >Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<!-- modal -->
+<div class="modal" tabindex="-1" role="dialog"  [ngStyle]="{'display':display5}">
+  <!-- modal-dialog -->
+  <div class="modal-dialog" role="document">
+    <!-- modal-content -->
+    <div class="modal-content">
+      <!-- modal-header -->
+      <div class="modal-header ">
+        <p>Rating</p>
+        <button type="button" class="close" aria-label="Close" (click)="closeModalDialog5()"><span aria-hidden="true">&times;</span></button>
+        <!-- <h4 class="modal-title">Login</h4> -->
+      </div>
+
+      <!-- modal-body -->
+      <div class="modal-body" >
+
+        <div>
+          <rating [max]="10" [(ngModel)]="CarRate.rate" (click)="rateCar()" [customTemplate]="tt"></rating>
+          <div class="card">
+            <pre class="card-block card-header"  style="margin:15px 0;"> <b>(<i>Rate:</i> {{y}})</b> </pre>
+          </div>
+          <ng-template #tt let-i="index" let-v="value">
+            <button class="btn btn-{{i < v ? 'warning' : 'default'}}">
+              {{i < v ? '&#9733;' : '&#9734;'}}
+            </button>
+          </ng-template>
+        </div>
+      </div>
+
+      </div>
+
+      <!-- modal-footer -->
+      <div class="modal-footer">
+
+
+        <button type="button" class="btn btn-default" (click)="closeModalDialog5()" >Close</button>
+      </div>
+    </div>
+  </div>
+
+
+
+
+<!-- modal -->
+<div  class="modal" tabindex="-1" role="dialog"  [ngStyle]="{'display':display6}">
+  <!-- modal-dialog -->
+  <div style="background-color: dodgerblue" class="modal-dialog" role="document">
+    <!-- modal-content -->
+    <div class="modal-content">
+      <!-- modal-header -->
+      <div class="modal-header ">
+        <p>Info</p>
+        <button type="button" class="close" aria-label="Close" (click)="closeModalDialog6()"><span aria-hidden="true">&times;</span></button>
+        <!-- <h4 class="modal-title">Login</h4> -->
+      </div>
+
+      <!-- modal-body -->
+      <div class="modal-body" >
+
+        <div>
+          <p>
+
+
+          </p>
+          <label>DESCRIPTION</label>
+        <p></p>
+          <label>{{newCarService2.carServiceDescription}}</label>
+         <p>
+       <br/>
+
+         </p>
+          <label>ADDRESS</label>
+          <p></p>
+          <label>{{newCarService2.carServiceAddress}}</label>
+        </div>
+      </div>
+      <button type="button" class="btn btn-default" (click)="closeModalDialog6()" >Close</button>
+
+    </div>
+
+    <!-- modal-footer -->
+
+  </div>
+</div>
+
+
+
+
+<!-- modal -->
+<div class="modal" tabindex="-1" role="dialog"  [ngStyle]="{'display':display7}">
+  <!-- modal-dialog -->
+  <div class="modal-dialog" role="document">
+    <!-- modal-content -->
+    <div class="modal-content">
+      <!-- modal-header -->
+      <div class="modal-header ">
+        <p>Rating</p>
+        <button type="button" class="close" aria-label="Close" (click)="closeModalDialog7()"><span aria-hidden="true">&times;</span></button>
+        <!-- <h4 class="modal-title">Login</h4> -->
+      </div>
+
+      <!-- modal-body -->
+      <div class="modal-body" >
+
+        <div>
+          <rating [max]="10" [(ngModel)]="CarServiceRate.rate" (click)="rateService()" [customTemplate]="tt"></rating>
+
+          <ng-template #tt let-i="index" let-v="value">
+            <button class="btn btn-{{i < v ? 'warning' : 'default'}}">
+              {{i < v ? '&#9733;' : '&#9734;'}}
+            </button>
+          </ng-template>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- modal-footer -->
+    <div class="modal-footer">
+
+
+      <button type="button" class="btn btn-default" (click)="closeModalDialog7()" >Close</button>
+    </div>
+  </div>
+</div>
+
+
+
+</body>
+</html>

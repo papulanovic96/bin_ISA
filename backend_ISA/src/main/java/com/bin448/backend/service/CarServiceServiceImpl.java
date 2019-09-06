@@ -8,16 +8,14 @@ import com.bin448.backend.entity.CarService;
 import com.bin448.backend.entity.DTOentity.CarServiceDTO;
 import com.bin448.backend.entity.DTOentity.CarServicePriceListDTO;
 import com.bin448.backend.entity.DTOentity.CarServiceRateDTO;
-import com.bin448.backend.repository.CarRepository;
-import com.bin448.backend.repository.CarServicePriceListRepository;
-import com.bin448.backend.repository.CarServiceRateRepository;
-import com.bin448.backend.repository.CarServiceRepository;
+import com.bin448.backend.repository.*;
 import org.hibernate.service.spi.InjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,8 +27,10 @@ public class CarServiceServiceImpl implements CarServiceService {
     private CarRepository cr;
     private CarServicePriceListRepository csPrice;
     private CarServiceRateRepository csrr;
-    public CarServiceServiceImpl(CarRepository cr,CarServiceRateRepository csrr, CarServicePriceListRepository csPrice, CarServiceRepository csr){
+    private CarReservationRepository crr;
+    public CarServiceServiceImpl(CarReservationRepository crr,CarRepository cr,CarServiceRateRepository csrr, CarServicePriceListRepository csPrice, CarServiceRepository csr){
         this.csrr = csrr;
+        this.crr = crr;
         this.csPrice = csPrice;
         this.csr=csr;
         this.cr = cr;
@@ -57,16 +57,11 @@ public class CarServiceServiceImpl implements CarServiceService {
         }
 
     @Override
-    public String logicRemoveCarService(String ime) {
+    public String logicRemoveCarService(Long id) {
         String ret = "REMOVING FAILED!";
         try {
-            List<Car> cars  = cr.findAllByCarService_CarServiceName(ime);
-            if(cars!=null){
-               for(Car c:cars){
-                   cr.deleteSelectedCar(true,c.getRegID());
-               }
-            }
-            csr.logicalDeleting(true,ime);
+            csr.logicalDeleting(true,id);
+            cr.deleteAllByCarService_CarServiceId(id);
             ret = "SUCCESS";
         }catch (Exception e){
            e.printStackTrace();
@@ -89,6 +84,18 @@ public class CarServiceServiceImpl implements CarServiceService {
             return ret;
         }
         }
+
+    @Override
+    public CarServicePriceListDTO getItem(Long id) {
+        CarServicePriceListDTO cs = new CarServicePriceListDTO();
+        try{
+            cs = CarServicePriceListConverter.fromEntity(csPrice.findByIdCarServicePriceList(id));
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            return cs;
+        }
+    }
 
     @Override
     public String addItem(CarServicePriceList cs) {
@@ -157,8 +164,10 @@ public class CarServiceServiceImpl implements CarServiceService {
     public String carServiceRate(CarServiceRateDTO csrDTO) {
         String ret = "ERROR!";
         try {
-            CarServiceRate csr = CarServiceRateConverter.toEntity(csrDTO);
-            csrr.save(csr);
+            CarServiceRate csra = CarServiceRateConverter.toEntity(csrDTO);
+            csrr.save(csra);
+            Double grade = csrr.getAvgRate(csrDTO.getServiceID());
+            csr.rateSelectedCarService(grade,csrDTO.getServiceID());
             ret = "SUCCESS!";
         }catch (Exception e){
             e.printStackTrace();
@@ -178,14 +187,63 @@ public class CarServiceServiceImpl implements CarServiceService {
     }
 
     @Override
+    public String modifyService(String name, String adress, String description, String location, Long id) {
+        String ret = "ERROR";
+        try {
+            CarService old = csr.getCarServiceByCarServiceId(id);
+            if(!name.equals(old.getCarServiceName())){
+            if(!csr.existsByCarServiceName(name)){
+                csr.modifyCarService(name,adress,description,location,id);
+                ret = "SUCCESS";
+            }
+            else{
+                ret = "Service name is already in use!";
+
+
+            }
+            }else{
+                csr.modifyCarService(name,adress,description,location,id);
+                ret = "SUCCESS";
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            return ret;
+        }
+
+
+    }
+
+    @Override
+    public boolean isUserAbleToRateService(Long userID, Long serviceID) {
+
+        List<CarReservation> carReservations = crr.checkIfEverReservedAnyCar(serviceID,userID);
+        Boolean exist = csrr.existsByCarService_CarServiceIdAndUser_Id(serviceID,userID);
+        if(carReservations.size()!=0 && !exist)
+            return true;
+        else
+            return false;
+
+    }
+
+    @Override
+    public List<CarServiceDTO> search(String address, String name) {
+        List<CarService> services = csr.search(address,name);
+        List<CarServiceDTO> output = new ArrayList<>();
+        for (CarService service:services)
+            output.add(CarServiceConverter.fromEntity(service));
+        return output;
+    }
+
+    @Override
     public List<CarServiceDTO> getAll() {
         List<CarService> base = csr.findAll();
         List<CarServiceDTO> newList = new ArrayList<>();
-        for(CarService cs : base) {
-        if(!cs.isDeleted())
+        for (CarService cs : base) {
             newList.add(CarServiceConverter.fromEntity(cs));
         }
-            return  newList;
+            return newList;
+
     }
 
 }

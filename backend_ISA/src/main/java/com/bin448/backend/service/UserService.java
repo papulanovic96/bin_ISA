@@ -20,5 +20,6 @@ public interface UserService {
     boolean logIn(String username,String password);
     User getByEmail(String mail);
     void modifyUser(boolean active,String user);
+    User getById(Long id);
 
 }

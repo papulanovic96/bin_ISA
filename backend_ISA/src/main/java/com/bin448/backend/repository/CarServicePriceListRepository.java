@@ -14,6 +14,7 @@ import java.util.List;
 public interface CarServicePriceListRepository extends JpaRepository<CarServicePriceList,Long> {
 
     List<CarServicePriceList> findAllByCarS_CarServiceName(String name);
+
     @Transactional
     @Modifying
     void deleteByName(String name);

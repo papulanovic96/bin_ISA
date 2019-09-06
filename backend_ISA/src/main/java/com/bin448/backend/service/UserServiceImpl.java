@@ -147,4 +147,9 @@ public class UserServiceImpl implements UserService {
     public void modifyUser(boolean active,String user) {
       ur.modifyByUsername(active,user);
     }
+
+    @Override
+    public User getById(Long id) {
+        return ur.getUserById(id);
+    }
 }

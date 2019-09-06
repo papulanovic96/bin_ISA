@@ -5,7 +5,6 @@ import com.bin448.backend.entity.User;
 import java.util.List;
 
 public class UserDTO {
-
     private Long id;
     private String name;
     private String lastName;
@@ -117,4 +116,5 @@ public class UserDTO {
     public void setUsernameOfRequests(List<String> usernameOfRequests) {
         this.usernameOfRequests = usernameOfRequests;
     }
+
 }

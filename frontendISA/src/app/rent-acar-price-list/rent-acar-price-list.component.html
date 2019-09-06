@@ -1,0 +1,139 @@
+
+<mdb-navbar SideClass="navbar navbar-expand-lg navbar-dark bg-primary" [containerInside]="false">
+
+  <!-- Navbar brand -->
+  <mdb-navbar-brand><a class="navbar-brand" href="#">RENT A CAR SERVICE [Price List]</a></mdb-navbar-brand>
+
+
+</mdb-navbar>
+
+
+<label>Select Rent-a-Car Service</label>
+<div class="md-form pb-3">
+
+    <select required [(ngModel)]="csName" (change)="getItemsOfCarService(csName)"  name="CarServices">
+      <option required name="serviceName" *ngFor="let service of carServices" [ngValue]="service.carServiceName">{{service.carServiceName}}</option>
+    </select>
+  </div>
+
+
+
+
+<div class="col-5" *ngIf="show">
+  <div>
+    <button type="button" mdbBtn (click)="openModalDialog()" color="success" mdbWavesEffect>ADD</button>
+  </div>
+  <table class="table table-fixed table-hover">
+    <thead>
+    <tr>
+      <th scope="col-xs-1">NAME</th>
+      <th scope="col-1">PRICE</th>
+
+
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor = 'let a of listOfItems'>
+      <td>{{ a.name }}</td>
+      <td>{{ a.price }}</td>
+
+      <td>
+        <button [id]="a.regID" (click)="deleteItem(a.id)" mdbBtn type="button" color="elegant" mdbWavesEffect>DELETE</button>
+      </td>
+      <td>
+        <button type="button" mdbBtn (click)="getItem(a.id)" color="success" mdbWavesEffect>Change</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+
+<!-- modal -->
+<div class="modal" tabindex="-1" role="dialog"  [ngStyle]="{'display':display}">
+  <!-- modal-dialog -->
+  <div class="modal-dialog" role="document">
+    <!-- modal-content -->
+    <div class="modal-content">
+      <!-- modal-header -->
+      <div class="modal-header ">
+        <p>Add New Item</p>
+        <button type="button" class="close" aria-label="Close" (click)="closeModalDialog()"><span aria-hidden="true">&times;</span></button>
+        <!-- <h4 class="modal-title">Login</h4> -->
+      </div>
+
+      <!-- modal-body -->
+      <div class="modal-body" >
+        <form  ngNativeValidate (ngSubmit)="createItem()">
+
+          <div class="md-form pb-3">
+            <input required type="text" class="form-control" name="name"  placeholder="Name" [(ngModel)]="newPriceListItem.name" />
+          </div>
+          <div class="md-form pb-3">
+            <input required type="number" class="form-control" name="price" placeholder="Price" [(ngModel)]="newPriceListItem.price" />
+          </div>
+
+          <div>
+            <button  mdbBtn gradient="blue" type="submit"   rounded="true"  class="z-depth-1a waves-light" mdbWavesEffect>Submit</button>
+
+          </div>
+        </form>
+      </div>
+
+      <!-- modal-footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" (click)="closeModalDialog()" >Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<!-- modal -->
+<div class="modal" tabindex="-1" role="dialog"  [ngStyle]="{'display':display2}">
+  <!-- modal-dialog -->
+  <div class="modal-dialog" role="document">
+    <!-- modal-content -->
+    <div class="modal-content">
+      <!-- modal-header -->
+      <div class="modal-header ">
+        <p>Edit Item</p>
+        <button type="button" class="close" aria-label="Close" (click)="closeModalDialog2()"><span aria-hidden="true">&times;</span></button>
+        <!-- <h4 class="modal-title">Login</h4> -->
+      </div>
+
+      <!-- modal-body -->
+      <div class="modal-body" >
+        <form  ngNativeValidate (ngSubmit)="addChangedItem()">
+          <div >
+            <label style="margin-left: 1px">Name</label>
+          </div>
+          <div class="md-form pb-3">
+            <input required type="text"  class="form-control" name="name"  placeholder="Name" [(ngModel)]="PriceListItem.name" >
+          </div>
+          <div >
+            <label style="margin-left: 1px">Price</label>
+          </div>
+          <div class="md-form pb-3">
+            <input required type="number"  class="form-control" name="price"  placeholder="Price" [(ngModel)]="PriceListItem.price" >
+          </div>
+
+          <div>
+            <button  mdbBtn gradient="blue" type="submit"   rounded="true"  class="z-depth-1a waves-light" mdbWavesEffect>Submit</button>
+
+          </div>
+        </form>
+      </div>
+
+      <!-- modal-footer -->
+      <div class="modal-footer">
+
+
+        <button type="button" class="btn btn-default" (click)="closeModalDialog2()" >Close</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -23,6 +23,7 @@ export class RegisterComponent  implements OnInit {
   username = ''
   password = ''
   role =''
+  id = 0
   user : User
   constructor(private regService: RegisterService,private router: Router) {
 
@@ -32,7 +33,7 @@ export class RegisterComponent  implements OnInit {
   }
 
   register() {
-   this.user = new User(this.name, this.lastName, this.city, this.email, this.telephone, this.username, this.password,this.role);
+   this.user = new User(this.name, this.lastName, this.city, this.email, this.telephone, this.username, this.password,this.role,null);
 
     (this.regService.registerUser(this.user).subscribe(
       data => {

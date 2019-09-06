@@ -30,6 +30,12 @@ public class CarController {
         this.crs = crs;
 
     }
+    @GetMapping("/tryToRate/{regID},{userId}")
+    public boolean tryToRate(@PathVariable Long regID,@PathVariable Long userId){
+        return crs.isUserAbleToRate(regID,userId);
+    }
+
+
 
     @PostMapping("/add")
     public String addCar(@RequestBody CarDTO car){
@@ -62,39 +68,56 @@ public class CarController {
     @PostMapping("/reserve")
     public String reserveCar(@RequestBody CarReservationDTO cr){
      crs.addReservation(cr);
-     return css.modifyReserved(true,cr.getRegID());
+     return css.modifyReserved(true,cr.getCarId());
 
     }
 
-    @PostMapping("/unreserve")
-    public String unreserveCar(@RequestBody CarReservationDTO cr){
-        String ret = "ERROR";
-        try {
-            crs.deleteReservation(cr.getRegID(), cr.getUsername());
-            ret = "SUCCESS";
-        }catch (Exception e){
-            e.printStackTrace();
-        }finally {
-            return ret;
-        }
+    @GetMapping("/tryToUnreserve/{carId},{userId}")
+    public boolean CanUserUnreserveCar(@PathVariable Long carId,@PathVariable Long userId){
+       return crs.IsDeleteReservationPosible(carId,userId);
         }
 
-    @PostMapping("/modifyCar/{model},{type},{year},{conv},{regID}")
-    public ResponseEntity<String> modifyCars(@PathVariable String model,@PathVariable String type,@PathVariable Integer year,@PathVariable Boolean conv,@PathVariable String regID){
-    return ResponseEntity.ok(css.modifyCar(model,type,year,conv,regID));
+     @PostMapping("/deleteRes/{carId},{userId}")
+        public String removeReservation(@PathVariable Long carId,@PathVariable Long userId){
+
+        return crs.removeReservation(carId,userId);
+
+     }
+
+    @PostMapping("/modifyCar/{model},{type},{year},{conv},{regID},{sID},{cID}")
+    public ResponseEntity<String> modifyCars(@PathVariable String model,@PathVariable String type,@PathVariable Integer year,@PathVariable Boolean conv,@PathVariable String regID,@PathVariable Long sID,@PathVariable Long cID){
+    return ResponseEntity.ok(css.modifyCar(model,type,year,conv,regID,sID,cID));
     }
 
     @PostMapping("/rateCar")
     public String rateCar(@RequestBody CarRateDTO cr){
+
         return css.rateCar(cr);
     }
 
-    @GetMapping("/getAvgGrade/{regID}")
+    @GetMapping("/search/{model},{type},{from},{to},{nos}")
+    public List<CarDTO> search(@PathVariable String model,@PathVariable String type,@PathVariable Integer from,@PathVariable Integer to, @PathVariable Integer nos){
+        return css.search(model,type,from,to,nos);
+    }
+
+  /*  @GetMapping("/getAvgGrade/{regID}")
     public Double getAvgRate(@PathVariable String regID){
         return css.getAvgGrade(regID);
-    }
+    }*/
     @GetMapping("/getAllCars")
     public List<CarDTO> getAll(){
         return css.getAllCars();
+    }
+    @GetMapping("/IsUserReservedCar/{id},{id2}")
+    public boolean IURC(@PathVariable Long id,@PathVariable Long id2){
+        return crs.IsUserReservedCar(id,id2);
+    }
+    @GetMapping("/IsUserRated/{id},{id2}")
+    public boolean IUR(@PathVariable Long id,@PathVariable Long id2){
+        return css.isUserRated(id,id2);
+    }
+    @GetMapping("/getReservedCars/{idUser}")
+    public List<CarDTO> getReserved(@PathVariable Long idUser){
+        return css.getAllReservedCars(idUser);
     }
 }

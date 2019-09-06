@@ -16,7 +16,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MDBBootstrapModule } from "angular-bootstrap-md";
 import { RentACarComponent } from './rent-acar/rent-acar.component';
-
+import { RentACarPriceListComponent } from './rent-acar-price-list/rent-acar-price-list.component';
+import { RatingModule } from 'ngx-bootstrap/rating';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { UserHistoryComponent } from './user-history/user-history.component';
 
 @NgModule({
   declarations: [
@@ -30,21 +33,28 @@ import { RentACarComponent } from './rent-acar/rent-acar.component';
     LogoutComponent,
     RegisterComponent,
     RentACarComponent,
-
+    RentACarPriceListComponent,
+    UserHistoryComponent,
 
   ],
 
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     HttpClientModule,
     FormsModule,
     MDBBootstrapModule,
     AppRoutingModule,
+    RatingModule.forRoot(),
+    BsDatepickerModule.forRoot(),
     RouterModule.forRoot([
       {path: 'planeseats', component: PlaneSeatComponent},
       {path: 'airlines', component: AirlineComponent},
       {path: 'cars', component: CarComponent},
       {path: 'register', component:RegisterComponent},
+      {path: 'carServices', component:RentACarComponent},
+      {path: 'carServicePR',component:RentACarPriceListComponent},
+      {path: 'userHistory',component:UserHistoryComponent}
 
 
     ], {useHash: true}),

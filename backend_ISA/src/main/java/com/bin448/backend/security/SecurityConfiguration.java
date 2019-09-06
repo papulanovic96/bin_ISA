@@ -25,7 +25,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private IsaAuthProvider isaAuth;
     @Autowired
     private UserService us;
-
+    @Autowired
+    private CustomAuthenticationEntryPoint authenticationEntryPoint;
 
 
 
@@ -40,31 +41,37 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
        http.csrf().disable();
         // http.addFilterBefore(new CustomFilter(), ChannelProcessingFilter.class);
 
-                http.httpBasic().and().authorizeRequests()
+               http.httpBasic().authenticationEntryPoint(authenticationEntryPoint).and().authorizeRequests()
+               http.httpBasic().and().authorizeRequests()
                         .antMatchers("/user/sendFriendRequest/**").permitAll()
                         .antMatchers("/user/acceptFriendRequest").permitAll()
-                        .antMatchers("/user/getUser/**").permitAll()
-                        .antMatchers("/user/validateLogin/**").permitAll()
-                        .antMatchers("/user/register").permitAll()
-                        .antMatchers("/user/confirm-account").permitAll()
+ 
                         .antMatchers("/user/getAirlines").permitAll()
                         .antMatchers("/Car/add").hasAnyRole("CAR_ADMIN","SYSTEM_ADMIN")
                         .antMatchers("/Car/remove/**").hasAnyRole("CAR_ADMIN","SYSTEM_ADMIN")
-                        .antMatchers("/Car/rateCar").hasAnyRole("CAR_ADMIN","SYSTEM_ADMIN")
+                        .antMatchers("/Car/rateCar").hasAnyRole("CAR_ADMIN","SYSTEM_ADMIN","USER")
                         .antMatchers("/Car/reserve").hasAnyRole("USER","CAR_ADMIN")
-                        .antMatchers("/Car/getAllCars").hasAnyRole("CAR_ADMIN")
-                        .antMatchers("/Car/unreserve").hasAnyRole("CAR_ADMIN","USER")
+                        .antMatchers("/Car/getAllCars").hasAnyRole("CAR_ADMIN","USER")
+                        .antMatchers("/Car/tryToUnreserve/**").hasAnyRole("CAR_ADMIN","USER")
+                        .antMatchers("/Car/deleteRes/**").hasAnyRole("CAR_ADMIN","USER")
                         .antMatchers("/Car/modifyCar/**").hasAnyRole("CAR_ADMIN","SYSTEM_ADMIN")
+                        .antMatchers("/Car/IsUserReservedCar/**").hasAnyRole("CAR_ADMIN","SYSTEM_ADMIN","USER")
+                        .antMatchers("/Car/IsUserRated/**").hasAnyRole("CAR_ADMIN","SYSTEM_ADMIN","USER")
+                        .antMatchers("/Car/getReservedCars/**").hasAnyRole("CAR_ADMIN","SYSTEM_ADMIN","USER")
+                        .antMatchers("/carService/tryToRate/**").hasAnyRole("CAR_ADMIN","SYSTEM_ADMIN","USER")
+                        .antMatchers("/Car/tryToRate/**").hasAnyRole("CAR_ADMIN","SYSTEM_ADMIN","USER")
                         .antMatchers("/Car/getAvgGrade/**").permitAll()
                         .antMatchers("/Car/find/**","Car/findAll/**").permitAll()
                         .antMatchers("/carService/add").hasAnyRole("CAR_ADMIN","SYSTEM_ADMIN")
-                        .antMatchers("/carService/rateCarService").hasAnyRole("CAR_ADMIN","SYSTEM_ADMIN")
+                        .antMatchers("/carService/rateCarService").hasAnyRole("CAR_ADMIN","SYSTEM_ADMIN","USER")
                         .antMatchers("/carService/addItem").hasAnyRole("CAR_ADMIN","SYSTEM_ADMIN")
                         .antMatchers("/carService/deleteItem/**").hasAnyRole("CAR_ADMIN","SYSTEM_ADMIN")
                         .antMatchers("/carService/modifyItem/**").hasAnyRole("CAR_ADMIN","SYSTEM_ADMIN")
                         //mozda cak staviti u webignoring
                         .antMatchers("/carService/getAllItems/**").hasAnyRole("CAR_ADMIN","USER","SYSTEM_ADMIN")
                         .antMatchers("/carService/remove/**").hasAnyRole("CAR_ADMIN","SYSTEM_ADMIN")
+                        .antMatchers("/carService/getItem/**").hasAnyRole("CAR_ADMIN","SYSTEM_ADMIN")
+                        .antMatchers("/carService/modifyCarService/**").hasAnyRole("CAR_ADMIN","SYSTEM_ADMIN")
                         .antMatchers("/carService/find/**").permitAll()
                         .antMatchers("/carService/getAvgGrade/**").permitAll()
                         .antMatchers("/seats/findAll").permitAll()
@@ -82,16 +89,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                         .anyRequest()
                         .fullyAuthenticated()
               ;
-/*
-       http.addFilterBefore(new CustomFilter(), ChannelProcessingFilter.class);
-        http.authorizeRequests()
-                .antMatchers("/")
-                .permitAll()
-                .anyRequest()
-                //.permitAll()
-                .fullyAuthenticated()
-                .and().httpBasic().and().csrf().disable();
-*/
 
 
     }
@@ -103,7 +100,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         web.ignoring().antMatchers("/user/register/**");
         web.ignoring().antMatchers("/user/register/");
         web.ignoring().antMatchers("/validateLogin/**");
-        web.ignoring().antMatchers("/user/getUser/**");
+        web.ignoring().antMatchers("/Car/search/**");
+        web.ignoring().antMatchers("/carService/search/**");
+        web.ignoring().antMatchers("/user/get/**");
+        web.ignoring().antMatchers("/user/confirm-account?token=**");
+        web.ignoring().antMatchers("/user/confirm-account?**");
+        web.ignoring().antMatchers("/user/confirm-account**");
     }
 
     @Bean

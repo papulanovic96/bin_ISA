@@ -3,7 +3,8 @@ package com.bin448.backend.entity.DTOentity;
 public class CarServiceRateDTO {
 
     private Long id;
-    private String carServiceName;
+    private Long serviceID;
+    private Long userID;
     private Double rate;
 
     public Long getId() {
@@ -14,19 +15,27 @@ public class CarServiceRateDTO {
         this.id = id;
     }
 
-    public String getCarServiceName() {
-        return carServiceName;
-    }
-
-    public void setCarServiceName(String carServiceName) {
-        this.carServiceName = carServiceName;
-    }
-
     public Double getRate() {
         return rate;
     }
 
     public void setRate(Double rate) {
         this.rate = rate;
+    }
+
+    public Long getServiceID() {
+        return serviceID;
+    }
+
+    public void setServiceID(Long serviceID) {
+        this.serviceID = serviceID;
+    }
+
+    public Long getUserID() {
+        return userID;
+    }
+
+    public void setUserID(Long userID) {
+        this.userID = userID;
     }
 }
