@@ -41,7 +41,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
        http.csrf().disable();
         // http.addFilterBefore(new CustomFilter(), ChannelProcessingFilter.class);
 
-               http.httpBasic().authenticationEntryPoint(authenticationEntryPoint).and().authorizeRequests()
+               http.httpBasic().authenticationEntryPoint(authenticationEntryPoint).and().authorizeRequests();
                http.httpBasic().and().authorizeRequests()
                         .antMatchers("/user/sendFriendRequest/**").permitAll()
                         .antMatchers("/user/acceptFriendRequest").permitAll()
@@ -99,7 +99,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         web.ignoring().antMatchers("/user/register");
         web.ignoring().antMatchers("/user/register/**");
         web.ignoring().antMatchers("/user/register/");
-        web.ignoring().antMatchers("/validateLogin/**");
+        web.ignoring().antMatchers("/user/validateLogin/**");
         web.ignoring().antMatchers("/Car/search/**");
         web.ignoring().antMatchers("/carService/search/**");
         web.ignoring().antMatchers("/user/get/**");

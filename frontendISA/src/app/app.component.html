@@ -14,15 +14,17 @@
             <a class="dropdown-item" [routerLink]="['/airlines']" routerLinkActive="router-link-active" >Airlines</a>
             <a class="dropdown-item" [routerLink]="['/planeseats']" routerLinkActive="router-link-active" >Seats</a>
 </div>
-
+<div *ngIf="loginService.isUserLoggedIn() && !loginService.isUserAirlineAdmin()">
       <li><a *ngIf="loginService.isUserLoggedIn() && loginService.isUserADMIN()"   routerLink="/cars" class="nav-link">Cars</a></li>
       <li><a *ngIf="loginService.isUserLoggedIn() || loginService.isUserADMIN()"  routerLink="/carServices" class="nav-link">Rent A Car</a></li>
+    </div>
       <li><a *ngIf="loginService.isUserLoggedIn() && loginService.isUserUSER()"  routerLink="/userHistory" class="nav-link">Profile</a></li>
-
-      <li><a *ngIf="loginService.isUserLoggedIn() || loginService.isUserADMIN()"  routerLink="/carServicePR" class="nav-link">Price List</a></li>
+      <div *ngIf="loginService.isUserLoggedIn() && !loginService.isUserAirlineAdmin()">
+      <li><a *ngIf="loginService.isUserLoggedIn() || loginService.isUserADMIN()"  routerLink="/carServicePR" class="nav-link">Price List</a></li> 
+      </div>
       <li><a *ngIf="!loginService.isUserLoggedIn()" routerLink="/login" class="nav-link">Login</a></li>
       <li><a *ngIf="loginService.isUserLoggedIn()" routerLink="/logout" class="nav-link">LogOut</a></li>
-      <li><a  routerLink="/register" class="nav-link">Register</a></li>
+      <div *ngIf="!loginService.isUserLoggedIn()"><li><a  routerLink="/register" class="nav-link">Register</a></li></div>
 
     </ul>
  <div style="margin-left: 7cm">
