@@ -41,7 +41,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
        http.csrf().disable();
         // http.addFilterBefore(new CustomFilter(), ChannelProcessingFilter.class);
 
-                http.httpBasic().authenticationEntryPoint(authenticationEntryPoint).and().authorizeRequests()
+               http.httpBasic().authenticationEntryPoint(authenticationEntryPoint).and().authorizeRequests()
+               http.httpBasic().and().authorizeRequests()
+                        .antMatchers("/user/sendFriendRequest/**").permitAll()
+                        .antMatchers("/user/acceptFriendRequest").permitAll()
+ 
                         .antMatchers("/user/getAirlines").permitAll()
                         .antMatchers("/Car/add").hasAnyRole("CAR_ADMIN","SYSTEM_ADMIN")
                         .antMatchers("/Car/remove/**").hasAnyRole("CAR_ADMIN","SYSTEM_ADMIN")
@@ -70,6 +74,18 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                         .antMatchers("/carService/modifyCarService/**").hasAnyRole("CAR_ADMIN","SYSTEM_ADMIN")
                         .antMatchers("/carService/find/**").permitAll()
                         .antMatchers("/carService/getAvgGrade/**").permitAll()
+                        .antMatchers("/seats/findAll").permitAll()
+                        .antMatchers("/seats/findById/**").permitAll()
+                        .antMatchers("/seats/addSeat").permitAll()
+                        .antMatchers("/seats/deleteSeat/**").permitAll()
+                        .antMatchers("/seats/modifySeat/**").permitAll()
+                        .antMatchers("/airline/findAll").permitAll()
+                        .antMatchers("/airline/findById/**").permitAll()
+                        .antMatchers("/airline/create").permitAll()
+                        .antMatchers("/airline/delete/**").permitAll()
+                        .antMatchers("/airline/modify/**").permitAll()
+                        .antMatchers("/flight/findAll").permitAll()
+                        .antMatchers("/flight/create").permitAll()
                         .anyRequest()
                         .fullyAuthenticated()
               ;

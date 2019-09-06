@@ -21,4 +21,21 @@
         </tbody>
       </table>
 </div>
+
+<div class=row>
+  <div class="col-4">
+  <div class="card text-right">
+  <div class="card-body">
+    <form exportAs="ngForm">
+          <div class="form-row">
+    <div class="col-8 my-1 text-right">
+      <input type="checkbox" class="form-control" name = "reserved" [(ngModel)]="seat.reserved">
+    </div>
+    <div class="col my-1 text-right">
+          <button type="submit" class="btn btn-success" (click)="onSubmit()"><i class="fa fa-plus"></i> Add type</button>
+    </div>
+  </div>
+  </form>
+  </div>
+  </div></div></div>
    

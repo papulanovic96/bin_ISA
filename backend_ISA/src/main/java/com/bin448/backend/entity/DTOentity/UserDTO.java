@@ -15,6 +15,11 @@ public class UserDTO {
     private String password;
     private String role;
     private boolean active;
+    private List<String> usernameOfFriend;
+    private List<String> usernameOfRequests;
+
+    public UserDTO() {
+    }
 
     public String getName() {
         return name;
@@ -88,6 +93,14 @@ public class UserDTO {
         this.active = active;
     }
 
+    public List<String> getUsernameOfFriend() {
+        return usernameOfFriend;
+    }
+
+    public void setUsernameOfFriend(List<String> usernameOfFriend) {
+        this.usernameOfFriend = usernameOfFriend;
+    }
+
     public Long getId() {
         return id;
     }
@@ -95,4 +108,13 @@ public class UserDTO {
     public void setId(Long id) {
         this.id = id;
     }
+
+    public List<String> getUsernameOfRequests() {
+        return usernameOfRequests;
+    }
+
+    public void setUsernameOfRequests(List<String> usernameOfRequests) {
+        this.usernameOfRequests = usernameOfRequests;
+    }
+
 }

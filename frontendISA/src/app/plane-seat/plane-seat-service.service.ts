@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { PlaneSeat } from './plane-seat';
 import { Observable } from 'rxjs';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { throwError } from 'rxjs';
 import { catchError} from 'rxjs/operators';
 
@@ -11,13 +11,29 @@ import { catchError} from 'rxjs/operators';
 export class PlaneSeatServiceService {
 
   private getURL : string;
+  private createNewURL: string;
 
+  httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type':  'application/json',
+      'Authorization': 'my-auth-token'
+    })
+  };
+  
   constructor(private http: HttpClient) { 
     this.getURL = 'http://localhost:4200/seats/findAll';
+    this.createNewURL = "http://localhost:4200/seats/addSeat";
   }
 
   getAllSeats(): Observable<PlaneSeat[]> {
     return this.http.get<PlaneSeat[]>(this.getURL);
+  }
+
+  addSeat(newSeat : PlaneSeat) : Observable<PlaneSeat> {
+    console.log(newSeat);
+    return this.http.post<PlaneSeat>(this.createNewURL, newSeat).pipe(
+        catchError(this.handleError)
+    );
   }
 
   private handleError(err: HttpErrorResponse) {

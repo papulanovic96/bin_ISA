@@ -14,7 +14,7 @@ import { LogoutComponent } from './logout/logout.component';
 import { RegisterComponent } from './register/register.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {MDBBootstrapModule} from "angular-bootstrap-md";
+import { MDBBootstrapModule } from "angular-bootstrap-md";
 import { RentACarComponent } from './rent-acar/rent-acar.component';
 import { RentACarPriceListComponent } from './rent-acar-price-list/rent-acar-price-list.component';
 import { RatingModule } from 'ngx-bootstrap/rating';

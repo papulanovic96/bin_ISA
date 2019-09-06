@@ -1,42 +1,28 @@
 package com.bin448.backend.controller;
 
 import com.bin448.backend.converter.UserConverter;
-import com.bin448.backend.entity.ConfirmationToken;
 import com.bin448.backend.entity.DTOentity.AirlineDTO;
-import com.bin448.backend.entity.DTOentity.FlightDTO;
 import com.bin448.backend.entity.DTOentity.UserDTO;
-import com.bin448.backend.entity.Flight;
 import com.bin448.backend.entity.User;
 import com.bin448.backend.repository.ConfirmationTokenRepository;
 import com.bin448.backend.service.AirlineService;
 import com.bin448.backend.service.EmailSenderService;
 import com.bin448.backend.service.UserService;
-import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
-import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
-import java.security.Principal;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Base64;
 import java.util.List;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @RestController
-
+@RequestMapping("/user")
 public class UserController {
 
     private UserService us;
@@ -53,9 +39,6 @@ public class UserController {
 
     }
 
-
-
-
     @RequestMapping(value = { "/validateLogin/{username},{password}" },method = POST)
     public boolean validateLogin(@PathVariable String username, @PathVariable String password)
     {
@@ -70,35 +53,49 @@ public class UserController {
     }
 
 
-    @RequestMapping(value="/user/register", method = RequestMethod.POST)
+    @RequestMapping(value="/register", method = RequestMethod.POST)
     public boolean registerUser(ModelAndView modelAndView, @RequestBody  UserDTO user)
     {
 
-           return emailSenderService.mailSendWhenRegister(modelAndView,user);
+        return emailSenderService.mailSendWhenRegister(modelAndView,user);
 
     }
 
-    @GetMapping("/user/get/{username}")
+    @GetMapping("/get/{username}")
     public UserDTO findUser(@PathVariable String username){
         return UserConverter.fromEntity(us.getUserByUsername(username));
     }
 
-    @RequestMapping(value="/user/confirm-account", method= {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value="/confirm-account", method= {RequestMethod.GET, RequestMethod.POST})
     public ModelAndView confirmUserAccount(ModelAndView modelAndView, @RequestParam("token")String confirmationToken)
     {
-       return emailSenderService.accountConfimation(modelAndView,confirmationToken);
+        return emailSenderService.accountConfimation(modelAndView,confirmationToken);
     }
 
-    @RequestMapping(value = "/user/getAirlines", method = GET)
+    @RequestMapping(value = "/getAirlines", method = GET)
     public ResponseEntity<List<AirlineDTO>> getAirline(){
 
         return ResponseEntity.ok(as.findAll());
 
     }
 
+    @RequestMapping(value = "/getUser/{username}")
+    public ResponseEntity<UserDTO> getUser(@PathVariable String username){
+        return new ResponseEntity<>(UserConverter.fromEntity(us.getUserByUsername(username)), HttpStatus.OK);
+    }
 
 
+    @RequestMapping(value = "/sendFriendRequest/{username}", method = POST)
+    public ResponseEntity<String> sendFriendRequest(@PathVariable String username){
+        User u = us.getUserByUsername(username);
+        us.sendRequest(u);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/acceptFriendRequest", method = POST)
+    public ResponseEntity<String> acceptFriendship(){
+        us.acceptFriendship();
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
 }
-
-

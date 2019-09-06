@@ -3,14 +3,14 @@ package com.bin448.backend.entity;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "user",uniqueConstraints={@UniqueConstraint(columnNames={"username"})})
 
 @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
-public class User {
+public class User implements Serializable {
     @Column
     private String name;
     @Column
@@ -29,10 +29,14 @@ public class User {
     private String city;
     @Column
     private String telephone;
+    @Column
     private String role;
+    @Column
     private boolean active;
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<User> friends;
+    @OneToMany(mappedBy = "receiver", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Friendship> friends;
+    @OneToMany(mappedBy = "sender", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Friendship> requests;
 
 
     public String getLastName() {
@@ -116,11 +120,20 @@ public class User {
         this.active = active;
     }
 
-    public List<User> getFriends() {
+    public List<Friendship> getFriends() {
         return friends;
     }
 
-    public void setFriends(List<User> friends) {
+    public void setFriends(List<Friendship> friends) {
         this.friends = friends;
     }
+
+    public List<Friendship> getRequests() {
+        return requests;
+    }
+
+    public void setRequests(List<Friendship> requests) {
+        this.requests = requests;
+    }
+
 }
