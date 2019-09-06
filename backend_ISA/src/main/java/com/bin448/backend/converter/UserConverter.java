@@ -19,6 +19,7 @@ public abstract class UserConverter extends AbstractConverter{
         newDTOUser.setRole(e.getRole());
         newDTOUser.setPassword(e.getPassword());
         newDTOUser.setActive(e.isActive());
+        newDTOUser.setId(e.getId());
         return newDTOUser;
     }
 
@@ -27,6 +28,7 @@ public abstract class UserConverter extends AbstractConverter{
         User newUser = new User();
         newUser.setActive(d.isActive());
         newUser.setName(d.getName());
+        newUser.setId(d.getId());
         newUser.setLastName(d.getLastName());
         newUser.setCity(d.getCity());
         newUser.setEmail(d.getEmail());

@@ -19,9 +19,10 @@ public class CarReservationConverter extends AbstractConverter{
     }
     public static CarReservation toEntity(CarReservationDTO crDTO){
         CarReservation cr = new CarReservation();
-        cr.setCarREG(crDTO.getRegID());
+        cr.setCarId(crDTO.getCarId());
+        cr.setCarResId(crDTO.getId());
         cr.setEndDate(crDTO.getEndDate());
-        cr.setUsername(crDTO.getUsername());
+        cr.setUserId(crDTO.getUserId());
         cr.setStartDate(crDTO.getStartDate());
         return  cr;
     }
@@ -29,8 +30,9 @@ public class CarReservationConverter extends AbstractConverter{
         CarReservationDTO crDTO = new CarReservationDTO();
         crDTO.setEndDate(cr.getEndDate());
         crDTO.setStartDate(cr.getStartDate());
-        crDTO.setRegID(cr.getCarREG());
-        crDTO.setUsername(cr.getUsername());
+        crDTO.setCarId(cr.getCarId());
+        crDTO.setId(cr.getCarResId());
+        crDTO.setUserId(cr.getUserId());
         return crDTO;
     }
 }

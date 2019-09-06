@@ -13,6 +13,6 @@ export class GetUserService {
 
   getLoggedUser(username: string) {
 
-    return this.httpClient.get<User>('http://localhost:8080/user/getUser/' + username);
+    return this.httpClient.get<User>('http://localhost:4200/user/get/' + username);
   }
 }

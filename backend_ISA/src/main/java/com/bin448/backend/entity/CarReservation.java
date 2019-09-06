@@ -11,9 +11,9 @@ public class CarReservation {
     private Date startDate;
     private Date endDate;
     @Column(nullable = false)
-    private String username;
+    private Long userId;
     @Column(nullable = false)
-    private String carREG;
+    private Long carId;
 
     public Long getCarResId() {
         return carResId;
@@ -40,19 +40,19 @@ public class CarReservation {
     }
 
 
-    public String getCarREG() {
-        return carREG;
+    public Long getCarId() {
+        return carId;
     }
 
-    public void setCarREG(String carREG) {
-        this.carREG = carREG;
+    public void setCarId(Long carId) {
+        this.carId = carId;
     }
 
-    public String getUsername() {
-        return username;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 }

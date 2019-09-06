@@ -15,7 +15,7 @@ export class AuthenticationService {
   authenticate(username, password) {
     sessionStorage.clear();
     const headers = new HttpHeaders({ Authorization: 'Basic ' + btoa(username + ':' + password) });
-   return this.httpClient.post<any>('http://localhost:8080/validateLogin/'+username+","+password, {headers});
+   return this.httpClient.post<any>('http://localhost:4200/validateLogin/'+username+","+password, {headers});
 
 
    }
@@ -24,7 +24,7 @@ export class AuthenticationService {
 
   isUserLoggedIn() {
     let user = sessionStorage.getItem('username')
-    console.log(!(user === null))
+   
     return !(user === null)
   }
 
@@ -40,6 +40,10 @@ export class AuthenticationService {
 
   getLogged(): string{
     return sessionStorage.getItem('username');
+  }
+
+  getRole(): string{
+    return sessionStorage.getItem("role");
   }
 
 

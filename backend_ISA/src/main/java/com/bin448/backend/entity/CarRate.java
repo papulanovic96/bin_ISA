@@ -18,6 +18,12 @@ public class CarRate {
     @JoinColumn(name = "carId", nullable = false)
     private Car car;
 
+    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @JoinColumn(name = "userId", nullable = false)
+    private User user;
+
+
+
     public Long getId() {
         return id;
     }
@@ -40,5 +46,13 @@ public class CarRate {
 
     public void setCar(Car car) {
         this.car = car;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

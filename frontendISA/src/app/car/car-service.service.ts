@@ -15,13 +15,27 @@ export class CarServiceService {
   private deleteURL : string;
   private getCarForUpdateURL : string;
   private postModifiedCarURL:string;
+  private searchUrl:string;
   constructor(private http: HttpClient) {
-    this.getURL = 'http://localhost:8080/Car/getAllCars';
-    this.createURL = 'http://localhost:8080/Car/add';
-    this.deleteURL = 'http://localhost:8080/Car/remove';
-    this.getCarForUpdateURL = 'http://localhost:8080/Car/find';
-    this.postModifiedCarURL ='http://localhost:8080/Car/modifyCar';
+    this.searchUrl = 'http://localhost:4200/Car/search';
+    this.getURL = 'http://localhost:4200/Car/getAllCars';
+    this.createURL = 'http://localhost:4200/Car/add';
+    this.deleteURL = 'http://localhost:4200/Car/remove';
+    this.getCarForUpdateURL = 'http://localhost:4200/Car/find';
+    this.postModifiedCarURL ='http://localhost:4200/Car/modifyCar';
 
+  }
+
+  search(model:string,type:string,from:number,to:number,nos:number) : Observable<Car[]> {
+
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+
+      })
+    };
+    return this.http.get<Car[]>(this.searchUrl+'/'+model+','+type+','+from+','+to+','+nos,httpOptions);
   }
 
   getAllCars() : Observable<Car[]> {
@@ -97,7 +111,7 @@ export class CarServiceService {
 
   }
 
-  addModifiedCar(model:string,type:string,year:number,conv:boolean,regid:string) : Observable<string>{
+  addModifiedCar(model:string,type:string,year:number,conv:boolean,regid:string,sID:number,cID:number) : Observable<string>{
     let username = sessionStorage.getItem('username');
     let password = sessionStorage.getItem('password');
     const httpOptions = {
@@ -112,7 +126,7 @@ export class CarServiceService {
 
       }),dataType: 'text/plain; charset=utf-8',responseType: 'text' as 'json'
     };
-    return this.http.post<string>(this.postModifiedCarURL+'/'+model+','+type+','+year+','+conv+','+regid,null,httpOptions);
+    return this.http.post<string>(this.postModifiedCarURL+'/'+model+','+type+','+year+','+conv+','+regid+','+sID+','+cID,null,httpOptions);
   }
 
 }

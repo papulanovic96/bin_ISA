@@ -15,15 +15,19 @@
             <a class="dropdown-item" [routerLink]="['/planeseats']" routerLinkActive="router-link-active" >Seats</a>
 </div>
 
-      <li><a *ngIf="loginService.isUserLoggedIn()"  routerLink="/cars" class="nav-link">Cars</a></li>
+      <li><a *ngIf="loginService.isUserLoggedIn() && loginService.isUserADMIN()"   routerLink="/cars" class="nav-link">Cars</a></li>
+      <li><a *ngIf="loginService.isUserLoggedIn() || loginService.isUserADMIN()"  routerLink="/carServices" class="nav-link">Rent A Car</a></li>
+      <li><a *ngIf="loginService.isUserLoggedIn() && loginService.isUserUSER()"  routerLink="/userHistory" class="nav-link">Profile</a></li>
+
+      <li><a *ngIf="loginService.isUserLoggedIn() || loginService.isUserADMIN()"  routerLink="/carServicePR" class="nav-link">Price List</a></li>
       <li><a *ngIf="!loginService.isUserLoggedIn()" routerLink="/login" class="nav-link">Login</a></li>
       <li><a *ngIf="loginService.isUserLoggedIn()" routerLink="/logout" class="nav-link">LogOut</a></li>
       <li><a  routerLink="/register" class="nav-link">Register</a></li>
 
     </ul>
- <div style="margin-left: 15cm">
-   <label style="margin-top: 9px;color: lightsalmon;alignment: right" id="LogLab" *ngIf="loginService.isUserLoggedIn()"> Current user : [{{loginService.getLogged()}}] </label>
-
+ <div style="margin-left: 7cm">
+   <label style="margin-top: 9px;color: white;font-family: Verdana;alignment: right" id="LogLab" *ngIf="loginService.isUserLoggedIn()"> Current user : [{{loginService.getLogged()}}] &nbsp; &nbsp; </label>
+   <label style="margin-top: 9px;color: white;font-family: Verdana;alignment: right" id="LogLab2" *ngIf="loginService.isUserLoggedIn()"> Role : [{{loginService.getRole()}}] </label>
  </div>
   </nav>
   <br><br>

@@ -16,6 +16,12 @@ public class CarServiceRate {
     @JoinColumn(name = "carServiceId")
     private CarService carService;
 
+    @ManyToOne
+    @JoinColumn(name = "userId")
+    private User user;
+
+
+
     public Long getId() {
         return id;
     }
@@ -38,5 +44,13 @@ public class CarServiceRate {
 
     public void setCarService(CarService carService) {
         this.carService = carService;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

@@ -5,7 +5,7 @@ import com.bin448.backend.entity.User;
 import java.util.List;
 
 public class UserDTO {
-
+    private Long id;
     private String name;
     private String lastName;
     private String city;
@@ -86,5 +86,13 @@ public class UserDTO {
 
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

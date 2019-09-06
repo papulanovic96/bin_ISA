@@ -5,7 +5,9 @@ import { LogoutComponent } from './logout/logout.component';
 import {AuthGaurdService} from "./service/auth-guard.service";
 import {CarComponent} from "./car/car.component";
 import {RegisterComponent} from "./register/register.component";
-
+import {RentACarComponent} from "./rent-acar/rent-acar.component";
+import {RentACarPriceListComponent} from "./rent-acar-price-list/rent-acar-price-list.component";
+import {UserHistoryComponent} from "./user-history/user-history.component";
 
 const appRoutes: Routes = [
 
@@ -13,6 +15,10 @@ const appRoutes: Routes = [
   { path: 'logout', component: LogoutComponent,canActivate:[AuthGaurdService] },
   { path: 'cars', component: CarComponent,canActivate:[AuthGaurdService] },
   { path: 'register', component: RegisterComponent },
+  { path: 'carServicePR', component: RentACarPriceListComponent,canActivate:[AuthGaurdService] },
+  { path: 'carServices', component: RentACarComponent,canActivate:[AuthGaurdService] },
+  { path: 'userHistory', component: UserHistoryComponent}
+
 
 
 ];
@@ -22,4 +28,5 @@ export const routing = RouterModule.forRoot(appRoutes);
   imports: [RouterModule.forRoot(appRoutes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+
+export class AppRoutingModule {}

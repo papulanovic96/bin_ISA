@@ -16,8 +16,9 @@ import java.util.Optional;
 public interface CarServiceService {
 
     String addCarService(CarServiceDTO cs);
-    String logicRemoveCarService(String ime);
+    String logicRemoveCarService(Long id);
     String removeCarService(Long id);
+    CarServicePriceListDTO getItem(Long id);
     String addItem(CarServicePriceList cs);
     String deleteItem(Long id);
     CarServiceDTO findCarService(String name);
@@ -26,5 +27,7 @@ public interface CarServiceService {
     String carServiceRate(CarServiceRateDTO csr);
     Double getAvgGrade(String name);
     List<CarServiceDTO> getAll();
-
+    String modifyService(String name, String adress, String description, String location, Long id);
+    boolean isUserAbleToRateService(Long userID,Long serviceID);
+    List<CarServiceDTO> search(String address,String name);
 }

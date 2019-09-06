@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component} from "@angular/core";
 import {AuthenticationService} from "./service/authentication.service";
 
 @Component({
@@ -6,6 +6,7 @@ import {AuthenticationService} from "./service/authentication.service";
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
+
 export class AppComponent {
   title = 'MegaTravel';
   loginService : AuthenticationService;
