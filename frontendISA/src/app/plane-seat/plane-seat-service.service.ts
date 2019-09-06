@@ -31,7 +31,7 @@ export class PlaneSeatServiceService {
 
   addSeat(newSeat : PlaneSeat) : Observable<PlaneSeat> {
     console.log(newSeat);
-    return this.http.post<PlaneSeat>(this.createNewURL, newSeat, {responseType: 'text'}).pipe(
+    return this.http.post<PlaneSeat>(this.createNewURL, newSeat).pipe(
         catchError(this.handleError)
     );
   }

@@ -6,6 +6,7 @@ import java.util.List;
 
 public class UserDTO {
 
+    private Long id;
     private String name;
     private String lastName;
     private String city;
@@ -15,14 +16,10 @@ public class UserDTO {
     private String password;
     private String role;
     private boolean active;
-    private List<Long> userID;
+    private List<String> usernameOfFriend;
+    private List<String> usernameOfRequests;
 
-    public List<Long> getUserID() {
-        return userID;
-    }
-
-    public void setUserID(List<Long> userID) {
-        this.userID = userID;
+    public UserDTO() {
     }
 
     public String getName() {
@@ -95,5 +92,29 @@ public class UserDTO {
 
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+    public List<String> getUsernameOfFriend() {
+        return usernameOfFriend;
+    }
+
+    public void setUsernameOfFriend(List<String> usernameOfFriend) {
+        this.usernameOfFriend = usernameOfFriend;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public List<String> getUsernameOfRequests() {
+        return usernameOfRequests;
+    }
+
+    public void setUsernameOfRequests(List<String> usernameOfRequests) {
+        this.usernameOfRequests = usernameOfRequests;
     }
 }

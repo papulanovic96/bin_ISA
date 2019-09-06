@@ -11,6 +11,7 @@ public class AirlineDTO {
     private List<Long> flightListID;
     private List<Long> discountTicketListID;
     private List<Long> seatsListID;
+    private List<Long> luggageID;
 
     public AirlineDTO() {
         super();
@@ -78,5 +79,13 @@ public class AirlineDTO {
 
     public void setSeatsListID(List<Long> seatsListID) {
         this.seatsListID = seatsListID;
+    }
+
+    public List<Long> getLuggageID() {
+        return luggageID;
+    }
+
+    public void setLuggageID(List<Long> luggageID) {
+        this.luggageID = luggageID;
     }
 }

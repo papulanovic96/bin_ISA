@@ -22,4 +22,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Modifying
     @Query(value = "UPDATE user SET active =?1 where username = ?2", nativeQuery = true)
     void modifyByUsername(boolean active, String username);
+
+    @Query(value = "SELECT * FROM isa.user WHERE username = ?1", nativeQuery = true)
+    User findByUsername(String username);
 }
