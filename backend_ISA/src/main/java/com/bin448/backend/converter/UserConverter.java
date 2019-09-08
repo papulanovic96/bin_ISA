@@ -7,7 +7,6 @@ import com.bin448.backend.repository.FriendshipRepository;
 import com.bin448.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -15,6 +14,7 @@ import java.util.List;
 public class UserConverter extends AbstractConverter{
 
     private static FriendshipRepository fr;
+
 
     public UserConverter(FriendshipRepository f){
         this.fr = f;

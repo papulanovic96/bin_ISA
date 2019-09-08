@@ -1,0 +1,140 @@
+<div class="col-5">
+  <button type="button" class="btn btn-outline-warning" style="float: left" (click)="openAddRoomModal()"><i
+    class="fa fa-plus"></i>Add room
+  </button>
+  <br/>
+  <label></label>
+  <table style="width: 230%" class="table table-fixed table-hover">
+    <thead>
+    <tr>
+      <th scope="col-xs-1">Room number</th>
+      <th scope="col-xs-1">Hotel</th>
+      <th scope="col-xs-1">Room type</th>
+      <th scope="col-1">Price per night  <i class="fa fa-euro"></i></th>
+      <th scope="col-xs-1">Floor</th>
+      <th scope="col-1">Grade</th>
+      <th scope="col-xs-1" colspan="2"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor='let room of listOfRooms; let reserved of listOfReservedRooms'>
+      <td>{{ room.number }}</td>
+      <td>{{ convertHotelIdToHotelName(room.hotelId) }}</td>
+      <td>{{ convertTypeIdToTypeName(room.roomType)}}</td>
+      <td>{{ room.pricePerNight}}</td>
+      <td>{{room.floor}}</td>
+      <td>{{ room.avgGrade}}</td>
+      <td><a>
+        <button *ngIf="!room.reserved" type="button" class="btn btn-outline-warning" (click)="changeRoom(room.number)">
+          <i
+            class="fa fa-refresh"></i>Change
+        </button>
+      </a></td>
+      <td><a>
+        <button *ngIf="!room.reserved" type="button" class="btn btn-outline-warning" (click)="removeRoom(room.number)">
+          <i
+            class="fa fa-remove"></i>Remove
+        </button>
+      </a></td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+
+<div class="modal" [ngStyle]="{'display':displayChange}" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeChangeRoomModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form ngNativeValidate>
+        <div class="modal-body">
+          <div class="form-group">
+            <label style="text-align: left">Hotel <i class="fa fa-building-o"></i></label>
+            <select class="form-control" name="tipH" [(ngModel)]="changedRoom.hotelId" required>
+              <option *ngFor="let hotel of listOfHotels;"
+                      [selected]=" hotel.hotel_id == changedRoom.hotelId ? true : false"
+                      [ngValue]="hotel.hotel_id">{{ hotel.name }}</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label style="text-align: left">Room type <i class="fa fa-bed"></i></label>
+            <select class="form-control" name="tipS" [(ngModel)]="changedRoom.roomType" required>
+              <option *ngFor="let type of listOfTypes;" [selected]=" type.id == changedRoom.roomType ? true : false"
+                      [ngValue]="type.id">{{ type.name }}</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Price per night <i class="fa fa-euro"></i></label>
+            <input type="number" min="1" class="form-control" [(ngModel)]="changedRoom.pricePerNight"
+                   [ngModelOptions]="{standalone: true}" (keypress)="numberOnly($event)" required>
+          </div>
+          <div class="form-group">
+            <label>Floor</label>
+            <input type="number" min="-2" class="form-control" [(ngModel)]="changedRoom.floor"
+                   [ngModelOptions]="{standalone: true}" (keypress)="numberOnly($event)" required>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-outline-success"
+                  (click)="changeRoomSave()">Done
+          </button>
+          <button type="button" class="btn btn-outline-success" (click)="closeChangeRoomModal()"><i
+            class="fa fa-close"></i>Close
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal" [ngStyle]="{'display':displayAdd}" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeAddRoomModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form ngNativeValidate>
+        <div class="modal-body">
+          <div class="form-group">
+            <label style="text-align: left">Hotel <i class="fa fa-building-o"></i></label>
+            <select class="form-control" name="tipHA" [(ngModel)]="newRoom.hotelId" required>
+              <option *ngFor="let hotel of listOfHotels;" [ngValue]="hotel.hotel_id">{{ hotel.name }}</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label style="text-align: left">Room type <i class="fa fa-bed"></i></label>
+            <select class="form-control" name="tipSA" [(ngModel)]="newRoom.roomType" required>
+              <option *ngFor="let type of listOfTypes; let itemIndex = index" [selected]="itemIndex == 0"
+                      [ngValue]="type.id">{{ type.name }}</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Price per night <i class="fa fa-euro"></i></label>
+            <input type="number" min="1" class="form-control" [(ngModel)]="newRoom.pricePerNight"
+                   [ngModelOptions]="{standalone: true}" (keypress)="numberOnly($event)" required>
+          </div>
+          <div class="form-group">
+            <label>Floor </label>
+            <input type="number" min="-2" class="form-control" [(ngModel)]="newRoom.floor"
+                   [ngModelOptions]="{standalone: true}" (keypress)="numberOnly($event)" required>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-outline-success"
+                  (click)="addRoom()">Done
+          </button>
+          <button type="button" class="btn btn-outline-success" (click)="closeAddRoomModal()"><i
+            class="fa fa-close"></i>Close
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+

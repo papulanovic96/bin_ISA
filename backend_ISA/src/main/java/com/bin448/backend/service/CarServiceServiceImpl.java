@@ -6,11 +6,13 @@ import com.bin448.backend.converter.CarServiceRateConverter;
 import com.bin448.backend.entity.*;
 import com.bin448.backend.entity.CarService;
 import com.bin448.backend.entity.DTOentity.CarServiceDTO;
+
 import com.bin448.backend.entity.DTOentity.CarServicePriceListDTO;
 import com.bin448.backend.entity.DTOentity.CarServiceRateDTO;
 import com.bin448.backend.repository.*;
 import org.hibernate.service.spi.InjectService;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,6 +26,7 @@ import java.util.Optional;
 public class CarServiceServiceImpl implements CarServiceService {
 
     private CarServiceRepository csr;
+
     private CarRepository cr;
     private CarServicePriceListRepository csPrice;
     private CarServiceRateRepository csrr;
@@ -37,6 +40,9 @@ public class CarServiceServiceImpl implements CarServiceService {
     }
 
 
+    public CarServiceServiceImpl(CarServiceRepository csr) {
+        this.csr = csr;
+    }
 
 
     @Override
@@ -243,6 +249,7 @@ public class CarServiceServiceImpl implements CarServiceService {
             newList.add(CarServiceConverter.fromEntity(cs));
         }
             return newList;
+
 
     }
 

@@ -1,3 +1,6 @@
+import {HotelComponent} from './hotel/hotel.component';
+import {RoomComponent} from './room/room.component';
+import {ReservationComponent} from './reservation/reservation.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
@@ -28,6 +31,9 @@ import { FriendshipComponent } from './friendship/friendship.component';
     PlaneSeatComponent,
     AirlineComponent,
     PlaneTicketComponent,
+    HotelComponent,
+    RoomComponent,
+    ReservationComponent,
     FlightComponent,
     CarComponent,
     LoginComponent,
@@ -37,10 +43,10 @@ import { FriendshipComponent } from './friendship/friendship.component';
     RentACarPriceListComponent,
     UserHistoryComponent,
     FriendshipComponent,
-
   ],
 
   imports: [
+    FormsModule,
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
@@ -52,6 +58,9 @@ import { FriendshipComponent } from './friendship/friendship.component';
     RouterModule.forRoot([
       {path: 'planeseats', component: PlaneSeatComponent},
       {path: 'airlines', component: AirlineComponent},
+      {path: 'hotels', component: HotelComponent},
+      {path: 'rooms', component: RoomComponent},
+      {path: 'reservations', component: ReservationComponent}
       {path: 'cars', component: CarComponent},
       {path: 'register', component:RegisterComponent},
       {path: 'carServices', component:RentACarComponent},
@@ -67,4 +76,6 @@ import { FriendshipComponent } from './friendship/friendship.component';
 providers: [],
   bootstrap: [AppComponent]
 })
+
 export class AppModule { }
+

@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface CarServiceRepository extends JpaRepository<CarService,String> {
+public interface CarServiceRepository extends JpaRepository<CarService, String> {
 
 
     CarService getCarServiceByCarServiceName(String name);

@@ -7,11 +7,12 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
+
 
 @Table(name = "cars",uniqueConstraints={@UniqueConstraint(columnNames={"regID"})})
 
 @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
+
 public class Car {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
