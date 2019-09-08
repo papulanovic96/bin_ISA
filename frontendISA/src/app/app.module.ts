@@ -20,6 +20,7 @@ import { RentACarPriceListComponent } from './rent-acar-price-list/rent-acar-pri
 import { RatingModule } from 'ngx-bootstrap/rating';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { UserHistoryComponent } from './user-history/user-history.component';
+import { FriendshipComponent } from './friendship/friendship.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { UserHistoryComponent } from './user-history/user-history.component';
     RentACarComponent,
     RentACarPriceListComponent,
     UserHistoryComponent,
+    FriendshipComponent,
 
   ],
 
@@ -43,7 +45,7 @@ import { UserHistoryComponent } from './user-history/user-history.component';
     BrowserAnimationsModule,
     HttpClientModule,
     FormsModule,
-    MDBBootstrapModule,
+    MDBBootstrapModule.forRoot(),
     AppRoutingModule,
     RatingModule.forRoot(),
     BsDatepickerModule.forRoot(),
@@ -54,8 +56,8 @@ import { UserHistoryComponent } from './user-history/user-history.component';
       {path: 'register', component:RegisterComponent},
       {path: 'carServices', component:RentACarComponent},
       {path: 'carServicePR',component:RentACarPriceListComponent},
-      {path: 'userHistory',component:UserHistoryComponent}
-
+      {path: 'userHistory',component:UserHistoryComponent},
+      {path: 'profile', component: FriendshipComponent}
 
     ], {useHash: true}),
     BrowserAnimationsModule

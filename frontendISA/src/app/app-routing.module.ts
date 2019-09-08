@@ -8,6 +8,7 @@ import {RegisterComponent} from "./register/register.component";
 import {RentACarComponent} from "./rent-acar/rent-acar.component";
 import {RentACarPriceListComponent} from "./rent-acar-price-list/rent-acar-price-list.component";
 import {UserHistoryComponent} from "./user-history/user-history.component";
+import { FriendshipComponent } from './friendship/friendship.component';
 
 const appRoutes: Routes = [
 
@@ -17,10 +18,8 @@ const appRoutes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'carServicePR', component: RentACarPriceListComponent,canActivate:[AuthGaurdService] },
   { path: 'carServices', component: RentACarComponent,canActivate:[AuthGaurdService] },
-  { path: 'userHistory', component: UserHistoryComponent}
-
-
-
+  { path: 'userHistory', component: UserHistoryComponent},
+  { path: 'profile', component: FriendshipComponent}
 ];
 
 export const routing = RouterModule.forRoot(appRoutes);
