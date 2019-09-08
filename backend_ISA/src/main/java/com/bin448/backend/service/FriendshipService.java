@@ -19,6 +19,10 @@ public class FriendshipService {
         friendshipRepository.save(newFriendship);
     }
 
+    public void delete(Friendship newFriendship) {
+        friendshipRepository.delete(newFriendship);
+    }
+
     public List<FrendshipDTO> findAll() {
         List<Friendship> newList = friendshipRepository.findAll();
         List<FrendshipDTO> newListDTO = FriendshipConverter.fromEntityList(newList, e -> FriendshipConverter.fromEntity(e));

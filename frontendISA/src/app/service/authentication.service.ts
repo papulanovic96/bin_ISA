@@ -27,7 +27,7 @@ export class AuthenticationService {
    
     return !(user === null)
   }
-
+  
   isUserUSER() {
     let user = sessionStorage.getItem('role')
     return (user !== null && user === "ROLE_USER")

@@ -11,10 +11,12 @@ import java.util.List;
 public interface UserService {
 
     boolean modify(UserDTO oldUser);
-    void deleteFriend(UserDTO user, String friendsUsername);
-    void sendRequest(User user);
-    void acceptFriendship();
-    List<FrendshipDTO> getMyFriends(UserDTO user);
+    void sendRequest(String usernameSender, String usernameReceiver);
+    void acceptFriendship(String usernameSender, String usernameReceiver);
+    void declineFriendship(String usernameSender, String usernameReceiver);
+    void deleteFriendship(String usernameSender, String usernameReceiver);
+    List<String> getMyReceivedRequests(String username);
+    List<UserDTO> findAll(String username);
     User getUserByUsername(String username);
     String addUser(UserDTO u);
     boolean logIn(String username,String password);

@@ -1,5 +1,8 @@
 package com.bin448.backend.entity;
 
+import org.hibernate.annotations.Where;
+import org.hibernate.annotations.WhereJoinTable;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
