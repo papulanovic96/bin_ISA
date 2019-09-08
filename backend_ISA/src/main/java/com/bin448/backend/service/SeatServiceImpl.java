@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-public class SeatServiceImpl implements SeatService{
+public class SeatServiceImpl implements SeatService {
     @Autowired
     private SeatRepository seatRepository;
 
@@ -40,18 +40,19 @@ public class SeatServiceImpl implements SeatService{
         PlaneSeatDTO newSeatDTO = PlaneSeatConverter.fromEntity(newSeat);
         return newSeatDTO;
     }
+
     @Transactional
     @Override
     public boolean modifySeat(PlaneSeatDTO seat) {
         PlaneSeat newSeat = PlaneSeatConverter.toEntity(seat);
         PlaneSeat newSeatForUse = seatRepository.findById(newSeat.getSeatId()).orElse(null);
-        if(newSeatForUse == null) {
+        if (newSeatForUse == null) {
             return false;
         } else if (newSeatForUse.getReserved()) {
             return false;
         }
-            seatRepository.modifySeat(newSeat.getSeatId(), newSeat.getAirline(), newSeat.getTicket());
-            return true;
+        seatRepository.modifySeat(newSeat.getSeatId(), newSeat.getAirline(), newSeat.getTicket());
+        return true;
 
     }
 }

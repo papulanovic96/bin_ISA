@@ -1,6 +1,5 @@
 package com.bin448.backend.controller;
 
-import com.bin448.backend.entity.Airline;
 import com.bin448.backend.entity.DTOentity.AirlineDTO;
 import com.bin448.backend.service.AirlineService;
 import org.springframework.beans.factory.annotation.Autowired;

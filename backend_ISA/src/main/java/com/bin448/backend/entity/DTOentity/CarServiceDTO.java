@@ -1,8 +1,5 @@
 package com.bin448.backend.entity.DTOentity;
 
-import com.bin448.backend.entity.Car;
-
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 

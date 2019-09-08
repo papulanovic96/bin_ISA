@@ -5,7 +5,7 @@ import com.bin448.backend.entity.DTOentity.PlaneSeatDTO;
 import com.bin448.backend.entity.PlaneSeat;
 import com.bin448.backend.entity.PlaneTicket;
 
-public abstract class PlaneSeatConverter extends AbstractConverter{
+public abstract class PlaneSeatConverter extends AbstractConverter {
 
     public static PlaneSeatDTO fromEntity(PlaneSeat e) {
         PlaneSeatDTO planeSeatDTO = new PlaneSeatDTO();

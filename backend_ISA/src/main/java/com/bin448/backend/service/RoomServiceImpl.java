@@ -1,34 +1,50 @@
 package com.bin448.backend.service;
 
+import com.bin448.backend.converter.HotelReservationConverter;
 import com.bin448.backend.converter.RoomConverter;
+import com.bin448.backend.entity.DTOentity.HotelReservationDTO;
 import com.bin448.backend.entity.DTOentity.RoomDTO;
-import com.bin448.backend.entity.Hotel;
+import com.bin448.backend.entity.HotelReservation;
 import com.bin448.backend.entity.Room;
 import com.bin448.backend.exception.NotFoundException;
+import com.bin448.backend.repository.HotelReservationRepository;
 import com.bin448.backend.repository.RoomRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class RoomServiceImpl implements RoomService {
 
     private final RoomRepository roomRepository;
     private final HotelService hotelService;
+    private final HotelReservationRepository hotelReservationRepository;
 
-    public RoomServiceImpl(RoomRepository roomRepository, HotelService hotelService) {
+    public RoomServiceImpl(RoomRepository roomRepository, HotelService hotelService, HotelReservationRepository hotelReservationRepository) {
         this.roomRepository = roomRepository;
         this.hotelService = hotelService;
+        this.hotelReservationRepository = hotelReservationRepository;
+    }
+
+    @Override
+    public List<RoomDTO> findAll() {
+        return changeListOfRoomToRoomDTO(roomRepository.findByDeleted(false));
     }
 
     @Override
     public void addRoom(RoomDTO roomDTO) {
-        hotelService.checkIfHotelExsists(roomDTO.getHotelId());
+        hotelService.checkIfHotelExists(roomDTO.getHotelId());
+        roomDTO.setAvgGrade(0d);
+        roomDTO.setReserved(false);
         roomRepository.save(RoomConverter.toEntity(roomDTO));
     }
 
     @Override
     public void removeRoom(Long id) {
         Room room = findRoomById(id);
-        if (room.getReserved() == false) {
+        if (!existReservationWithRoomId(id)) {
             room.setDeleted(true);
             roomRepository.save(room);
         }
@@ -36,21 +52,83 @@ public class RoomServiceImpl implements RoomService {
 
     @Override
     public void changeRoom(RoomDTO roomDTO, Long id) {
+        roomDTO.setNumber(id);
         Room room = findRoomById(id);
-        hotelService.checkIfHotelExsists(roomDTO.getHotelId());
-        if (room.getReserved() == false) {
-            Hotel hotel = new Hotel();
-            hotel.setHotel_id(roomDTO.getHotelId());
-            room.setHotel(hotel);
-            room.setPricePerNight(roomDTO.getPricePerNight());
-            roomRepository.save(room);
+        hotelService.checkIfHotelExists(roomDTO.getHotelId());
+        if (!existReservationWithRoomId(id)) {
+            roomRepository.save(RoomConverter.toEntity(roomDTO));
         }
+    }
+
+    @Override
+    public void changeRoomReserved(RoomDTO roomDTO, Long id) {
+        roomDTO.setNumber(id);
+        roomRepository.save(RoomConverter.toEntity(roomDTO));
     }
 
     @Override
     public Room findRoomById(Long id) {
         return roomRepository.findByNumberAndDeleted(id, false)
                 .orElseThrow(() -> new NotFoundException(String.format("Room with id %s not found", id)));
+    }
+
+    @Override
+    public RoomDTO findRoomDTOById(Long id) {
+        return RoomConverter.fromEntity(findRoomById(id));
+    }
+
+    @Override
+    public List<RoomDTO> findRoomsByHotelId(Long hotelId) {
+        return changeListOfRoomToRoomDTO(roomRepository.findByHotel_IdAndDeleted(hotelId,false));
+    }
+
+    @Override
+    public List<List<RoomDTO>> findRoomsFromReservation(List<RoomDTO> rooms, HotelReservationDTO hotelReservationDTO) {
+        List<List<RoomDTO>> allRooms = new ArrayList<>();
+        for (RoomDTO room : rooms) {
+            List<RoomDTO> appropriateRoom = new ArrayList<RoomDTO>();
+            List<RoomDTO> possibleRooms = changeListOfRoomToRoomDTO(roomRepository.findByHotel_IdAndRoomType_IdAndDeleted(room.getHotelId(), room.getRoomType(),false));
+            for (RoomDTO possibleRoom : possibleRooms) {
+                if (room.getPricePerNight() >= possibleRoom.getPricePerNight() || room.getPricePerNight() == 0) {
+                    if (checkIfThereIsAvailableRoom(possibleRoom, hotelReservationDTO)) {
+                        appropriateRoom.add(possibleRoom);
+                    }
+                }
+            }
+            allRooms.add(appropriateRoom);
+        }
+        return allRooms;
+    }
+
+    @Override
+    public boolean checkIfThereIsAvailableRoom(RoomDTO room, HotelReservationDTO hotelReservationDTO) {
+        HotelReservation hotelReservation = HotelReservationConverter.toEntity(hotelReservationDTO);
+
+        List<HotelReservation> hotelReservations = hotelReservationRepository.getByRoom_Number(room.getNumber());
+        boolean notReserved = true;
+
+        for (HotelReservation r : hotelReservations) {
+            if ((hotelReservation.getArrivalDate().compareTo(r.getReturnDate()) > 0 && hotelReservation.getReturnDate().compareTo(r.getReturnDate()) > 0 && hotelReservation.getArrivalDate().compareTo(r.getArrivalDate()) > 0 && hotelReservation.getReturnDate().compareTo(r.getArrivalDate()) > 0)) { //date1 je posle rezervisanog odlaska
+
+            } else if (hotelReservation.getArrivalDate().compareTo(r.getReturnDate()) < 0 && hotelReservation.getReturnDate().compareTo(r.getReturnDate()) < 0 && hotelReservation.getArrivalDate().compareTo(r.getArrivalDate()) < 0 && hotelReservation.getReturnDate().compareTo(r.getArrivalDate()) < 0) {
+
+            } else {
+                notReserved = false;
+            }
+        }
+
+        return notReserved;
+    }
+
+    @Override
+    public boolean existReservationWithRoomId(Long roomId) {
+        return hotelReservationRepository.getByRoom_Number(roomId).size() != 0;
+    }
+
+    public List<RoomDTO> changeListOfRoomToRoomDTO(List<Room> rooms) {
+        return rooms.stream()
+                .map(room -> RoomConverter.fromEntity(room))
+                .collect(Collectors.toList());
     }
 
 }

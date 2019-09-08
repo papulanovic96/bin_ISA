@@ -15,12 +15,17 @@ public class Room {
     private Long number;
     @ManyToOne
     private Hotel hotel;
+
+    @ManyToOne
+    private RoomType roomType;
     @Column
     private Double pricePerNight;
 
+    private Integer floor;
+
     private Double avgGrade;
 
-    private Boolean reserved;
+    private boolean reserved;
 
     private Boolean deleted;
 
@@ -56,19 +61,35 @@ public class Room {
         this.avgGrade = avgGrade;
     }
 
-    public Boolean getReserved() {
-        return reserved;
-    }
-
-    public void setReserved(Boolean reserved) {
-        this.reserved = reserved;
-    }
-
     public Boolean getDeleted() {
         return deleted;
     }
 
     public void setDeleted(Boolean deleted) {
         this.deleted = deleted;
+    }
+
+    public RoomType getRoomType() {
+        return roomType;
+    }
+
+    public void setRoomType(RoomType roomType) {
+        this.roomType = roomType;
+    }
+
+    public Integer getFloor() {
+        return floor;
+    }
+
+    public void setFloor(Integer floor) {
+        this.floor = floor;
+    }
+
+    public boolean isReserved() {
+        return reserved;
+    }
+
+    public void setReserved(boolean reserved) {
+        this.reserved = reserved;
     }
 }

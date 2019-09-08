@@ -8,15 +8,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.ConcurrentModificationException;
 import java.util.List;
 
 @Service
 @Transactional
 public class CarServiceImpl implements CarService {
     private CarRepository cr;
-    public CarServiceImpl(CarRepository cr){
-        this.cr=cr;
+
+    public CarServiceImpl(CarRepository cr) {
+        this.cr = cr;
     }
 
     @Override
@@ -32,15 +32,15 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public CarDTO getCar(String reg) {
-    CarDTO c = CarConverter.fromEntity(cr.getCarByRegID(reg));
-    return c;
+        CarDTO c = CarConverter.fromEntity(cr.getCarByRegID(reg));
+        return c;
     }
 
     @Override
     public List<CarDTO> findAll(Long id) {
-        List <Car> auti = cr.findAllByCarService_CarServiceId(id);
+        List<Car> auti = cr.findAllByCarService_CarServiceId(id);
         List<CarDTO> cardto = new ArrayList<>();
-        for(int i =0;i<auti.size();i++)
+        for (int i = 0; i < auti.size(); i++)
             cardto.add(CarConverter.fromEntity(auti.get(i)));
         return cardto;
     }

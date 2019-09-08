@@ -1,6 +1,5 @@
 package com.bin448.backend.service;
 
-import com.bin448.backend.entity.Airline;
 import com.bin448.backend.entity.DTOentity.UserDTO;
 import com.bin448.backend.entity.User;
 

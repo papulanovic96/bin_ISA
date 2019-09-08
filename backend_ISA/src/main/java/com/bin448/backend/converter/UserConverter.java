@@ -3,9 +3,7 @@ package com.bin448.backend.converter;
 import com.bin448.backend.entity.DTOentity.UserDTO;
 import com.bin448.backend.entity.User;
 
-import java.util.List;
-
-public abstract class UserConverter extends AbstractConverter{
+public abstract class UserConverter extends AbstractConverter {
 
     public UserDTO fromEntity(User e) {
         UserDTO newDTOUser = new UserDTO();

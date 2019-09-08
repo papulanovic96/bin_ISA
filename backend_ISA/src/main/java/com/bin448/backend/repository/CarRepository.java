@@ -7,9 +7,12 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface CarRepository extends JpaRepository<Car,String> {
+public interface CarRepository extends JpaRepository<Car, String> {
     Car getCarByRegID(String regId);
+
     void deleteCarByRegID(String regId);
+
     List<Car> findAllByCarService_CarServiceId(Long id);
+
     void deleteAllByCarService_CarServiceId(Long id);
 }
