@@ -29,8 +29,8 @@ public class Airline {
     private Collection<PlaneTicket> discountTicket;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "airline", cascade = CascadeType.ALL)
     private Collection<PlaneSeat> planeSeats;
-    @Column
-    private HashMap<String, Double> luggagePrice;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "airline_luggage_price", cascade = CascadeType.ALL)
+    private Collection<LuggagePrice> luggagePrice;
 
 
     public Long getId() {
@@ -89,11 +89,11 @@ public class Airline {
         this.flightList = flightList;
     }
 
-    public HashMap<String, Double> getLuggagePrice() {
+    public Collection<LuggagePrice> getLuggagePrice() {
         return luggagePrice;
     }
 
-    public void setLuggagePrice(HashMap<String, Double> luggagePrice) {
+    public void setLuggagePrice(Collection<LuggagePrice> luggagePrice) {
         this.luggagePrice = luggagePrice;
     }
 

@@ -16,20 +16,17 @@ public class CarService {
     @Column(nullable = false)
     private Long carServiceId;
 
-    @Column(name = "carServiceName")
+    private Boolean deleted;
+
+    @Column(name="carServiceName")
     private String carServiceName;
     @Column
     private String carServiceAddress;
     @Column
     private String carServiceDescription;
     @Column
-    private HashMap<String, Double> carServiceMenu;
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "carService", cascade = CascadeType.ALL)
-    private List<Car> carsCollection;
-    @Column
     private String carServiceLocation;
-    @Transient
+    @Column
     private Double avgGrade;
 
     public Long getCarService_id() {
@@ -64,21 +61,6 @@ public class CarService {
         this.carServiceDescription = carServiceDescription;
     }
 
-    public HashMap<String, Double> getCarServiceMenu() {
-        return carServiceMenu;
-    }
-
-    public void setCarServiceMenu(HashMap<String, Double> carServiceMenu) {
-        this.carServiceMenu = carServiceMenu;
-    }
-
-    public List<Car> getCarsCollection() {
-        return carsCollection;
-    }
-
-    public void setCarsCollection(List<Car> carsCollection) {
-        this.carsCollection = carsCollection;
-    }
 
     public String getCarServiceLocation() {
         return carServiceLocation;
@@ -94,5 +76,13 @@ public class CarService {
 
     public void setAvgGrade(Double avgGrade) {
         this.avgGrade = avgGrade;
+    }
+
+    public Boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        this.deleted = deleted;
     }
 }

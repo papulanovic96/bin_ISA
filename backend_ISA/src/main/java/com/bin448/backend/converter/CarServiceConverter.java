@@ -4,6 +4,7 @@ import com.bin448.backend.entity.Car;
 import com.bin448.backend.entity.CarService;
 import com.bin448.backend.entity.DTOentity.CarServiceDTO;
 import com.bin448.backend.repository.CarRepository;
+import com.bin448.backend.repository.CarServiceRepository;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -13,49 +14,35 @@ import java.util.List;
 public class CarServiceConverter {
     private static CarRepository carR;
 
-    public CarServiceConverter(CarRepository cr) {
+    private static CarServiceRepository crr;
+    public CarServiceConverter(CarRepository cr, CarServiceRepository crr) {
+        this.crr = crr;
         carR = cr;
     }
+    public static CarServiceDTO fromEntity(CarService cs){
 
-    public static CarServiceDTO fromEntity(/*@org.jetbrains.annotations.NotNull*/ CarService cs) {
         CarServiceDTO csDTO = new CarServiceDTO();
-        List<String> listaReg = new ArrayList<>();
         csDTO.setCarServiceAddress(cs.getCarServiceAddress());
+        csDTO.setId(cs.getCarService_id());
+        csDTO.setAvgGrade(cs.getAvgGrade());
         csDTO.setCarServiceDescription(cs.getCarServiceDescription());
-        csDTO.setCarServiceMenu(cs.getCarServiceMenu());
-        csDTO.setCarService_id(cs.getCarService_id());
         csDTO.setCarServiceName(cs.getCarServiceName());
-        for (Car c : cs.getCarsCollection()) {
-            listaReg.add(c.getRegID());
-
-        }
-        csDTO.setCarsCollection(listaReg);
+        csDTO.setCarServiceLocation(cs.getCarServiceLocation());
+        csDTO.setDeleted(cs.isDeleted());
         return csDTO;
 
 
     }
 
-    public static CarService toEntity(/*@org.jetbrains.annotations.NotNull*/ CarServiceDTO csDTO) {
+    public static CarService toEntity(CarServiceDTO csDTO){
         CarService cs = new CarService();
+        cs.setCarService_id(csDTO.getId());
         cs.setAvgGrade(csDTO.getAvgGrade());
-        List<Car> listaAuta = new ArrayList<>();
-        Car c = new Car();
-        List<String> list = csDTO.getCarsCollection();
-        if (list != null && list.size() > 0) {
-            for (String reg : list) {
-                Car car = carR.getCarByRegID(reg);
-                listaAuta.add(car);
-            }
-            cs.setCarsCollection(listaAuta);
-
-        } else
-            cs.setCarsCollection(listaAuta);
-        cs.setCarService_id(csDTO.getCarService_id());
         cs.setCarServiceAddress(csDTO.getCarServiceAddress());
         cs.setCarServiceDescription(csDTO.getCarServiceDescription());
-        cs.setCarServiceMenu(csDTO.getCarServiceMenu());
         cs.setCarServiceLocation(csDTO.getCarServiceLocation());
         cs.setCarServiceName(csDTO.getCarServiceName());
+        cs.setDeleted(csDTO.isDeleted());
         return cs;
     }
 }

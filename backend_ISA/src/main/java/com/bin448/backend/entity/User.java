@@ -1,16 +1,17 @@
 package com.bin448.backend.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import org.hibernate.annotations.Where;
+import javax.persistence.*;
+import java.io.Serializable;
+import java.util.List;
 
 @Entity
-@Table(name = "user")
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class User {
+@Table(name = "user",uniqueConstraints={@UniqueConstraint(columnNames={"username"})})
+
+@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
+public class User implements Serializable {
+
     @Column
     private String name;
     @Column
@@ -18,9 +19,10 @@ public class User {
     @Column
     private String email;
     @Id
-    @Column(nullable = false)
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    @Column(name = "id" , nullable = false)
     private Long id;
-    @Column(nullable = false)
+    @Column(nullable = false,name = "username")
     private String username;
     @Column(nullable = false)
     private String password;
@@ -28,6 +30,15 @@ public class User {
     private String city;
     @Column
     private String telephone;
+    @Column
+    private String role;
+    @Column
+    private boolean active;
+    @OneToMany(mappedBy = "sender", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Friendship> friends;
+    @OneToMany(mappedBy = "receiver", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Friendship> requests;
+
 
     public String getLastName() {
         return lastName;
@@ -91,6 +102,39 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public List<Friendship> getFriends() {
+        return friends;
+    }
+
+    public void setFriends(List<Friendship> friends) {
+        this.friends = friends;
+    }
+
+    public List<Friendship> getRequests() {
+        return requests;
+    }
+
+    public void setRequests(List<Friendship> requests) {
+        this.requests = requests;
     }
 
 }

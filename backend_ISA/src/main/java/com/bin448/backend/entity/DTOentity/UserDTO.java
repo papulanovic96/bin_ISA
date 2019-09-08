@@ -1,13 +1,21 @@
 package com.bin448.backend.entity.DTOentity;
 
 public class UserDTO {
-
+    private Long id;
     private String name;
     private String lastName;
     private String city;
     private String email;
     private String telephone;
     private String username;
+    private String password;
+    private String role;
+    private boolean active;
+    private List<String> usernameOfFriend;
+    private List<String> usernameOfRequests;
+
+    public UserDTO() {
+    }
 
     public String getName() {
         return name;
@@ -55,6 +63,54 @@ public class UserDTO {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public List<String> getUsernameOfFriend() {
+        return usernameOfFriend;
+    }
+
+    public void setUsernameOfFriend(List<String> usernameOfFriend) {
+        this.usernameOfFriend = usernameOfFriend;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public List<String> getUsernameOfRequests() {
+        return usernameOfRequests;
+    }
+
+    public void setUsernameOfRequests(List<String> usernameOfRequests) {
+        this.usernameOfRequests = usernameOfRequests;
     }
 
 }

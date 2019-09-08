@@ -13,7 +13,7 @@ import java.util.List;
 @Service
 public class SeatServiceImpl implements SeatService {
     @Autowired
-    private SeatRepository seatRepository;
+    public SeatRepository seatRepository;
 
     @Override
     public PlaneSeat save(PlaneSeatDTO seat) {

@@ -1,14 +1,14 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
+
 <div style="text-align:center">
   <nav class="navbar navbar-expand navbar-dark bg-primary">
     <ul class = "nav navbar-nav">
       <li><a class="nav-link">MegaTravel</a></li>
-      <li class='nav-item dropdown'><a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >Plane seats</a>
-      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item"></a>
-        </div>
+
+      <li class='nav-item' *ngIf="loginService.isUserLoggedIn()"><a class="nav-link"  [routerLink]="['/profile']" routerLinkActive="router-link-active" >ProfileUSER</a>
+
       </li>
-      <li class='nav-item dropdown'><a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >Airline</a>
+      <li class='nav-item dropdown'><a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >Airline</a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <a class="dropdown-item" [routerLink]="['/airlines']" routerLinkActive="router-link-active" >Airlines</a>
             <a class="dropdown-item" [routerLink]="['/planeseats']" routerLinkActive="router-link-active" >Seats</a>
@@ -20,11 +20,74 @@
       </li>
     </ul>
 
+</div>
+<div *ngIf="loginService.isUserLoggedIn() && !loginService.isUserAirlineAdmin()">
+      <li><a *ngIf="loginService.isUserLoggedIn() && loginService.isUserADMIN()"   routerLink="/cars" class="nav-link">Cars</a></li>
+      <li><a *ngIf="loginService.isUserLoggedIn() || loginService.isUserADMIN()"  routerLink="/carServices" class="nav-link">Rent A Car</a></li>
+    </div>
+      <li><a *ngIf="loginService.isUserLoggedIn() && loginService.isUserUSER()"  routerLink="/userHistory" class="nav-link">Profile</a></li>
+      <div *ngIf="loginService.isUserLoggedIn() && !loginService.isUserAirlineAdmin()">
+      <li><a *ngIf="loginService.isUserLoggedIn() || loginService.isUserADMIN()"  routerLink="/carServicePR" class="nav-link">Price List</a></li> 
+      </div>
+      <li><a *ngIf="!loginService.isUserLoggedIn()" routerLink="/login" class="nav-link">Login</a></li>
+      <li><a *ngIf="loginService.isUserLoggedIn()" routerLink="/logout" class="nav-link">LogOut</a></li>
+      <div *ngIf="!loginService.isUserLoggedIn()"><li><a  routerLink="/register" class="nav-link">Register</a></li></div>
 
+    </ul>
+ <div style="margin-left: 7cm">
+   <label style="margin-top: 9px;color: white; font-family: Verdana; float: right" id="LogLab" *ngIf="loginService.isUserLoggedIn()"> Current user : [{{loginService.getLogged()}}] &nbsp; &nbsp; </label>
+   <label style="margin-top: 9px;color: white; font-family: Verdana; float: right" id="LogLab2" *ngIf="loginService.isUserLoggedIn()"> Role : [{{loginService.getRole()}}] </label>
+ </div>
   </nav>
   <br><br>
-</div>
 
-<div style="text-align:center">
-  <router-outlet></router-outlet>
-</div>
+</div> -->
+
+
+
+
+
+
+<header class="h-100">
+  <mdb-navbar SideClass="navbar fixed-top navbar-expand-lg navbar-dark scrolling-navbar intro-fixed-nav" [containerInside]="false">
+    <mdb-navbar-brand>
+      <a class="logo navbar-brand" href="#">
+        <strong>MegaTravel</strong>
+      </a>
+    </mdb-navbar-brand>
+    <links>
+      <ul class="navbar-nav mr-auto">
+
+          <li class="nav-item waves-light" mdbWavesEffect *ngIf="loginService.isUserLoggedIn()"><a class="nav-link"  [routerLink]="['/profile']" routerLinkActive="router-link-active" >ProfileUSER</a>
+    
+          </li>
+          <li class='nav-item dropdown waves-light' mdbWavesEffect><a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >Airline</a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" [routerLink]="['/airlines']" routerLinkActive="router-link-active" >Airlines  </a>
+                <a class="dropdown-item" [routerLink]="['/planeseats']" routerLinkActive="router-link-active" >Seats</a>
+    </div>
+          <li *ngIf="loginService.isUserLoggedIn() && !loginService.isUserAirlineAdmin()" class="nav-item waves-light" mdbWavesEffect><a *ngIf="loginService.isUserLoggedIn() || loginService.isUserADMIN()"  routerLink="/carServices" class="nav-link">Rent A Car</a></li>
+          <li *ngIf="loginService.isUserLoggedIn() && !loginService.isUserAirlineAdmin()" class="nav-item waves-light" mdbWavesEffect><a *ngIf="loginService.isUserLoggedIn() && loginService.isUserADMIN()"  routerLink="/cars" class="nav-link">Cars</a></li>
+          <li *ngIf="loginService.isUserLoggedIn() && !loginService.isUserAirlineAdmin()" class="nav-item waves-light" mdbWavesEffect><a *ngIf="loginService.isUserLoggedIn() && loginService.isUserADMIN()"  routerLink="/carServicePR" class="nav-link">Price List</a></li> 
+          <li class="nav-item waves-light" mdbWavesEffect><a *ngIf="loginService.isUserLoggedIn() && loginService.isUserUSER()"  routerLink="/userHistory" class="nav-link">Profile</a></li>
+          <li class="nav-item waves-light" mdbWavesEffect><a *ngIf="!loginService.isUserLoggedIn()" routerLink="/login" class="nav-link">Login</a></li>
+          <li class="nav-item waves-light" mdbWavesEffect><a *ngIf="loginService.isUserLoggedIn()" routerLink="/logout" class="nav-link">LogOut</a></li>
+    <div *ngIf="!loginService.isUserLoggedIn()"><li><a  routerLink="/register" class="nav-link">Register</a></li></div>
+      </ul>
+    </links>
+  </mdb-navbar>
+  <!-- Main -->
+  <div class="view intro-2" >
+    <div class="full-bg-img">
+      <div class="mask rgba-purple-light flex-center">
+        <div class="container text-center white-text wow fadeInUp">
+          
+                <router-outlet></router-outlet>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /.Main -->
+</header>
+
+

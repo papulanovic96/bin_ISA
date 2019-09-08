@@ -50,7 +50,7 @@ public class SeatController {
             return new ResponseEntity<>("Seat with ID: " + id + " deleted!", HttpStatus.OK);
         }
     }
-
+    
     @RequestMapping(value = "/modifySeat/{id}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> modifySeat(@PathVariable Long id, @RequestBody PlaneSeatDTO seat) {
         seat.setId(id);

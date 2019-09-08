@@ -9,26 +9,45 @@ import org.springframework.stereotype.Component;
 public class CarConverter extends AbstractConverter {
     private static CarServiceRepository cr;
 
-    public CarConverter(CarServiceRepository cr) {
-        CarConverter.cr = cr;
+    private static CarRepository cRep;
+    public CarConverter(CarServiceRepository cr,CarRepository c){
+        cRep = c;
+        this.cr=cr;
+
     }
 
     public static CarDTO fromEntity(Car c) {
         CarDTO cDTO = new CarDTO();
-        cDTO.setAvgGrade(c.getAvgGrade());
-        cDTO.setIdService(c.getCarService().getCarService_id());
-        cDTO.setCarId(c.getCarId());
+        cDTO.setNos(c.getNumOfSeats());
+        cDTO.setModel(c.getModel());
+        cDTO.setServiceId(c.getCarService().getCarService_id());
         cDTO.setRegID(c.getRegID());
+        cDTO.setConvertible(c.isConvertible());
+        cDTO.setType(c.getType());
+        cDTO.setYear(c.getYear());
+        cDTO.setServiceName(c.getCarService().getCarServiceName());
+        cDTO.setId(c.getCarId());
+        cDTO.setAvgGrade(c.getAvgGrade());
+        cDTO.setDeleted(c.getDeleted());
+        cDTO.setReserved(c.isReserved());
         return cDTO;
     }
 
     public static Car toEntity(CarDTO cDTO) {
         Car car = new Car();
-        car.setRegID(cDTO.getRegID());
         car.setAvgGrade(cDTO.getAvgGrade());
-        car.setCarId(cDTO.getCarId());
+        car.setRegID(cDTO.getRegID());
+        car.setModel(cDTO.getModel());
+        car.setCarId(cDTO.getId());
+        car.setNumOfSeats(cDTO.getNos());
+        car.setReserved(cDTO.getReserved());
         car.setReserved(false);
-        car.setCarService(cr.getCarServiceByCarServiceId(cDTO.getIdService()));
+        car.setCarService(cr.getCarServiceByCarServiceId(cDTO.getServiceId()));
+        car.setModel(cDTO.getModel());
+        car.setConvertible(cDTO.isConvertible());
+        car.setType(cDTO.getType());
+        car.setYear(cDTO.getYear());
+        car.setDeleted(cDTO.getDeleted());
         return car;
     }
 

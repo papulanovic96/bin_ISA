@@ -1,0 +1,80 @@
+
+
+<!-- modal -->
+<div class="modal" tabindex="-1" role="dialog" style="margin-left: -3cm;position: center" [ngStyle]="{'display':display5}">
+  <!-- modal-dialog -->
+  <div class="modal-dialog" role="document">
+    <!-- modal-content -->
+    <div class="modal-content">
+      <!-- modal-header -->
+      <div class="modal-header ">
+        <p>Rating</p>
+        <button type="button" class="close" aria-label="Close" (click)="closeModalDialog5()"><span aria-hidden="true">&times;</span></button>
+        <!-- <h4 class="modal-title">Login</h4> -->
+      </div>
+
+      <!-- modal-body -->
+      <div class="modal-body" >
+
+        <div>
+          <rating [max]="10" [(ngModel)]="CarRate.rate" (click)="rateCar()" [customTemplate]="tt"></rating>
+          <div class="card">
+            <pre class="card-block card-header"  style="margin:15px 0;"> <b>(<i>Rate:</i> {{CarRate.rate}})</b> </pre>
+          </div>
+          <ng-template #tt let-i="index" let-v="value">
+            <button class="btn btn-{{i < v ? 'warning' : 'default'}}">
+              {{i < v ? '&#9733;' : '&#9734;'}}
+            </button>
+          </ng-template>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- modal-footer -->
+    <div class="modal-footer">
+
+
+      <button type="button" class="btn btn-default" (click)="closeModalDialog5()" >Close</button>
+    </div>
+  </div>
+</div>
+
+
+
+<h1>In this section you can see all of your reservations!</h1>
+<section>
+  <!--for demo wrap-->
+  <h1>Reserved Cars</h1>
+  <div class="tbl-header">
+    <table class="table-striped" style="width: 100%"  border="0">
+      <thead>
+      <tr>
+        <th>Model</th>
+        <th>Year</th>
+        <th>Convertible</th>
+        <th>RentACar</th>
+        <th>Rate</th>
+
+      </tr>
+      </thead>
+
+      <tbody>
+      <tr *ngFor="let c of listOfCars">
+        <td>{{c.model}}</td>
+        <td>{{c.year}} </td>
+        <td>{{c.convertible}}</td>
+        <td>{{c.serviceName}}</td>
+        <td>{{c.avgGrade}}</td>
+        <td> <button type="button" (click)="isUserAbleToRate(c.id)" class="btn btn-danger waves-effect waves-light">Rate</button></td>
+      <td><button type="button" (click)="isUserAbleToUnreserve(c.id)" class="btn btn-danger waves-effect waves-light" >Cancel</button></td>
+      </tr>
+      </tbody>
+    </table>
+    </div>
+
+</section>
+
+
+
+

@@ -1,10 +1,7 @@
 package com.bin448.backend.converter;
 
-import com.bin448.backend.entity.Airline;
+import com.bin448.backend.entity.*;
 import com.bin448.backend.entity.DTOentity.AirlineDTO;
-import com.bin448.backend.entity.Flight;
-import com.bin448.backend.entity.PlaneSeat;
-import com.bin448.backend.entity.PlaneTicket;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -40,7 +37,17 @@ public abstract class AirlineConverter extends AbstractConverter {
             seatsID.add(ps.getSeatId());
         }
         airlineDTO.setSeatsListID(seatsID);
-        return airlineDTO;
+
+
+        Collection<LuggagePrice> luggagePrices = e.getLuggagePrice();
+        List<Long> luggageID = new ArrayList<>();
+        for(LuggagePrice lg : luggagePrices) {
+            luggageID.add(lg.getId());
+        }
+        airlineDTO.setLuggageID(luggageID);
+
+    return airlineDTO;
+
     }
 
     public static Airline toEntity(AirlineDTO d) {
@@ -82,6 +89,17 @@ public abstract class AirlineConverter extends AbstractConverter {
             }
         }
         airline.setPlaneSeats(seats);
+
+        Collection<LuggagePrice> luggagePrices = null;
+        List<Long> luggageID = d.getLuggageID();
+        LuggagePrice newLuggage = new LuggagePrice();
+        if(luggageID != null) {
+            for(Long key : luggageID) {
+                newLuggage.setId(key);
+                luggagePrices.add(newLuggage);
+            }
+        }
+        airline.setLuggagePrice(luggagePrices);
         return airline;
     }
 }
