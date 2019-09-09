@@ -13,21 +13,29 @@ import { FlightComponent } from './flight/flight.component';
 import { AirlineComponent } from './airline/airline.component';
 import { PlaneSeatComponent } from './plane-seat/plane-seat.component';
 import { FlightListComponent } from './flight/flight-list/flight-list.component';
+import {HotelComponent} from "./hotel/hotel.component";
+import {RoomComponent} from "./room/room.component";
+import {ReservationComponent} from "./reservation/reservation.component";
+
 
 const appRoutes: Routes = [
 
   { path: 'login', component: LoginComponent },
-  { path: 'logout', component: LogoutComponent,canActivate:[AuthGaurdService] },
-  { path: 'cars', component: CarComponent,canActivate:[AuthGaurdService] },
+  { path: 'logout', component: LogoutComponent},
+  { path: 'cars', component: CarComponent},
   { path: 'register', component: RegisterComponent },
-  { path: 'carServicePR', component: RentACarPriceListComponent,canActivate:[AuthGaurdService] },
-  { path: 'carServices', component: RentACarComponent,canActivate:[AuthGaurdService] },
+  { path: 'carServicePR', component: RentACarPriceListComponent },
+  { path: 'carServices', component: RentACarComponent},
   { path: 'userHistory', component: UserHistoryComponent},
   { path: 'profile', component: FriendshipComponent},
   { path: 'airlines', component: AirlineComponent},
   { path: 'planeseats', component: PlaneSeatComponent},
   { path: 'flightList', component: FlightListComponent},
+  { path: 'hotel', component: HotelComponent },
+  { path: 'room', component: RoomComponent },
+  { path: 'reservation', component: ReservationComponent },
   { path: '**', component: FlightComponent}
+
 ];
 
 export const routing = RouterModule.forRoot(appRoutes);
@@ -36,4 +44,6 @@ export const routing = RouterModule.forRoot(appRoutes);
   exports: [RouterModule]
 })
 
+
 export class AppRoutingModule {}
+

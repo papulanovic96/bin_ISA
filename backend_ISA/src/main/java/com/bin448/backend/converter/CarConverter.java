@@ -7,15 +7,18 @@ import com.bin448.backend.repository.CarServiceRepository;
 import org.springframework.stereotype.Component;
 
 @Component
-public class CarConverter extends AbstractConverter{
+public class CarConverter extends AbstractConverter {
     private static CarServiceRepository cr;
+
     private static CarRepository cRep;
-    public CarConverter(CarServiceRepository cr,CarRepository c){
+
+    public CarConverter(CarServiceRepository cr, CarRepository c) {
         cRep = c;
-        this.cr=cr;
+        this.cr = cr;
+
     }
 
-    public static CarDTO fromEntity(Car c){
+    public static CarDTO fromEntity(Car c) {
         CarDTO cDTO = new CarDTO();
         cDTO.setNos(c.getNumOfSeats());
         cDTO.setModel(c.getModel());
@@ -32,7 +35,7 @@ public class CarConverter extends AbstractConverter{
         return cDTO;
     }
 
-    public static Car toEntity(CarDTO cDTO){
+    public static Car toEntity(CarDTO cDTO) {
         Car car = new Car();
         car.setAvgGrade(cDTO.getAvgGrade());
         car.setRegID(cDTO.getRegID());

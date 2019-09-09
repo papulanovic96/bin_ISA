@@ -12,6 +12,14 @@
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <a class="dropdown-item" [routerLink]="['/airlines']" routerLinkActive="router-link-active" >Airlines</a>
             <a class="dropdown-item" [routerLink]="['/planeseats']" routerLinkActive="router-link-active" >Seats</a>
+        </div>
+      </li>
+      <li class='nav-item'><a class="nav-link" [routerLink]="['/hotels']" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >Hotel</a>
+      </li>
+      <li class='nav-item'><a class="nav-link" [routerLink]="['/rooms']" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >Room</a>
+      </li>
+    </ul>
+
 </div>
 <div *ngIf="loginService.isUserLoggedIn() && !loginService.isUserAirlineAdmin()">
       <li><a *ngIf="loginService.isUserLoggedIn() && loginService.isUserADMIN()"   routerLink="/cars" class="nav-link">Cars</a></li>
@@ -32,7 +40,6 @@
  </div>
   </nav>
   <br><br>
-
 
 </div> -->
 
@@ -62,11 +69,16 @@
     </div>
           <li class="nav-item waves-light" mdbWavesEffect><a routerLink="/carServices" class="nav-link">Rent A Car</a></li>
           <li *ngIf="loginService.isUserLoggedIn() && !loginService.isUserAirlineAdmin()" class="nav-item waves-light" mdbWavesEffect><a *ngIf="loginService.isUserLoggedIn() && loginService.isUserADMIN()"  routerLink="/cars" class="nav-link">Cars</a></li>
-          <li *ngIf="loginService.isUserLoggedIn() && !loginService.isUserAirlineAdmin()" class="nav-item waves-light" mdbWavesEffect><a *ngIf="loginService.isUserLoggedIn() && loginService.isUserADMIN()"  routerLink="/carServicePR" class="nav-link">Price List</a></li> 
+          <li *ngIf="loginService.isUserLoggedIn() && !loginService.isUserAirlineAdmin()" class="nav-item waves-light" mdbWavesEffect><a *ngIf="loginService.isUserLoggedIn() && loginService.isUserADMIN()"  routerLink="/carServicePR" class="nav-link">Price List</a></li>
           <li class="nav-item waves-light" mdbWavesEffect><a *ngIf="loginService.isUserLoggedIn() && loginService.isUserUSER()"  routerLink="/userHistory" class="nav-link">Profile</a></li>
           <li class="nav-item waves-light" mdbWavesEffect><a *ngIf="!loginService.isUserLoggedIn()" routerLink="/login" class="nav-link">Login</a></li>
           <li class="nav-item waves-light" mdbWavesEffect><a *ngIf="loginService.isUserLoggedIn()" routerLink="/logout" class="nav-link">LogOut</a></li>
-    <div *ngIf="!loginService.isUserLoggedIn()"><li><a  routerLink="/register" class="nav-link">Register</a></li></div>
+
+        <li class='nav-item'><a class="nav-link" [routerLink]="['/hotels']"  role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >Hotel</a>
+        </li>
+        <li class='nav-item'><a *ngIf="loginService.isUserHotelAdmin()" class="nav-link" [routerLink]="['/rooms']" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >Room</a>
+        </li>
+        <div *ngIf="!loginService.isUserLoggedIn()"><li><a  routerLink="/register" class="nav-link">Register</a></li></div>
       </ul>
     </links>
   </mdb-navbar>
@@ -82,3 +94,5 @@
   </div>
   <!-- /.Main -->
 </header>
+
+

@@ -1,6 +1,5 @@
 package com.bin448.backend.converter;
 
-import com.bin448.backend.controller.CarServiceController;
 import com.bin448.backend.entity.Car;
 import com.bin448.backend.entity.CarService;
 import com.bin448.backend.entity.DTOentity.CarServiceDTO;
@@ -10,15 +9,18 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+
 @Component
 public class CarServiceConverter {
     private static CarRepository carR;
+
     private static CarServiceRepository crr;
     public CarServiceConverter(CarRepository cr, CarServiceRepository crr) {
         this.crr = crr;
         carR = cr;
     }
     public static CarServiceDTO fromEntity(CarService cs){
+
         CarServiceDTO csDTO = new CarServiceDTO();
         csDTO.setCarServiceAddress(cs.getCarServiceAddress());
         csDTO.setId(cs.getCarService_id());
@@ -31,6 +33,7 @@ public class CarServiceConverter {
 
 
     }
+
     public static CarService toEntity(CarServiceDTO csDTO){
         CarService cs = new CarService();
         cs.setCarService_id(csDTO.getId());

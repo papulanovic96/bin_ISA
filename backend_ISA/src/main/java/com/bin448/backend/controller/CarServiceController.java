@@ -8,9 +8,6 @@ import com.bin448.backend.entity.DTOentity.CarServicePriceListDTO;
 import com.bin448.backend.entity.DTOentity.CarServiceRateDTO;
 import com.bin448.backend.repository.CarServiceRepository;
 import com.bin448.backend.service.CarServiceService;
-import com.bin448.backend.service.CarServiceServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,7 +22,6 @@ public class CarServiceController {
     public CarServiceController(CarServiceService css, CarServiceRepository csr){
         this.css = css;
         this.csr = csr;
-
     }
 
     @PostMapping("/add")

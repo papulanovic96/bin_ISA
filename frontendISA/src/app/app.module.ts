@@ -1,3 +1,6 @@
+import {HotelComponent} from './hotel/hotel.component';
+import {RoomComponent} from './room/room.component';
+import {ReservationComponent} from './reservation/reservation.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
@@ -29,6 +32,9 @@ import { FlightListComponent } from './flight/flight-list/flight-list.component'
     PlaneSeatComponent,
     AirlineComponent,
     PlaneTicketComponent,
+    HotelComponent,
+    RoomComponent,
+    ReservationComponent,
     FlightComponent,
     CarComponent,
     LoginComponent,
@@ -39,10 +45,10 @@ import { FlightListComponent } from './flight/flight-list/flight-list.component'
     UserHistoryComponent,
     FriendshipComponent,
     FlightListComponent,
-
   ],
 
   imports: [
+    FormsModule,
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
@@ -54,6 +60,9 @@ import { FlightListComponent } from './flight/flight-list/flight-list.component'
     RouterModule.forRoot([
       {path: 'planeseats', component: PlaneSeatComponent},
       {path: 'airlines', component: AirlineComponent},
+      {path: 'hotels', component: HotelComponent},
+      {path: 'rooms', component: RoomComponent},
+      {path: 'reservations', component: ReservationComponent},
       {path: 'cars', component: CarComponent},
       {path: 'register', component:RegisterComponent},
       {path: 'carServices', component:RentACarComponent},
@@ -69,4 +78,6 @@ import { FlightListComponent } from './flight/flight-list/flight-list.component'
 providers: [],
   bootstrap: [AppComponent]
 })
+
 export class AppModule { }
+

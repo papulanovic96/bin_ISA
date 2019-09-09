@@ -3,7 +3,6 @@ package com.bin448.backend.entity;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
-import java.util.Collection;
 import java.util.HashMap;
 
 @Entity
@@ -14,7 +13,7 @@ public class Hotel {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(nullable = false)
-    private Long hotel_id;
+    private Long id;
     @Column(unique = true, nullable = false)
     private String name;
     @Column
@@ -24,23 +23,9 @@ public class Hotel {
     @Column
     private HashMap<String, Double> menu;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "hotel", cascade = CascadeType.ALL)
-    private Collection<Room> configuration;
-
     private Double avgGrade;
-    private Boolean TV;
-    private Boolean WiFi;
-    private Boolean roomService;
-    private Boolean restaurant;
-    private Boolean pool;
 
-    public Long getHotel_id() {
-        return hotel_id;
-    }
-
-    public void setHotel_id(Long hotel_id) {
-        this.hotel_id = hotel_id;
-    }
+    private boolean deleted;
 
     public String getName() {
         return name;
@@ -74,14 +59,6 @@ public class Hotel {
         this.menu = menu;
     }
 
-    public Collection<Room> getConfiguration() {
-        return configuration;
-    }
-
-    public void setConfiguration(Collection<Room> configuration) {
-        this.configuration = configuration;
-    }
-
     public Double getAvgGrade() {
         return avgGrade;
     }
@@ -90,43 +67,19 @@ public class Hotel {
         this.avgGrade = avgGrade;
     }
 
-    public Boolean getTV() {
-        return TV;
+    public Long getId() {
+        return id;
     }
 
-    public void setTV(Boolean TV) {
-        this.TV = TV;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public Boolean getWiFi() {
-        return WiFi;
+    public boolean isDeleted() {
+        return deleted;
     }
 
-    public void setWiFi(Boolean wiFi) {
-        WiFi = wiFi;
-    }
-
-    public Boolean getRoomService() {
-        return roomService;
-    }
-
-    public void setRoomService(Boolean roomService) {
-        this.roomService = roomService;
-    }
-
-    public Boolean getRestaurant() {
-        return restaurant;
-    }
-
-    public void setRestaurant(Boolean restaurant) {
-        this.restaurant = restaurant;
-    }
-
-    public Boolean getPool() {
-        return pool;
-    }
-
-    public void setPool(Boolean pool) {
-        this.pool = pool;
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
     }
 }

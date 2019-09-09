@@ -10,12 +10,13 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Repository
-public interface CarRepository extends JpaRepository<Car,String> {
+public interface CarRepository extends JpaRepository<Car, String> {
     Car getCarByRegID(String regId);
 
     @Modifying
     @Transactional
     @Query(value = "update cars set deleted = 1 where id_service = ?1",nativeQuery = true)
+
     void deleteAllByCarService_CarServiceId(Long id);
  //   Car findByCarService_CarServiceName(String name);
     @Query(value = "SELECT * FROM cars c right outer join car_service cs on c.id_service = cs.car_service_id where c.deleted = 0 and cs.car_service_name = ?1",nativeQuery = true)

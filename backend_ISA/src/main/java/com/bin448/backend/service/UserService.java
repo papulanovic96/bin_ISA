@@ -11,6 +11,7 @@ import java.util.List;
 public interface UserService {
 
     boolean modify(UserDTO oldUser);
+
     void sendRequest(String usernameSender, String usernameReceiver);
     void acceptFriendship(String usernameSender, String usernameReceiver);
     void declineFriendship(String usernameSender, String usernameReceiver);
@@ -23,5 +24,6 @@ public interface UserService {
     User getByEmail(String mail);
     void modifyUser(boolean active,String user);
     User getById(Long id);
+
 
 }

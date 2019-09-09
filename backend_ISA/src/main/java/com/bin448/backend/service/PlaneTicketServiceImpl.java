@@ -1,5 +1,6 @@
 package com.bin448.backend.service;
 
+
 import com.bin448.backend.entity.DTOentity.PlaneTicketDTO;
 import com.bin448.backend.entity.PlaneTicket;
 
@@ -15,4 +16,5 @@ public class PlaneTicketServiceImpl implements PlaneTicketService{
     public List<PlaneTicket> findAll() {
         return null;
     }
+
 }

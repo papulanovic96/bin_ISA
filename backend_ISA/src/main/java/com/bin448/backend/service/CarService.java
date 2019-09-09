@@ -1,6 +1,5 @@
 package com.bin448.backend.service;
 
-import com.bin448.backend.entity.Car;
 import com.bin448.backend.entity.DTOentity.CarDTO;
 import com.bin448.backend.entity.DTOentity.CarRateDTO;
 import com.sun.org.apache.xpath.internal.operations.Bool;
@@ -8,6 +7,7 @@ import com.sun.org.apache.xpath.internal.operations.Bool;
 import java.util.List;
 
 public interface CarService {
+
     String addCar(CarDTO car);
    // boolean checkReservation(Long carId,Long userId);
     String removeCar(String reg);
@@ -21,4 +21,5 @@ public interface CarService {
     List<CarDTO> getAllCars();
     boolean isUserRated(Long id,Long userId);
     List<CarDTO> getAllReservedCars(Long userID);
+
 }

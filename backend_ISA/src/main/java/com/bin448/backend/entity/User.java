@@ -2,7 +2,6 @@ package com.bin448.backend.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Where;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
@@ -12,6 +11,7 @@ import java.util.List;
 
 @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 public class User implements Serializable {
+
     @Column
     private String name;
     @Column
