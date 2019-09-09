@@ -60,7 +60,7 @@ import { FriendshipComponent } from './friendship/friendship.component';
       {path: 'airlines', component: AirlineComponent},
       {path: 'hotels', component: HotelComponent},
       {path: 'rooms', component: RoomComponent},
-      {path: 'reservations', component: ReservationComponent}
+      {path: 'reservations', component: ReservationComponent},
       {path: 'cars', component: CarComponent},
       {path: 'register', component:RegisterComponent},
       {path: 'carServices', component:RentACarComponent},

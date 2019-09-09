@@ -10,7 +10,7 @@ import java.util.List;
 
 
 @Table(name = "cars",uniqueConstraints={@UniqueConstraint(columnNames={"regID"})})
-
+@Entity
 @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 
 public class Car {

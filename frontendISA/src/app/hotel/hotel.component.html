@@ -1,8 +1,8 @@
-<div class="col-5">
-  <table style="width:230%" class="table table-fixed table-hover">
+<div class="col-6">
+  <table style="width: 210%; margin-top: 2cm;margin-left: 0px;margin-right: 0px;" class="table table-fixed table-hover">
     <thead>
     <tr>
-      <th scope="col-xs-1">Hotel id</th>
+      <th scope="col-xs-1" *ngIf="loginService.isUserHotelAdmin()">Hotel id</th>
       <th scope="col-1">Name</th>
       <th scope="col-1">Address</th>
       <th scope="col-xs-1">Description</th>
@@ -12,36 +12,36 @@
     </thead>
     <tbody>
     <tr *ngFor='let hotel of listOfHotels'>
-      <td>{{ hotel.hotel_id }}</td>
+      <td *ngIf="loginService.isUserHotelAdmin()">{{ hotel.hotel_id }}</td>
       <td>{{ hotel.name }}</td>
       <td>{{ hotel.address }}</td>
       <td>
-        <button class="btn btn-outline-success" (click)="openDescription(hotel.hotel_id)"><i
+        <button class="btn btn-info" (click)="openDescription(hotel.hotel_id)"><i
           class="fa fa-info-circle"></i></button>
       </td>
       <td>{{ hotel.avgGrade}}</td>
       <td><a>
-        <button type="button" class="btn btn-outline-success" (click)="listRooms(hotel.hotel_id)"><i
+        <button type="button" class="btn btn-info" (click)="listRooms(hotel.hotel_id)"><i
           class="fa fa-list"></i> Rooms
         </button>
       </a></td>
       <td><a>
-        <button type="button" class="btn btn-outline-success" (click)="listMenu(hotel.hotel_id)"><i
+        <button type="button" class="btn btn-info" (click)="listMenu(hotel.hotel_id)"><i
           class="fa fa-wifi"></i> Additional services
         </button>
       </a></td>
       <td><a>
-        <button type="button" class="btn btn-outline-success" (click)="changeHotel(hotel.hotel_id)"><i
+        <button *ngIf="loginService.isUserHotelAdmin()" type="button" class="btn btn-info" (click)="changeHotel(hotel.hotel_id)"><i
           class="fa fa-refresh"></i> Change
         </button>
       </a></td>
       <td><a>
-        <button type="button" class="btn btn-outline-success" (click)="removeHotel(hotel.hotel_id)"><i
+        <button *ngIf="loginService.isUserHotelAdmin()" type="button" class="btn btn-info" (click)="removeHotel(hotel.hotel_id)"><i
           class="fa fa-remove"></i> Remove
         </button>
       </a></td>
       <td><a>
-        <button type="button" class="btn btn-outline-success" data-toggle="modal"
+        <button *ngIf="loginService.isUserUSER()" type="button" class="btn btn-info" data-toggle="modal"
                 (click)="openReservationModal(hotel.hotel_id)"><i
           class="fa fa-check"></i>Reservation
         </button>
@@ -53,7 +53,7 @@
 
 <div class="modal" [ngStyle]="{'display':displayRooms}" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
-    <div class="modal-content">
+    <div class="modal-content" style="background-color: rgb(122, 154, 198)">
       <div class="modal-header">
         <h4><u><b>Hotel rooms</b></u></h4>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeModalRooms()">
@@ -84,7 +84,7 @@
           </table>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-outline-success" (click)="closeModalRooms()"><i
+          <button type="button" class="btn btn-info" (click)="closeModalRooms()"><i
             class="fa fa-close"></i>Close
           </button>
         </div>
@@ -95,7 +95,7 @@
 
 <div class="modal" [ngStyle]="{'display':displayMenu}" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
-    <div class="modal-content">
+    <div class="modal-content" style="background-color: rgb(122, 154, 198)">
       <div class="modal-header">
         <h4><u><b>Additional services</b></u></h4>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeModalMenu()">
@@ -115,17 +115,20 @@
             <tr *ngFor='let item of menuNames ; index as i'>
               <td>{{ item }}</td>
               <td>{{menuPrices[i]}}</td>
-              <td><button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="removeAdditionalService(item)">
-                <span aria-hidden="true">&times;</span>
-              </button></td>
+              <td>
+                <button *ngIf="loginService.isUserHotelAdmin()" type="button" class="close" data-dismiss="modal" aria-label="Close"
+                        (click)="removeAdditionalService(item)">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </td>
             </tr>
             </tbody>
           </table>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-outline-success" (click)="openMenuItemModal()">Add menu item
+          <button *ngIf="loginService.isUserHotelAdmin()" type="button" class="btn btn-info" (click)="openMenuItemModal()">Add menu item
           </button>
-          <button type="button" class="btn btn-outline-success" (click)="closeModalMenu()"><i
+          <button type="button" class="btn btn-info" (click)="closeModalMenu()"><i
             class="fa fa-close"></i>Close
           </button>
         </div>
@@ -136,7 +139,7 @@
 
 <div class="modal" [ngStyle]="{'display':displayMenuItem}" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
-    <div class="modal-content">
+    <div class="modal-content" style="background-color: rgb(122, 154, 198)">
       <div class="modal-header">
         <h4><u><b>New additional service</b></u></h4>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeMenuItemModal()">
@@ -147,19 +150,19 @@
         <div class="modal-body">
           <div class="form-group">
             <label style="text-align: left">Name* </label>
-            <input type="text" min="1" class="form-control" [(ngModel)]="menuItemName"
+            <input style="background-color: rgb(193, 212, 224)" type="text" class="form-control" [(ngModel)]="menuItemName"
                    [ngModelOptions]="{standalone: true}" required>
           </div>
           <div class="form-group">
             <label>Price* <i class="fa fa-euro"></i></label>
-            <input type="number" min="1" class="form-control" [(ngModel)]="menuItemPrice"
+            <input style="background-color: rgb(193, 212, 224)" type="number" min="1" class="form-control" [(ngModel)]="menuItemPrice"
                    [ngModelOptions]="{standalone: true}" (keypress)="numberOnly($event)" required>
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-outline-success" (click)="addMenuItem()">Add
+          <button type="button" class="btn btn-info" (click)="addMenuItem()">Add
           </button>
-          <button type="button" class="btn btn-outline-success" (click)="closeMenuItemModal()"><i
+          <button type="button" class="btn btn-info" (click)="closeMenuItemModal()"><i
             class="fa fa-close"></i>Close
           </button>
         </div>
@@ -170,19 +173,22 @@
 
 <div class="modal" [ngStyle]="{'display':displayDescription}" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
-    <div class="modal-content">
+    <div class="modal-content" style="background-color: rgb(122, 154, 198)">
       <div class="modal-header">
-        <h4><u><b>Hotel description</b></u></h4>
-
+        <h4 class="label label-default"><u><b>Hotel description</b></u></h4>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeDescription()">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
-        <label style="text-align: left">{{description}}</label>
-      </div>
+      <form ngNativeValidate>
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="label label-default">{{description}}</label>
+          </div>
+        </div>
+      </form>
       <div class="modal-footer">
-        <button type="button" class="btn btn-outline-success" (click)="closeDescription()"><i
+        <button type="button" class="btn btn-info" (click)="closeDescription()"><i
           class="fa fa-close"></i>Close
         </button>
       </div>
@@ -193,7 +199,7 @@
 
 <div class="modal" [ngStyle]="{'display':displayChangeHotelModal}" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
-    <div class="modal-content">
+    <div class="modal-content" style="background-color: rgb(122, 154, 198)">
       <div class="modal-header">
         <h4><u><b>Hotel for change</b></u></h4>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeChangeHotelModal()">
@@ -204,22 +210,25 @@
         <div class="modal-body">
           <div class="form-group">
             <label style="text-align: left">Hotel name </label>
-            <input type="text" class="form-control" [(ngModel)]="changedHotel.name" [ngModelOptions]="{standalone: true}" required>
+            <input style="background-color: rgb(193, 212, 224)" type="text" class="form-control" [(ngModel)]="changedHotel.name"
+                   [ngModelOptions]="{standalone: true}" required>
           </div>
           <div class="form-group">
             <label>Hotel address </label>
-            <input type="text" class="form-control" [(ngModel)]="changedHotel.address" [ngModelOptions]="{standalone: true}" required>
+            <input style="background-color: rgb(193, 212, 224)" type="text" class="form-control" [(ngModel)]="changedHotel.address"
+                   [ngModelOptions]="{standalone: true}" required>
           </div>
           <div class="form-group">
             <label>Hotel description </label>
-            <textarea rows="4" type="text" class="form-control" [(ngModel)]="changedHotel.description" name="hotelDescription" required></textarea>
+            <textarea style="background-color: rgb(193, 212, 224)" rows="4" type="text" class="form-control" [(ngModel)]="changedHotel.description"
+                      name="hotelDescription" required></textarea>
           </div>
         </div>
         <div class="modal-footer">
-          <button type="submit" class="btn btn-outline-success"
+          <button type="submit" class="btn btn-info"
                   (click)="changeHotelSave()">Done
           </button>
-          <button type="button" class="btn btn-outline-success" (click)="closeChangeHotelModal()"><i
+          <button type="button" class="btn btn-info" (click)="closeChangeHotelModal()"><i
             class="fa fa-close"></i>Close
           </button>
         </div>

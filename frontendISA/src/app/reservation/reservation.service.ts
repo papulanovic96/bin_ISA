@@ -9,52 +9,37 @@ import {Room} from "../room/room";
 })
 export class ReservationService {
   private getUrlAddReservation = 'http://localhost:4200/reservation'
-  //private getRoomsByHotelAndType = 'http://localhost:4200/room/hotelType'
   private findAvailable = 'http://localhost:4200/room/checkAvailable'
   private setReservationUrl = 'http://localhost:4200/room/setReservation'
-  private saveReservationUrl='http://localhost:4200/reservation'
-
-  // private setHotelUrl = 'http://localhost:4200/room/setHotel'
+  private username = sessionStorage.getItem('username');
+  private password = sessionStorage.getItem('password');
+  private httpOptionsWithDataTypes = {
+    headers: new HttpHeaders({
+      'Authorization': 'Basic ' + btoa(this.username + ':' + this.password),
+    }), dataType: 'text/plain; charset=utf-8', responseType: 'text' as 'json'
+  };
+  private httpOptions = {
+    headers: new HttpHeaders({
+      'Authorization': 'Basic ' + btoa(this.username + ':' + this.password),
+    })
+  };
 
   constructor(private http: HttpClient) {
   }
 
   findAvailableRooms(reservation: Reservation, listOfTypeIds: number[], listOfPrices: number []) {
-    return this.http.get<Room[][]>(this.findAvailable + '/' + listOfTypeIds + '/' + listOfPrices);
+    return this.http.get<Room[][]>(this.findAvailable + '/' + listOfTypeIds + '/' + listOfPrices, this.httpOptions);
   }
 
   setReservation(reservation: Reservation): Observable<Reservation> {
-    const httpOptions = {
-      headers: new HttpHeaders({}), dataType: 'text/plain; charset=utf-8', responseType: 'text' as 'json'
-    };
-    return this.http.post<Reservation>(this.setReservationUrl, reservation, httpOptions);
+    return this.http.post<Reservation>(this.setReservationUrl, reservation, this.httpOptionsWithDataTypes);
   }
 
-
-  // checkIfThereAreAvailableRoom(listOfTypeIds: number[]) {
-  //   return this.http.get<Boolean>(this.checkIfAvailable + '/' + listOfTypeIds);
-  // }
-  //
-  // setHotel(hotelId: number): Observable<number> {
-  //   const httpOptions = {
-  //     headers: new HttpHeaders({}), dataType: 'text/plain; charset=utf-8', responseType: 'text' as 'json'
-  //   };
-  //   return this.http.get<number>(this.setHotelUrl + '/' + hotelId,httpOptions);
-  // }
-  //
-  // getRoomsByHotelIdAndTypeId(hotelId: number, typeId: number): Observable<Room[]> {
-  //   return this.http.get<Room[]>(this.getRoomsByHotelAndType + '/' + hotelId + ',' + typeId);
-  // }
-
   addReservation(reservation: Reservation): Observable<Reservation> {
-    const httpOptions = {
-      headers: new HttpHeaders({}), dataType: 'text/plain; charset=utf-8', responseType: 'text' as 'json'
-    };
-    console.log(reservation.roomId +" SERVICE")
-    return this.http.post<Reservation>(this.getUrlAddReservation, reservation, httpOptions);
+    return this.http.post<Reservation>(this.getUrlAddReservation, reservation, this.httpOptionsWithDataTypes);
   }
 
   mostRecentReservationId(): Observable<number> {
-    return this.http.get<number>(this.getUrlAddReservation + '/mostRecent');
+    return this.http.get<number>(this.getUrlAddReservation + '/mostRecent', this.httpOptions);
   }
 }

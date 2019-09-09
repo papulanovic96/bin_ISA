@@ -11,6 +11,8 @@ public class HotelReservationDTO {
 
     private Long roomId;
 
+    private Double roomPrice;
+
     private Long userId;
 
     private Date arrivalDate;
@@ -83,5 +85,13 @@ public class HotelReservationDTO {
 
     public void setAdditionalServices(List<String> additionalServices) {
         this.additionalServices = additionalServices;
+    }
+
+    public Double getRoomPrice() {
+        return roomPrice;
+    }
+
+    public void setRoomPrice(Double roomPrice) {
+        this.roomPrice = roomPrice;
     }
 }

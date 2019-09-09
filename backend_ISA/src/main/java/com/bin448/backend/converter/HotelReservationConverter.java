@@ -5,9 +5,12 @@ import com.bin448.backend.entity.Hotel;
 import com.bin448.backend.entity.HotelReservation;
 import com.bin448.backend.entity.Room;
 import com.bin448.backend.entity.User;
+import org.springframework.stereotype.Component;
 
 import java.util.Calendar;
+import java.util.Date;
 
+@Component
 public class HotelReservationConverter extends AbstractConverter {
 
     public static HotelReservationDTO fromEntity(HotelReservation e) {
@@ -17,6 +20,7 @@ public class HotelReservationConverter extends AbstractConverter {
         res.setRoomId(e.getRoom().getNumber());
         res.setId(e.getId());
         res.setNumberOfGuests(e.getNumberOfGuests());
+        res.setRoomPrice(e.getRoomPrice());
         res.setUserId(e.getUser().getId());
         res.setAdditionalServices(e.getAdditionalServices());
         Long numbOfNights = e.getReturnDate().getTime() - e.getArrivalDate().getTime();
@@ -26,7 +30,10 @@ public class HotelReservationConverter extends AbstractConverter {
 
     public static HotelReservation toEntity(HotelReservationDTO e) {
         HotelReservation res = new HotelReservation();
+        if (e.getArrivalDate() == null)
+            e.setArrivalDate(new Date());
         res.setArrivalDate(e.getArrivalDate());
+        res.setRoomPrice(e.getRoomPrice());
         Hotel hotel = new Hotel();
         hotel.setId(e.getHotelId());
         res.setHotel(hotel);
@@ -43,7 +50,6 @@ public class HotelReservationConverter extends AbstractConverter {
         c.setTime(e.getArrivalDate()); // Now use today date.
         c.add(Calendar.DATE, e.getNumberOfNights()); // Adding 5 days
         res.setReturnDate(c.getTime());
-        System.out.println(res.getReturnDate());
         return res;
     }
 }

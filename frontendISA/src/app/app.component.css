@@ -44,7 +44,8 @@
 .flex-center {
     display: flex;
     justify-content: center;
-    align-items: center;
+    /*ovo ispod zakom da ti bude lepa tabela*/
+    /*align-items: center;*/
     height: 100%;
 }
 .rgba-purple-light, .rgba-purple-light:after {

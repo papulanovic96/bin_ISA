@@ -1,5 +1,7 @@
 package com.bin448.backend.entity.DTOentity;
 
+import java.util.List;
+
 public class UserDTO {
     private Long id;
     private String name;

@@ -40,11 +40,6 @@ public class CarServiceServiceImpl implements CarServiceService {
     }
 
 
-    public CarServiceServiceImpl(CarServiceRepository csr) {
-        this.csr = csr;
-    }
-
-
     @Override
     public String addCarService(CarServiceDTO cs) {
         String ret = "ADDING FAILED!";

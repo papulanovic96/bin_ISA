@@ -5,6 +5,7 @@ import {HotelService} from "../hotel/hotel.service";
 import {Hotel} from "../hotel/hotel";
 import {Type} from "../hotel/type";
 import {Router} from "@angular/router";
+import {NewRoomPrice} from "./newRoomPrice";
 
 
 @Component({
@@ -16,10 +17,12 @@ export class RoomComponent implements OnInit {
 
   displayAdd = 'none';
   displayChange = 'none';
+  displayNewPrice = 'none';
   listOfRooms: Room[];
   listOfHotels: Hotel[] = [];
   listOfTypes: Type[] = [];
   listOfReservedRooms: Boolean[] = [];
+  newRoomPrice = new NewRoomPrice(1, 0, 0, new Date(), 0);
 
   newRoom = new Room(0, 0, 0, 0, 0, 0, false);
   changedRoom = new Room(0, 0, 0, 0, 0, 0, false);
@@ -128,11 +131,11 @@ export class RoomComponent implements OnInit {
     )
   }
 
-  openAddRoomModal() {
-    for (let a of this.listOfReservedRooms) {
-      console.log(a + " CC")
-    }
+  getToday(): string {
+    return new Date().toISOString().split('T')[0]
+  }
 
+  openAddRoomModal() {
     this.displayAdd = 'block';
   }
 
@@ -146,6 +149,37 @@ export class RoomComponent implements OnInit {
 
   closeChangeRoomModal() {
     this.displayChange = 'none';
+  }
+
+  openNewPriceModal(roomId: number) {
+    this.newRoomPrice.roomId=roomId;
+    this.displayNewPrice = 'block';
+  }
+
+  closeNewPriceModal() {
+    this.displayNewPrice = 'none';
+  }
+
+  addNewPrice(){
+    if(this.newRoomPrice.duration>0 && this.newRoomPrice.newPrice>0 && this.newRoomPrice.roomId!=0) {
+      this.roomService.checkIfPriceExist(this.newRoomPrice).subscribe(
+        exist =>{
+          console.log(exist)
+          if(exist==true){
+            this.roomService.addNewPrice(this.newRoomPrice).subscribe(
+              newPrice=>{
+                this.closeNewPriceModal();
+                alert("Successfully added new price")
+              }
+            );
+          }
+          else{
+            console.log(exist)
+            alert('New price already exist for that period of time')
+          }
+        }
+      )
+    }
   }
 
 }

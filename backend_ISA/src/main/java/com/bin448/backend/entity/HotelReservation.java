@@ -22,6 +22,8 @@ public class HotelReservation {
     @ManyToOne
     private Room room;
 
+    private Double roomPrice;
+
     @ManyToOne
     private User user;
 
@@ -99,5 +101,13 @@ public class HotelReservation {
 
     public void setAdditionalServices(List<String> additionalServices) {
         this.additionalServices = additionalServices;
+    }
+
+    public Double getRoomPrice() {
+        return roomPrice;
+    }
+
+    public void setRoomPrice(Double roomPrice) {
+        this.roomPrice = roomPrice;
     }
 }

@@ -4,6 +4,7 @@ import {HotelService} from "./hotel.service";
 import {RoomService} from "../room/room.service";
 import {Room} from "../room/room";
 import {Router} from "@angular/router";
+import {AuthenticationService} from "../service/authentication.service";
 
 
 @Component({
@@ -30,7 +31,7 @@ export class HotelComponent implements OnInit {
   description: String = "";
   changedHotel = new Hotel(0, "", "", "", 0);
 
-  constructor(private hotelService: HotelService, private roomService: RoomService, private  router: Router) {
+  constructor(private hotelService: HotelService, private roomService: RoomService, private  router: Router,public loginService:AuthenticationService) {
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
       return false;
     }
