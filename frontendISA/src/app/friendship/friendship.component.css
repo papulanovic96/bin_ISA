@@ -1670,7 +1670,7 @@ div {
     display: -ms-flexbox!important;
     display: flex!important;
 }
-.cascading-admin-card .admin-up .fab, .cascading-admin-card .admin-up .far, .cascading-admin-card .admin-up .fas {
+.cascading-admin-card .admin-up .fab, .cascading-admin-card .admin-up .far, .cascading-admin-card .admin-up .fa {
     padding: 1.7rem;
     font-size: 2rem;
     color: #fff;
@@ -1694,21 +1694,7 @@ div {
 .mr-3, .mx-3 {
     margin-right: 1rem!important;
 }
-.fa, .fas {
-    font-weight: 900;
-}
-.fa, .far, .fas {
-    font-family: "Font Awesome 5 Free";
-}
-.fa, .fab, .fal, .far, .fas {
-    -moz-osx-font-smoothing: grayscale;
-    -webkit-font-smoothing: antialiased;
-    display: inline-block;
-    font-style: normal;
-    font-variant: normal;
-    text-rendering: auto;
-    line-height: 1;
-}
+
 .cascading-admin-card .admin-up .data {
     float: right;
     margin-top: 2rem;

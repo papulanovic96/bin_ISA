@@ -14,6 +14,10 @@ public class Flight {
     @Column(nullable = false)
     private Long id;
     @Column
+    private String fromDestination;
+    @Column
+    private String toDestination;
+    @Column
     private String dateAndTimeTakeOff;
     @Column
     private String dateAndTimeLanding;
@@ -100,5 +104,21 @@ public class Flight {
 
     public void setAirline(Airline airline) {
         this.airline = airline;
+    }
+
+    public String getFromDestination() {
+        return fromDestination;
+    }
+
+    public void setFromDestination(String fromDestination) {
+        this.fromDestination = fromDestination;
+    }
+
+    public String getToDestination() {
+        return toDestination;
+    }
+
+    public void setToDestination(String toDestination) {
+        this.toDestination = toDestination;
     }
 }

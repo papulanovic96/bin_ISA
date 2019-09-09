@@ -52,7 +52,7 @@ export class FriendshipService {
     return this.http.post(this.urlSend + "/" + this.getgets.getLogged() + ", " + username, null);
   }
 
-  unfriend(username: string){
-    return this.http.post(this.urlUnfriend + "/" + this.getgets.getLogged() + ", " + username, null);
+  unfriend(username: string) : Observable<String[]>{
+    return this.http.post<String[]>(this.urlUnfriend + "/" + this.getgets.getLogged() + ", " + username, null);
   }
 }

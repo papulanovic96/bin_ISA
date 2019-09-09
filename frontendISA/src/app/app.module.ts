@@ -24,6 +24,7 @@ import { RatingModule } from 'ngx-bootstrap/rating';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { UserHistoryComponent } from './user-history/user-history.component';
 import { FriendshipComponent } from './friendship/friendship.component';
+import { FlightListComponent } from './flight/flight-list/flight-list.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { FriendshipComponent } from './friendship/friendship.component';
     RentACarPriceListComponent,
     UserHistoryComponent,
     FriendshipComponent,
+    FlightListComponent,
   ],
 
   imports: [

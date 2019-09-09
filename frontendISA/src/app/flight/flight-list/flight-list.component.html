@@ -1,0 +1,26 @@
+<table class="table" style="background-color: rgba(156,39,176,.3);">
+        <thead style="background-color: aquamarine">
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">From</th>
+            <th scope="col">To</th>
+            <th scope="col">Depart</th>
+            <th scope="col">Return</th>
+            <th scope="col">Tranfer</th>
+            <th scope="col">Time</th>
+            <th scope="col">Price</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let x of lista">
+            <th scope="row"> {{ x.id }} </th>
+            <td>{{ x.fromDest }}</td>
+            <td>{{ x.toDest }}</td>
+            <td> {{ x.dateAndTimeTakeOff }}</td>
+            <td> {{ x.dateAndTimeLanding }}</td>
+            <td> {{ x.transferNumber }} stop {{ x.transferLocation }}</td>
+            <td> {{ x.flightTime }}</td>
+            <td> {{ x.ticketPrice }}</td>
+          </tr>
+        </tbody>
+</table>

@@ -119,9 +119,12 @@ public class UserController {
     }
 
     @RequestMapping(value = "/deleteFriendRequest/{username1}, {username2}", method = POST)
-    public ResponseEntity<String> deleteFriendship(@PathVariable String username1, @PathVariable String username2){
+    public ResponseEntity<List<String>> deleteFriendship(@PathVariable String username1, @PathVariable String username2){
         us.deleteFriendship(username1, username2);
-        return new ResponseEntity<>(HttpStatus.OK);
+        User u = us.getUserByUsername(username1);
+        UserDTO uD = UserConverter.fromEntity(u);
+        List<String> fList = uD.getUsernameOfFriend();
+        return new ResponseEntity<>(fList, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/findAll/{username}", method = GET)

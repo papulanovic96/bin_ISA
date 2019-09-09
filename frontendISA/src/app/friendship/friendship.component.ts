@@ -18,7 +18,7 @@ export class FriendshipComponent implements OnInit {
   public user1 = 'assets/user1.png'
 
   loginService : AuthenticationService;
-  a = new User('Meho','Sulejmani','Sarajevo', 'mehoVoliSebe@narcis.com', '066 928 123', 'superMeho', '1232sd', 'ROLE_USER', 2);
+  a = new User('Meho','Sulejmani','Sarajevo', 'superMeho@narcis.com', '066 928 123', 'superMeho', '1232sd', 'ROLE_USER', 2);
   friendsList: String[];
   usersList: User[];
   requestsList: String[];
@@ -53,13 +53,13 @@ export class FriendshipComponent implements OnInit {
 
   acceptRequest(username : string) {
     return this.friendshipService.acceptRequest(username).subscribe(
-      response => {this.friendshipService.getAllRequests().subscribe()}
+      friendsList => {this.friendshipService.getAllRequests().subscribe()}
     );
   }
 
   declineRequest(username : string) {
     return this.friendshipService.declineRequest(username).subscribe(
-      response => {this.friendshipService.getAllRequests().subscribe()}
+      friendsList => {this.friendshipService.getAllRequests().subscribe()}
     );
   }
 
@@ -68,7 +68,9 @@ export class FriendshipComponent implements OnInit {
   }
 
   unfriend(username : string){
-    return this.friendshipService.unfriend(username).subscribe()
+    return this.friendshipService.unfriend(username).subscribe(
+      response =>  this.friendsList = response
+    )
   }
 
   reload() {  
