@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { FlightService } from './flight.service';
+import { Flight } from './flight';
 
 @Component({
   selector: 'app-flight',
@@ -7,7 +9,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FlightComponent implements OnInit {
 
-  constructor() { }
+  newFlight = new Flight(0, '', '', '', '', '', '', 0, '', 0, null);
+
+  constructor(private flightService: FlightService) { }
+
+  save(flight: Flight) {
+    return this.flightService.save(flight).subscribe(
+      newFlight => this.newFlight = newFlight
+    )
+  }
 
   ngOnInit() {
   }

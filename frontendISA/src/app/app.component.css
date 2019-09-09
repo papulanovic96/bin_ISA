@@ -1,5 +1,5 @@
 .view {
-    background: url("https://mdbootstrap.com/img/Photos/Others/img (40).jpg")no-repeat center center;
+    background: url("https://mdbootstrap.com/img/Photos/Others/img (40).jpg")repeat center center;
     background-size: cover;
     height: 100vh;
 }
@@ -23,11 +23,7 @@
 }
 .view {
     position: relative;
-    overflow: hidden;
     cursor: default;
-}
-*, ::after, ::before {
-    box-sizing: border-box;
 }
 .view .mask {
     position: absolute;
@@ -35,7 +31,6 @@
     left: 0;
     right: 0;
     bottom: 0;
-    overflow: hidden;
     width: 100%;
     height: 100%;
     background-attachment: fixed;

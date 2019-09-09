@@ -3,6 +3,8 @@ package com.bin448.backend.entity.DTOentity;
 public class FlightDTO {
 
     private Long id;
+    private String fromDest;
+    private String toDest;
     private String dateAndTimeTakeOff;
     private String dateAndTimeLanding;
     private String flightTime;
@@ -82,5 +84,21 @@ public class FlightDTO {
 
     public void setAirline(String airline) {
         this.airline = airline;
+    }
+
+    public String getFromDest() {
+        return fromDest;
+    }
+
+    public void setFromDest(String fromDest) {
+        this.fromDest = fromDest;
+    }
+
+    public String getToDest() {
+        return toDest;
+    }
+
+    public void setToDest(String toDest) {
+        this.toDest = toDest;
     }
 }

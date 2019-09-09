@@ -58,8 +58,9 @@
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <a class="dropdown-item" [routerLink]="['/airlines']" routerLinkActive="router-link-active" >Airlines  </a>
                 <a class="dropdown-item" [routerLink]="['/planeseats']" routerLinkActive="router-link-active" >Seats</a>
+                <a class="dropdown-item" [routerLink]="['/flightList']" routerLinkActive="router-link-active">Flights</a> 
     </div>
-          <li *ngIf="loginService.isUserLoggedIn() && !loginService.isUserAirlineAdmin()" class="nav-item waves-light" mdbWavesEffect><a *ngIf="loginService.isUserLoggedIn() || loginService.isUserADMIN()"  routerLink="/carServices" class="nav-link">Rent A Car</a></li>
+          <li class="nav-item waves-light" mdbWavesEffect><a routerLink="/carServices" class="nav-link">Rent A Car</a></li>
           <li *ngIf="loginService.isUserLoggedIn() && !loginService.isUserAirlineAdmin()" class="nav-item waves-light" mdbWavesEffect><a *ngIf="loginService.isUserLoggedIn() && loginService.isUserADMIN()"  routerLink="/cars" class="nav-link">Cars</a></li>
           <li *ngIf="loginService.isUserLoggedIn() && !loginService.isUserAirlineAdmin()" class="nav-item waves-light" mdbWavesEffect><a *ngIf="loginService.isUserLoggedIn() && loginService.isUserADMIN()"  routerLink="/carServicePR" class="nav-link">Price List</a></li> 
           <li class="nav-item waves-light" mdbWavesEffect><a *ngIf="loginService.isUserLoggedIn() && loginService.isUserUSER()"  routerLink="/userHistory" class="nav-link">Profile</a></li>
@@ -74,7 +75,6 @@
     <div class="full-bg-img">
       <div class="mask rgba-purple-light flex-center">
         <div class="container text-center white-text wow fadeInUp">
-          
                 <router-outlet></router-outlet>
         </div>
       </div>
@@ -82,12 +82,3 @@
   </div>
   <!-- /.Main -->
 </header>
-
-
-
-
-
-
-
-
-
