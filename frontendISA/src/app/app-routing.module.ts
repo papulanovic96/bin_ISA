@@ -34,13 +34,15 @@ const appRoutes: Routes = [
   { path: 'hotel', component: HotelComponent },
   { path: 'room', component: RoomComponent },
   { path: 'reservation', component: ReservationComponent },
+  { path: 'rooms', component: RoomComponent},
+  { path: 'reservations', component: ReservationComponent},
   { path: '**', component: FlightComponent}
+  
+] ;
 
-];
-
-export const routing = RouterModule.forRoot(appRoutes);
+export const routing = RouterModule.forRoot(appRoutes, {useHash: true});
 @NgModule({
-  imports: [RouterModule.forRoot(appRoutes)],
+  imports: [RouterModule.forRoot(appRoutes, {useHash: true})],
   exports: [RouterModule]
 })
 

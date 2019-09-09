@@ -53,24 +53,10 @@ import { FlightListComponent } from './flight/flight-list/flight-list.component'
     BrowserAnimationsModule,
     HttpClientModule,
     FormsModule,
-    MDBBootstrapModule.forRoot(),
+    MDBBootstrapModule,
     AppRoutingModule,
     RatingModule.forRoot(),
     BsDatepickerModule.forRoot(),
-    RouterModule.forRoot([
-      {path: 'planeseats', component: PlaneSeatComponent},
-      {path: 'airlines', component: AirlineComponent},
-      {path: 'hotels', component: HotelComponent},
-      {path: 'rooms', component: RoomComponent},
-      {path: 'reservations', component: ReservationComponent},
-      {path: 'cars', component: CarComponent},
-      {path: 'register', component:RegisterComponent},
-      {path: 'carServices', component:RentACarComponent},
-      {path: 'carServicePR',component:RentACarPriceListComponent},
-      {path: 'userHistory',component:UserHistoryComponent},
-      {path: 'profile', component: FriendshipComponent}
-
-    ], {useHash: true}),
     BrowserAnimationsModule
   ],
 
