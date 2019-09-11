@@ -15,6 +15,7 @@ public class UserDTO {
     private boolean active;
     private List<String> usernameOfFriend;
     private List<String> usernameOfRequests;
+    private List<Long> planeTicket;
 
     public UserDTO() {
     }
@@ -115,4 +116,11 @@ public class UserDTO {
         this.usernameOfRequests = usernameOfRequests;
     }
 
+    public List<Long> getPlaneTicket() {
+        return planeTicket;
+    }
+
+    public void setPlaneTicket(List<Long> planeTicket) {
+        this.planeTicket = planeTicket;
+    }
 }

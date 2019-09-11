@@ -2,12 +2,16 @@ package com.bin448.backend.converter;
 
 import com.bin448.backend.entity.*;
 import com.bin448.backend.entity.DTOentity.AirlineDTO;
+import com.bin448.backend.repository.PlaneTicketRepository;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public abstract class AirlineConverter extends AbstractConverter {
+
+public class AirlineConverter extends AbstractConverter {
+
 
     public static AirlineDTO fromEntity(Airline e) {
         AirlineDTO airlineDTO = new AirlineDTO();
@@ -27,16 +31,18 @@ public abstract class AirlineConverter extends AbstractConverter {
         Collection<PlaneTicket> planeTickets = e.getDicountTicket();
         List<Long> ticketsID = new ArrayList<>();
         for (PlaneTicket pt : planeTickets) {
-            ticketsID.add(pt.getId());
+            if(pt.isDiscount()) {
+                ticketsID.add(pt.getId());
+            }
         }
         airlineDTO.setDiscountTicketListID(ticketsID);
 
-        Collection<PlaneSeat> planeSeats = e.getPlaneSeats();
-        List<Long> seatsID = new ArrayList<>();
-        for (PlaneSeat ps : planeSeats) {
-            seatsID.add(ps.getSeatId());
+        Collection<Flight> flights = e.getFlightList();
+        List<Long> fIds = new ArrayList<>();
+        for (Flight ps : flights) {
+            fIds.add(ps.getId());
         }
-        airlineDTO.setSeatsListID(seatsID);
+        airlineDTO.setFlightListID(fIds);
 
 
         Collection<LuggagePrice> luggagePrices = e.getLuggagePrice();
@@ -79,16 +85,16 @@ public abstract class AirlineConverter extends AbstractConverter {
         }
         airline.setDicountTicket(tickets);
 
-        Collection<PlaneSeat> seats = null;
-        List<Long> seatsID = d.getSeatsListID();
-        PlaneSeat newSeat = new PlaneSeat();
-        if (seatsID != null) {
-            for (Long key : seatsID) {
-                newSeat.setSeatId(key);
-                seats.add(newSeat);
+        Collection<Flight> flights1 = null;
+        List<Long> flLongList = d.getFlightListID();
+        Flight flight2 = new Flight();
+        if (flLongList != null) {
+            for (Long key : flLongList) {
+                flight2.setId(key);
+                flights1.add(flight2);
             }
         }
-        airline.setPlaneSeats(seats);
+        airline.setFlightList(flights1);
 
         Collection<LuggagePrice> luggagePrices = null;
         List<Long> luggageID = d.getLuggageID();

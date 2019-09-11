@@ -27,8 +27,6 @@ public class Airline {
     private Collection<Flight> flightList;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "airline", cascade = CascadeType.ALL)
     private Collection<PlaneTicket> discountTicket;
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "airline", cascade = CascadeType.ALL)
-    private Collection<PlaneSeat> planeSeats;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "airline_luggage_price", cascade = CascadeType.ALL)
     private Collection<LuggagePrice> luggagePrice;
 
@@ -97,11 +95,4 @@ public class Airline {
         this.luggagePrice = luggagePrice;
     }
 
-    public Collection<PlaneSeat> getPlaneSeats() {
-        return planeSeats;
-    }
-
-    public void setPlaneSeats(Collection<PlaneSeat> planeSeats) {
-        this.planeSeats = planeSeats;
-    }
 }

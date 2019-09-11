@@ -13,6 +13,7 @@ public class FlightDTO {
     private String transferLocation;
     private Double ticketPrice;
     private String airline;
+    private Long planeTicket;
 
     public Long getId() {
         return id;
@@ -100,5 +101,13 @@ public class FlightDTO {
 
     public void setToDest(String toDest) {
         this.toDest = toDest;
+    }
+
+    public Long getPlaneTicket() {
+        return planeTicket;
+    }
+
+    public void setPlaneTicket(Long planeTicket) {
+        this.planeTicket = planeTicket;
     }
 }

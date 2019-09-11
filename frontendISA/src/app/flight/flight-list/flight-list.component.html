@@ -1,4 +1,4 @@
-<table class="table" style="background-color: rgba(156,39,176,.3);">
+<table class="table" style="background-color: rgba(255, 255, 255, 0.3);">
         <thead style="background-color: aquamarine">
           <tr>
             <th scope="col">#</th>
@@ -9,6 +9,7 @@
             <th scope="col">Tranfer</th>
             <th scope="col">Time</th>
             <th scope="col">Price</th>
+            <th scope="col"></th>
           </tr>
         </thead>
         <tbody>
@@ -21,6 +22,7 @@
             <td> {{ x.transferNumber }} stop {{ x.transferLocation }}</td>
             <td> {{ x.flightTime }}</td>
             <td> {{ x.ticketPrice }}</td>
+            <td> <button class="btn btn-success" value="Reserve" (click)="nextPage(x)"></button></td>
           </tr>
         </tbody>
 </table>

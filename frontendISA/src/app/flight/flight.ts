@@ -12,6 +12,6 @@ export class Flight {
         public transferNumber: number,
         public transferLocation: string,
         public ticketPrice: number,
-        public airlineId: Airline
+        public airlineId: number
     ) {}
 }

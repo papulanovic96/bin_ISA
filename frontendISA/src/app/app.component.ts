@@ -8,7 +8,10 @@ import {AuthenticationService} from "./service/authentication.service";
 })
 
 export class AppComponent {
+
   title = 'MegaTravel';
+  public vin = 'assets/binairlines.jpg';
+
   loginService : AuthenticationService;
   constructor(loginService:AuthenticationService){
     this.loginService = loginService;

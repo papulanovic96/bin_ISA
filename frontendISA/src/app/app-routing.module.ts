@@ -16,6 +16,7 @@ import { FlightListComponent } from './flight/flight-list/flight-list.component'
 import {HotelComponent} from "./hotel/hotel.component";
 import {RoomComponent} from "./room/room.component";
 import {ReservationComponent} from "./reservation/reservation.component";
+import { FriendInviteComponent } from './friend-invite/friend-invite.component';
 
 
 const appRoutes: Routes = [
@@ -31,11 +32,14 @@ const appRoutes: Routes = [
   { path: 'airlines', component: AirlineComponent},
   { path: 'planeseats', component: PlaneSeatComponent},
   { path: 'flightList', component: FlightListComponent},
+  { path: 'flightList/:list', component: FlightListComponent},
   { path: 'hotel', component: HotelComponent },
   { path: 'room', component: RoomComponent },
   { path: 'reservation', component: ReservationComponent },
   { path: 'rooms', component: RoomComponent},
   { path: 'reservations', component: ReservationComponent},
+  { path: 'friendinvite', component: FriendInviteComponent},
+  { path: 'invite', component: LoginComponent},
   { path: '**', component: FlightComponent}
   
 ] ;

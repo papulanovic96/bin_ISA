@@ -3,6 +3,7 @@ package com.bin448.backend.converter;
 import com.bin448.backend.entity.Airline;
 import com.bin448.backend.entity.DTOentity.FlightDTO;
 import com.bin448.backend.entity.Flight;
+import com.bin448.backend.entity.PlaneTicket;
 
 public abstract class FlightConverter extends AbstractConverter{
 
@@ -19,6 +20,9 @@ public abstract class FlightConverter extends AbstractConverter{
         newFlight.setTransferLocation(e.getTransferLocation());
         newFlight.setTransferNumber(e.getTransferNumber());
         newFlight.setAirline(e.getAirline().getName());
+        PlaneTicket newTicket = e.getPlaneTicket();
+        if(newTicket != null) {
+        newFlight.setPlaneTicket(e.getPlaneTicket().getId());}
         return newFlight;
     }
 

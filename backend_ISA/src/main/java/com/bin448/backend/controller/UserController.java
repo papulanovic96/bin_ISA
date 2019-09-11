@@ -8,13 +8,16 @@ import com.bin448.backend.entity.Friendship;
 import com.bin448.backend.entity.User;
 import com.bin448.backend.repository.ConfirmationTokenRepository;
 import com.bin448.backend.service.AirlineService;
+import com.bin448.backend.service.EmailInviteService;
 import com.bin448.backend.service.EmailSenderService;
 import com.bin448.backend.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -31,6 +34,8 @@ public class UserController {
     private AirlineService as;
     private ConfirmationTokenRepository confirmationTokenRepository;
     private EmailSenderService emailSenderService;
+    @Autowired
+    private EmailInviteService emailInviteService;
 
 
     public UserController(AirlineService as, UserService us,EmailSenderService em,ConfirmationTokenRepository c) {
@@ -61,6 +66,13 @@ public class UserController {
 
         return emailSenderService.mailSendWhenRegister(modelAndView,user);
 
+    }
+
+    @RequestMapping(value = "/invite/{username}", method = POST)
+    public boolean inviteUser(ModelAndView modelAndView, @PathVariable String username) {
+        User newUser = us.getUserByUsername(username);
+        UserDTO user = UserConverter.fromEntity(newUser);
+        return emailInviteService.mailForInvitation(modelAndView, user);
     }
 
     @GetMapping("/get/{username}")

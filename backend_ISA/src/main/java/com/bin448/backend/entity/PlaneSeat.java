@@ -17,7 +17,7 @@ public class PlaneSeat {
     private boolean reserved;
     @ManyToOne
     private Airline airline;
-    @OneToOne
+    @ManyToOne
     private PlaneTicket ticket;
 
     public Long getSeatId() {

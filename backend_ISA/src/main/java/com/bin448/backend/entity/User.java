@@ -1,7 +1,7 @@
 package com.bin448.backend.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import org.hibernate.annotations.Where;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
@@ -38,6 +38,8 @@ public class User implements Serializable {
     private List<Friendship> friends;
     @OneToMany(mappedBy = "receiver", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Friendship> requests;
+    @OneToMany(mappedBy = "reservedBy", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<PlaneTicket> reservedTicket;
 
 
     public String getLastName() {
@@ -137,4 +139,11 @@ public class User implements Serializable {
         this.requests = requests;
     }
 
+    public List<PlaneTicket> getReservedTicket() {
+        return reservedTicket;
+    }
+
+    public void setReservedTicket(List<PlaneTicket> reservedTicket) {
+        this.reservedTicket = reservedTicket;
+    }
 }

@@ -1,9 +1,18 @@
 package com.bin448.backend.entity.DTOentity;
 
+import java.util.List;
+
 public class PlaneTicketDTO {
 
     private Long id;
-    private Long seat;
+    private boolean discount;
+    private Long userNumber;
+    private String tripType;
+    private String tripClass;
+    private String bag;
+    private List<Long> seat;
+    private Long flight;
+    private String reservedBy;
     private Long airline;
 
     public Long getId() {
@@ -14,19 +23,75 @@ public class PlaneTicketDTO {
         this.id = id;
     }
 
-    public Long getPlaneSeatID() {
+    public List<Long> getPlaneSeatID() {
         return seat;
     }
 
-    public void setPlaneSeatID(Long planeSeatID) {
+    public void setPlaneSeatID(List<Long> planeSeatID) {
         this.seat = planeSeatID;
     }
 
-    public Long getAirlineID() {
+    public String getReservedBy() {
+        return reservedBy;
+    }
+
+    public void setReservedBy(String reservedBy) {
+        this.reservedBy = reservedBy;
+    }
+
+    public boolean isDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(boolean discount) {
+        this.discount = discount;
+    }
+
+    public Long getFlight() {
+        return flight;
+    }
+
+    public void setFlight(Long flight) {
+        this.flight = flight;
+    }
+
+    public Long getUserNumber() {
+        return userNumber;
+    }
+
+    public void setUserNumber(Long userNumber) {
+        this.userNumber = userNumber;
+    }
+
+    public String getTripType() {
+        return tripType;
+    }
+
+    public void setTripType(String tripType) {
+        this.tripType = tripType;
+    }
+
+    public String getTripClass() {
+        return tripClass;
+    }
+
+    public void setTripClass(String tripClass) {
+        this.tripClass = tripClass;
+    }
+
+    public String getBag() {
+        return bag;
+    }
+
+    public void setBag(String bag) {
+        this.bag = bag;
+    }
+
+    public Long getAirline() {
         return airline;
     }
 
-    public void setAirlineID(Long airlineLong) {
-        this.airline = airlineLong;
+    public void setAirline(Long airline) {
+        this.airline = airline;
     }
 }

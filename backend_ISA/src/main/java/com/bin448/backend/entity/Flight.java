@@ -33,6 +33,8 @@ public class Flight {
     private Double ticketPrice;
     @ManyToOne
     private Airline airline;
+    @OneToOne(fetch = FetchType.EAGER, mappedBy = "flight", cascade = CascadeType.ALL)
+    private PlaneTicket planeTicket;
 
     public Long getId() {
         return id;
@@ -120,5 +122,13 @@ public class Flight {
 
     public void setToDestination(String toDestination) {
         this.toDestination = toDestination;
+    }
+
+    public PlaneTicket getPlaneTicket() {
+        return planeTicket;
+    }
+
+    public void setPlaneTicket(PlaneTicket planeTicket) {
+        this.planeTicket = planeTicket;
     }
 }

@@ -25,6 +25,7 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { UserHistoryComponent } from './user-history/user-history.component';
 import { FriendshipComponent } from './friendship/friendship.component';
 import { FlightListComponent } from './flight/flight-list/flight-list.component';
+import { FriendInviteComponent } from './friend-invite/friend-invite.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { FlightListComponent } from './flight/flight-list/flight-list.component'
     UserHistoryComponent,
     FriendshipComponent,
     FlightListComponent,
+    FriendInviteComponent,
   ],
 
   imports: [
