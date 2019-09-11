@@ -10,11 +10,15 @@ public class CarServicePriceList {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long idCarServicePriceList;
     private Double price;
-    @Column(nullable = false)
-    private String name;
+
     @ManyToOne
     @JoinColumn(name = "carServiceId")
     private CarService carS;
+
+    @OneToOne
+    @JoinColumn(name = "carId")
+    private Car car;
+
 
 
     public Double getPrice() {
@@ -23,14 +27,6 @@ public class CarServicePriceList {
 
     public void setPrice(Double price) {
         this.price = price;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public CarService getCarS() {
@@ -47,5 +43,13 @@ public class CarServicePriceList {
 
     public void setIdCarServicePriceList(Long idCarServicePriceList) {
         this.idCarServicePriceList = idCarServicePriceList;
+    }
+
+    public Car getCar() {
+        return car;
+    }
+
+    public void setCar(Car car) {
+        this.car = car;
     }
 }

@@ -18,6 +18,8 @@ public interface CarReservationRepository extends JpaRepository<CarReservation,L
     @Transactional
     void deleteByCarResId(Long id);
 
+
+
     @Modifying
     @Transactional
     void deleteAllByCarIdAndUserId(Long id,Long id2);

@@ -1,0 +1,125 @@
+<link rel="stylesheet" href="https://unpkg.com/ngx-bootstrap/datepicker/bs-datepicker.css">
+<form   (ngSubmit)="checkDate()">
+<label style="font-family: Verdana;font-kerning: inherit;font-size: 16px">Make a car reservation</label>
+<div class="container">
+<div class="form-group">
+  <input name="start" readonly required [(ngModel)]="startDate" type="text"
+         placeholder="START DATE"
+         class="form-control"
+         [bsConfig]="{ dateOutputFormat: 'YYYY-MM-dd' }"
+         [minDate]=""
+         bsDatepicker>
+</div>
+
+
+  <div class="form-group">
+    <input name="end" readonly required [(ngModel)]="endDate" type="text"
+           placeholder="END DATE"
+           class="form-control"
+           [bsConfig]="{ dateOutputFormat: 'YYYY-MM-dd' }"
+           [minDate]="startDate"
+           bsDatepicker>
+  </div>
+</div>
+
+<div class="dropdown">
+  <label>Car Type &nbsp; &nbsp;</label>
+  <select required [(ngModel)]="type" class="form-group"  name="types">
+    <option  required name="types" *ngFor="let type of types" [ngValue]="type">{{type.name}} &nbsp; {{type.seats}} seats</option>
+  </select>
+</div>
+
+
+<div class="container">
+  <input type="number"   class="form-control" name="nos" placeholder="Number of persons" [(ngModel)]="nos"/>
+
+</div>
+
+
+  <div class="container border-danger">
+    <input type="number"   class="form-control" name="from" placeholder="Price from" (ngModel)="pricefrom"/>
+    <input type="number"   class="form-control" name="to" placeholder="Price to" (ngModel)="priceto"/>
+
+  </div>
+
+<div class="container">
+  <button type="submit"  class="btn-outline-success" name="types">GET VEHICLES</button>
+</div>
+
+</form>
+
+<div class="container" *ngIf="length!=0">
+
+  <table class="table table-fixed table-hover">
+    <thead>
+    <tr>
+      <th scope="col-xs-1">REGID</th>
+      <th scope="col-1">MODEL</th>
+      <th scope="col-xs-1">YEAR</th>
+      <th scope="col-xs-1">SERVICE OWNER</th>
+
+
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor = 'let a of cars' ng-if="!a.deleted">
+      <td>{{ a.regID }}</td>
+      <td>{{ a.model }}</td>
+      <td>{{ a.year }}</td>
+      <td>{{ a.serviceName}}</td>
+
+      <td>
+        <button (click)="push(a)" mdbBtn type="button" name="btn" color="elegant" mdbWavesEffect>GET</button>
+      </td>
+
+    </tbody>
+  </table>
+<hr>
+  <hr>
+</div>
+
+<div class="container" *ngIf="forReservation.length!=0">
+  <label style="font-size: 16px;font-family: Verdana;position: center">Cars for reservation</label>
+  <table class="table table-fixed table-hover">
+    <thead>
+    <tr>
+      <th scope="col-xs-1">REGID</th>
+      <th scope="col-1">MODEL</th>
+      <th scope="col-xs-1">YEAR</th>
+      <th scope="col-xs-1">SERVICE OWNER</th>
+
+
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor = 'let a of forReservation' ng-if="!a.deleted">
+      <td>{{ a.regID }}</td>
+      <td>{{ a.model }}</td>
+      <td>{{ a.year }}</td>
+      <td>{{ a.serviceName}}</td>
+
+      <td>
+        <button (click)="pop(a.id)" mdbBtn type="button" name="btn" color="elegant" mdbWavesEffect>CANCEL</button>
+      </td>
+
+    </tbody>
+
+  </table>
+  <button (click)="checkSeats()" mdbBtn type="button" name="btn" style="position: center" class="btn-outline-info">Done</button>
+
+</div>
+
+
+      <!-- modal-body -->
+      <div *ngIf="show" class="container" style="width: 25cm" >
+        <label>You have reserved {{numberOfSeats}} seats for {{nos}} people.</label>
+        <hr>
+        <hr>
+        <label>Total price is: {{totalCount}}</label>
+     <hr>
+      <hr>
+        <button type="button" (click)="sendReservations()" class="btn btn-outline-light">CONFIRM</button>
+
+      </div>
+
+

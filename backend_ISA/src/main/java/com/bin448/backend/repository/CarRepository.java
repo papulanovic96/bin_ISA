@@ -7,10 +7,11 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 @Repository
-public interface CarRepository extends JpaRepository<Car,String> {
+public interface CarRepository extends JpaRepository<Car,Long> {
     Car getCarByRegID(String regId);
 
     @Modifying
@@ -24,7 +25,6 @@ public interface CarRepository extends JpaRepository<Car,String> {
     List<Car> findAllByCarService_CarServiceId(Long id);
     @Query(value = "select * from cars where deleted = 0",nativeQuery = true)
     List<Car> findAll();
-
     Car getCarByCarId(Long id);
 
     @Modifying
@@ -50,10 +50,11 @@ public interface CarRepository extends JpaRepository<Car,String> {
     @Transactional
     @Query(value = "Update cars set avg_grade = ?1 where car_id = ?2", nativeQuery = true)
     void rateSelectedCar(Double grade, Long regID);
-    @Query(value = "select * from cars where model like %?1% and typec like %?2% and year > ?3 and year < ?4 and num_of_seats = ?5",nativeQuery = true)
+    @Query(value = "select * from cars c right outer join car_type ct on ct.car_id = c.car_id where ct.seats  like  %?5% and ct.name like ?2 and model like %?1%  and year > ?3 and year < ?4 and deleted = 0",nativeQuery = true)
     List<Car> search(String model,String typec,Integer from,Integer to,Integer nos);
-    @Query(value = "select * from cars where model like %?1% and typec like %?2% and year > ?3 and year < ?4 ",nativeQuery = true)
+    @Query(value = "select * from cars where model like %?1% and typec like %?2% and year > ?3 and year < ?4 and deleted = 0",nativeQuery = true)
     List<Car> searchWithoutSeats(String model,String typec,Integer from,Integer to);
 
-
+    @Query(value = "SELECT distinct c.car_id FROM cars c right outer join carpricelist cpl on c.car_id = cpl.car_id right outer join car_reservation cr on cr.car_id = c.car_id right outer join car_type ct on ct.car_id = c.car_id where ct.name like %?1% and c.deleted = 0 and cpl.price > ?2 and cpl.price < ?3 and ((cr.end_date < ?4 and cr.start_date < ?4) or (cr.end_date > ?5 and cr.start_date > ?5))",nativeQuery = true)
+    List<Long> getAvailableCars(String type, Integer priceFrom, Integer priceTo, String start, String end);
 }

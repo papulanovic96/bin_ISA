@@ -51,7 +51,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                         .antMatchers("/Car/remove/**").hasAnyRole("CAR_ADMIN","SYSTEM_ADMIN")
                         .antMatchers("/Car/rateCar").hasAnyRole("CAR_ADMIN","SYSTEM_ADMIN","USER")
                         .antMatchers("/Car/reserve").hasAnyRole("USER","CAR_ADMIN")
-                        .antMatchers("/Car/getAllCars").hasAnyRole("CAR_ADMIN","USER")
                         .antMatchers("/Car/tryToUnreserve/**").hasAnyRole("CAR_ADMIN","USER")
                         .antMatchers("/Car/deleteRes/**").hasAnyRole("CAR_ADMIN","USER")
                         .antMatchers("/Car/modifyCar/**").hasAnyRole("CAR_ADMIN","SYSTEM_ADMIN")
@@ -61,16 +60,25 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                         .antMatchers("/carService/tryToRate/**").hasAnyRole("CAR_ADMIN","SYSTEM_ADMIN","USER")
                         .antMatchers("/Car/tryToRate/**").hasAnyRole("CAR_ADMIN","SYSTEM_ADMIN","USER")
                         .antMatchers("/Car/getAvgGrade/**").permitAll()
-                        .antMatchers("/Car/find/**","Car/findAll/**").permitAll()
-                        .antMatchers("/carService/add").hasAnyRole("CAR_ADMIN","SYSTEM_ADMIN")
+                        .antMatchers("/Car/find/**").permitAll()
+                       .antMatchers("/Car/getAvailable/**").permitAll()
+
+                       .antMatchers("/carService/add").hasAnyRole("CAR_ADMIN","SYSTEM_ADMIN")
                         .antMatchers("/carService/rateCarService").hasAnyRole("CAR_ADMIN","SYSTEM_ADMIN","USER")
                         .antMatchers("/carService/addItem").hasAnyRole("CAR_ADMIN","SYSTEM_ADMIN")
                         .antMatchers("/carService/deleteItem/**").hasAnyRole("CAR_ADMIN","SYSTEM_ADMIN")
                         .antMatchers("/carService/modifyItem/**").hasAnyRole("CAR_ADMIN","SYSTEM_ADMIN")
-                        //mozda cak staviti u webignoring
-                        .antMatchers("/carService/getAllItems/**").hasAnyRole("CAR_ADMIN","USER","SYSTEM_ADMIN")
+                       .antMatchers("/carService/office/add").hasAnyRole("CAR_ADMIN","SYSTEM_ADMIN")
+                       .antMatchers("/carService/office/delete/**").hasAnyRole("CAR_ADMIN","SYSTEM_ADMIN")
+                       .antMatchers("/carService/office/modify/**").hasAnyRole("CAR_ADMIN","SYSTEM_ADMIN")
+                       .antMatchers("/carService/updateProfit/**").hasAnyRole("USER")
+
+                       //mozda cak staviti u webignoring
                         .antMatchers("/carService/remove/**").hasAnyRole("CAR_ADMIN","SYSTEM_ADMIN")
-                        .antMatchers("/carService/getItem/**").hasAnyRole("CAR_ADMIN","SYSTEM_ADMIN")
+                       .antMatchers("/carService/totalPrice/**").hasRole("USER")
+                       .antMatchers("/carService/getPrice/**").hasRole("USER")
+
+                       .antMatchers("/carService/getItem/**").hasAnyRole("CAR_ADMIN","SYSTEM_ADMIN")
                         .antMatchers("/carService/modifyCarService/**").hasAnyRole("CAR_ADMIN","SYSTEM_ADMIN")
                         .antMatchers("/carService/find/**").permitAll()
                         .antMatchers("/carService/getAvgGrade/**").permitAll()
@@ -96,11 +104,19 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
+        web.ignoring().antMatchers("/Car/getAllCars");
+        web.ignoring().antMatchers("/Car/findAll/**");
+        web.ignoring().antMatchers("/carService/office/getOne/**");
+        web.ignoring().antMatchers("/carService/office/getAll/**");
+        web.ignoring().antMatchers("/carService/getAllCarServices/**");
         web.ignoring().antMatchers("/user/register");
         web.ignoring().antMatchers("/user/register/**");
         web.ignoring().antMatchers("/user/register/");
         web.ignoring().antMatchers("/user/validateLogin/**");
         web.ignoring().antMatchers("/Car/search/**");
+        web.ignoring().antMatchers("/Car/types");
+        web.ignoring().antMatchers("/carService/getAllItems/**");
+
         web.ignoring().antMatchers("/carService/search/**");
         web.ignoring().antMatchers("/user/get/**");
         web.ignoring().antMatchers("/user/confirm-account?token=**");

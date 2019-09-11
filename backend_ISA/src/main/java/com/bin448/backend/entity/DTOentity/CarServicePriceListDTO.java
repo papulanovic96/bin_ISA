@@ -1,18 +1,16 @@
 package com.bin448.backend.entity.DTOentity;
 
 public class CarServicePriceListDTO {
-    private String name;
     private Double price;
     private String carServiceName;
+    private Long carServiceId;
+    private Long carId;
+    private String carModel;
+    private Integer carYear;
+    private String carREGID;
     private Long id;
 
-    public String getName() {
-        return name;
-    }
 
-    public void setName(String name) {
-        this.name = name;
-    }
 
     public Double getPrice() {
         return price;
@@ -36,5 +34,45 @@ public class CarServicePriceListDTO {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getCarModel() {
+        return carModel;
+    }
+
+    public void setCarModel(String carModel) {
+        this.carModel = carModel;
+    }
+
+    public Integer getCarYear() {
+        return carYear;
+    }
+
+    public void setCarYear(Integer carYear) {
+        this.carYear = carYear;
+    }
+
+    public String getCarREGID() {
+        return carREGID;
+    }
+
+    public void setCarREGID(String carREGID) {
+        this.carREGID = carREGID;
+    }
+
+    public Long getCarId() {
+        return carId;
+    }
+
+    public void setCarId(Long carId) {
+        this.carId = carId;
+    }
+
+    public Long getCarServiceId() {
+        return carServiceId;
+    }
+
+    public void setCarServiceId(Long carServiceId) {
+        this.carServiceId = carServiceId;
     }
 }

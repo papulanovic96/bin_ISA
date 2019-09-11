@@ -20,6 +20,9 @@ import { RentACarPriceListComponent } from './rent-acar-price-list/rent-acar-pri
 import { RatingModule } from 'ngx-bootstrap/rating';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { UserHistoryComponent } from './user-history/user-history.component';
+import { RentacarOfficesComponent } from './rentacar-offices/rentacar-offices.component';
+import { ReserveCarComponent } from './reserve-car/reserve-car.component';
+import {DatePipe} from "@angular/common";
 
 @NgModule({
   declarations: [
@@ -35,6 +38,10 @@ import { UserHistoryComponent } from './user-history/user-history.component';
     RentACarComponent,
     RentACarPriceListComponent,
     UserHistoryComponent,
+    RentacarOfficesComponent,
+    ReserveCarComponent,
+
+
 
   ],
 
@@ -54,7 +61,9 @@ import { UserHistoryComponent } from './user-history/user-history.component';
       {path: 'register', component:RegisterComponent},
       {path: 'carServices', component:RentACarComponent},
       {path: 'carServicePR',component:RentACarPriceListComponent},
-      {path: 'userHistory',component:UserHistoryComponent}
+      {path: 'userHistory',component:UserHistoryComponent},
+      {path: 'carServiceOffice',component:RentacarOfficesComponent},
+      {path: 'carReservation',component:ReserveCarComponent}
 
 
     ], {useHash: true}),
@@ -62,7 +71,7 @@ import { UserHistoryComponent } from './user-history/user-history.component';
   ],
 
 
-providers: [],
+providers: [DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

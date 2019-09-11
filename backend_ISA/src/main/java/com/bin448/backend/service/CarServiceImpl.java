@@ -2,17 +2,24 @@ package com.bin448.backend.service;
 
 import com.bin448.backend.converter.CarConverter;
 import com.bin448.backend.converter.CarRateConverter;
+import com.bin448.backend.converter.CarTypeConverter;
 import com.bin448.backend.entity.Car;
 import com.bin448.backend.entity.CarRate;
+import com.bin448.backend.entity.CarType;
 import com.bin448.backend.entity.DTOentity.CarDTO;
 import com.bin448.backend.entity.DTOentity.CarRateDTO;
+import com.bin448.backend.entity.DTOentity.CarTypeDTO;
 import com.bin448.backend.repository.CarRateRepository;
 import com.bin448.backend.repository.CarRepository;
+import com.bin448.backend.repository.CarTypeRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -20,8 +27,10 @@ import java.util.List;
 public class CarServiceImpl implements CarService {
     private CarRepository cr;
     private CarRateRepository crr;
-    public CarServiceImpl(CarRateRepository crr, CarRepository cr)
+    private CarTypeRepository ctr;
+    public CarServiceImpl(CarTypeRepository ctr, CarRateRepository crr, CarRepository cr)
     {
+        this.ctr = ctr;
         this.crr=crr;
         this.cr=cr;
     }
@@ -177,6 +186,40 @@ public class CarServiceImpl implements CarService {
             carsDTO.add(CarConverter.fromEntity(cars.get(i)));
         }
         return carsDTO;
+    }
+
+    @Override
+    public List<CarDTO> getAvailableCars(String type, Integer from, Integer to, String start, String end) {
+        try {
+
+            List<Long> ids =  cr.getAvailableCars(type,from,to,start,end);
+            List<Car> cars = new ArrayList<>();
+            List<CarDTO> out = new ArrayList<>();
+            for (Long id : ids)
+                cars.add(cr.getCarByCarId(id));
+            for (Car c:cars)
+                out.add(CarConverter.fromEntity(c));
+            return out;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return  null;
+        }
+
+
+    }
+
+    @Override
+    public void updateType(Integer seats, Long sId, Long id) {
+     ctr.update(seats, sId, id);
+    }
+
+    @Override
+    public List<CarTypeDTO> getTypes() {
+        List<CarType> types = ctr.findAll();
+        List<CarTypeDTO> out = new ArrayList<>();
+        for(CarType c:types)
+            out.add(CarTypeConverter.fromEntity(c));
+        return  out;
     }
 
 }

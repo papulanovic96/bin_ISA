@@ -17,12 +17,10 @@ public class CarConverter extends AbstractConverter{
 
     public static CarDTO fromEntity(Car c){
         CarDTO cDTO = new CarDTO();
-        cDTO.setNos(c.getNumOfSeats());
         cDTO.setModel(c.getModel());
         cDTO.setServiceId(c.getCarService().getCarService_id());
         cDTO.setRegID(c.getRegID());
         cDTO.setConvertible(c.isConvertible());
-        cDTO.setType(c.getType());
         cDTO.setYear(c.getYear());
         cDTO.setServiceName(c.getCarService().getCarServiceName());
         cDTO.setId(c.getCarId());
@@ -38,13 +36,13 @@ public class CarConverter extends AbstractConverter{
         car.setRegID(cDTO.getRegID());
         car.setModel(cDTO.getModel());
         car.setCarId(cDTO.getId());
-        car.setNumOfSeats(cDTO.getNos());
+
         car.setReserved(cDTO.getReserved());
         car.setReserved(false);
         car.setCarService(cr.getCarServiceByCarServiceId(cDTO.getServiceId()));
         car.setModel(cDTO.getModel());
         car.setConvertible(cDTO.isConvertible());
-        car.setType(cDTO.getType());
+
         car.setYear(cDTO.getYear());
         car.setDeleted(cDTO.getDeleted());
         return car;

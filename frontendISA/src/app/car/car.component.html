@@ -11,7 +11,7 @@
     <ul class="navbar-nav mr-auto">
 
       <li class="nav-item">
-        <button   (click)="openModalDialog()" rounded="true"  class="btn-outline-info" mdbWavesEffect>Add New Car</button>
+        <button *ngIf="loginService.isUserLoggedIn() && loginService.isUserUSER()"  (click)="openModalDialog()" rounded="true"  class="btn-outline-info" mdbWavesEffect>Add New Car</button>
       </li>
 
 
@@ -22,10 +22,9 @@
     <!-- Links -->
     <div style="margin-left: 1cm">
       <input  (keyup)="onKey($event)" class="form-control-sm" type="text" placeholder="Search Model">
-      <input (keyup)="onKey2($event)" class="form-control-sm" type="text" placeholder="Search Type">
       <input (keyup)="onKey3($event)" class="form-control-sm" type="number" placeholder="Year from">
       <input (keyup)="onKey4($event)" class="form-control-sm" type="number" placeholder="Year to">
-      <input (keyup)="onKey5($event)" class="form-control-sm" type="number" placeholder="Num of seats">
+
 
       <button style="margin-right: 3cm" class="btn btn-outline-success" type="button" (click)="search()">Search</button>
     </div>
@@ -42,11 +41,9 @@
     <thead>
     <tr>
       <th scope="col-xs-1">REGID</th>
-      <th scope="col-xs-1">NUM OF SEATS</th>
       <th scope="col-1">MODEL</th>
       <th scope="col-xs-1">YEAR</th>
       <th scope="col-xs-1">SERVICE OWNER</th>
-      <th scope="col-xs-1">TYPE</th>
       <th scope="col-xs-1">CONVERTIBLE</th>
 
 
@@ -55,19 +52,17 @@
     <tbody>
     <tr *ngFor = 'let a of listOfCars' ng-if="!a.deleted">
       <td>{{ a.regID }}</td>
-      <td>{{ a.nos }}</td>
       <td>{{ a.model }}</td>
       <td>{{ a.year }}</td>
       <td>{{ a.serviceName}}</td>
-      <td>{{ a.type }}</td>
       <td>{{ a.convertible }}</td>
       <td>
-        <button *ngIf="!a.reserved" (click)="deleteCar(a.regID)" mdbBtn type="button" color="elegant" mdbWavesEffect>DELETE</button>
+        <button *ngIf="!a.reserved && loginService.isUserLoggedIn() && loginService.isUserADMIN()"  (click)="deleteCar(a.regID)" mdbBtn type="button" color="elegant" mdbWavesEffect>DELETE</button>
       </td>
       <td>
-        <button type="button" mdbBtn *ngIf="!a.reserved" (click)="getCarForUpdate(a.regID)" color="success" mdbWavesEffect>Change</button>
+        <button *ngIf="!a.reserved && loginService.isUserLoggedIn() && loginService.isUserADMIN()" type="button" mdbBtn  (click)="getCarForUpdate(a.regID)" color="success" mdbWavesEffect>CHANGE</button>
       </td>
-      <td><label *ngIf="a.reserved">[RESERVED]</label></td>
+      <td><label *ngIf="a.reserved && loginService.isUserLoggedIn() && loginService.isUserADMIN()">[RESERVED]</label></td>
     </tr>
     </tbody>
   </table>
@@ -99,9 +94,7 @@
           <div class="md-form pb-3">
             <input required type="text" class="form-control" name="regID"  placeholder="Register number" [(ngModel)]="car.regID" />
           </div>
-          <div class="md-form pb-3">
-            <input required type="number" class="form-control" name="nos"  placeholder="Number of seats" [(ngModel)]="car.nos" />
-          </div>
+
           <div class="md-form pb-3">
             <input required type="text" class="form-control" name="model" placeholder="Model" [(ngModel)]="car.model" />
           </div>

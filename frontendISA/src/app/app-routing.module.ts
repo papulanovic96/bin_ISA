@@ -8,16 +8,20 @@ import {RegisterComponent} from "./register/register.component";
 import {RentACarComponent} from "./rent-acar/rent-acar.component";
 import {RentACarPriceListComponent} from "./rent-acar-price-list/rent-acar-price-list.component";
 import {UserHistoryComponent} from "./user-history/user-history.component";
+import {RentacarOfficesComponent} from "./rentacar-offices/rentacar-offices.component";
+import {ReserveCarComponent} from "./reserve-car/reserve-car.component";
 
 const appRoutes: Routes = [
 
   { path: 'login', component: LoginComponent },
   { path: 'logout', component: LogoutComponent,canActivate:[AuthGaurdService] },
-  { path: 'cars', component: CarComponent,canActivate:[AuthGaurdService] },
+  { path: 'cars', component: CarComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'carServicePR', component: RentACarPriceListComponent,canActivate:[AuthGaurdService] },
-  { path: 'carServices', component: RentACarComponent,canActivate:[AuthGaurdService] },
-  { path: 'userHistory', component: UserHistoryComponent}
+  { path: 'carServicePR', component: RentACarPriceListComponent },
+  { path: 'carServices', component: RentACarComponent },
+  { path: 'userHistory', component: UserHistoryComponent},
+  {path: 'carServiceOffice',component : RentacarOfficesComponent},
+  {path: 'carReservation',component: ReserveCarComponent}
 
 
 

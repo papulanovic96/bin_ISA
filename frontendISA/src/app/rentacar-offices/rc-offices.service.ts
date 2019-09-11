@@ -1,99 +1,28 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {carServicePriceLIst} from "./carServicePriceList";
 import {Observable} from "rxjs";
-import {CarService} from "../rent-acar/carService";
+import {rcOffice} from "./rcOffice";
 
 @Injectable({
   providedIn: 'root'
 })
-export class RCPriceListServiceService {
-
-
-  private getURL : string;
-  private createURL : string;
-  private deleteURL : string;
-  private getForUpdateURL : string;
-  private modifyURL : string;
-
-
+export class RcOfficesService {
+private getOneURL: string;
+private getAllURLL: string;
+private addURL: string;
+private deleteURL: string;
+private modifyURL: string;
   constructor(private http:HttpClient) {
-    this.getURL = 'http://localhost:4200/carService/getAllItems';
-    this.createURL = 'http://localhost:4200/carService/addItem';
-    this.deleteURL = 'http://localhost:4200/carService/deleteItem';
-    this.getForUpdateURL = 'http://localhost:4200/carService/getItem';
-   this.modifyURL = 'http://localhost:4200/carService/modifyItem';
-  }
 
-  addUpdated(price:number,id:number) : Observable<string>{
-    let username = sessionStorage.getItem('username');
-    let password = sessionStorage.getItem('password');
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json',
-        'Authorization': 'Basic ' + btoa(username+':'+password),
-        'Access-Control-Allow-Methods': 'GET, POST, PUT, PATCH, POST, DELETE, OPTIONS',
-        'Access-Control-Allow-Headers': 'Content-Type',
-        'Access-Control-Max-Age': '86400',
-        'Access-Control-Allow-Origin': '*'
-      }),dataType: 'text/plain; charset=utf-8',responseType: 'text' as 'json'
-    };
-    return this.http.post<string>(this.modifyURL+'/'+price+','+id,null,httpOptions);
+    this.getOneURL = 'http://localhost:4200/carService/office/getOne';
+    this.getAllURLL = 'http://localhost:4200/carService/office/getAll';
+    this.addURL = 'http://localhost:4200/carService/office/add';
+    this.deleteURL = 'http://localhost:4200/carService/office/delete';
+    this.modifyURL = 'http://localhost:4200/carService/office/modify';
 
   }
 
-  getForUpdate(id:number) : Observable<carServicePriceLIst>{
-    let username = sessionStorage.getItem('username');
-    let password = sessionStorage.getItem('password');
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json',
-        'Authorization': 'Basic ' + btoa(username+':'+password),
-        'Access-Control-Allow-Methods': 'GET, POST, PUT, PATCH, POST, DELETE, OPTIONS',
-        'Access-Control-Allow-Headers': 'Content-Type',
-        'Access-Control-Max-Age': '86400',
-        'Access-Control-Allow-Origin': '*'
-      })
-
-    };
-    return this.http.get<carServicePriceLIst>(this.getForUpdateURL+'/'+id,httpOptions);
-
-  }
-
-
-  create(newItem:carServicePriceLIst) : Observable<string> {
-    let username = sessionStorage.getItem('username');
-    let password = sessionStorage.getItem('password');
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json',
-        'Authorization': 'Basic ' + btoa(username+':'+password),
-        'Access-Control-Allow-Methods': 'GET, POST, PUT, PATCH, POST, DELETE, OPTIONS',
-        'Access-Control-Allow-Headers': 'Content-Type',
-        'Access-Control-Max-Age': '86400',
-        'Access-Control-Allow-Origin': '*'
-      }),dataType: 'text/plain; charset=utf-8',responseType: 'text' as 'json'
-    };
-    return this.http.post<string>(this.createURL,newItem,httpOptions);
-  }
-
-  delete(itemName:string) : Observable<string>{
-    let username = sessionStorage.getItem('username');
-    let password = sessionStorage.getItem('password');
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json',
-        'Authorization': 'Basic ' + btoa(username+':'+password),
-        'Access-Control-Allow-Methods': 'GET, POST, PUT, PATCH, POST, DELETE, OPTIONS',
-        'Access-Control-Allow-Headers': 'Content-Type',
-        'Access-Control-Max-Age': '86400',
-        'Access-Control-Allow-Origin': '*'
-      }),dataType: 'text/plain; charset=utf-8',responseType: 'text' as 'json'
-    };
-    return this.http.post<string>(this.deleteURL+'/'+itemName,null,httpOptions);
-  }
-
-  getAll(serviceId : number) : Observable<carServicePriceLIst[]> {
+  getAll(id:number) : Observable<rcOffice[]>{
     let username = sessionStorage.getItem('username');
     let password = sessionStorage.getItem('password');
     const httpOptions = {
@@ -106,11 +35,10 @@ export class RCPriceListServiceService {
         'Access-Control-Allow-Origin': '*'
       })
     };
-    return this.http.get<carServicePriceLIst[]>(this.getURL+'/'+serviceId,httpOptions);
+   return this.http.get<rcOffice[]>(this.getAllURLL+'/'+id,httpOptions);
+  }
 
-}
-
-  getAllServices(): Observable<CarService[]>{
+  getOne(id:number) : Observable<rcOffice>{
     let username = sessionStorage.getItem('username');
     let password = sessionStorage.getItem('password');
     const httpOptions = {
@@ -123,8 +51,59 @@ export class RCPriceListServiceService {
         'Access-Control-Allow-Origin': '*'
       })
     };
-    return this.http.get<CarService[]>('http://localhost:4200/carService/getAllCarServices',httpOptions);
+    return this.http.get<rcOffice>(this.getOneURL+'/'+id,httpOptions);
+  }
+
+  create(rco:rcOffice) : Observable<boolean>{
+    let username = sessionStorage.getItem('username');
+    let password = sessionStorage.getItem('password');
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Authorization': 'Basic ' + btoa(username+':'+password),
+        'Access-Control-Allow-Methods': 'GET, POST, PUT, PATCH, POST, DELETE, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type',
+        'Access-Control-Max-Age': '86400',
+        'Access-Control-Allow-Origin': '*'
+      })
+    };
+    return this.http.post<boolean>(this.addURL,rco,httpOptions);
 
   }
+
+  delete(id:number) : Observable<boolean>{
+    let username = sessionStorage.getItem('username');
+    let password = sessionStorage.getItem('password');
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Authorization': 'Basic ' + btoa(username+':'+password),
+        'Access-Control-Allow-Methods': 'GET, POST, PUT, PATCH, POST, DELETE, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type',
+        'Access-Control-Max-Age': '86400',
+        'Access-Control-Allow-Origin': '*'
+      })
+    };
+    return this.http.get<boolean>(this.deleteURL+'/'+id,httpOptions);
+
+  }
+
+  modify(address:string,id:number) : Observable<string>{
+    let username = sessionStorage.getItem('username');
+    let password = sessionStorage.getItem('password');
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Authorization': 'Basic ' + btoa(username+':'+password),
+        'Access-Control-Allow-Methods': 'GET, POST, PUT, PATCH, POST, DELETE, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type',
+        'Access-Control-Max-Age': '86400',
+        'Access-Control-Allow-Origin': '*'
+      }),dataType: 'text/plain; charset=utf-8',responseType: 'text' as 'json'
+    };
+    return this.http.get<string>(this.modifyURL+'/'+address+','+id,httpOptions);
+
+  }
+
 
 }

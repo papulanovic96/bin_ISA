@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface CarServiceRepository extends JpaRepository<CarService,String> {
+public interface CarServiceRepository extends JpaRepository<CarService,Long> {
 
 
     CarService getCarServiceByCarServiceName(String name);
@@ -28,7 +28,7 @@ public interface CarServiceRepository extends JpaRepository<CarService,String> {
     @Transactional
     @Modifying
     @Query(value = "Update car_service set deleted = ?1 where car_service_id= ?2", nativeQuery = true)
-    void logicalDeleting(boolean delete , Long id);
+    void logicalDeleting(Integer delete , Long id);
 
     @Transactional
     @Modifying
@@ -42,4 +42,8 @@ public interface CarServiceRepository extends JpaRepository<CarService,String> {
 
     @Query(value = "select * from car_service where car_service_address like %?1% and car_service_name like %?2% and deleted = 0 order by avg_grade DESC",nativeQuery = true)
     List<CarService> search(String address,String name);
+    @Transactional
+    @Modifying
+    @Query(value = "update car_service set profit = profit + ?1 where car_service_id = ?2",nativeQuery = true)
+    void updateProfit(Integer profit,Long id);
 }

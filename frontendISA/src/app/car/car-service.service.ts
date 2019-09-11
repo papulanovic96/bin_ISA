@@ -4,6 +4,7 @@ import { Car } from './car';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {CrossOrigin} from "@angular-devkit/build-angular/src/browser/schema";
 import {CarService} from "../rent-acar/carService";
+import {carType} from "./carType";
 
 @Injectable({
   providedIn: 'root'
@@ -16,13 +17,115 @@ export class CarServiceService {
   private getCarForUpdateURL : string;
   private postModifiedCarURL:string;
   private searchUrl:string;
+  private typesUrl:string;
+  private getAvailable:string;
+  private fullPriceUrl:string;
+  private updateProfitUrl:string;
+  private getPriceUrl:string;
   constructor(private http: HttpClient) {
+    this.getPriceUrl = 'http://localhost:4200/carService/getPrice';
+    this.updateProfitUrl = 'http://localhost:4200/carService/updateProfit';
+    this.fullPriceUrl='http://localhost:4200/carService/totalPrice';
     this.searchUrl = 'http://localhost:4200/Car/search';
     this.getURL = 'http://localhost:4200/Car/getAllCars';
     this.createURL = 'http://localhost:4200/Car/add';
     this.deleteURL = 'http://localhost:4200/Car/remove';
     this.getCarForUpdateURL = 'http://localhost:4200/Car/find';
     this.postModifiedCarURL ='http://localhost:4200/Car/modifyCar';
+    this.typesUrl = 'http://localhost:4200/Car/types';
+    this.getAvailable = 'http://localhost:4200/Car/getAvailable';
+  }
+
+
+  getcarPrice(id:number):Observable<number>{
+
+
+    let username = sessionStorage.getItem('username');
+    let password = sessionStorage.getItem('password');
+
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Authorization': 'Basic ' + btoa(username+':'+password),
+        'Access-Control-Allow-Methods': 'GET, POST, PUT, PATCH, POST, DELETE, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type',
+        'Access-Control-Max-Age': '86400',
+        'Access-Control-Allow-Origin': '*'
+      })
+    };
+    return this.http.get<number>(this.getPriceUrl+'/'+id,httpOptions);
+  }
+
+
+  updateProfit(amount:number,id:number):Observable<any>{
+
+
+    let username = sessionStorage.getItem('username');
+    let password = sessionStorage.getItem('password');
+
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Authorization': 'Basic ' + btoa(username+':'+password),
+        'Access-Control-Allow-Methods': 'GET, POST, PUT, PATCH, POST, DELETE, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type',
+        'Access-Control-Max-Age': '86400',
+        'Access-Control-Allow-Origin': '*'
+      })
+    };
+    return this.http.get<any>(this.updateProfitUrl+'/'+amount+','+id,httpOptions);
+  }
+
+  getFullPrice(array:Number[]): Observable<number>{
+
+    let username = sessionStorage.getItem('username');
+    let password = sessionStorage.getItem('password');
+
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Authorization': 'Basic ' + btoa(username+':'+password),
+        'Access-Control-Allow-Methods': 'GET, POST, PUT, PATCH, POST, DELETE, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type',
+        'Access-Control-Max-Age': '86400',
+        'Access-Control-Allow-Origin': '*'
+      })
+    };
+    return this.http.get<number>(this.fullPriceUrl+'/'+array,httpOptions);
+  }
+
+  getAvailableFun(type:string,f:number,t:number,start:string,end:string) : Observable<Car[]>{
+    let username = sessionStorage.getItem('username');
+    let password = sessionStorage.getItem('password');
+
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Authorization': 'Basic ' + btoa(username+':'+password),
+        'Access-Control-Allow-Methods': 'GET, POST, PUT, PATCH, POST, DELETE, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type',
+        'Access-Control-Max-Age': '86400',
+        'Access-Control-Allow-Origin': '*'
+      })
+    };
+    return this.http.get<Car[]>(this.getAvailable+'/'+type+','+f+','+t+','+start+','+end,httpOptions);
+
+  }
+
+  getTypes() : Observable<carType[]>{
+
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+
+      })
+    };
+    return this.http.get<carType[]>(this.typesUrl,httpOptions);
 
   }
 
