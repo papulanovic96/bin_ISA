@@ -38,6 +38,11 @@ export class HotelComponent implements OnInit {
   listOfAddress: Address[] = [];
   listOfRooms: Room[] = [];
   listOfTypes: Type[] = [];
+  findHotelName: String = "";
+  address: String = "";
+  arrival = new Date('2018-11-11')
+  return = new Date('2018-11-11')
+
   changedHotel = new Hotel(0, "", 0, "", 0);
   static fastReservation = new FastHotelReservation(0, 0, 0, "", new Date(), 5, "NS");
   /////////////////////////////////////////////////////////////////////////////////////////////////////////promeni gornji det na prazan string
@@ -61,14 +66,55 @@ export class HotelComponent implements OnInit {
     this.hotelService.getAllRoomTypes().subscribe(listOfTypes => this.listOfTypes = listOfTypes);
   }
 
+  find() {
+    if (this.findHotelName == "" && this.address == "") {
+      alert("You have to fill hotel name or address")
+    } else if (this.arrival < new Date() || this.return < new Date()) {
+      alert("Both dates are required")
+    } else if (this.return < this.arrival) {
+      alert('Arrival date have to be bigger than return date')
+    } else {
+      if (this.address == "") {
+        this.hotelService.findHotels(this.findHotelName, this.address, this.arrival, this.return).subscribe(
+          hotels => {
+            for (let h of hotels) {
+              console.log(h.name)
+            }
+          }
+        )
+      } else {
+        let found = false;
+        for (let adress of this.listOfAddress) {
+          if (adress.city.toUpperCase() == this.address.toUpperCase()) {
+            found = true;
+          }
+        }
+        if (found == false) {
+          alert("Ther is no hotel in " + this.address);
+        } else {
+          this.hotelService.findHotels(this.findHotelName, this.address, this.arrival, this.return).subscribe(
+            hotels => {
+              for (let h of hotels) {
+                console.log(h.name)
+              }
+            }
+          )
+        }
+      }
+    }
+
+
+  }
+
   makeFastReservation() {
     if (this.fastResNumberOfNights > 0) {
       for (let discount of this.validDiscounts) {
         if (discount.id == HotelComponent.fastReservation.discountId) {
           let returnDate: Date = new Date((new Date(HotelComponent.fastReservation.arrivalDate)).getTime() + (60 * 60 * 24 * 1000) * this.fastResNumberOfNights);
-          let discountEndDate: Date = new Date((new Date(discount.startDate)).getTime() + (60 * 60 * 24 * 1000) * discount.duration);
-          if (returnDate <= discountEndDate) {
-            let sumPrice:number=HotelComponent.fastReservation.sumPrice * this.fastResNumberOfNights;
+          let discountEndDate: Date = new Date((new Date(discount.startDate)).getTime() + (60 * 60 * 24 * 1000) * (discount.duration + 1));
+          let discount2 = new Date((new Date(discount.startDate)).getTime() + (60 * 60 * 24 * 1000) * discount.duration);
+          if (returnDate < discountEndDate) {
+            let sumPrice: number = HotelComponent.fastReservation.sumPrice * this.fastResNumberOfNights;
             HotelComponent.fastReservation.sumPrice = sumPrice;
             HotelComponent.fastReservation.userUsername = this.loginService.getLogged();
             HotelComponent.fastReservation.numberOfNights = this.fastResNumberOfNights;
@@ -81,7 +127,7 @@ export class HotelComponent implements OnInit {
               }
             );
           } else {
-            alert("Discount expires " + this.datePipe.transform(discountEndDate, 'yyyy-MM-dd'));
+            alert("Discount expires " + this.datePipe.transform(discount2, 'yyyy-MM-dd'));
           }
         }
       }
@@ -99,6 +145,10 @@ export class HotelComponent implements OnInit {
 
   returnDate(startDate: Date, duration: number): Date {
     return new Date((new Date(startDate)).getTime() + (60 * 60 * 24 * 1000) * duration);
+  }
+
+  getToday(): string {
+    return new Date().toISOString().split('T')[0]
   }
 
   getTypeName(typeId: number): String {
