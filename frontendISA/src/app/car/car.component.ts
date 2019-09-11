@@ -59,9 +59,9 @@ export class CarComponent implements OnInit {
       this.from = 0;
     if(String(this.to)==="")
       this.to= 3000;
-    if(String(this.nos)==="")
+    if(String(this.nos)!=="a")
       this.nos =-5;
-
+     this.type='';
 
     this.carService.search(this.model,this.type,this.from,this.to,this.nos).subscribe(
       data=> {

@@ -6,6 +6,7 @@ import com.bin448.backend.entity.CarServicePriceList;
 import com.bin448.backend.entity.DTOentity.CarServiceDTO;
 import com.bin448.backend.entity.DTOentity.CarServicePriceListDTO;
 import com.bin448.backend.entity.DTOentity.CarServiceRateDTO;
+import com.bin448.backend.entity.DTOentity.RentACarBranchOfficeDTO;
 import com.bin448.backend.repository.CarServiceRepository;
 import com.bin448.backend.service.CarServiceService;
 import org.springframework.http.ResponseEntity;
@@ -24,11 +25,57 @@ public class CarServiceController {
         this.csr = csr;
     }
 
+    @PostMapping("/office/add")
+    public boolean addOffice(@RequestBody RentACarBranchOfficeDTO dto){
+        return css.addBranchOffice(dto);
+    }
+
+    @GetMapping("/office/delete/{id}")
+    public boolean deleteOffice(@PathVariable Long id){
+        return css.deleteBranchOffice(id);
+    }
+
+    @GetMapping("/office/getAll/{id}")
+    public List<RentACarBranchOfficeDTO> getAllOffices(@PathVariable Long id){
+        return css.getAllBranches(id);
+    }
+
+    @GetMapping("/office/getOne/{id}")
+    public RentACarBranchOfficeDTO getOne(@PathVariable Long id){
+        return css.getByID(id);
+    }
+
+    @GetMapping("/office/modify/{address},{id}")
+    public String officeMod(@PathVariable String address, @PathVariable Long id){
+        return css.updateBranchOffice(address, id);
+    }
+
     @PostMapping("/add")
     public String addCarService(@RequestBody CarServiceDTO carService){
         return css.addCarService(carService);
 
     }
+
+
+    @GetMapping("/totalPrice/{array}")
+    public Integer getTotal(@PathVariable Integer[] array){
+        Integer sum = css.getFullPrice(array);
+
+        return sum;
+    }
+
+
+    @GetMapping("/getPrice/{id}")
+    public Integer getTotal(@PathVariable Long id){
+        return css.getPrice(id);
+    }
+
+
+    @GetMapping("/updateProfit/{profit},{id}")
+    public void updateProfit(@PathVariable Integer profit,@PathVariable Long id){
+        css.updateProfit(profit,id);
+    }
+
 
     @PostMapping("/remove/{id}")
     public String removeCarService(@PathVariable Long id){
@@ -51,9 +98,9 @@ public class CarServiceController {
         return css.modifyService(name,adress,descrip,location,id);
     }
 
-    @GetMapping("/getAllItems/{name}")
-    public List<CarServicePriceListDTO> getAllItems(@PathVariable String name){
-        return css.getAllItems(name);
+    @GetMapping("/getAllItems/{idService}")
+    public List<CarServicePriceListDTO> getAllItems(@PathVariable Long idService){
+        return css.getAllItems(idService);
     }
 
     @PostMapping("/addItem")
@@ -77,9 +124,9 @@ public class CarServiceController {
         return ResponseEntity.ok(css.deleteItem(id));
     }
 
-    @PostMapping("/modifyItem/{Ime},{Cena},{Id}")
-    public String modifyItem(@PathVariable String Ime,@PathVariable Double Cena, @PathVariable Long Id){
-        return css.changeItem(Ime,Cena,Id);
+    @PostMapping("/modifyItem/{Cena},{Id}")
+    public String modifyItem(@PathVariable Double Cena, @PathVariable Long Id){
+        return css.changeItem(Cena,Id);
     }
 
     @PostMapping("/rateCarService")

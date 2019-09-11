@@ -6,6 +6,9 @@ import {CarService} from "../rent-acar/carService";
 import {RentACarComponent} from "../rent-acar/rent-acar.component";
 import {RCPriceListServiceService} from "./rcprice-list-service.service";
 import {Router} from "@angular/router";
+import {RentaCarServiceService} from "../rent-acar/renta-car-service.service";
+import {Car} from "../car/car";
+import {AuthenticationService} from "../service/authentication.service";
 
 @Component({
   selector: 'app-rent-acar-price-list',
@@ -13,15 +16,19 @@ import {Router} from "@angular/router";
   styleUrls: ['./rent-acar-price-list.component.css']
 })
 export class RentACarPriceListComponent implements OnInit {
-  public PriceListItem = new carServicePriceLIst('',0,'',0);
-  public newPriceListItem = new carServicePriceLIst('',0,'',0);
+  public cars : Car[];
+  public PriceListItem = new carServicePriceLIst('',0,'',0,0,0,'',0);
+  public newPriceListItem =  new carServicePriceLIst('',0,'',0,0,0,'',0);
   public carServices : CarService[];
   public csName:string;
+  public csId:number;
+  public carId:number;
+  public actualIdService:number;
   public listOfItems : carServicePriceLIst[];
   public show : boolean = false;
   display='none';
   display2='none';
-  constructor(private http:HttpClient, private service:RCPriceListServiceService,  public router:Router) {
+  constructor(private loginService:AuthenticationService,private rcService:RentaCarServiceService,private http:HttpClient, private service:RCPriceListServiceService,  public router:Router) {
     this.router.routeReuseStrategy.shouldReuseRoute = function(){
       return false;
     }
@@ -36,7 +43,18 @@ export class RentACarPriceListComponent implements OnInit {
   }
 
 
-
+getCars(){
+    this.rcService.getAllVehicles().subscribe(
+      data=>{
+        this.cars = [];
+        for(let c of data){
+          if (c.serviceId === this.actualIdService)
+            this.cars.push(c);
+        }
+        this.openModalDialog();
+      }
+    );
+}
 
   showDiv(){
     this.show = true;
@@ -58,8 +76,15 @@ export class RentACarPriceListComponent implements OnInit {
     this.display2='none'; //set none css after close dialog
   }
 
-getItemsOfCarService(name:string){
-  this.service.getAll(name).subscribe(
+getItemsOfCarService(name : string){
+
+    for(let cs of this.carServices)
+    {
+      if(cs.carServiceName === name)
+        this.csId = cs.id;
+    }
+    this.actualIdService = this.csId;
+  this.service.getAll(this.csId).subscribe(
     data=> {
       this.listOfItems = data;
       this.show = true;
@@ -73,8 +98,8 @@ deleteItem(name:string){
     this.service.delete(name).subscribe(
       data=>{
         alert(data);
-        this.router.navigated = false;
-        this.router.navigate([this.router.url]);
+        this.getItemsOfCarService(this.csName);
+        this.display = 'none';
       },
       error1 => alert(error1)
     );
@@ -89,19 +114,23 @@ getItem(id:number){
 
 createItem(){
     this.newPriceListItem.carServiceName = this.csName;
+    this.newPriceListItem.carId = this.carId;
+    this.newPriceListItem.carServiceId = this.actualIdService;
     this.service.create(this.newPriceListItem).subscribe(
       data=> {
         alert(data);
-        this.router.navigated = false;
-        this.router.navigate([this.router.url]);
+        this.getItemsOfCarService(this.csName);
+        this.display = 'none';
+
       },
       error1 => alert(error1)
 
     );
 }
 
+
 addChangedItem (){
-    this.service.addUpdated(this.PriceListItem.name,this.PriceListItem.price,this.PriceListItem.id).subscribe(
+    this.service.addUpdated(this.PriceListItem.price,this.PriceListItem.id).subscribe(
       data=> {
         alert(data);
         this.router.navigated = false;

@@ -35,8 +35,11 @@
 
           </div>
         <li class="nav-item waves-light" mdbWavesEffect><a routerLink="/carServices" class="nav-link">Rent A Car</a></li>
-        <li *ngIf="loginService.isUserLoggedIn() && !loginService.isUserAirlineAdmin()" class="nav-item waves-light" mdbWavesEffect><a *ngIf="loginService.isUserLoggedIn() && loginService.isUserADMIN()"  routerLink="/cars" class="nav-link">Cars</a></li>
-        <li *ngIf="loginService.isUserLoggedIn() && !loginService.isUserAirlineAdmin()" class="nav-item waves-light" mdbWavesEffect><a *ngIf="loginService.isUserLoggedIn() && loginService.isUserADMIN()"  routerLink="/carServicePR" class="nav-link">Price List</a></li>
+        <li class="nav-item waves-light" mdbWavesEffect><a  routerLink="/cars" class="nav-link">Cars</a></li>
+        <li class="nav-item waves-light" mdbWavesEffect><a  routerLink="/carServicePR" class="nav-link">Price List</a></li>
+        <li class="nav-item waves-light" mdbWavesEffect><a *ngIf="loginService.isUserLoggedIn() && loginService.isUserUSER()"  routerLink="/carReservation" class="nav-link">Make an reservation</a></li>
+        <li class="nav-item waves-light" mdbWavesEffect><a  routerLink="/carServiceOffice" class="nav-link">Branch Office</a></li>
+
         <li class='nav-item'><a class="nav-link" [routerLink]="['/hotel']"  role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >Hotel</a></li>
         <li class='nav-item'><a *ngIf="loginService.isUserHotelAdmin()" class="nav-link" [routerLink]="['/rooms']" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >Room</a> </li>
         <li class="nav-item waves-light" mdbWavesEffect *ngIf="loginService.isUserLoggedIn()"><a class="nav-link"  [routerLink]="['/profile']" routerLinkActive="router-link-active" >User profile</a>
@@ -186,6 +189,7 @@
     </div>
   </div>
 </div>
+
 
 <!-- Modal 4 -->
 <div class="portfolio-modal modal fade" id="portfolioModal4" tabindex="-1" role="dialog" aria-hidden="true">

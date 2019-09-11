@@ -5,38 +5,13 @@
   </title>
 </head>
 <body>
-<mdb-navbar *ngIf="loginService.isUserADMIN()" SideClass="navbar navbar-expand-lg navbar-dark bg-primary" [containerInside]="false">
 
-  <!-- Navbar brand -->
-  <mdb-navbar-brand><a class="navbar-brand" href="#">Rent a Car Service</a></mdb-navbar-brand>
-
-  <!-- Collapsible content -->
-  <links>
-
-    <!-- Links -->
-    <ul class="navbar-nav mr-auto">
-
-      <li class="nav-item">
-        <button  (click)="openModalDialog()"  class="btn-outline-info">Add New Service</button>
-      </li>
-      <li class="nav-item">
-
-      </li>
-
-    </ul>
-    <!-- Links -->
-
-    <!-- Search form -->
-
-  </links>
-  <!-- Collapsible content -->
-
-</mdb-navbar>
 
 <mdb-navbar  SideClass="navbar navbar-expand-lg navbar-dark bg-primary" [containerInside]="false">
 
   <!-- Navbar brand -->
   <mdb-navbar-brand><a class="navbar-brand" href="#">Rent a Car Service</a></mdb-navbar-brand>
+  <button *ngIf="loginService.isUserLoggedIn() && loginService.isUserADMIN()" (click)="openModalDialog()"  class="btn-outline-info">Add New Service</button>
 
   <!-- Collapsible content -->
   <links>
@@ -73,10 +48,10 @@
       <td>{{ a.carServiceLocation }}</td>
       <td>{{ a.avgGrade }}</td>
       <td>
-        <button [id]="a.regID" (click)="(deleteCarService(a.id))" mdbBtn type="button" color="elegant" mdbWavesEffect>DELETE</button>
+        <button [id]="a.regID" *ngIf="loginService.isUserLoggedIn() && loginService.isUserADMIN()" (click)="(deleteCarService(a.id))" mdbBtn type="button" color="elegant" mdbWavesEffect>DELETE</button>
       </td>
       <td>
-        <button type="button" mdbBtn (click)="getCarServiceForUpdate(a.id)" color="success" mdbWavesEffect>CHANGE</button>
+        <button type="button" *ngIf="loginService.isUserLoggedIn() && loginService.isUserADMIN()" mdbBtn (click)="getCarServiceForUpdate(a.id)" color="success" mdbWavesEffect>CHANGE</button>
       </td>
     </tr>
     </tbody>
@@ -103,11 +78,11 @@
         <p>
 
         </p>
-        <a (click)="getCarService(cs.id)">See Info</a>
+        <a  (click)="getCarService(cs.id)">See Info</a>
         <p>
 
         </p>
-        <a (click)="tryToRateService(cs.id)">Rate</a>
+        <a *ngIf="loginService.isUserLoggedIn() && loginService.isUserUSER()" (click)="tryToRateService(cs.id)">Rate</a>
 
       </figcaption>
     </figure>
@@ -131,10 +106,9 @@
         <!-- <h4 class="modal-title">Login</h4> -->
         <div style="margin-left: 1cm">
           <input  (keyup)="onKeyM($event)" class="form-control-sm" type="text" placeholder="Search Model">
-          <input (keyup)="onKeyT($event)" class="form-control-sm" type="text" placeholder="Search Type">
+
           <input (keyup)="onKeyF($event)" class="form-control-sm" type="number" placeholder="Year from">
           <input (keyup)="onKeyTo($event)" class="form-control-sm" type="number" placeholder="Year to">
-          <input (keyup)="onKeyN($event)" class="form-control-sm" type="number" placeholder="Num of seats">
 
           <button style="margin-right: 3cm" class="btn btn-outline-success" type="button" (click)="searchCars()">Search</button>
         </div>
@@ -147,35 +121,29 @@
         <table class="table table-fixed table-hover tab">
         <thead>
 
-        <tr><th>REGID</th><th>Num of seats</th><th>Model</th><th>Year</th><th>Type</th><th>Convertible</th><th>AvgGrade</th></tr>
+        <tr><th>REGID</th><th>Model</th><th>Year</th><th>Convertible</th><th>AvgGrade</th></tr>
         </thead>
           <tbody *ngFor = 'let a of listOfCars'>
 
-          <tr *ngIf="!a.reserved && !a.deleted ">
+          <tr *ngIf=" !a.deleted ">
             <td>
               {{a.regID}}
             </td>
-            <td>
-              {{a.nos}}
-            </td>
+
             <td>
               {{a.model}}
             </td>
             <td>
               {{a.year}}
             </td>
-            <td>
-              {{a.type}}
-            </td>
+
             <td>
               {{a.convertible}}
             </td>
             <td>
               {{a.avgGrade}}
             </td>
-            <td>
-                <button  mdbBtn gradient="blue"  (click)="middleWear(a.id)"   rounded="true"  class="z-depth-1a waves-light" mdbWavesEffect>Reserve</button>
-            </td>
+
 
 
 
@@ -219,7 +187,7 @@
             <input readonly required [(ngModel)]="startDate" type="text"
                    placeholder="START DATE"
                    class="form-control"
-                   [bsConfig]="{ dateInputFormat: 'MMMM Do YYYY' }"
+                   [bsConfig]="{ dateInputFormat: 'YYYY-MM-dd' }"
                    [minDate]="today"
                    bsDatepicker>
           </div>
@@ -229,7 +197,7 @@
               <input readonly required [(ngModel)]="endDate" type="text"
                      placeholder="END DATE"
                      class="form-control"
-                     [bsConfig]="{ dateInputFormat: 'MMMM Do YYYY' }"
+                     [bsConfig]="{ dateInputFormat: 'YYYY-MM-dd' }"
                      [minDate]="startDate"
                      bsDatepicker>
             </div>

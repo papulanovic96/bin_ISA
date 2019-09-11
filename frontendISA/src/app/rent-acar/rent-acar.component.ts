@@ -20,8 +20,8 @@ export class RentACarComponent implements OnInit {
 
   private listOfCarServices: CarService[];
   private listOfCarServices2: CarService[];
-
   public listOfCars: Car[];
+  public cars:Car[];
   public updateCarService  = new CarService(0,null,'','','','',false);
   ime : string;
   deleteID : string;
@@ -58,8 +58,8 @@ export class RentACarComponent implements OnInit {
   endDate = new Date();
   public idCar : number =0;
   public CarRate = new carRate(0,0,null,0);
-  public CarServiceRate = new carServiceRate(0,0,null,0);
-  public CarReservation = new carReservation(null,null,0,0);
+  public CarServiceRate = new carServiceRate(null,0,0,null);
+  public CarReservation = new carReservation(null,null,null,0,0);
   constructor(private carservice:CarServiceService,private rentacar : RentaCarServiceService, public router:Router,public loginService:AuthenticationService) {
 
     this.router.routeReuseStrategy.shouldReuseRoute = function(){
@@ -90,22 +90,27 @@ export class RentACarComponent implements OnInit {
       this.from = 0;
     if(String(this.to)==="")
       this.to= 3000;
-    if(String(this.nos)==="")
-      this.nos =-5;
-
+    this.nos =-5;
+    this.type='';
 
     this.carservice.search(this.model,this.type,this.from,this.to,this.nos).subscribe(
       data=> {
+        this.listOfCars = data;
+           this.cars =[];
+
 
           for (let c of data) {
-            if (c.id === this.serviceIDForSearch)
-              this.listOfCars.push(c);
+            if (c.serviceId === this.serviceIDForSearch) {
+              this.cars.push(c);
+            }
           }
+          this.listOfCars = this.cars;
+
           this.display3='none';
           this.display3='display';
 
 
-       this.serviceIDForSearch = -5;
+
       }
 
     );
@@ -224,6 +229,7 @@ getCars(name:string,id:number){
   this.rentacar.getAllCars(name).subscribe(
     data=> {
       this.listOfCars = data;
+
       this.openModalDialog3();
     });
 }

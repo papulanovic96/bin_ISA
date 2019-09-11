@@ -3,6 +3,7 @@ package com.bin448.backend.entity.DTOentity;
 public class RentACarBranchOfficeDTO {
     private String address;
     private Long id;
+    private Long serviceId;
     private String serviceName;
 
     public String getAddress() {
@@ -27,5 +28,13 @@ public class RentACarBranchOfficeDTO {
 
     public void setServiceName(String serviceName) {
         this.serviceName = serviceName;
+    }
+
+    public Long getServiceId() {
+        return serviceId;
+    }
+
+    public void setServiceId(Long serviceId) {
+        this.serviceId = serviceId;
     }
 }

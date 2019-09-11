@@ -8,6 +8,8 @@ import {RegisterComponent} from "./register/register.component";
 import {RentACarComponent} from "./rent-acar/rent-acar.component";
 import {RentACarPriceListComponent} from "./rent-acar-price-list/rent-acar-price-list.component";
 import {UserHistoryComponent} from "./user-history/user-history.component";
+import {RentacarOfficesComponent} from "./rentacar-offices/rentacar-offices.component";
+import {ReserveCarComponent} from "./reserve-car/reserve-car.component";
 import { FriendshipComponent } from './friendship/friendship.component';
 import { FlightComponent } from './flight/flight.component';
 import { AirlineComponent } from './airline/airline.component';
@@ -18,10 +20,12 @@ import {RoomComponent} from "./room/room.component";
 import {ReservationComponent} from "./reservation/reservation.component";
 import { FriendInviteComponent } from './friend-invite/friend-invite.component';
 
-
 const appRoutes: Routes = [
 
   { path: 'login', component: LoginComponent },
+  { path: 'userHistory', component: UserHistoryComponent},
+  {path: 'carServiceOffice',component : RentacarOfficesComponent},
+  {path: 'carReservation',component: ReserveCarComponent},
   { path: 'logout', component: LogoutComponent},
   { path: 'cars', component: CarComponent},
   { path: 'register', component: RegisterComponent },
@@ -43,6 +47,7 @@ const appRoutes: Routes = [
   { path: '**', component: FlightComponent}
   
 ] ;
+
 
 export const routing = RouterModule.forRoot(appRoutes, {useHash: true});
 @NgModule({

@@ -23,6 +23,9 @@ import { RentACarPriceListComponent } from './rent-acar-price-list/rent-acar-pri
 import { RatingModule } from 'ngx-bootstrap/rating';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { UserHistoryComponent } from './user-history/user-history.component';
+import { RentacarOfficesComponent } from './rentacar-offices/rentacar-offices.component';
+import { ReserveCarComponent } from './reserve-car/reserve-car.component';
+import {DatePipe} from "@angular/common";
 import { FriendshipComponent } from './friendship/friendship.component';
 import { FlightListComponent } from './flight/flight-list/flight-list.component';
 import { FriendInviteComponent } from './friend-invite/friend-invite.component';
@@ -44,9 +47,12 @@ import { FriendInviteComponent } from './friend-invite/friend-invite.component';
     RentACarComponent,
     RentACarPriceListComponent,
     UserHistoryComponent,
+    RentacarOfficesComponent,
+    ReserveCarComponent,
     FriendshipComponent,
     FlightListComponent,
     FriendInviteComponent,
+
   ],
 
   imports: [
@@ -59,13 +65,29 @@ import { FriendInviteComponent } from './friend-invite/friend-invite.component';
     AppRoutingModule,
     RatingModule.forRoot(),
     BsDatepickerModule.forRoot(),
+
+    RouterModule.forRoot([
+      {path: 'planeseats', component: PlaneSeatComponent},
+      {path: 'airlines', component: AirlineComponent},
+      {path: 'cars', component: CarComponent},
+      {path: 'register', component:RegisterComponent},
+      {path: 'carServices', component:RentACarComponent},
+      {path: 'carServicePR',component:RentACarPriceListComponent},
+      {path: 'userHistory',component:UserHistoryComponent},
+      {path: 'carServiceOffice',component:RentacarOfficesComponent},
+      {path: 'carReservation',component:ReserveCarComponent}
+
+
+    ], {useHash: true}),
+
     BrowserAnimationsModule
   ],
 
 
-providers: [],
+providers: [DatePipe],
   bootstrap: [AppComponent]
 })
 
 export class AppModule { }
+
 

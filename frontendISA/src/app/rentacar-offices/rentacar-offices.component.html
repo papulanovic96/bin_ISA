@@ -2,58 +2,52 @@
 <mdb-navbar SideClass="navbar navbar-expand-lg navbar-dark bg-primary" [containerInside]="false">
 
   <!-- Navbar brand -->
-  <mdb-navbar-brand><a class="navbar-brand" href="#">RENT A CAR SERVICE [Price List]</a></mdb-navbar-brand>
+  <mdb-navbar-brand><a class="navbar-brand" href="#">Office Branches</a></mdb-navbar-brand>
 
 
 </mdb-navbar>
 
 <div class="d-md-flex">
-<label>Select Rent-a-Car Service &nbsp;</label>
-<div class="md-form pb-3">
+  <label>Select Rent-a-Car Service &nbsp;</label>
+  <div class="md-form pb-3">
 
-    <select required [(ngModel)]="csId" (change)="getItemsOfCarService(csId)"  name="CarServices">
-      <option required name="serviceName" *ngFor="let service of carServices" [ngValue]="service.carServiceName">{{service.carServiceName}}</option>
+    <select required [(ngModel)]="csId" (change)="getAllOffices(csId)"  name="CarServices">
+      <option required name="serviceName" *ngFor="let service of listOfServices" [ngValue]="service.id">{{service.carServiceName}}</option>
     </select>
   </div>
 </div>
 
-
-
 <div class="col-5" *ngIf="show">
   <div>
-    <button *ngIf="loginService.isUserADMIN() && loginService.isUserLoggedIn()" type="button" mdbBtn (click)="getCars()" color="success" mdbWavesEffect>ADD</button>
+    <button type="button" *ngIf="loginService.isUserADMIN() && loginService.isUserLoggedIn()" mdbBtn (click)="openModalDialog()" color="success" mdbWavesEffect>ADD</button>
   </div>
   <table class="table table-fixed table-hover">
     <thead>
     <tr>
-      <th scope="col-xs-1">Model</th>
-      <th scope="col-1">Year</th>
-      <th scope="col-1">Register number</th>
-      <th scope="col-1">Price per Day</th>
+      <th scope="col-xs-1">Address</th>
+
 
 
 
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor = 'let a of listOfItems'>
-      <td>{{ a.carModel }}</td>
-      <td>{{ a.carYear }}</td>
+    <tr *ngFor = 'let aa of offices'>
+      <td>{{ aa.address }}</td>
 
-      <td>{{ a.carREGID }}</td>
 
-      <td>{{ a.price }}</td>
 
       <td>
-        <button [id]="a.regID" *ngIf="loginService.isUserADMIN() && loginService.isUserLoggedIn()" (click)="deleteItem(a.id)" mdbBtn type="button" color="elegant" mdbWavesEffect>DELETE</button>
+        <button *ngIf="loginService.isUserADMIN() && loginService.isUserLoggedIn()" (click)="deleteOffice(aa.id)" mdbBtn type="button" color="elegant" mdbWavesEffect>DELETE</button>
       </td>
       <td>
-        <button type="button" *ngIf="loginService.isUserADMIN() && loginService.isUserLoggedIn()" mdbBtn (click)="getItem(a.id)" color="success" mdbWavesEffect>CHANGE</button>
+        <button type="button" *ngIf="loginService.isUserADMIN() && loginService.isUserLoggedIn()" mdbBtn (click)="get(aa.id,aa.address)" color="success" mdbWavesEffect>Change</button>
       </td>
     </tr>
     </tbody>
   </table>
 </div>
+
 
 
 <!-- modal -->
@@ -64,23 +58,17 @@
     <div class="modal-content">
       <!-- modal-header -->
       <div class="modal-header ">
-        <p>Add New Item</p>
+        <p>Add Branch office</p>
         <button type="button" class="close" aria-label="Close" (click)="closeModalDialog()"><span aria-hidden="true">&times;</span></button>
         <!-- <h4 class="modal-title">Login</h4> -->
       </div>
 
       <!-- modal-body -->
       <div class="modal-body" >
-        <form  ngNativeValidate (ngSubmit)="createItem()">
-      <div class="md-form pb-3">
-        <label>Car</label>
-         <select required class="dropdown-item" [(ngModel)]="carId" name="Cars">
-          <option required name="car" *ngFor="let car of cars" [ngValue]="car.id">Model: {{car.model}}  Year: {{car.year}}</option>
-          </select>
-      </div>
+        <form  ngNativeValidate (ngSubmit)="addOffice()">
 
           <div class="md-form pb-3">
-            <input required type="number" class="form-control" name="price" placeholder="Price" [(ngModel)]="newPriceListItem.price" />
+            <input required type="text" class="form-control" name="address" placeholder="Address" [(ngModel)]="newOffice.address" />
           </div>
 
           <div>
@@ -102,6 +90,9 @@
 
 
 
+
+
+
 <!-- modal -->
 <div class="modal" tabindex="-1" role="dialog"  [ngStyle]="{'display':display2}">
   <!-- modal-dialog -->
@@ -110,20 +101,17 @@
     <div class="modal-content">
       <!-- modal-header -->
       <div class="modal-header ">
-        <p>Edit Item</p>
+        <p>Change address</p>
         <button type="button" class="close" aria-label="Close" (click)="closeModalDialog2()"><span aria-hidden="true">&times;</span></button>
         <!-- <h4 class="modal-title">Login</h4> -->
       </div>
 
       <!-- modal-body -->
       <div class="modal-body" >
-        <form  ngNativeValidate (ngSubmit)="addChangedItem()">
+        <form  ngNativeValidate (ngSubmit)="update()">
 
-          <div >
-            <label style="margin-left: 1px">Price</label>
-          </div>
           <div class="md-form pb-3">
-            <input required type="number"  class="form-control" name="price"  placeholder="Price" [(ngModel)]="PriceListItem.price" >
+            <input required type="text"  class="form-control" name="address"  placeholder="Address" [(ngModel)]="modifiedAddress" >
           </div>
 
           <div>
@@ -142,3 +130,5 @@
     </div>
   </div>
 </div>
+
+

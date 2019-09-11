@@ -28,6 +28,8 @@ public class CarService {
     private String carServiceLocation;
     @Column
     private Double avgGrade;
+    @Column
+    private Double profit;
 
     public Long getCarService_id() {
         return carServiceId;
@@ -84,5 +86,13 @@ public class CarService {
 
     public void setDeleted(Boolean deleted) {
         this.deleted = deleted;
+    }
+
+    public Double getProfit() {
+        return profit;
+    }
+
+    public void setProfit(Double profit) {
+        this.profit = profit;
     }
 }

@@ -2,8 +2,10 @@ package com.bin448.backend.service;
 
 import com.bin448.backend.entity.DTOentity.CarDTO;
 import com.bin448.backend.entity.DTOentity.CarRateDTO;
+import com.bin448.backend.entity.DTOentity.CarTypeDTO;
 import com.sun.org.apache.xpath.internal.operations.Bool;
 
+import java.util.Date;
 import java.util.List;
 
 public interface CarService {
@@ -21,5 +23,9 @@ public interface CarService {
     List<CarDTO> getAllCars();
     boolean isUserRated(Long id,Long userId);
     List<CarDTO> getAllReservedCars(Long userID);
+    List<CarDTO> getAvailableCars(String type, Integer from, Integer to, String start, String end);
+    void updateType(Integer seats,Long sId,Long id);
+    List<CarTypeDTO> getTypes();
+
 
 }

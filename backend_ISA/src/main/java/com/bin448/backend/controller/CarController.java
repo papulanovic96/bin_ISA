@@ -3,15 +3,18 @@ package com.bin448.backend.controller;
 import com.bin448.backend.entity.Car;
 import com.bin448.backend.entity.CarRate;
 import com.bin448.backend.entity.CarReservation;
+import com.bin448.backend.entity.DTOentity.*;
 import com.bin448.backend.entity.DTOentity.CarDTO;
 import com.bin448.backend.entity.DTOentity.CarRateDTO;
 import com.bin448.backend.entity.DTOentity.CarReservationDTO;
 import com.bin448.backend.entity.DTOentity.CarServiceDTO;
+
 import com.bin448.backend.service.CarReservationService;
 import com.bin448.backend.service.CarService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -27,6 +30,18 @@ public class CarController {
         this.crs = crs;
 
     }
+
+    @GetMapping("/types")
+    public List<CarTypeDTO>getTypes(){
+        return css.getTypes();
+    }
+
+
+    @GetMapping("/getAvailable/{ty},{f},{t},{start},{end}")
+    public List<CarDTO> getAvailable(@PathVariable String ty, @PathVariable Integer f, @PathVariable Integer t, @PathVariable String start, @PathVariable String end){
+        return css.getAvailableCars(ty, f, t, start, end);
+    }
+
     @GetMapping("/tryToRate/{regID},{userId}")
     public boolean tryToRate(@PathVariable Long regID,@PathVariable Long userId){
         return crs.isUserAbleToRate(regID,userId);
@@ -67,9 +82,9 @@ public class CarController {
     }
 
     @PostMapping("/reserve")
-    public String reserveCar(@RequestBody CarReservationDTO cr){
+    public void reserveCar(@RequestBody CarReservationDTO cr){
      crs.addReservation(cr);
-     return css.modifyReserved(true,cr.getCarId());
+
     }
 
     @GetMapping("/tryToUnreserve/{carId},{userId}")

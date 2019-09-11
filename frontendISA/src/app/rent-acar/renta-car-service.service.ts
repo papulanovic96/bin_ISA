@@ -85,7 +85,7 @@ export class RentaCarServiceService {
     return this.http.get<Car[]>(this.getReservedUrl+"/"+id,httpOptions);
   }
 
-  setReservations(carR:carReservation): Observable<string>{
+  setReservations(carR:carReservation): Observable<void>{
     let username = sessionStorage.getItem('username');
     let password = sessionStorage.getItem('password');
     const httpOptions = {
@@ -98,9 +98,9 @@ export class RentaCarServiceService {
         'Access-Control-Allow-Origin': '*',
         'responseType':'text',
 
-      }),dataType: 'text/plain; charset=utf-8',responseType: 'text' as 'json'
+      })
     };
-    return this.http.post<string>(this.reserveCarUrl,carR,httpOptions);
+    return this.http.post<void>(this.reserveCarUrl,carR,httpOptions);
   }
 
   deleteReservation(carID:number): Observable<string>{
