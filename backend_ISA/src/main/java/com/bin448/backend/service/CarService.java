@@ -1,6 +1,5 @@
 package com.bin448.backend.service;
 
-import com.bin448.backend.entity.Car;
 import com.bin448.backend.entity.DTOentity.CarDTO;
 import com.bin448.backend.entity.DTOentity.CarRateDTO;
 import com.bin448.backend.entity.DTOentity.CarTypeDTO;
@@ -10,6 +9,7 @@ import java.util.Date;
 import java.util.List;
 
 public interface CarService {
+
     String addCar(CarDTO car);
    // boolean checkReservation(Long carId,Long userId);
     String removeCar(String reg);

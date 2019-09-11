@@ -11,6 +11,7 @@ import java.util.List;
 
 @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 public class User implements Serializable {
+
     @Column
     private String name;
     @Column
@@ -33,10 +34,12 @@ public class User implements Serializable {
     private String role;
     @Column
     private boolean active;
-    @OneToMany(mappedBy = "receiver", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Friendship> friends;
     @OneToMany(mappedBy = "sender", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Friendship> friends;
+    @OneToMany(mappedBy = "receiver", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Friendship> requests;
+    @OneToMany(mappedBy = "reservedBy", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<PlaneTicket> reservedTicket;
 
 
     public String getLastName() {
@@ -136,4 +139,11 @@ public class User implements Serializable {
         this.requests = requests;
     }
 
+    public List<PlaneTicket> getReservedTicket() {
+        return reservedTicket;
+    }
+
+    public void setReservedTicket(List<PlaneTicket> reservedTicket) {
+        this.reservedTicket = reservedTicket;
+    }
 }

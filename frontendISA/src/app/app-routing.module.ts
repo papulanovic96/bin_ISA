@@ -10,27 +10,51 @@ import {RentACarPriceListComponent} from "./rent-acar-price-list/rent-acar-price
 import {UserHistoryComponent} from "./user-history/user-history.component";
 import {RentacarOfficesComponent} from "./rentacar-offices/rentacar-offices.component";
 import {ReserveCarComponent} from "./reserve-car/reserve-car.component";
+import { FriendshipComponent } from './friendship/friendship.component';
+import { FlightComponent } from './flight/flight.component';
+import { AirlineComponent } from './airline/airline.component';
+import { PlaneSeatComponent } from './plane-seat/plane-seat.component';
+import { FlightListComponent } from './flight/flight-list/flight-list.component';
+import {HotelComponent} from "./hotel/hotel.component";
+import {RoomComponent} from "./room/room.component";
+import {ReservationComponent} from "./reservation/reservation.component";
+import { FriendInviteComponent } from './friend-invite/friend-invite.component';
 
 const appRoutes: Routes = [
 
   { path: 'login', component: LoginComponent },
-  { path: 'logout', component: LogoutComponent,canActivate:[AuthGaurdService] },
-  { path: 'cars', component: CarComponent },
-  { path: 'register', component: RegisterComponent },
-  { path: 'carServicePR', component: RentACarPriceListComponent },
-  { path: 'carServices', component: RentACarComponent },
   { path: 'userHistory', component: UserHistoryComponent},
   {path: 'carServiceOffice',component : RentacarOfficesComponent},
-  {path: 'carReservation',component: ReserveCarComponent}
+  {path: 'carReservation',component: ReserveCarComponent},
+  { path: 'logout', component: LogoutComponent},
+  { path: 'cars', component: CarComponent},
+  { path: 'register', component: RegisterComponent },
+  { path: 'carServicePR', component: RentACarPriceListComponent },
+  { path: 'carServices', component: RentACarComponent},
+  { path: 'userHistory', component: UserHistoryComponent},
+  { path: 'profile', component: FriendshipComponent},
+  { path: 'airlines', component: AirlineComponent},
+  { path: 'planeseats', component: PlaneSeatComponent},
+  { path: 'flightList', component: FlightListComponent},
+  { path: 'flightList/:list', component: FlightListComponent},
+  { path: 'hotel', component: HotelComponent },
+  { path: 'room', component: RoomComponent },
+  { path: 'reservation', component: ReservationComponent },
+  { path: 'rooms', component: RoomComponent},
+  { path: 'reservations', component: ReservationComponent},
+  { path: 'friendinvite', component: FriendInviteComponent},
+  { path: 'invite', component: LoginComponent},
+  { path: '**', component: FlightComponent}
+  
+] ;
 
 
-
-];
-
-export const routing = RouterModule.forRoot(appRoutes);
+export const routing = RouterModule.forRoot(appRoutes, {useHash: true});
 @NgModule({
-  imports: [RouterModule.forRoot(appRoutes)],
+  imports: [RouterModule.forRoot(appRoutes, {useHash: true})],
   exports: [RouterModule]
 })
 
+
 export class AppRoutingModule {}
+

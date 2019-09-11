@@ -7,8 +7,12 @@ import java.util.List;
 
 public interface SeatService {
     PlaneSeat save(PlaneSeatDTO seat);
+
     void delete(PlaneSeatDTO seat);
+
     List<PlaneSeatDTO> findAll();
+
     PlaneSeatDTO findById(Long id);
+
     boolean modifySeat(PlaneSeatDTO seat);
 }

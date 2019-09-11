@@ -10,232 +10,232 @@
 
 
 
-#ads .card-notify-badge {
-  position: absolute;
-  left: -10px;
-  top: -20px;
-  background: #f2d900;
-  text-align: center;
-  border-radius: 30px 30px 30px 30px;
-  color: #000;
-  padding: 5px 10px;
-  font-size: 14px;
+/*#ads .card-notify-badge {*/
+  /*position: absolute;*/
+  /*left: -10px;*/
+  /*top: -20px;*/
+  /*background: #f2d900;*/
+  /*text-align: center;*/
+  /*border-radius: 30px 30px 30px 30px;*/
+  /*color: #000;*/
+  /*padding: 5px 10px;*/
+  /*font-size: 14px;*/
 
-}
+/*}*/
 
-#ads .card-notify-year {
-  position: absolute;
-  right: -10px;
-  top: -20px;
-  background: #ff4444;
-  border-radius: 50%;
-  text-align: center;
-  color: #fff;
-  font-size: 14px;
-  width: 50px;
-  height: 50px;
-  padding: 15px 0 0 0;
-}
-
-
-#ads .card-detail-badge {
-  background: #f2d900;
-  text-align: center;
-  border-radius: 30px 30px 30px 30px;
-  color: #000;
-  padding: 5px 10px;
-  font-size: 14px;
-}
+/*#ads .card-notify-year {*/
+  /*position: absolute;*/
+  /*right: -10px;*/
+  /*top: -20px;*/
+  /*background: #ff4444;*/
+  /*border-radius: 50%;*/
+  /*text-align: center;*/
+  /*color: #fff;*/
+  /*font-size: 14px;*/
+  /*width: 50px;*/
+  /*height: 50px;*/
+  /*padding: 15px 0 0 0;*/
+/*}*/
 
 
-
-#ads .card:hover {
-  background: #fff;
-  box-shadow: 12px 15px 20px 0px rgba(46,61,73,0.15);
-  border-radius: 4px;
-  transition: all 0.3s ease;
-}
-
-#ads .card-image-overlay {
-  font-size: 20px;
-
-}
+/*#ads .card-detail-badge {*/
+  /*background: #f2d900;*/
+  /*text-align: center;*/
+  /*border-radius: 30px 30px 30px 30px;*/
+  /*color: #000;*/
+  /*padding: 5px 10px;*/
+  /*font-size: 14px;*/
+/*}*/
 
 
-#ads .card-image-overlay span {
-  display: inline-block;
-}
+
+/*#ads .card:hover {*/
+  /*background: #fff;*/
+  /*box-shadow: 12px 15px 20px 0px rgba(46,61,73,0.15);*/
+  /*border-radius: 4px;*/
+  /*transition: all 0.3s ease;*/
+/*}*/
+
+/*#ads .card-image-overlay {*/
+  /*font-size: 20px;*/
+
+/*}*/
 
 
-#ads .ad-btn {
-  text-transform: uppercase;
-  width: 150px;
-  height: 35px;
-  border-radius: 80px;
-  font-size: 16px;
-  line-height: 35px;
-  text-align: center;
-  border: 3px solid #e6de08;
-  display: block;
-  text-decoration: none;
-  margin: 20px auto 1px auto;
-  color: #000;
-  overflow: hidden;
-  position: relative;
-  background-color: #e6de08;
-}
+/*#ads .card-image-overlay span {*/
+  /*display: inline-block;*/
+/*}*/
 
-#ads .ad-btn:hover {
-  background-color: #e6de08;
-  color: #1e1717;
-  border: 2px solid #e6de08;
-  background: transparent;
-  transition: all 0.3s ease;
-  box-shadow: 12px 15px 20px 0px rgba(46,61,73,0.15);
-}
 
-#ads .ad-title h5 {
-  text-transform: uppercase;
-  font-size: 18px;
-}
-.star {
-  font-size: 1.5rem;
-  color: #b0c4de;
-}
-.filled {
-  color: #1e90ff;
-}
-.bad {
-  color: #deb0b0;
-}
-.filled.bad {
-  color: #ff1e1e;
-}
+/*#ads .ad-btn {*/
+  /*text-transform: uppercase;*/
+  /*width: 150px;*/
+  /*height: 35px;*/
+  /*border-radius: 80px;*/
+  /*font-size: 16px;*/
+  /*line-height: 35px;*/
+  /*text-align: center;*/
+  /*border: 3px solid #e6de08;*/
+  /*display: block;*/
+  /*text-decoration: none;*/
+  /*margin: 20px auto 1px auto;*/
+  /*color: #000;*/
+  /*overflow: hidden;*/
+  /*position: relative;*/
+  /*background-color: #e6de08;*/
+/*}*/
 
-#con {
-  width: 75%;
-  margin: 0 auto;
-  margin-top: 200px;
-  height: auto;
-}
+/*#ads .ad-btn:hover {*/
+  /*background-color: #e6de08;*/
+  /*color: #1e1717;*/
+  /*border: 2px solid #e6de08;*/
+  /*background: transparent;*/
+  /*transition: all 0.3s ease;*/
+  /*box-shadow: 12px 15px 20px 0px rgba(46,61,73,0.15);*/
+/*}*/
 
-#con2 {
-  width: 75%;
-  margin: 0 auto;
-  margin-top: 30px;
-  height: auto;
-}
+/*#ads .ad-title h5 {*/
+  /*text-transform: uppercase;*/
+  /*font-size: 18px;*/
+/*}*/
+/*.star {*/
+  /*font-size: 1.5rem;*/
+  /*color: #b0c4de;*/
+/*}*/
+/*.filled {*/
+  /*color: #1e90ff;*/
+/*}*/
+/*.bad {*/
+  /*color: #deb0b0;*/
+/*}*/
+/*.filled.bad {*/
+  /*color: #ff1e1e;*/
+/*}*/
 
-#con3 {
-  width: 75%;
-  margin: 0 auto;
-  margin-top: 30px;
-  height: auto;
-}
-.con4{
-  width: 75%;
-  margin: 0 auto;
-  margin-top: 30px;
-  height: auto;
-}
-h4 {
-  width: 90%;
-  position: absolute;
-  font-size: 30px;
-  padding: 20px;
-  margin-top: 120px;
-  color: #fff;
-}
-.f-title{
-  text-align: center;
-  margin-top: 30px;
-  font-size: 30px;
-  font-family: 'Rock Salt', cursive;
-  -webkit-animation:colorchange 5s infinite alternate;
-}
-.zayn_1 {
-  position: relative;
-  margin-top: -150px;
-  background: url(http://i.huffpost.com/gen/1960925/images/o-COOLEST-CITIES-IN-AMERICA-facebook.jpg);
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-  border-bottom: 3px solid rgba(255,162,52,0.8);
-  width: 100%;
-  height: 280px;
-  border-radius: 6px;
-  box-shadow: 5px 5px 30px 0px rgba(46,61,73,0.9);
-  transition: all 0.3s ease;
+/*#con {*/
+  /*width: 75%;*/
+  /*margin: 0 auto;*/
+  /*margin-top: 200px;*/
+  /*height: auto;*/
+/*}*/
 
-}
+/*#con2 {*/
+  /*width: 75%;*/
+  /*margin: 0 auto;*/
+  /*margin-top: 30px;*/
+  /*height: auto;*/
+/*}*/
 
-.zayn_2 {
-  position: relative;
-  margin-top: 1px;
-  background: url(https://i.ytimg.com/vi/fwoDwajwqdo/maxresdefault.jpg);
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-  border-bottom: 3px solid rgba(2,204,186,0.8);
-  width: 49%;
-  height: 300px;
-  border-radius: 6px;
-  box-shadow: 5px 5px 30px 0px rgba(46,61,73,0.9);
-  transition: all 0.3s ease;
-}
+/*#con3 {*/
+  /*width: 75%;*/
+  /*margin: 0 auto;*/
+  /*margin-top: 30px;*/
+  /*height: auto;*/
+/*}*/
+/*.con4{*/
+  /*width: 75%;*/
+  /*margin: 0 auto;*/
+  /*margin-top: 30px;*/
+  /*height: auto;*/
+/*}*/
+/*h4 {*/
+  /*width: 90%;*/
+  /*position: absolute;*/
+  /*font-size: 30px;*/
+  /*padding: 20px;*/
+  /*margin-top: 120px;*/
+  /*color: #fff;*/
+/*}*/
+/*.f-title{*/
+  /*text-align: center;*/
+  /*margin-top: 30px;*/
+  /*font-size: 30px;*/
+  /*font-family: 'Rock Salt', cursive;*/
+  /*-webkit-animation:colorchange 5s infinite alternate;*/
+/*}*/
+/*.zayn_1 {*/
+  /*position: relative;*/
+  /*margin-top: -150px;*/
+  /*background: url(http://i.huffpost.com/gen/1960925/images/o-COOLEST-CITIES-IN-AMERICA-facebook.jpg);*/
+  /*background-size: cover;*/
+  /*background-repeat: no-repeat;*/
+  /*background-position: center;*/
+  /*border-bottom: 3px solid rgba(255,162,52,0.8);*/
+  /*width: 100%;*/
+  /*height: 280px;*/
+  /*border-radius: 6px;*/
+  /*box-shadow: 5px 5px 30px 0px rgba(46,61,73,0.9);*/
+  /*transition: all 0.3s ease;*/
 
-.zayn_3 {
-  position: relative;
-  float: right;
-  margin-top: -304px;
-  background: url(https://i.ytimg.com/vi/kD0jh_S975M/maxresdefault.jpg);
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-  border-bottom: 3px solid rgba(169,81,237,0.8);
-  width: 49%;
-  height: 300px;
-  border-radius: 6px;
-  box-shadow: 5px 5px 30px 0px rgba(46,61,73,0.9);
-  transition: all 0.3s ease;
-}
+/*}*/
 
-.zayn_4 {
-  position: relative;
-  margin-top: 1px;
-  background: url(http://www.lolwot.com/wp-content/uploads/2015/02/top-16-coolest-buildings-in-the-world.jpg);
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-  border-bottom: 3px solid rgba(255,84,131,0.8);
-  width: 100%;
-  height: 280px;
-  border-radius: 6px;
-  box-shadow: 5px 5px 30px 0px rgba(46,61,73,0.9);
-  transition: all 0.3s ease;
-}
+/*.zayn_2 {*/
+  /*position: relative;*/
+  /*margin-top: 1px;*/
+  /*background: url(https://i.ytimg.com/vi/fwoDwajwqdo/maxresdefault.jpg);*/
+  /*background-size: cover;*/
+  /*background-repeat: no-repeat;*/
+  /*background-position: center;*/
+  /*border-bottom: 3px solid rgba(2,204,186,0.8);*/
+  /*width: 49%;*/
+  /*height: 300px;*/
+  /*border-radius: 6px;*/
+  /*box-shadow: 5px 5px 30px 0px rgba(46,61,73,0.9);*/
+  /*transition: all 0.3s ease;*/
+/*}*/
 
-.new {
-  color: #fff;
-  z-index: 1;
-  position: relative;
-  left: 2%;
-  top: 8%;
-  padding: 15px;
-  background: linear-gradient(to right, #02b3e4 0%, #02ccba 100%);
-  border-radius: 50px 120px 120px;
-}
-.zayn_form{
-  position: relative;
-  margin-top: -150px;
-  background:#fafafa;
-  border-bottom: 3px solid rgba(255,162,52,0.8);
-  width: 100%;
-  height: 280px;
-  border-radius: 6px;
-  box-shadow: 5px 5px 30px 0px rgba(46,61,73,0.9);
-  transition: all 0.3s ease;
-}
+/*.zayn_3 {*/
+  /*position: relative;*/
+  /*float: right;*/
+  /*margin-top: -304px;*/
+  /*background: url(https://i.ytimg.com/vi/kD0jh_S975M/maxresdefault.jpg);*/
+  /*background-size: cover;*/
+  /*background-repeat: no-repeat;*/
+  /*background-position: center;*/
+  /*border-bottom: 3px solid rgba(169,81,237,0.8);*/
+  /*width: 49%;*/
+  /*height: 300px;*/
+  /*border-radius: 6px;*/
+  /*box-shadow: 5px 5px 30px 0px rgba(46,61,73,0.9);*/
+  /*transition: all 0.3s ease;*/
+/*}*/
+
+/*.zayn_4 {*/
+  /*position: relative;*/
+  /*margin-top: 1px;*/
+  /*background: url(http://www.lolwot.com/wp-content/uploads/2015/02/top-16-coolest-buildings-in-the-world.jpg);*/
+  /*background-size: cover;*/
+  /*background-repeat: no-repeat;*/
+  /*background-position: center;*/
+  /*border-bottom: 3px solid rgba(255,84,131,0.8);*/
+  /*width: 100%;*/
+  /*height: 280px;*/
+  /*border-radius: 6px;*/
+  /*box-shadow: 5px 5px 30px 0px rgba(46,61,73,0.9);*/
+  /*transition: all 0.3s ease;*/
+/*}*/
+
+/*.new {*/
+  /*color: #fff;*/
+  /*z-index: 1;*/
+  /*position: relative;*/
+  /*left: 2%;*/
+  /*top: 8%;*/
+  /*padding: 15px;*/
+  /*background: linear-gradient(to right, #02b3e4 0%, #02ccba 100%);*/
+  /*border-radius: 50px 120px 120px;*/
+/*}*/
+/*.zayn_form{*/
+  /*position: relative;*/
+  /*margin-top: -150px;*/
+  /*background:#fafafa;*/
+  /*border-bottom: 3px solid rgba(255,162,52,0.8);*/
+  /*width: 100%;*/
+  /*height: 280px;*/
+  /*border-radius: 6px;*/
+  /*box-shadow: 5px 5px 30px 0px rgba(46,61,73,0.9);*/
+  /*transition: all 0.3s ease;*/
+/*}*/
 /*
 .form-title{
 	position: relative;
@@ -263,224 +263,224 @@ input:focus {
     background: rgba(2, 204, 186, 0.4);
 }
 */
-.date-1 {
-  color: #fff;
-  z-index: 1;
-  background: #b24592;
-  /* fallback for old browsers */
-  background: -webkit-linear-gradient(to right, #b24592, #f15f79);
-  /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to right, #b24592, #f15f79);
-  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-  position: absolute;
-  left: 80%;
-  top: 3%;
-  padding: 9px;
-  border-radius: 50px 120px 120px;
-}
+/*.date-1 {*/
+  /*color: #fff;*/
+  /*z-index: 1;*/
+  /*background: #b24592;*/
+  /*!* fallback for old browsers *!*/
+  /*background: -webkit-linear-gradient(to right, #b24592, #f15f79);*/
+  /*!* Chrome 10-25, Safari 5.1-6 *!*/
+  /*background: linear-gradient(to right, #b24592, #f15f79);*/
+  /*!* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ *!*/
+  /*position: absolute;*/
+  /*left: 80%;*/
+  /*top: 3%;*/
+  /*padding: 9px;*/
+  /*border-radius: 50px 120px 120px;*/
+/*}*/
 
-.date {
-  color: #fff;
-  z-index: 1;
-  background: #b24592;
-  /* fallback for old browsers */
-  background: -webkit-linear-gradient(to right, #b24592, #f15f79);
-  /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to right, #b24592, #f15f79);
-  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-  position: absolute;
-  left: 71%;
-  top: 3%;
-  padding: 9px;
-  border-radius: 50px 120px 120px;
-}
+/*.date {*/
+  /*color: #fff;*/
+  /*z-index: 1;*/
+  /*background: #b24592;*/
+  /*!* fallback for old browsers *!*/
+  /*background: -webkit-linear-gradient(to right, #b24592, #f15f79);*/
+  /*!* Chrome 10-25, Safari 5.1-6 *!*/
+  /*background: linear-gradient(to right, #b24592, #f15f79);*/
+  /*!* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ *!*/
+  /*position: absolute;*/
+  /*left: 71%;*/
+  /*top: 3%;*/
+  /*padding: 9px;*/
+  /*border-radius: 50px 120px 120px;*/
+/*}*/
 
-.pop {
-  color: #fff;
-  z-index: 1;
-  position: absolute;
-  left: 2%;
-  top: 3%;
-  padding: 15px;
-  background: linear-gradient(to right, #fa3350 0%, #fa3380 100%);
-  border-radius: 50px 120px 120px;
-}
+/*.pop {*/
+  /*color: #fff;*/
+  /*z-index: 1;*/
+  /*position: absolute;*/
+  /*left: 2%;*/
+  /*top: 3%;*/
+  /*padding: 15px;*/
+  /*background: linear-gradient(to right, #fa3350 0%, #fa3380 100%);*/
+  /*border-radius: 50px 120px 120px;*/
+/*}*/
 
-.lat {
-  color: #fff;
-  z-index: 1;
-  position: absolute;
-  left: 2%;
-  top: 3%;
-  padding: 15px;
-  background: linear-gradient(to right, deeppink 0%, #fa3380 100%);
-  border-radius: 50px 120px 120px;
-}
+/*.lat {*/
+  /*color: #fff;*/
+  /*z-index: 1;*/
+  /*position: absolute;*/
+  /*left: 2%;*/
+  /*top: 3%;*/
+  /*padding: 15px;*/
+  /*background: linear-gradient(to right, deeppink 0%, #fa3380 100%);*/
+  /*border-radius: 50px 120px 120px;*/
+/*}*/
 
-.free {
-  color: #fff;
-  z-index: 1;
-  position: absolute;
-  left: 2%;
-  top: 3%;
-  padding: 15px;
-  background: linear-gradient(to right, deepskyblue 0%, skyblue 100%);
-  border-radius: 50px 120px 120px;
-}
+/*.free {*/
+  /*color: #fff;*/
+  /*z-index: 1;*/
+  /*position: absolute;*/
+  /*left: 2%;*/
+  /*top: 3%;*/
+  /*padding: 15px;*/
+  /*background: linear-gradient(to right, deepskyblue 0%, skyblue 100%);*/
+  /*border-radius: 50px 120px 120px;*/
+/*}*/
 
-.overlay {
-  position: absolute;
-  z-index: 0;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background-color: rgba(000,000,000, 0.6);
-  border-radius: 6px;
-}
-
-
-
-@media only screen and (max-width: 840px) {
-
-  h4 {
-    font-size: 24px;
-  }
-
-  .zayn_2 {
-    position: relative;
-    width: 100%;
-  }
-
-  .zayn_3 {
-    position: relative;
-    width: 100%;
-    margin-top: 30px;
-  }
-
-  .zayn_4 {
-    position: relative;
-    width: 100%;
-    margin-top: 360px;
-  }
-
-  .date {
-    left: 70%;
-  }
-
-  .date-1 {
-    left: 70%;
-  }
-}
-
-.footer {
-  margin-top: 50px;
-  position: absolute;
-  background: #b24592;
-  /* fallback for old browsers */
-  background: -webkit-linear-gradient(to right, #b24592, #f15f79);
-  /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to right, #b24592, #f15f79);
-  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-  padding: 15px;
-  width: 100%;
-  border-radius: 4px;
-}
-
-.footer h1 {
-  color: #fff;
-  font-size: 20px;
-  text-align: center;
-}
+/*.overlay {*/
+  /*position: absolute;*/
+  /*z-index: 0;*/
+  /*top: 0;*/
+  /*bottom: 0;*/
+  /*left: 0;*/
+  /*right: 0;*/
+  /*background-color: rgba(000,000,000, 0.6);*/
+  /*border-radius: 6px;*/
+/*}*/
 
 
 
-.shadow:hover {
-  box-shadow: 5px 1px 10px 0px rgba(46,61,73,0.1);
-  transition: all 0.3s ease;
-}
+/*@media only screen and (max-width: 840px) {*/
+
+  /*h4 {*/
+    /*font-size: 24px;*/
+  /*}*/
+
+  /*.zayn_2 {*/
+    /*position: relative;*/
+    /*width: 100%;*/
+  /*}*/
+
+  /*.zayn_3 {*/
+    /*position: relative;*/
+    /*width: 100%;*/
+    /*margin-top: 30px;*/
+  /*}*/
+
+  /*.zayn_4 {*/
+    /*position: relative;*/
+    /*width: 100%;*/
+    /*margin-top: 360px;*/
+  /*}*/
+
+  /*.date {*/
+    /*left: 70%;*/
+  /*}*/
+
+  /*.date-1 {*/
+    /*left: 70%;*/
+  /*}*/
+/*}*/
+
+/*.footer {*/
+  /*margin-top: 50px;*/
+  /*position: absolute;*/
+  /*background: #b24592;*/
+  /*!* fallback for old browsers *!*/
+  /*background: -webkit-linear-gradient(to right, #b24592, #f15f79);*/
+  /*!* Chrome 10-25, Safari 5.1-6 *!*/
+  /*background: linear-gradient(to right, #b24592, #f15f79);*/
+  /*!* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ *!*/
+  /*padding: 15px;*/
+  /*width: 100%;*/
+  /*border-radius: 4px;*/
+/*}*/
+
+/*.footer h1 {*/
+  /*color: #fff;*/
+  /*font-size: 20px;*/
+  /*text-align: center;*/
+/*}*/
 
 
-@-webkit-keyframes spaceboots {
-  0% { -webkit-transform: translate(2px, 1px) rotate(0deg); }
-  10% { -webkit-transform: translate(-1px, -2px) rotate(-1deg); }
-  20% { -webkit-transform: translate(-3px, 0px) rotate(1deg); }
-  30% { -webkit-transform: translate(0px, 2px) rotate(0deg); }
-  40% { -webkit-transform: translate(1px, -1px) rotate(1deg); }
-  50% { -webkit-transform: translate(-1px, 2px) rotate(-1deg); }
-  60% { -webkit-transform: translate(-3px, 1px) rotate(0deg); }
-  70% { -webkit-transform: translate(2px, 1px) rotate(-1deg); }
-  80% { -webkit-transform: translate(-1px, -1px) rotate(1deg); }
-  90% { -webkit-transform: translate(2px, 2px) rotate(0deg); }
-  100% { -webkit-transform: translate(1px, -2px) rotate(-1deg); }
-}
-.shadow:hover,
-.shadow:focus {
-  -webkit-animation-name: spaceboots;
-  -webkit-animation-duration: 0.8s;
-  -webkit-transform-origin:50% 50%;
-  -webkit-animation-iteration-count: infinite;
-  -webkit-animation-timing-function: linear;
-}
+
+/*.shadow:hover {*/
+  /*box-shadow: 5px 1px 10px 0px rgba(46,61,73,0.1);*/
+  /*transition: all 0.3s ease;*/
+/*}*/
+
+
+/*@-webkit-keyframes spaceboots {*/
+  /*0% { -webkit-transform: translate(2px, 1px) rotate(0deg); }*/
+  /*10% { -webkit-transform: translate(-1px, -2px) rotate(-1deg); }*/
+  /*20% { -webkit-transform: translate(-3px, 0px) rotate(1deg); }*/
+  /*30% { -webkit-transform: translate(0px, 2px) rotate(0deg); }*/
+  /*40% { -webkit-transform: translate(1px, -1px) rotate(1deg); }*/
+  /*50% { -webkit-transform: translate(-1px, 2px) rotate(-1deg); }*/
+  /*60% { -webkit-transform: translate(-3px, 1px) rotate(0deg); }*/
+  /*70% { -webkit-transform: translate(2px, 1px) rotate(-1deg); }*/
+  /*80% { -webkit-transform: translate(-1px, -1px) rotate(1deg); }*/
+  /*90% { -webkit-transform: translate(2px, 2px) rotate(0deg); }*/
+  /*100% { -webkit-transform: translate(1px, -2px) rotate(-1deg); }*/
+/*}*/
+/*.shadow:hover,*/
+/*.shadow:focus {*/
+  /*-webkit-animation-name: spaceboots;*/
+  /*-webkit-animation-duration: 0.8s;*/
+  /*-webkit-transform-origin:50% 50%;*/
+  /*-webkit-animation-iteration-count: infinite;*/
+  /*-webkit-animation-timing-function: linear;*/
+/*}*/
 
 
 
 
-@-webkit-keyframes colorchange {
-  0% {
+/*@-webkit-keyframes colorchange {*/
+  /*0% {*/
 
-    color: darkviolet;
-  }
+    /*color: darkviolet;*/
+  /*}*/
 
-  10% {
+  /*10% {*/
 
-    color: #fa3380;
-  }
+    /*color: #fa3380;*/
+  /*}*/
 
-  20% {
+  /*20% {*/
 
-    color: #02b3e4;
-  }
+    /*color: #02b3e4;*/
+  /*}*/
 
-  30% {
+  /*30% {*/
 
-    color: #02ccba;
-  }
+    /*color: #02ccba;*/
+  /*}*/
 
-  40% {
+  /*40% {*/
 
-    color: #a951ed;
-  }
+    /*color: #a951ed;*/
+  /*}*/
 
-  50% {
+  /*50% {*/
 
-    color: #ffa234;
-  }
+    /*color: #ffa234;*/
+  /*}*/
 
-  60% {
+  /*60% {*/
 
-    color: #ff5483;
-  }
+    /*color: #ff5483;*/
+  /*}*/
 
-  70% {
+  /*70% {*/
 
-    color: deepskyblue;
-  }
-  80% {
+    /*color: deepskyblue;*/
+  /*}*/
+  /*80% {*/
 
-    color: purple;
-  }
+    /*color: purple;*/
+  /*}*/
 
-  90% {
+  /*90% {*/
 
-    color: lightpink;
-  }
+    /*color: lightpink;*/
+  /*}*/
 
-  100% {
+  /*100% {*/
 
-    color: #fff;
-  }
-}
+    /*color: #fff;*/
+  /*}*/
+/*}*/
 
 /* Included color classes..
     .red
@@ -489,96 +489,96 @@ input:focus {
 	.green
 	.navy
 */
-.services{
-  margin: 20px auto;
-}
-figure.snip1174 {
-  color: #fff;
-  position: relative;
-  float: left;
-  overflow: hidden;
-  background-color: #1a1a1a;
-  color: #ffffff;
-  text-align: left;
-  margin: 10px;
-  width: 100%;
-  border-radius: 0px;
-}
-figure.snip1174 * {
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-  -webkit-transition: all 0.35s ease;
-  transition: all 0.35s ease;
-}
-figure.snip1174 img {
-  max-width: 100%;
-  -webkit-transform: scale(1.1);
-  transform: scale(1.1);
-  vertical-align: top;
-  opacity: 0.7;
-}
-figure.snip1174 figcaption {
-  position: absolute;
-  padding: 40px 25px;
-  top: 0;
-  left: 0;
-}
-figure.snip1174 h2,
-figure.snip1174 p {
-  margin: 0;
-  padding: 0;
-}
-figure.snip1174 h2 {
-  margin-bottom: 10px;
-  display: inline-block;
-  font-weight: 100;
-  font-size: 1.8em;
-}
-figure.snip1174 p {
-  font-weight: 300;
-  margin-bottom: 20px;
-  line-height: 1.4em;
-}
-figure.snip1174 a {
-  display: inline-block;
-  padding: 10px 20px;
-  border: 1px solid #ffffff;
-  text-decoration: none;
-  color: #ffffff;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  font-size: 0.8em;
-  -webkit-transform: translateY(50%);
-  transform: translateY(50%);
-  opacity: 0;
-}
-figure.snip1174 a:hover {
-  background-color: rgba(0, 0, 0, 0.2);
-}
-figure.snip1174.blue {
-  background-color: #20638f;
-}
-figure.snip1174.yellow {
-  background-color: #c87f0a;
-}
-figure.snip1174.green {
-  background-color: #1e8449;
-}
-figure.snip1174.navy {
-  background-color: #222f3d;
-}
-figure.snip1174.red {
-  background-color: #962d22;
-}
-figure.snip1174:hover img,
-figure.snip1174.hover img {
-  opacity: 0;
-  -webkit-transform: scale(1);
-  transform: scale(1);
-}
-figure.snip1174:hover a,
-figure.snip1174.hover a {
-  -webkit-transform: translateY(0);
-  transform: translateY(0);
-  opacity: 1;
-}
+/*.services{*/
+  /*margin: 20px auto;*/
+/*}*/
+/*figure.snip1174 {*/
+  /*color: #fff;*/
+  /*position: relative;*/
+  /*float: left;*/
+  /*overflow: hidden;*/
+  /*background-color: #1a1a1a;*/
+  /*color: #ffffff;*/
+  /*text-align: left;*/
+  /*margin: 10px;*/
+  /*width: 100%;*/
+  /*border-radius: 0px;*/
+/*}*/
+/*figure.snip1174 * {*/
+  /*-webkit-box-sizing: border-box;*/
+  /*box-sizing: border-box;*/
+  /*-webkit-transition: all 0.35s ease;*/
+  /*transition: all 0.35s ease;*/
+/*}*/
+/*figure.snip1174 img {*/
+  /*max-width: 100%;*/
+  /*-webkit-transform: scale(1.1);*/
+  /*transform: scale(1.1);*/
+  /*vertical-align: top;*/
+  /*opacity: 0.7;*/
+/*}*/
+/*figure.snip1174 figcaption {*/
+  /*position: absolute;*/
+  /*padding: 40px 25px;*/
+  /*top: 0;*/
+  /*left: 0;*/
+/*}*/
+/*figure.snip1174 h2,*/
+/*figure.snip1174 p {*/
+  /*margin: 0;*/
+  /*padding: 0;*/
+/*}*/
+/*figure.snip1174 h2 {*/
+  /*margin-bottom: 10px;*/
+  /*display: inline-block;*/
+  /*font-weight: 100;*/
+  /*font-size: 1.8em;*/
+/*}*/
+/*figure.snip1174 p {*/
+  /*font-weight: 300;*/
+  /*margin-bottom: 20px;*/
+  /*line-height: 1.4em;*/
+/*}*/
+/*figure.snip1174 a {*/
+  /*display: inline-block;*/
+  /*padding: 10px 20px;*/
+  /*border: 1px solid #ffffff;*/
+  /*text-decoration: none;*/
+  /*color: #ffffff;*/
+  /*letter-spacing: 2px;*/
+  /*text-transform: uppercase;*/
+  /*font-size: 0.8em;*/
+  /*-webkit-transform: translateY(50%);*/
+  /*transform: translateY(50%);*/
+  /*opacity: 0;*/
+/*}*/
+/*figure.snip1174 a:hover {*/
+  /*background-color: rgba(0, 0, 0, 0.2);*/
+/*}*/
+/*figure.snip1174.blue {*/
+  /*background-color: #20638f;*/
+/*}*/
+/*figure.snip1174.yellow {*/
+  /*background-color: #c87f0a;*/
+/*}*/
+/*figure.snip1174.green {*/
+  /*background-color: #1e8449;*/
+/*}*/
+/*figure.snip1174.navy {*/
+  /*background-color: #222f3d;*/
+/*}*/
+/*figure.snip1174.red {*/
+  /*background-color: #962d22;*/
+/*}*/
+/*figure.snip1174:hover img,*/
+/*figure.snip1174.hover img {*/
+  /*opacity: 0;*/
+  /*-webkit-transform: scale(1);*/
+  /*transform: scale(1);*/
+/*}*/
+/*figure.snip1174:hover a,*/
+/*figure.snip1174.hover a {*/
+  /*-webkit-transform: translateY(0);*/
+  /*transform: translateY(0);*/
+  /*opacity: 1;*/
+/*}*/

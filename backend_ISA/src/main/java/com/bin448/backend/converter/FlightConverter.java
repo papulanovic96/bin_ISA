@@ -3,12 +3,15 @@ package com.bin448.backend.converter;
 import com.bin448.backend.entity.Airline;
 import com.bin448.backend.entity.DTOentity.FlightDTO;
 import com.bin448.backend.entity.Flight;
+import com.bin448.backend.entity.PlaneTicket;
 
 public abstract class FlightConverter extends AbstractConverter{
 
     public static FlightDTO fromEntity(Flight e) {
         FlightDTO newFlight = new FlightDTO();
         newFlight.setId(e.getId());
+        newFlight.setFromDest(e.getFromDestination());
+        newFlight.setToDest(e.getToDestination());
         newFlight.setDateAndTimeTakeOff(e.getDateAndTimeTakeOff());
         newFlight.setDateAndTimeLanding(e.getDateAndTimeLanding());
         newFlight.setFlightTime(e.getFlightTime());
@@ -17,12 +20,17 @@ public abstract class FlightConverter extends AbstractConverter{
         newFlight.setTransferLocation(e.getTransferLocation());
         newFlight.setTransferNumber(e.getTransferNumber());
         newFlight.setAirline(e.getAirline().getName());
+        PlaneTicket newTicket = e.getPlaneTicket();
+        if(newTicket != null) {
+        newFlight.setPlaneTicket(e.getPlaneTicket().getId());}
         return newFlight;
     }
 
     public static Flight toEntity(FlightDTO d) {
         Flight newFlight = new Flight();
         newFlight.setId(d.getId());
+        newFlight.setFromDestination(d.getFromDest());
+        newFlight.setToDestination(d.getToDest());
         newFlight.setDateAndTimeTakeOff(d.getDateAndTimeTakeOff());
         newFlight.setDateAndTimeLanding(d.getDateAndTimeLanding());
         newFlight.setTicketPrice(d.getTicketPrice());

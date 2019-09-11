@@ -1,18 +1,14 @@
 package com.bin448.backend.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 
 @Entity
 @Table(name = "airline")
-@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Airline {
 
     @Id
@@ -31,8 +27,6 @@ public class Airline {
     private Collection<Flight> flightList;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "airline", cascade = CascadeType.ALL)
     private Collection<PlaneTicket> discountTicket;
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "airline", cascade = CascadeType.ALL)
-    private Collection<PlaneSeat> planeSeats;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "airline_luggage_price", cascade = CascadeType.ALL)
     private Collection<LuggagePrice> luggagePrice;
 
@@ -101,11 +95,4 @@ public class Airline {
         this.luggagePrice = luggagePrice;
     }
 
-    public Collection<PlaneSeat> getPlaneSeats() {
-        return planeSeats;
-    }
-
-    public void setPlaneSeats(Collection<PlaneSeat> planeSeats) {
-        this.planeSeats = planeSeats;
-    }
 }

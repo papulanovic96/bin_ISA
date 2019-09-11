@@ -20,12 +20,14 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 import java.util.Date;
+
 import java.util.List;
 
 @Service
 
 public class CarServiceImpl implements CarService {
     private CarRepository cr;
+
     private CarRateRepository crr;
     private CarTypeRepository ctr;
     public CarServiceImpl(CarTypeRepository ctr, CarRateRepository crr, CarRepository cr)
@@ -33,6 +35,7 @@ public class CarServiceImpl implements CarService {
         this.ctr = ctr;
         this.crr=crr;
         this.cr=cr;
+
     }
 
     @Override
@@ -93,8 +96,8 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public CarDTO getCar(String reg) {
-    CarDTO c = CarConverter.fromEntity(cr.getCarByRegID(reg));
-    return c;
+        CarDTO c = CarConverter.fromEntity(cr.getCarByRegID(reg));
+        return c;
     }
 
     @Override
@@ -136,6 +139,7 @@ public class CarServiceImpl implements CarService {
         }finally {
             return  ret;
         }
+
     }
 
     @Override

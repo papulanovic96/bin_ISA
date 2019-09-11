@@ -3,6 +3,7 @@ package com.bin448.backend.service;
 import com.bin448.backend.converter.FriendshipConverter;
 import com.bin448.backend.converter.UserConverter;
 import com.bin448.backend.entity.DTOentity.FrendshipDTO;
+
 import com.bin448.backend.entity.DTOentity.UserDTO;
 import com.bin448.backend.entity.Friendship;
 import com.bin448.backend.entity.User;
@@ -15,6 +16,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 @Service
@@ -33,8 +36,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public boolean modify(UserDTO oldUser) {
-        User newUser = UserConverter.toEntity(oldUser);
-        User newUserUseIt = ur.getUserByUsername(newUser.getUsername());
+        User newUserUseIt = UserConverter.toEntity(oldUser);
         if(newUserUseIt == null) {
             return false;
         } else {
@@ -45,38 +47,36 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    @Override
-    public void deleteFriend(UserDTO user, String friendsUsername) {
-        /*User userReal = UserConverter.toEntity(user);
-        List<User> users = userReal.getFriends();
-        for(User u : users) {
-            if(u.getUsername().equals(friendsUsername)) {
-                ur.delete(u);
-                break;
-            }
-        }*/
-    }
 
     @Override
-    public void sendRequest(User newUser) {
+    public void sendRequest(String usernameSender, String usernameReceiver) {
         Friendship newFriendShip = new Friendship();
-        newFriendShip.setReceiver(newUser);
-        User sender;
-        sender = ur.findByUsername("nebica996");
-        newFriendShip.setSender(sender);
+        newFriendShip.setReceiver(ur.findByUsername(usernameReceiver));
+        newFriendShip.setSender(ur.findByUsername(usernameSender));
         newFriendShip.setAreFriends(false);
         friendshipService.save(newFriendShip);
     }
+
     @Transactional
     @Override
-    public void acceptFriendship() {
-
-        System.out.println("usao u accept" +
-                "!");
+    public void acceptFriendship(String usernameSender, String usernameReceiver) {
         List<Friendship> friendships = friendshipService.findAllEntities();
-        User newUser = ur.findByUsername("ivica996");
+        User receiver = ur.findByUsername(usernameReceiver);
+        User sender = ur.findByUsername(usernameSender);
         for(Friendship f: friendships) {
-            if(f.getReceiver() == (newUser)) {
+            if(f.getReceiver() == (sender)) {
+                f.setAreFriends(true);
+                friendshipService.save(f);
+                break;
+            } else if(f.getReceiver() == receiver) {
+                f.setAreFriends(true);
+                friendshipService.save(f);
+                break;
+            } else if(f.getSender() == receiver) {
+                f.setAreFriends(true);
+                friendshipService.save(f);
+                break;
+            } else if(f.getSender() == sender) {
                 f.setAreFriends(true);
                 friendshipService.save(f);
                 break;
@@ -85,25 +85,70 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<FrendshipDTO> getMyFriends(UserDTO user) {
-        List<Friendship> novaLista = friendshipService.findAllEntities();
-        List<Friendship> newList = new ArrayList<>();
-        User newUser = UserConverter.toEntity(user);
-        for(Friendship f: novaLista){
-            if(f.isAreFriends()) {
-                if(newUser.getUsername() == f.getSender().getUsername()){
-                    newList.add(f);
+    public void declineFriendship(String usernameSender, String usernameReceiver) {
+        List<Friendship> friendships = friendshipService.findAllEntities();
+        User receiver = ur.findByUsername(usernameReceiver);
+        User sender = ur.findByUsername(usernameSender);
+        for(Friendship f: friendships) {
+            if(f.getReceiver() == (sender)) {
+                friendshipService.delete(f);
+                break;
+            } else if(f.getReceiver() == receiver) {
+                friendshipService.delete(f);
+                break;
+            } else if(f.getSender() == receiver) {
+                friendshipService.delete(f);
+                break;
+            } else if(f.getSender() == sender) {
+                friendshipService.delete(f);
+                break;
+            }
+        }
+    }
+
+    @Override
+    public void deleteFriendship(String usernameSender, String usernameReceiver) {
+        List<Friendship> list = friendshipService.findAllEntities();
+        User u = ur.findByUsername(usernameSender);
+        User u2 = ur.findByUsername(usernameReceiver);
+
+        for(Friendship f: list){
+            if(f.getSender() == u){
+                if(f.getReceiver() == u2) {
+                    friendshipService.delete(f);
+                    break;
+                }
+            } else if(f.getReceiver() == u){
+                if(f.getSender() == u2){
+                    friendshipService.delete(f);
+                    break;
                 }
             }
         }
-        List<FrendshipDTO> dtoList = FriendshipConverter.fromEntityList(newList, e -> FriendshipConverter.fromEntity(e));
-        return dtoList;
     }
 
     @Override
     public User getUserByUsername(String username) {
         return ur.getUserByUsername(username);
 
+    }
+
+    @Override
+    public List<String> getMyReceivedRequests(String username){
+        User newUser = ur.findByUsername(username);
+        List<Friendship> listRequests = newUser.getRequests();
+        List<String> listaPrava = new ArrayList<>();
+        for(Friendship f: listRequests){
+            if(!f.isAreFriends()){
+                if(f.getSender().getUsername() != username){
+                    listaPrava.add(f.getSender().getUsername());
+                } else {
+                    listaPrava.add(f.getReceiver().getUsername());
+                }
+            }
+
+        }
+        return listaPrava;
     }
 
     @Override
@@ -136,6 +181,28 @@ public class UserServiceImpl implements UserService {
         else
             return true;
 
+    }
+
+    @Override
+    public List<UserDTO> findAll(String username) {
+        List<User> novaLista = ur.findAll();
+        List<UserDTO> dtoList = UserConverter.fromEntityList(novaLista, e -> UserConverter.fromEntity(e));
+        User newUser = ur.findByUsername(username);
+        UserDTO userDTO = UserConverter.fromEntity(newUser);
+        List<String> listaFrsh = userDTO.getUsernameOfFriend();
+        if(listaFrsh.isEmpty()){
+            return dtoList;
+        }
+        Iterator<UserDTO> i = dtoList.iterator();
+        while(i.hasNext()) {
+            for(String un: listaFrsh) {
+                if(i.next().getUsername() == un) {
+                    i.remove();
+                }
+            }
+        }
+
+        return dtoList;
     }
 
     @Override

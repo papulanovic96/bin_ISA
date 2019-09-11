@@ -1,15 +1,16 @@
 package com.bin448.backend.controller;
 
-
 import com.bin448.backend.entity.Car;
 import com.bin448.backend.entity.CarRate;
 import com.bin448.backend.entity.CarReservation;
 import com.bin448.backend.entity.DTOentity.*;
-
+import com.bin448.backend.entity.DTOentity.CarDTO;
+import com.bin448.backend.entity.DTOentity.CarRateDTO;
+import com.bin448.backend.entity.DTOentity.CarReservationDTO;
+import com.bin448.backend.entity.DTOentity.CarServiceDTO;
 
 import com.bin448.backend.service.CarReservationService;
 import com.bin448.backend.service.CarService;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,6 +23,7 @@ import java.util.List;
 public class CarController {
 
     private CarService css;
+
     private CarReservationService crs;
     public CarController(CarReservationService crs,CarService css){
         this.css = css;
@@ -48,13 +50,16 @@ public class CarController {
 
 
     @PostMapping("/add")
-    public String addCar(@RequestBody CarDTO car){
 
+    public String addCar(@RequestBody CarDTO car){
        return css.addCar(car);
     }
+
     @PostMapping("/remove/{regID}")
+
     public String removeCar(@PathVariable String regID){
         return css.removeCar(regID);
+
     }
 
 /*    @PostMapping("/rate/{regID},{rate}")
@@ -66,6 +71,7 @@ public class CarController {
 */
 //ovu mogu svi
     @GetMapping("/find/{regID}")
+
     public CarDTO findCarbyregID(@PathVariable String regID){
         return css.getCar(regID);
     }
@@ -78,7 +84,6 @@ public class CarController {
     @PostMapping("/reserve")
     public void reserveCar(@RequestBody CarReservationDTO cr){
      crs.addReservation(cr);
-
 
     }
 

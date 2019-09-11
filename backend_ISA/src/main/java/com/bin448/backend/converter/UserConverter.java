@@ -2,15 +2,26 @@ package com.bin448.backend.converter;
 
 import com.bin448.backend.entity.DTOentity.UserDTO;
 import com.bin448.backend.entity.Friendship;
+import com.bin448.backend.entity.PlaneTicket;
 import com.bin448.backend.entity.User;
 import com.bin448.backend.repository.FriendshipRepository;
+import com.bin448.backend.repository.PlaneTicketRepository;
 import com.bin448.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.stereotype.Component;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+@Component
+public class UserConverter extends AbstractConverter{
 
-public abstract class UserConverter extends AbstractConverter{
+    private static FriendshipRepository fr;
+    private static PlaneTicketRepository tr;
+
+    public UserConverter(FriendshipRepository f, PlaneTicketRepository t){
+        this.fr = f;
+        this.tr = t;
+    }
 
     public static UserDTO fromEntity(User e) {
         UserDTO newDTOUser = new UserDTO();
@@ -26,8 +37,30 @@ public abstract class UserConverter extends AbstractConverter{
         newDTOUser.setActive(e.isActive());
 
 
-        List<Friendship> listUser = e.getFriends();
+        List<Friendship> listUser = fr.findAll();
         List<String> listUserNames = new ArrayList<>();
+        for(Friendship fp : listUser) {
+            List<Friendship> nova = fp.getReceiver().getFriends();
+            List<Friendship> nova2 = fp.getSender().getRequests();
+            if(nova.isEmpty()){
+                nova = fp.getSender().getFriends();
+            }
+            if(nova2.isEmpty()){
+                nova2 = fp.getReceiver().getRequests();
+            }
+            Iterator<Friendship> i = nova.iterator();
+            while(i.hasNext()){
+                if(!i.next().isAreFriends()) {
+                    i.remove();
+                }
+            }
+            Iterator<Friendship> i2 = nova2.iterator();
+            while(i2.hasNext()){
+                if(i2.next().isAreFriends()){
+                    i2.remove();
+                }
+            }
+        }
         User newUser;
         User newUser2;
         for(Friendship f: listUser) {
@@ -45,7 +78,7 @@ public abstract class UserConverter extends AbstractConverter{
         }
         newDTOUser.setUsernameOfFriend(listUserNames);
 
-        List<Friendship> listUserRequests = e.getFriends();
+        List<Friendship> listUserRequests = fr.findAll();
         List<String> listUserReq = new ArrayList<>();
         User newUserR;
         User newUserR2;
@@ -65,6 +98,15 @@ public abstract class UserConverter extends AbstractConverter{
             }
         }
         newDTOUser.setUsernameOfRequests(listUserReq);
+
+        List<Long> rezervisaneKarte = new ArrayList<>();
+        List<PlaneTicket> karte = e.getReservedTicket();
+        Long newTicket;
+        for(PlaneTicket k: karte){
+            newTicket = k.getId();
+            rezervisaneKarte.add(newTicket);
+        }
+        newDTOUser.setPlaneTicket(rezervisaneKarte);
         return newDTOUser;
     }
 
@@ -96,7 +138,7 @@ public abstract class UserConverter extends AbstractConverter{
         }
         newUser.setFriends(listUser);
 
-        List<String> listUserRequests = d.getUsernameOfFriend();
+        List<String> listUserRequests = d.getUsernameOfRequests();
         List<Friendship> listUserReq = new ArrayList<>();
         User userForR = new User();
         Friendship newFriendshipR = new Friendship();
@@ -109,6 +151,18 @@ public abstract class UserConverter extends AbstractConverter{
             }
         }
         newUser.setRequests(listUserReq);
+
+        List<Long> rezerved = d.getPlaneTicket();
+        List<PlaneTicket> newReserved = new ArrayList<>();
+        PlaneTicket newTicket;
+        if(rezerved != null){
+            for(Long key: rezerved){
+                newTicket = tr.getOne(key);
+                newReserved.add(newTicket);
+            }
+        }
+
+        newUser.setReservedTicket(newReserved);
         return newUser;
 
     }

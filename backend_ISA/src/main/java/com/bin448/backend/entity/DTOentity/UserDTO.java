@@ -1,7 +1,5 @@
 package com.bin448.backend.entity.DTOentity;
 
-import com.bin448.backend.entity.User;
-
 import java.util.List;
 
 public class UserDTO {
@@ -17,6 +15,7 @@ public class UserDTO {
     private boolean active;
     private List<String> usernameOfFriend;
     private List<String> usernameOfRequests;
+    private List<Long> planeTicket;
 
     public UserDTO() {
     }
@@ -117,4 +116,11 @@ public class UserDTO {
         this.usernameOfRequests = usernameOfRequests;
     }
 
+    public List<Long> getPlaneTicket() {
+        return planeTicket;
+    }
+
+    public void setPlaneTicket(List<Long> planeTicket) {
+        this.planeTicket = planeTicket;
+    }
 }

@@ -1,14 +1,12 @@
 package com.bin448.backend.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "seats")
-@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class PlaneSeat {
 
     @Id
@@ -19,7 +17,7 @@ public class PlaneSeat {
     private boolean reserved;
     @ManyToOne
     private Airline airline;
-    @OneToOne
+    @ManyToOne
     private PlaneTicket ticket;
 
     public Long getSeatId() {

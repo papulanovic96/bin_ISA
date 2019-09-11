@@ -5,18 +5,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.access.channel.ChannelProcessingFilter;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 
@@ -29,25 +23,33 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private CustomAuthenticationEntryPoint authenticationEntryPoint;
 
 
-
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 
 
         auth.authenticationProvider(isaAuth);
     }
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-       http.csrf().disable();
+        http.csrf().disable();
         // http.addFilterBefore(new CustomFilter(), ChannelProcessingFilter.class);
 
-               http.httpBasic().authenticationEntryPoint(authenticationEntryPoint).and().authorizeRequests();
-               http.httpBasic().and().authorizeRequests()
-                        .antMatchers("/user/sendFriendRequest/**").permitAll()
-                        .antMatchers("/user/acceptFriendRequest").permitAll()
- 
-                        .antMatchers("/user/getAirlines").permitAll()
-                        .antMatchers("/Car/add").hasAnyRole("CAR_ADMIN","SYSTEM_ADMIN")
+        http.httpBasic().authenticationEntryPoint(authenticationEntryPoint).and().authorizeRequests();
+        http.httpBasic().and().authorizeRequests()
+                .antMatchers("/user/sendFriendRequest/**").permitAll()
+                .antMatchers("/user/acceptFriendRequest/**").permitAll()
+                .antMatchers("/user/declineFriendRequest/**").permitAll()
+                .antMatchers("/user/deleteFriendRequest/**").permitAll()
+                .antMatchers("/user/findAll/**").permitAll()
+                .antMatchers("/user/modify/**").permitAll()
+                .antMatchers("/user/invite/**").permitAll()
+                .antMatchers("/user/getUser/**").permitAll()
+                .antMatchers("/user/getFriends/**").permitAll()
+                .antMatchers("/user/getRequests/**").permitAll()
+                .antMatchers("/user/getReceivedRequests/**").permitAll()
+                .antMatchers("/user/getAirlines").permitAll()
+                 .antMatchers("/Car/add").hasAnyRole("CAR_ADMIN","SYSTEM_ADMIN")
                         .antMatchers("/Car/remove/**").hasAnyRole("CAR_ADMIN","SYSTEM_ADMIN")
                         .antMatchers("/Car/rateCar").hasAnyRole("CAR_ADMIN","SYSTEM_ADMIN","USER")
                         .antMatchers("/Car/reserve").hasAnyRole("USER","CAR_ADMIN")
@@ -82,21 +84,36 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                         .antMatchers("/carService/modifyCarService/**").hasAnyRole("CAR_ADMIN","SYSTEM_ADMIN")
                         .antMatchers("/carService/find/**").permitAll()
                         .antMatchers("/carService/getAvgGrade/**").permitAll()
-                        .antMatchers("/seats/findAll").permitAll()
-                        .antMatchers("/seats/findById/**").permitAll()
-                        .antMatchers("/seats/addSeat").permitAll()
-                        .antMatchers("/seats/deleteSeat/**").permitAll()
-                        .antMatchers("/seats/modifySeat/**").permitAll()
-                        .antMatchers("/airline/findAll").permitAll()
-                        .antMatchers("/airline/findById/**").permitAll()
-                        .antMatchers("/airline/create").permitAll()
-                        .antMatchers("/airline/delete/**").permitAll()
-                        .antMatchers("/airline/modify/**").permitAll()
-                        .antMatchers("/flight/findAll").permitAll()
-                        .antMatchers("/flight/create").permitAll()
-                        .anyRequest()
-                        .fullyAuthenticated()
-              ;
+                        
+                .antMatchers("/seats/findAll").permitAll()
+                .antMatchers("/seats/findById/**").permitAll()
+                .antMatchers("/seats/addSeat").permitAll()
+                .antMatchers("/seats/deleteSeat/**").permitAll()
+                .antMatchers("/seats/modifySeat/**").permitAll()
+                .antMatchers("/airline/findAll").permitAll()
+                .antMatchers("/airline/findById/**").permitAll()
+                .antMatchers("/airline/create").permitAll()
+                .antMatchers("/airline/delete/**").permitAll()
+                .antMatchers("/airline/modify/**").permitAll()
+                .antMatchers("/flight/findAll").permitAll()
+                .antMatchers("/flight/create").permitAll()
+                .antMatchers("/flight/check/**").permitAll()
+                .antMatchers("/reservation").hasAnyRole("USER")
+                .antMatchers(HttpMethod.DELETE, "/room/**").hasAnyRole("HOTEL_ADMIN")
+                .antMatchers(HttpMethod.POST, "/room/setReservation").permitAll()
+                .antMatchers(HttpMethod.PUT, "/room/**").hasAnyRole("HOTEL_ADMIN")
+                .antMatchers(HttpMethod.GET, "/room/**").permitAll()
+                .antMatchers(HttpMethod.POST, "/room/addRoom").hasAnyRole("HOTEL_ADMIN")
+                .antMatchers(HttpMethod.POST, "/hotel/**").hasAnyRole("HOTEL_ADMIN")
+                .antMatchers(HttpMethod.PUT, "/hotel/**").hasAnyRole("HOTEL_ADMIN")
+                .antMatchers(HttpMethod.GET, "/hotel/addMenuItem/**").hasAnyRole("HOTEL_ADMIN")
+                .antMatchers(HttpMethod.GET, "/hotel/removeMenuItem/**").hasAnyRole("HOTEL_ADMIN")
+                .antMatchers(HttpMethod.POST, "/newRoomPrice/**").hasAnyRole("HOTEL_ADMIN")
+                .antMatchers(HttpMethod.PUT, "/newRoomPrice/validDiscounts").permitAll()
+                .anyRequest()
+                .fullyAuthenticated();
+        
+
 
 
     }
@@ -122,6 +139,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         web.ignoring().antMatchers("/user/confirm-account?token=**");
         web.ignoring().antMatchers("/user/confirm-account?**");
         web.ignoring().antMatchers("/user/confirm-account**");
+        web.ignoring().antMatchers(HttpMethod.GET, "/hotel/**");
+//        web.ignoring().antMatchers(HttpMethod.PUT, "/hotel/findHotels/**");
+//        web.ignoring().antMatchers(HttpMethod.PUT, "/hotel/date");
+
     }
 
     @Bean

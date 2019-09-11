@@ -32,7 +32,6 @@ public class IsaAuthProvider  implements AuthenticationProvider {
         String password = authentication.getCredentials().toString();
         try {
             User user = userService.getUserByUsername(username);
-
             if (!passwordEncoder.matches(password, user.getPassword()) || user.isActive()==false) {
                 throw new BadCredentialsException("Authentication failed");
             }

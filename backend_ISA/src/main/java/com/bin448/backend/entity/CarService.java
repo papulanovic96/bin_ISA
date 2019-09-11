@@ -1,16 +1,14 @@
 package com.bin448.backend.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
 @Entity
-@Table(name = "carService",uniqueConstraints={@UniqueConstraint(columnNames={"carServiceName"})})
-@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
+@Table(name = "carService", uniqueConstraints = {@UniqueConstraint(columnNames = {"carServiceName"})})
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class CarService {
 
     @Id

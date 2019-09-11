@@ -1,0 +1,356 @@
+<div class="col-6">
+
+  <div class="form-group" style="width: 210%;padding: 25px;border-radius: 1ch; background-color: rgba(156,39,176,.3);margin-top: 0cm;margin-left: 0px;margin-right: 0px;">
+
+    <form class="form-inline" >
+      <div class="inputWithIcon" style="margin-left: 2px">
+        <i class="fa fa-building-o fa-lg fa-fw" aria-hidden="true"></i>
+        <input  name="name" class="form-control" placeholder="Hotel name" [(ngModel)]="findHotelName" type="text" >
+      </div>
+      <div class="inputWithIcon" style="margin-left: 2px">
+        <i class="fa fa-address-book fa-lg fa-fw" aria-hidden="true"></i>
+        <input class="form-control" name="address" style="float: right;" type="text" [(ngModel)]="address"  placeholder="Address">
+      </div>
+      <div class="inputWithIcon" style="margin-left: 2px">
+        <i class="fa fa-arrow-right fa-lg fa-fw" aria-hidden="true"></i>
+        <input class="form-control" name="arrival" [min]="getToday()" [(ngModel)]="arrival" style="float: right;" type="date">
+      </div>
+      <div class="inputWithIcon" style="margin-left: 2px">
+        <i class="fa fa-arrow-left fa-lg fa-fw" aria-hidden="true"></i>
+        <input class="form-control" name="end" [min]="getToday()" style="float: right;" [(ngModel)]="return" type="date">
+      </div>
+      <input class="form-control btn btn-info" style="float: right;margin-left: 2px" type="button" value="Search">
+    </form>
+  </div>
+  <table style="width: 210%; margin-top: 0cm;margin-left: 0px;margin-right: 0px;" class="table table-fixed table-hover">
+    <thead>
+    <tr>
+      <th scope="col-xs-1" *ngIf="loginService.isUserHotelAdmin()">Hotel id</th>
+      <th scope="col-1">Name</th>
+      <th scope="col-1">Address</th>
+      <th scope="col-xs-1">Description</th>
+      <th scope="col-1">Grade</th>
+      <th scope="col-1"></th>
+      <th scope="col-1"></th>
+      <th scope="col-1"></th>
+      <!--<th scope="col-xs-1" colspan="2"><button class="btn btn-outline-info" style="height: 50px; border: 2px solid black"><a href="#aa" style="color: black" data-target="#aa" data-toggle="modal">Rooms on the discount</a></button></th>-->
+      <th *ngIf="destination!=''" scope="col-xs-1" colspan="2">
+        <button *ngIf="loginService.isUserUSER() && loginService.isUserLoggedIn()" class="btn btn-outline-info" style="height: 80px; length : 300px; border: 2px solid black"
+                (click)="getValidDiscounts()"><a style="color: black">Rooms on the discount</a></button>
+      </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor='let hotel of listOfHotels'>
+      <td *ngIf="loginService.isUserHotelAdmin()">{{ hotel.hotel_id }}</td>
+      <td>{{ hotel.name }}</td>
+      <td>{{ convertAddressIdToName(hotel.addressId) }}</td>
+      <td>
+        <button class="btn btn-info" (click)="openDescription(hotel.hotel_id)"><i
+          class="fa fa-info-circle"></i></button>
+      </td>
+      <td>{{ hotel.avgGrade}}</td>
+      <td><a>
+        <button type="button" class="btn btn-info" (click)="listRooms(hotel.hotel_id)"><i
+          class="fa fa-list"></i> Rooms
+        </button>
+      </a></td>
+      <td><a>
+        <button type="button" class="btn btn-info" (click)="listMenu(hotel.hotel_id)"><i
+          class="fa fa-wifi"></i> Additional services
+        </button>
+      </a></td>
+      <td><a>
+        <button *ngIf="loginService.isUserHotelAdmin()" type="button" class="btn btn-info"
+                (click)="changeHotel(hotel.hotel_id)"><i
+          class="fa fa-refresh"></i> Change
+        </button>
+      </a></td>
+      <td><a>
+        <button *ngIf="loginService.isUserHotelAdmin()" type="button" class="btn btn-info"
+                (click)="removeHotel(hotel.hotel_id)"><i
+          class="fa fa-remove"></i> Remove
+        </button>
+      </a></td>
+      <td><a>
+        <button *ngIf="loginService.isUserUSER()&& loginService.isUserLoggedIn()" type="button" class="btn btn-info" data-toggle="modal"
+                (click)="openReservationModal(hotel.hotel_id)"><i
+          class="fa fa-check"></i>Reservation
+        </button>
+      </a></td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="modal" [ngStyle]="{'display':displayRooms}" id="aa" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content" style="background-color: rgb(122, 154, 198); width: 600px">
+      <div class="modal-header">
+        <h4><u><b>Hotel rooms</b></u></h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeModalRooms()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form ngNativeValidate>
+        <div class="modal-body">
+          <table class="table table-fixed table-hover">
+            <thead>
+            <tr>
+              <th scope="col-xs-1">Number</th>
+              <th scope="col-xs-1">Type</th>
+              <th scope="col-1">Price per night</th>
+              <th scope="col-xs-1">Floor</th>
+              <th scope="col-1">Grade</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor='let room of listOfHotelRooms'>
+              <td>{{ room.number }}</td>
+              <td>{{ getTypeName(room.roomType) }}</td>
+              <td>{{ room.pricePerNight}} <i class="fa fa-euro"></i></td>
+              <td>{{room.floor}}</td>
+              <td>{{ room.avgGrade}}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-info" (click)="closeModalRooms()"><i
+            class="fa fa-close"></i>Close
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal" [ngStyle]="{'display':displayMenu}" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content" style="background-color: rgb(122, 154, 198)">
+      <div class="modal-header">
+        <h4><u><b>Additional services</b></u></h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeModalMenu()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form ngNativeValidate>
+        <div class="modal-body">
+          <table class="table table-fixed table-hover">
+            <thead>
+            <tr>
+              <th scope="col-1">Item name</th>
+              <th scope="col-1">Item price</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor='let item of menuNames ; index as i'>
+              <td>{{ item }}</td>
+              <td>{{menuPrices[i]}} <i class="fa fa-euro"></i></td>
+              <td>
+                <button *ngIf="loginService.isUserHotelAdmin()" type="button" class="close" data-dismiss="modal"
+                        aria-label="Close"
+                        (click)="removeAdditionalService(item)">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="modal-footer">
+          <button *ngIf="loginService.isUserHotelAdmin()" type="button" class="btn btn-info"
+                  (click)="openMenuItemModal()">Add menu item
+          </button>
+          <button type="button" class="btn btn-info" (click)="closeModalMenu()"><i
+            class="fa fa-close"></i>Close
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal" [ngStyle]="{'display':displayMenuItem}" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content" style="background-color: rgb(122, 154, 198)">
+      <div class="modal-header">
+        <h4><u><b>New additional service</b></u></h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeMenuItemModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form ngNativeValidate>
+        <div class="modal-body">
+          <div class="form-group">
+            <label style="text-align: left">Name* </label>
+            <input style="background-color: rgb(193, 212, 224)" type="text" class="form-control"
+                   [(ngModel)]="menuItemName"
+                   [ngModelOptions]="{standalone: true}" required>
+          </div>
+          <div class="form-group">
+            <label>Price* <i class="fa fa-euro"></i></label>
+            <input style="background-color: rgb(193, 212, 224)" type="number" min="1" class="form-control"
+                   [(ngModel)]="menuItemPrice"
+                   [ngModelOptions]="{standalone: true}" (keypress)="numberOnly($event)" required>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-info" (click)="addMenuItem()">Add
+          </button>
+          <button type="button" class="btn btn-info" (click)="closeMenuItemModal()"><i
+            class="fa fa-close"></i>Close
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal" [ngStyle]="{'display':displayDescription}" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content" style="background-color: rgb(122, 154, 198)">
+      <div class="modal-header">
+        <h4 class="label label-default"><u><b>Hotel description</b></u></h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeDescription()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form ngNativeValidate>
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="label label-default">{{description}}</label>
+          </div>
+        </div>
+      </form>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-info" (click)="closeDescription()"><i
+          class="fa fa-close"></i>Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal" [ngStyle]="{'display':displayChangeHotelModal}" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content" style="background-color: rgb(122, 154, 198)">
+      <div class="modal-header">
+        <h4><u><b>Hotel for change</b></u></h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeChangeHotelModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form ngNativeValidate>
+        <div class="modal-body">
+          <div class="form-group">
+            <label style="text-align: left">Hotel name </label>
+            <input style="background-color: rgb(193, 212, 224)" type="text" class="form-control"
+                   [(ngModel)]="changedHotel.name"
+                   [ngModelOptions]="{standalone: true}" required>
+          </div>
+          <div class="form-group">
+            <label>Hotel description </label>
+            <textarea style="background-color: rgb(193, 212, 224)" rows="4" type="text" class="form-control"
+                      [(ngModel)]="changedHotel.description"
+                      name="hotelDescription" required></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-info"
+                  (click)="changeHotelSave()">Done
+          </button>
+          <button type="button" class="btn btn-info" (click)="closeChangeHotelModal()"><i
+            class="fa fa-close"></i>Close
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal" [ngStyle]="{'display':displayDiscountRooms}" id="discountRooms"
+     tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document" style="margin-left: 10px;margin-right: 10px">
+    <div class="modal-content" style="background-color: rgb(122, 154, 198);width: 1200px;float: left;margin-left: 5px;">
+      <div class="modal-header">
+        <h4><u><b>Discounts</b></u></h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeDiscountRoomsModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form ngNativeValidate>
+        <div class="modal-body">
+          <table class="table table-fixed table-hover">
+            <thead>
+            <tr>
+              <th scope="col-xs-1">Type</th>
+              <th scope="col-1">Price per night</th>
+              <th scope="col-xs-1">Floor</th>
+              <th scope="col-1">Grade</th>
+              <th scope="col-1">Discount price</th>
+              <th scope="col-1">Included</th>
+              <th scope="col-1">Discount start</th>
+              <th scope="col-1">Discount ends</th>
+              <th scope="col-1">Hotel</th>
+              <th scope="col-1">Address</th>
+              <th scope="col-1"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor='let discount of validDiscounts'>
+              <td>{{ getTypeName(findRoomFromDiscount(discount.roomId).roomType) }}</td>
+              <td>{{ findRoomFromDiscount(discount.roomId).pricePerNight}} <i class="fa fa-euro"></i></td>
+              <td>{{findRoomFromDiscount(discount.roomId).floor}}</td>
+              <td>{{ findRoomFromDiscount(discount.roomId).avgGrade}}</td>
+              <td>{{ discount.newPrice}} <i class="fa fa-euro"></i></td>
+              <td>{{listAdditionalServices(discount.id)}}</td>
+              <td>{{ discount.startDate | date:'yyyy-MM-dd'}}</td>
+              <td>{{ returnDate(discount.startDate, discount.duration)| date:'yyyy-MM-dd'}}</td>
+              <td>{{getHotelName(discount.roomId)}}</td>
+              <td>{{getHotelAddress(discount.roomId)}}</td>
+              <td>
+                <button class="btn btn-info" (click)="openFastResNightsModal(discount.id,discount.newPrice)">
+                  Reservation
+                </button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-info" (click)="closeDiscountRoomsModal()"><i
+            class="fa fa-close"></i>Close
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal" [ngStyle]="{'display':displayFastResNights}" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content" style="background-color: rgb(122, 154, 198)">
+      <form ngNativeValidate>
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="label label-default">Number of nights</label>
+            <input style="background-color: rgb(193, 212, 224)" type="number" min="1" class="form-control"
+                   [(ngModel)]="fastResNumberOfNights"
+                   [ngModelOptions]="{standalone: true}" (keypress)="numberOnly($event)" required>
+          </div>
+        </div>
+      </form>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-info" (click)="makeFastReservation()">Done
+        </button>
+        <button type="button" class="btn btn-info" (click)="closeFastResNightsModal()"><i
+          class="fa fa-close"></i>Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -3,17 +3,20 @@ package com.bin448.backend.entity;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Table(name = "flight")
-@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Flight {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(nullable = false)
     private Long id;
+    @Column
+    private String fromDestination;
+    @Column
+    private String toDestination;
     @Column
     private String dateAndTimeTakeOff;
     @Column
@@ -30,6 +33,8 @@ public class Flight {
     private Double ticketPrice;
     @ManyToOne
     private Airline airline;
+    @OneToOne(fetch = FetchType.EAGER, mappedBy = "flight", cascade = CascadeType.ALL)
+    private PlaneTicket planeTicket;
 
     public Long getId() {
         return id;
@@ -101,5 +106,29 @@ public class Flight {
 
     public void setAirline(Airline airline) {
         this.airline = airline;
+    }
+
+    public String getFromDestination() {
+        return fromDestination;
+    }
+
+    public void setFromDestination(String fromDestination) {
+        this.fromDestination = fromDestination;
+    }
+
+    public String getToDestination() {
+        return toDestination;
+    }
+
+    public void setToDestination(String toDestination) {
+        this.toDestination = toDestination;
+    }
+
+    public PlaneTicket getPlaneTicket() {
+        return planeTicket;
+    }
+
+    public void setPlaneTicket(PlaneTicket planeTicket) {
+        this.planeTicket = planeTicket;
     }
 }

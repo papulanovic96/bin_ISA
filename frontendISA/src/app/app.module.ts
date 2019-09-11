@@ -1,3 +1,6 @@
+import {HotelComponent} from './hotel/hotel.component';
+import {RoomComponent} from './room/room.component';
+import {ReservationComponent} from './reservation/reservation.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
@@ -23,6 +26,9 @@ import { UserHistoryComponent } from './user-history/user-history.component';
 import { RentacarOfficesComponent } from './rentacar-offices/rentacar-offices.component';
 import { ReserveCarComponent } from './reserve-car/reserve-car.component';
 import {DatePipe} from "@angular/common";
+import { FriendshipComponent } from './friendship/friendship.component';
+import { FlightListComponent } from './flight/flight-list/flight-list.component';
+import { FriendInviteComponent } from './friend-invite/friend-invite.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +36,9 @@ import {DatePipe} from "@angular/common";
     PlaneSeatComponent,
     AirlineComponent,
     PlaneTicketComponent,
+    HotelComponent,
+    RoomComponent,
+    ReservationComponent,
     FlightComponent,
     CarComponent,
     LoginComponent,
@@ -40,12 +49,14 @@ import {DatePipe} from "@angular/common";
     UserHistoryComponent,
     RentacarOfficesComponent,
     ReserveCarComponent,
-
-
+    FriendshipComponent,
+    FlightListComponent,
+    FriendInviteComponent,
 
   ],
 
   imports: [
+    FormsModule,
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
@@ -54,6 +65,7 @@ import {DatePipe} from "@angular/common";
     AppRoutingModule,
     RatingModule.forRoot(),
     BsDatepickerModule.forRoot(),
+
     RouterModule.forRoot([
       {path: 'planeseats', component: PlaneSeatComponent},
       {path: 'airlines', component: AirlineComponent},
@@ -67,6 +79,7 @@ import {DatePipe} from "@angular/common";
 
 
     ], {useHash: true}),
+
     BrowserAnimationsModule
   ],
 
@@ -74,4 +87,7 @@ import {DatePipe} from "@angular/common";
 providers: [DatePipe],
   bootstrap: [AppComponent]
 })
+
 export class AppModule { }
+
+
