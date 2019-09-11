@@ -1,1 +1,21 @@
-<p>flight works!</p>
+
+<div class="form-group" style="padding: 25px;border-radius: 1ch; background-color: rgba(156,39,176,.3);">
+       
+              <form class="form-inline" >
+        <div class="inputWithIcon">
+            <input [(ngModel)]="newFlight.from" name="from" class="form-control" id="iconified" placeholder="From" style="float: left;" type="text" >
+            <i class="fa fa-plane fa-lg fa-fw" aria-hidden="true"></i>
+        </div>
+        <div class="inputWithIcon">
+            <input class="form-control" [(ngModel)]="newFlight.to" name="to" style="float: right;" type="text" placeholder="To">
+            <i class="fa fa-plane fa-lg fa-fw" aria-hidden="true"></i>
+        </div>
+        <div class="inputWithIcon">
+            <input class="form-control" [(ngModel)]="newFlight.datetimetakeoff" name="datetimetakeoff" style="float: right;" type="datetime-local">
+        </div>
+        <div class="inputWithIcon">
+            <input class="form-control" [(ngModel)]="newFlight.datetimelanding" name="datetimelanding" style="float: right;" type="datetime-local">
+        </div>
+            <input class="form-control btn btn-info" style="float: righ" type="button" (click) = "save(newFlight)" value="Search">
+        </form>
+</div>

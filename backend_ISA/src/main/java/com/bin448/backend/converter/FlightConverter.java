@@ -9,6 +9,8 @@ public abstract class FlightConverter extends AbstractConverter{
     public static FlightDTO fromEntity(Flight e) {
         FlightDTO newFlight = new FlightDTO();
         newFlight.setId(e.getId());
+        newFlight.setFromDest(e.getFromDestination());
+        newFlight.setToDest(e.getToDestination());
         newFlight.setDateAndTimeTakeOff(e.getDateAndTimeTakeOff());
         newFlight.setDateAndTimeLanding(e.getDateAndTimeLanding());
         newFlight.setFlightTime(e.getFlightTime());
@@ -23,6 +25,8 @@ public abstract class FlightConverter extends AbstractConverter{
     public static Flight toEntity(FlightDTO d) {
         Flight newFlight = new Flight();
         newFlight.setId(d.getId());
+        newFlight.setFromDestination(d.getFromDest());
+        newFlight.setToDestination(d.getToDest());
         newFlight.setDateAndTimeTakeOff(d.getDateAndTimeTakeOff());
         newFlight.setDateAndTimeLanding(d.getDateAndTimeLanding());
         newFlight.setTicketPrice(d.getTicketPrice());

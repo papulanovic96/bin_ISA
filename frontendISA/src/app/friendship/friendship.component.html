@@ -1,3 +1,4 @@
+
 <html lang="en"><head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -59,13 +60,14 @@
 
                         <!-- Card -->
                         <div class="card card-cascade cascading-admin-card user-card" style="margin-top: 100px; background-color: rgba(21, 62, 186, 0.3);" *ngIf="loginService.isUserLoggedIn()">
-            
+                          
                           <!-- Card Data -->
                           <div class="admin-up d-flex justify-content-start">
-                            <div class="data">
-                              <h5 class="font-weight-bold" style="color: aquamarine;">Edit Profile</h5>
+                              <i class="fa fa-users info-color py-4 mr-3 z-depth-2"></i>
+                              <div class="data">
+                                <h5 class="font-weight-bold dark-grey-text" style="color: aquamarine;">Edit Profile</h5>
+                              </div>
                             </div>
-                          </div>
                           <!-- Card Data -->
             
                           <!-- Card content -->
@@ -169,7 +171,7 @@
                               <!-- Grid column -->
                               <div class="col-md-12">
             
-                                <button class="btn btn-info btn-rounded waves-effect waves-light" (click) = "save()">Save</button>
+                                <button class="btn btn-info btn-rounded waves-effect waves-light" (click) = "save()"><i class="fa fa-save"></i> Save</button>
             
                               </div>
                               <!-- Grid column -->
