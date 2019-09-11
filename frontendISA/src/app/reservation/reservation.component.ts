@@ -7,6 +7,8 @@ import {Router} from "@angular/router";
 import {Room} from "../room/room";
 import {TypePrice} from "./typePrice";
 import {HotelComponent} from "../hotel/hotel.component";
+import {RoomService} from "../room/room.service";
+import {AuthenticationService} from "../service/authentication.service";
 
 @Component({
   selector: 'app-reservation',
@@ -19,7 +21,7 @@ export class ReservationComponent implements OnInit {
   additionalServices = 'none';
   menuNames: String[] = [];
   menuPrices: number[] = [];
-  listOfTypes: Type[];
+  listOfTypes: Type[]=[];
   listOfChosenRoomIds: number[] = [];
   listOfReservationTypesPrices: TypePrice[] = [];
   proceed: Boolean = true;
@@ -28,9 +30,9 @@ export class ReservationComponent implements OnInit {
   listOfAvailableRooms: Room[][];
   numberOfBeds: number = 0;
   reservationAdditionalServices: String[] = []
-  reservation = new Reservation(1, 0, 0, 1, new Date(), 0, 0,this.reservationAdditionalServices);
+  reservation = new Reservation(1, 0, 0, 0, this.loginService.getLogged(), new Date(), 0, 0, this.reservationAdditionalServices);
 
-  constructor(private hotelService: HotelService, private  router: Router, private reservationService: ReservationService) {
+  constructor(private hotelService: HotelService, private  router: Router,public loginService:AuthenticationService, private reservationService: ReservationService, private roomService: RoomService) {
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
       return false;
     }
@@ -84,18 +86,23 @@ export class ReservationComponent implements OnInit {
     }
   }
 
-  finishChoosingAdditional() {/////////////////////////////////////////////////////////dodaj ovo u rez i sacuvaj rez
-    this.reservation.additionalServices=this.reservationAdditionalServices
+  finishChoosingAdditional() {
+    this.reservation.additionalServices = this.reservationAdditionalServices
     alert('Reservation is successful')
     for (let roomId of this.listOfChosenRoomIds) {
-      console.log(roomId)
-      this.reservation.roomId = roomId;
-      this.reservationService.addReservation(this.reservation).subscribe();
+      this.roomService.getRoom(roomId).subscribe(
+        room => {
+          if (room.newPrice == 0) {
+            this.reservation.sumPrice = room.pricePerNight * this.reservation.numberOfNights
+          } else {
+            this.reservation.sumPrice = room.newPrice * this.reservation.numberOfNights
+          }
+          this.reservation.roomId = roomId;
+          this.reservationService.addReservation(this.reservation).subscribe();
+        }
+      )
     }
     this.backToHotels()
-    for (let a of this.reservation.additionalServices) {
-      console.log(a)
-    }
   }
 
   openAdditionalServicesModal() {
@@ -129,6 +136,7 @@ export class ReservationComponent implements OnInit {
   }
 
   reserve() {
+    this.reservation.userUsername=this.loginService.getLogged()
     if (this.listOfReservationTypesPrices.length == 0) {
       alert("You must choose type of your room/rooms");
     }
@@ -147,6 +155,9 @@ export class ReservationComponent implements OnInit {
           listOfReservationTypesId.push(typePrice.type.id);
           listOfReservationPrices.push(typePrice.price);
         }
+        if (this.reservation.arrivalDate == null) {
+          this.reservation.arrivalDate = new Date()
+        }
         this.reservationService.setReservation(this.reservation).subscribe(
           res => {
             let noAvailable = false;
@@ -162,12 +173,6 @@ export class ReservationComponent implements OnInit {
                   alert("There is no available room!")
                 } else {
                   this.listOfChosenRoomIds.length = listOfAvailableRooms.length;
-                  // for (let rooms of listOfAvailableRooms) {
-                  //   for (let room of rooms) {
-                  //     console.log(room.number)
-                  //
-                  //   }
-                  // }
                   this.foundRooms = 'block';
                 }
               }
@@ -182,7 +187,6 @@ export class ReservationComponent implements OnInit {
   }
 
   choseRooms(id: number, it: number) {
-    //console.log(id + " " + it)
     for (let i = 0; i < this.listOfChosenRoomIds.length; i++) {
       if (i == it) {
         this.listOfChosenRoomIds[i] = id;
@@ -204,6 +208,14 @@ export class ReservationComponent implements OnInit {
     } else {
       this.closeFoundRoomModal();
       this.openAdditionalServicesModal()
+    }
+  }
+
+  getTypeName(typeId: number): String {
+    for (let type of this.listOfTypes) {
+      if (type.id == typeId) {
+        return type.name
+      }
     }
   }
 

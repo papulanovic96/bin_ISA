@@ -3,6 +3,7 @@ import {Room} from "./room";
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {NewRoomPrice} from "./newRoomPrice";
+import {Discount} from "./discount";
 
 @Injectable({
   providedIn: 'root'
@@ -44,6 +45,10 @@ export class RoomService {
 
   addNewPrice(newPrice: NewRoomPrice): Observable<NewRoomPrice> {
     return this.http.post<NewRoomPrice>(this.addNewPriceUrl, newPrice, this.httpOptionsWithDataTypes);
+  }
+
+  addDiscount(discount: Discount): Observable<Discount> {
+    return this.http.post<Discount>(this.addNewPriceUrl + '/discount', discount, this.httpOptionsWithDataTypes);
   }
 
   addRoom(room: Room): Observable<Room> {

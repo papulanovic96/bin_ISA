@@ -6,6 +6,7 @@ import {Hotel} from "../hotel/hotel";
 import {Type} from "../hotel/type";
 import {Router} from "@angular/router";
 import {NewRoomPrice} from "./newRoomPrice";
+import {Discount} from "./discount";
 
 
 @Component({
@@ -15,22 +16,37 @@ import {NewRoomPrice} from "./newRoomPrice";
 })
 export class RoomComponent implements OnInit {
 
+  displaySale = 'none';
   displayAdd = 'none';
   displayChange = 'none';
+  displayAdditionalService = 'none';
   displayNewPrice = 'none';
   listOfRooms: Room[];
   listOfHotels: Hotel[] = [];
   listOfTypes: Type[] = [];
   listOfReservedRooms: Boolean[] = [];
+  sale: boolean = false;
+  newPriceRoomId: number = 0;
   newRoomPrice = new NewRoomPrice(1, 0, 0, new Date(), 0);
+  discountAdditionalServices: String[] = [];
+  menuNames: String[] = [];
+  menuPrices: number[] = [];
+  discount = new Discount(0, 0, 0, new Date(), 0, this.discountAdditionalServices, "");
+  discountHotelId: number = 0;
 
-  newRoom = new Room(0, 0, 0, 0, 0, 0, false);
-  changedRoom = new Room(0, 0, 0, 0, 0, 0, false);
+  newRoom = new Room(0, 0, 0, 0, 0, 0, 0, false);
+  changedRoom = new Room(0, 0, 0, 0, 0, 0, 0, false);
 
   constructor(private roomService: RoomService, private hotelService: HotelService, private  router: Router) {
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
       return false;
     }
+  }
+
+  setSale(sale: boolean) {
+    this.sale = sale;
+    this.closeSaleModal();
+    this.openNewPriceModal();
   }
 
   ngOnInit() {
@@ -43,9 +59,6 @@ export class RoomComponent implements OnInit {
           });
       }
     });
-    for (let a of this.listOfReservedRooms) {
-      console.log(a + " BB")
-    }
     this.hotelService.getAllHotels().subscribe(listOfHotels => this.listOfHotels = listOfHotels);
     this.hotelService.getAllRoomTypes().subscribe(listOfTypes => this.listOfTypes = listOfTypes);
   }
@@ -151,8 +164,8 @@ export class RoomComponent implements OnInit {
     this.displayChange = 'none';
   }
 
-  openNewPriceModal(roomId: number) {
-    this.newRoomPrice.roomId=roomId;
+  openNewPriceModal() {
+    this.newRoomPrice.roomId = this.newPriceRoomId;
     this.displayNewPrice = 'block';
   }
 
@@ -160,26 +173,101 @@ export class RoomComponent implements OnInit {
     this.displayNewPrice = 'none';
   }
 
-  addNewPrice(){
-    if(this.newRoomPrice.duration>0 && this.newRoomPrice.newPrice>0 && this.newRoomPrice.roomId!=0) {
-      this.roomService.checkIfPriceExist(this.newRoomPrice).subscribe(
-        exist =>{
-          console.log(exist)
-          if(exist==true){
-            this.roomService.addNewPrice(this.newRoomPrice).subscribe(
-              newPrice=>{
-                this.closeNewPriceModal();
-                alert("Successfully added new price")
+  addNewPrice() {
+    if (this.newRoomPrice.duration > 0 && this.newRoomPrice.newPrice > 0 && this.newRoomPrice.roomId != 0) {
+      if (this.sale == false) {
+        this.roomService.checkIfPriceExist(this.newRoomPrice).subscribe(
+          exist => {
+            if (exist == true) {
+              this.roomService.addNewPrice(this.newRoomPrice).subscribe(
+                newPrice => {
+                  this.closeNewPriceModal();
+                  alert("Successfully added new price")
+                }
+              );
+            } else {
+              alert('New price already exist for that period of time')
+            }
+          }
+        )
+      } else {
+        this.discount.roomId = this.newRoomPrice.roomId
+        this.discount.newPrice = this.newRoomPrice.newPrice
+        this.discount.duration = this.newRoomPrice.duration
+        this.discount.startDate = this.newRoomPrice.startDate
+        this.hotelService.getHotel(this.discountHotelId).subscribe(
+          hotel => {
+            this.hotelService.getAllAddresses().subscribe(
+              listOfAddresses => {
+                for (let address of listOfAddresses) {
+                  if (address.id == hotel.addressId) {
+                    this.discount.destination = address.city;
+                  }
+                }
               }
-            );
+            )
           }
-          else{
-            console.log(exist)
-            alert('New price already exist for that period of time')
-          }
-        }
-      )
+        )
+        this.closeNewPriceModal();
+        this.openAdditionalServiceModal();
+      }
     }
   }
 
+  openAdditionalServiceModal() {
+    this.hotelService.getMenu(this.discountHotelId).subscribe(
+      menu => {
+        if (menu != null) {
+          this.menuNames = [];
+          this.menuPrices = [];
+          for (let item of Object.keys(menu)) {
+            this.menuNames.push(item)
+            this.menuPrices.push(menu[item])
+          }
+        }
+      }
+    )
+    this.displayAdditionalService = 'block';
+  }
+
+  closeAdditionalServiceModal() {
+    this.displayAdditionalService = 'none';
+  }
+
+  openSaleModal(roomId: number, hotelId: number) {
+    this.discountHotelId = hotelId;
+    this.newPriceRoomId = roomId;
+    this.displaySale = 'block'
+  }
+
+  closeSaleModal() {
+    this.displaySale = 'none'
+  }
+
+  addAdditionalService(item: String) {
+    let found = false
+    for (let i = 0; i < this.discountAdditionalServices.length; i++) {
+      if (this.discountAdditionalServices[i] == item) {
+        found = true;
+        this.discountAdditionalServices.splice(i, 1);
+        break;
+      }
+    }
+    if (found == false) {
+      this.discountAdditionalServices.push(item);
+    }
+  }
+
+  finishChoosingAdditional() {
+    this.discount.additionalServices = this.discountAdditionalServices
+    this.roomService.addDiscount(this.discount).subscribe(
+      discount => {
+        alert('Successfully added discount')
+        this.closeAdditionalServiceModal()
+      }
+    )
+  }
+
+
+  //////////////////////////////////////vidi da lil moze sa hrefom kad zavrsis
 }

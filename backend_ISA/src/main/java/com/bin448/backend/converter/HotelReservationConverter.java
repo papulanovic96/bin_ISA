@@ -4,7 +4,6 @@ import com.bin448.backend.entity.DTOentity.HotelReservationDTO;
 import com.bin448.backend.entity.Hotel;
 import com.bin448.backend.entity.HotelReservation;
 import com.bin448.backend.entity.Room;
-import com.bin448.backend.entity.User;
 import org.springframework.stereotype.Component;
 
 import java.util.Calendar;
@@ -20,10 +19,10 @@ public class HotelReservationConverter extends AbstractConverter {
         res.setRoomId(e.getRoom().getNumber());
         res.setId(e.getId());
         res.setNumberOfGuests(e.getNumberOfGuests());
-        res.setRoomPrice(e.getRoomPrice());
-        res.setUserId(e.getUser().getId());
+        res.setSumPrice(e.getSumPrice());
+        res.setUserUsername(e.getUserUsername());
         res.setAdditionalServices(e.getAdditionalServices());
-        Long numbOfNights = e.getReturnDate().getTime() - e.getArrivalDate().getTime();
+        Long numbOfNights = (e.getReturnDate().getTime() - e.getArrivalDate().getTime()) / (24 * 60 * 60 * 1000);
         res.setNumberOfNights(numbOfNights.intValue());
         return res;
     }
@@ -33,7 +32,7 @@ public class HotelReservationConverter extends AbstractConverter {
         if (e.getArrivalDate() == null)
             e.setArrivalDate(new Date());
         res.setArrivalDate(e.getArrivalDate());
-        res.setRoomPrice(e.getRoomPrice());
+        res.setSumPrice(e.getSumPrice());
         Hotel hotel = new Hotel();
         hotel.setId(e.getHotelId());
         res.setHotel(hotel);
@@ -43,9 +42,7 @@ public class HotelReservationConverter extends AbstractConverter {
         res.setId(e.getId());
         res.setAdditionalServices(e.getAdditionalServices());
         res.setNumberOfGuests(e.getNumberOfGuests());
-        User user = new User();
-        user.setId(e.getUserId());
-        res.setUser(user);
+        res.setUserUsername(e.getUserUsername());
         Calendar c = Calendar.getInstance();
         c.setTime(e.getArrivalDate()); // Now use today date.
         c.add(Calendar.DATE, e.getNumberOfNights()); // Adding 5 days

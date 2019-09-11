@@ -17,6 +17,7 @@ public class RoomConverter extends AbstractConverter {
         room.setRoomType(e.getRoomType().getId());
         room.setAvgGrade(e.getAvgGrade());
         room.setFloor(e.getFloor());
+        room.setNewPrice(e.getNewPrice());
         room.setReserved(e.isReserved());
         return room;
     }
@@ -27,6 +28,7 @@ public class RoomConverter extends AbstractConverter {
         Hotel hotel = new Hotel();
         hotel.setId(e.getHotelId());
         room.setHotel(hotel);
+        room.setNewPrice(e.getNewPrice());
         room.setPricePerNight(e.getPricePerNight());
         RoomType type = new RoomType();
         type.setId(e.getRoomType());

@@ -21,11 +21,13 @@ public class RoomServiceImpl implements RoomService {
     private final RoomRepository roomRepository;
     private final HotelService hotelService;
     private final HotelReservationRepository hotelReservationRepository;
+    private final NewRoomPriceService newRoomPriceService;
 
-    public RoomServiceImpl(RoomRepository roomRepository, HotelService hotelService, HotelReservationRepository hotelReservationRepository) {
+    public RoomServiceImpl(RoomRepository roomRepository, NewRoomPriceService newRoomPriceService, HotelService hotelService, HotelReservationRepository hotelReservationRepository) {
         this.roomRepository = roomRepository;
         this.hotelService = hotelService;
         this.hotelReservationRepository = hotelReservationRepository;
+        this.newRoomPriceService = newRoomPriceService;
     }
 
     @Override
@@ -36,6 +38,7 @@ public class RoomServiceImpl implements RoomService {
     @Override
     public void addRoom(RoomDTO roomDTO) {
         hotelService.checkIfHotelExists(roomDTO.getHotelId());
+        roomDTO.setNewPrice(0d);
         roomDTO.setAvgGrade(0d);
         roomDTO.setReserved(false);
         roomRepository.save(RoomConverter.toEntity(roomDTO));
@@ -79,19 +82,32 @@ public class RoomServiceImpl implements RoomService {
 
     @Override
     public List<RoomDTO> findRoomsByHotelId(Long hotelId) {
-        return changeListOfRoomToRoomDTO(roomRepository.findByHotel_IdAndDeleted(hotelId,false));
+        return changeListOfRoomToRoomDTO(roomRepository.findByHotel_IdAndDeleted(hotelId, false));
     }
 
     @Override
     public List<List<RoomDTO>> findRoomsFromReservation(List<RoomDTO> rooms, HotelReservationDTO hotelReservationDTO) {
+        HotelReservation hotelReservation = HotelReservationConverter.toEntity(hotelReservationDTO);
         List<List<RoomDTO>> allRooms = new ArrayList<>();
         for (RoomDTO room : rooms) {
             List<RoomDTO> appropriateRoom = new ArrayList<RoomDTO>();
-            List<RoomDTO> possibleRooms = changeListOfRoomToRoomDTO(roomRepository.findByHotel_IdAndRoomType_IdAndDeleted(room.getHotelId(), room.getRoomType(),false));
+            List<RoomDTO> possibleRooms = changeListOfRoomToRoomDTO(roomRepository.findByHotel_IdAndRoomType_IdAndDeleted(room.getHotelId(), room.getRoomType(), false));
             for (RoomDTO possibleRoom : possibleRooms) {
-                if (room.getPricePerNight() >= possibleRoom.getPricePerNight() || room.getPricePerNight() == 0) {
-                    if (checkIfThereIsAvailableRoom(possibleRoom, hotelReservationDTO)) {
-                        appropriateRoom.add(possibleRoom);
+                if (possibleRoom.getNewPrice() == 0) {
+                    if (room.getPricePerNight() >= possibleRoom.getPricePerNight() || room.getPricePerNight() == 0) {
+                        if (checkIfThereIsAvailableRoom(possibleRoom, hotelReservationDTO)) {
+                            if (newRoomPriceService.checkIfDiscountAlreadyExist(hotelReservation.getArrivalDate(), hotelReservation.getReturnDate(), possibleRoom.getNumber())) {
+                                appropriateRoom.add(possibleRoom);
+                            }
+                        }
+                    }
+                } else {
+                    if (room.getPricePerNight() >= possibleRoom.getNewPrice() || room.getPricePerNight() == 0) {
+                        if (checkIfThereIsAvailableRoom(possibleRoom, hotelReservationDTO)) {
+                            if (newRoomPriceService.checkIfDiscountAlreadyExist(hotelReservation.getArrivalDate(), hotelReservation.getReturnDate(), possibleRoom.getNumber())) {
+                                appropriateRoom.add(possibleRoom);
+                            }
+                        }
                     }
                 }
             }

@@ -16,8 +16,8 @@ public class Hotel {
     private Long id;
     @Column(unique = true, nullable = false)
     private String name;
-    @Column
-    private String address;
+    @OneToOne
+    private Address address;
     @Column
     private String description;
     @Column
@@ -33,14 +33,6 @@ public class Hotel {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
     }
 
     public String getDescription() {
@@ -81,5 +73,13 @@ public class Hotel {
 
     public void setDeleted(boolean deleted) {
         this.deleted = deleted;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
     }
 }

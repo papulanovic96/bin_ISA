@@ -2,7 +2,7 @@ export class Hotel {
   constructor(
     public hotel_id: number,
     public name: string,
-    public address: string,
+    public addressId: number,
     public description: string,
     public avgGrade: number
   ) {

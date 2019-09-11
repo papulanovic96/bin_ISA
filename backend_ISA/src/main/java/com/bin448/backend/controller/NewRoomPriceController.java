@@ -1,19 +1,20 @@
 package com.bin448.backend.controller;
 
 
+import com.bin448.backend.entity.DTOentity.DiscountDTO;
+import com.bin448.backend.entity.DTOentity.FastHotelReservationDTO;
 import com.bin448.backend.entity.DTOentity.NewRoomPriceDTO;
 import com.bin448.backend.service.NewRoomPriceService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/newRoomPrice")
 public class NewRoomPriceController {
 
-    //dodaj u authent...
     private final NewRoomPriceService newRoomPriceService;
 
     public NewRoomPriceController(NewRoomPriceService newRoomPriceService) {
@@ -25,10 +26,20 @@ public class NewRoomPriceController {
         return ResponseEntity.ok(newRoomPriceService.checkIfPricesAlreadyExist(newRoomPriceDTO));
     }
 
+    @PostMapping("/discount")
+    public ResponseEntity<String> addDiscount(@RequestBody DiscountDTO discountDTO) {
+        newRoomPriceService.addDiscount(discountDTO);
+        return ResponseEntity.ok("New discount is added");
+    }
 
     @PostMapping
-    public ResponseEntity<String> addHotel(@RequestBody NewRoomPriceDTO newRoomPriceDTO) {
+    public ResponseEntity<String> addNewPrice(@RequestBody NewRoomPriceDTO newRoomPriceDTO) {
         newRoomPriceService.addNewPrice(newRoomPriceDTO);
         return ResponseEntity.ok("New price is added");
+    }
+
+    @PutMapping("/validDiscounts")
+    public ResponseEntity<List<DiscountDTO>> getValidDiscounts(@RequestBody FastHotelReservationDTO fastHotelReservationDTO) {
+        return ResponseEntity.ok(newRoomPriceService.getValidDiscounts(fastHotelReservationDTO));
     }
 }

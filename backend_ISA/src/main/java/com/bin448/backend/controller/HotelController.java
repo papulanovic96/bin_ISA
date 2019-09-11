@@ -1,5 +1,6 @@
 package com.bin448.backend.controller;
 
+import com.bin448.backend.entity.DTOentity.AddressDTO;
 import com.bin448.backend.entity.DTOentity.HotelDTO;
 import com.bin448.backend.service.HotelService;
 import org.springframework.http.ResponseEntity;
@@ -56,6 +57,11 @@ public class HotelController {
     @GetMapping
     public ResponseEntity<List<HotelDTO>> findAll() {
         return ResponseEntity.ok(hotelService.findAll());
+    }
+
+    @GetMapping("/addresses")
+    public ResponseEntity<List<AddressDTO>> findAllAddresses() {
+        return ResponseEntity.ok(hotelService.findAllAddresses());
     }
 
     @PutMapping("/remove/{id}")

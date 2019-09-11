@@ -21,6 +21,8 @@ public class Room {
     @Column
     private Double pricePerNight;
 
+    private Double newPrice;
+
     private Integer floor;
 
     private Double avgGrade;
@@ -91,5 +93,13 @@ public class Room {
 
     public void setReserved(boolean reserved) {
         this.reserved = reserved;
+    }
+
+    public Double getNewPrice() {
+        return newPrice;
+    }
+
+    public void setNewPrice(Double newPrice) {
+        this.newPrice = newPrice;
     }
 }

@@ -22,10 +22,9 @@ public class HotelReservation {
     @ManyToOne
     private Room room;
 
-    private Double roomPrice;
+    private Double sumPrice;
 
-    @ManyToOne
-    private User user;
+    private String userUsername;
 
     @Column(nullable = false)
     private Date arrivalDate;
@@ -53,14 +52,6 @@ public class HotelReservation {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 
     public Date getArrivalDate() {
@@ -103,11 +94,19 @@ public class HotelReservation {
         this.additionalServices = additionalServices;
     }
 
-    public Double getRoomPrice() {
-        return roomPrice;
+    public Double getSumPrice() {
+        return sumPrice;
     }
 
-    public void setRoomPrice(Double roomPrice) {
-        this.roomPrice = roomPrice;
+    public void setSumPrice(Double sumPrice) {
+        this.sumPrice = sumPrice;
+    }
+
+    public String getUserUsername() {
+        return userUsername;
+    }
+
+    public void setUserUsername(String userUsername) {
+        this.userUsername = userUsername;
     }
 }
