@@ -67,6 +67,7 @@ export class HotelComponent implements OnInit {
   }
 
   find() {
+    /*
     if (this.findHotelName == "" && this.address == "") {
       alert("You have to fill hotel name or address")
     } else if (this.arrival < new Date() || this.return < new Date()) {
@@ -102,7 +103,7 @@ export class HotelComponent implements OnInit {
         }
       }
     }
-
+*/
 
   }
 
