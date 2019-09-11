@@ -10,7 +10,6 @@ public class AirlineDTO {
     private String officeDestination;
     private List<Long> flightListID;
     private List<Long> discountTicketListID;
-    private List<Long> seatsListID;
     private List<Long> luggageID;
 
     public AirlineDTO() {
@@ -71,14 +70,6 @@ public class AirlineDTO {
 
     public void setDiscountTicketListID(List<Long> discountTicketListID) {
         this.discountTicketListID = discountTicketListID;
-    }
-
-    public List<Long> getSeatsListID() {
-        return seatsListID;
-    }
-
-    public void setSeatsListID(List<Long> seatsListID) {
-        this.seatsListID = seatsListID;
     }
 
     public List<Long> getLuggageID() {

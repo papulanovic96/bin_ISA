@@ -11,11 +11,12 @@
             <i class="fa fa-plane fa-lg fa-fw" aria-hidden="true"></i>
         </div>
         <div class="inputWithIcon">
-            <input class="form-control" [(ngModel)]="newFlight.datetimetakeoff" name="datetimetakeoff" style="float: right;" type="datetime-local">
+            <input class="form-control" [(ngModel)]="newFlight.datetimetakeoff" name="datetimetakeoff" style="float: right;" type="date">
         </div>
         <div class="inputWithIcon">
-            <input class="form-control" [(ngModel)]="newFlight.datetimelanding" name="datetimelanding" style="float: right;" type="datetime-local">
+            <input class="form-control" [(ngModel)]="newFlight.datetimelanding" name="datetimelanding" style="float: right;" type="date">
         </div>
-            <input class="form-control btn btn-info" style="float: righ" type="button" (click) = "save(newFlight)" value="Search">
+            <input class="form-control btn btn-info" style="float: righ" type="button" (click) = "onTap(newFlight.datetimetakeoff, newFlight.datetimelanding, newFlight.from, newFlight.to)" value="Search">
         </form>
-</div>
+    </div>
+    

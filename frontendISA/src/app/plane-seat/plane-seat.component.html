@@ -1,4 +1,4 @@
-<div class="col-5">
+<!-- <div class="col-5">
     <table class="table table-fixed table-hover">
         <thead>
           <tr>
@@ -20,22 +20,28 @@
           </tr>
         </tbody>
       </table>
-</div>
+</div> -->
 
-<div class=row>
-  <div class="col-4">
-  <div class="card text-right">
-  <div class="card-body">
-    <form exportAs="ngForm">
-          <div class="form-row">
-    <div class="col-8 my-1 text-right">
-      <input type="checkbox" class="form-control" name = "reserved" [(ngModel)]="seat.reserved">
-    </div>
-    <div class="col my-1 text-right">
-          <button type="submit" class="btn btn-success" (click)="onSubmit()"><i class="fa fa-plus"></i> Add type</button>
-    </div>
+<div class="container">
+      <div class="btn-group col-xs-12" data-toggle="buttons" *ngFor="let item of listOfSeats" (click)="action(item)">
+        <label *ngIf="!item.reserved" class="btn btn-success button_season">
+            <input type="checkbox" name="season_revenue_1" id="season_revenue_1" >{{item.id}}
+          </label>
+          <label *ngIf="item.reserved && !item.ticketID" class="btn btn-warning button_season">{{item.id}}
+          </label>
+          <label *ngIf="item.reserved && item.ticketID">
+              <input type="button" class="btn btn-danger button_season" name="season_revenue_1" id="season_revenue_1" value="{{item.id}}" disabled>
+            </label>
+      </div>
   </div>
-  </form>
-  </div>
-  </div></div></div>
-   
+
+  <button class="btn btn-info" value="next" (click)="nextFunc()" style="float: right">Next</button>
+
+<!--    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+    Sony <span class="caret"></span></button>
+    <ul class="dropdown-menu" role="menu">
+      <li><a href="#">Tablet</a></li>
+      <li><a href="#">Smartphone</a></li>
+    </ul>-->
+
+    

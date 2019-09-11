@@ -39,7 +39,7 @@ export class RegisterComponent  implements OnInit {
       data => {
        if(data === true) {
          alert("SUCCESS! Check your email!");
-         this.router.navigate(['/'])
+         this.router.navigate(['/login'])
        }
         else
          alert("ERROR");

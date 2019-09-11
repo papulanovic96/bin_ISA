@@ -13,7 +13,7 @@ input[type="text"] {
     border-color: aquamarine;
     box-shadow: 0 0 8px 0 aquamarine;
   }
-  input[type="datetime-local"] {
+  input[type="date"] {
     width: 100%;
     border: 2px solid #aaa;
     border-radius: 1ch;
@@ -24,7 +24,7 @@ input[type="text"] {
     transition: 0.3s;
   }
   
-  input[type="datetime-local"]:focus {
+  input[type="date"]:focus {
     border-color: aquamarine;
     box-shadow: 0 0 8px 0 aquamarine;
   }
@@ -105,3 +105,17 @@ input[type="text"] {
     -webkit-box-shadow: 0 8px 17px 0 rgba(0,0,0,.2),0 6px 20px 0 rgba(0,0,0,.19)!important;
     box-shadow: 0 8px 17px 0 rgba(0,0,0,.2),0 6px 20px 0 rgba(0,0,0,.19)!important;
 }
+
+.map-container{
+  overflow:hidden;
+  padding-bottom:56.25%;
+  position:relative;
+  height:0;
+  }
+  .map-container iframe{
+  left:0;
+  top:0;
+  height:100%;
+  width:100%;
+  position:absolute;
+  }

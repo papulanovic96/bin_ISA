@@ -2,8 +2,10 @@ package com.bin448.backend.converter;
 
 import com.bin448.backend.entity.DTOentity.UserDTO;
 import com.bin448.backend.entity.Friendship;
+import com.bin448.backend.entity.PlaneTicket;
 import com.bin448.backend.entity.User;
 import com.bin448.backend.repository.FriendshipRepository;
+import com.bin448.backend.repository.PlaneTicketRepository;
 import com.bin448.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -14,10 +16,11 @@ import java.util.List;
 public class UserConverter extends AbstractConverter{
 
     private static FriendshipRepository fr;
+    private static PlaneTicketRepository tr;
 
-
-    public UserConverter(FriendshipRepository f){
+    public UserConverter(FriendshipRepository f, PlaneTicketRepository t){
         this.fr = f;
+        this.tr = t;
     }
 
     public static UserDTO fromEntity(User e) {
@@ -95,6 +98,15 @@ public class UserConverter extends AbstractConverter{
             }
         }
         newDTOUser.setUsernameOfRequests(listUserReq);
+
+        List<Long> rezervisaneKarte = new ArrayList<>();
+        List<PlaneTicket> karte = e.getReservedTicket();
+        Long newTicket;
+        for(PlaneTicket k: karte){
+            newTicket = k.getId();
+            rezervisaneKarte.add(newTicket);
+        }
+        newDTOUser.setPlaneTicket(rezervisaneKarte);
         return newDTOUser;
     }
 
@@ -139,6 +151,18 @@ public class UserConverter extends AbstractConverter{
             }
         }
         newUser.setRequests(listUserReq);
+
+        List<Long> rezerved = d.getPlaneTicket();
+        List<PlaneTicket> newReserved = new ArrayList<>();
+        PlaneTicket newTicket;
+        if(rezerved != null){
+            for(Long key: rezerved){
+                newTicket = tr.getOne(key);
+                newReserved.add(newTicket);
+            }
+        }
+
+        newUser.setReservedTicket(newReserved);
         return newUser;
 
     }
