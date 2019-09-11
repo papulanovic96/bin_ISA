@@ -3,6 +3,9 @@ import {Hotel} from "./hotel";
 import {Type} from "./type"
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs";
+import {Address} from "./address";
+import {FastHotelReservation} from "./fastHotelReservation";
+import {Discount} from "../room/discount";
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +18,10 @@ export class HotelService {
   private addMenuItemUrl = 'http://localhost:4200/hotel/addMenuItem'
   private removeMenuItemUrl = 'http://localhost:4200/hotel/removeMenuItem'
   private getDescriptionUrl = 'http://localhost:4200/hotel/getDescription'
+  private getValidDiscountsUrl = 'http://localhost:4200/newRoomPrice/validDiscounts'
+  private addFastResUrl = 'http://localhost:4200/reservation/discount'
+
+
   private username = sessionStorage.getItem('username');
   private password = sessionStorage.getItem('password');
   private httpOptionsWithDataTypes = {
@@ -29,6 +36,19 @@ export class HotelService {
   };
 
   constructor(private http: HttpClient) {
+  }
+
+  addFastRes(fastRes: FastHotelReservation): Observable<FastHotelReservation> {
+    console.log(fastRes)
+    return this.http.post<FastHotelReservation>(this.addFastResUrl, fastRes, this.httpOptionsWithDataTypes);
+  }
+
+  getValidDiscounts(fastReservation: FastHotelReservation): Observable<Discount[]> {
+    return this.http.put<Discount[]>(this.getValidDiscountsUrl, fastReservation, this.httpOptions);
+  }
+
+  getAllAddresses(): Observable<Address[]> {
+    return this.http.get<Address[]>(this.getUrlHotels + '/addresses', this.httpOptions);
   }
 
   removeHotel(hotelId: number): Observable<Boolean> {

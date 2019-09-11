@@ -21,7 +21,8 @@
       <td>{{ room.number }}</td>
       <td>{{ convertHotelIdToHotelName(room.hotelId) }}</td>
       <td>{{ convertTypeIdToTypeName(room.roomType)}}</td>
-      <td>{{ room.pricePerNight}}</td>
+      <td *ngIf="room.newPrice==0">{{ room.pricePerNight}}</td>
+      <td *ngIf="!room.newPrice==0">{{ room.newPrice}}</td>
       <td>{{room.floor}}</td>
       <td>{{ room.avgGrade}}</td>
       <td><a>
@@ -37,7 +38,7 @@
         </button>
       </a></td>
       <td><a>
-        <button type="button" class="btn btn-info" (click)="openNewPriceModal(room.number)"><i
+        <button type="button" class="btn btn-info" (click)="openSaleModal(room.number,room.hotelId)"><i
           class="fa fa-plus"></i>Add new price
         </button>
       </a></td>
@@ -204,3 +205,64 @@
     </div>
   </div>
 </div>
+
+<div class="modal" [ngStyle]="{'display':displaySale}" style="margin-top: 5cm" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content" style="background-color: rgb(122, 154, 198)">
+      <form ngNativeValidate>
+        <div class="modal-body">
+          <div class="form-group" style="width: 400px;margin: 5px">
+            <input type="radio" name="Discount" value="Discount"
+                   (click)="setSale(true)"><label>Discount</label><br>
+          </div>
+          <div class="form-group" style="width: 400px;margin: 5px">
+            <input type="radio" name="Regular" value="Regular"
+                   (click)="setSale(false)"><label>Regular change of price</label><br>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal" [ngStyle]="{'display':displayAdditionalService}" tabindex="-1" role="dialog"
+     aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content" style="background-color: rgb(122, 154, 198)">
+      <div class="modal-header">
+        <button type="button" class="close" (click)="closeAdditionalServiceModal()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form ngNativeValidate>
+        <div class="modal-body">
+          <h2><b>Additional services</b></h2>
+          <table class="table table-fixed table-hover">
+            <thead>
+            <tr>
+              <th scope="col-1">Item name</th>
+              <th scope="col-1">Item price</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor='let item of menuNames ; index as i'>
+              <td>{{ item }}</td>
+              <td>{{menuPrices[i]}}</td>
+              <td><input type="checkbox" name="{{item}}" (click)="addAdditionalService(item)"></td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-info" (click)="finishChoosingAdditional()">Done
+          </button>
+          <button type="button" class="btn btn-info" (click)="closeAdditionalServiceModal()"><i
+            class="fa fa-close"></i>Close
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+

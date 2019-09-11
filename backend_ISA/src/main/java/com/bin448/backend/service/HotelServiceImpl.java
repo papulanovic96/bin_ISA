@@ -1,10 +1,13 @@
 package com.bin448.backend.service;
 
+import com.bin448.backend.converter.AddressConverter;
 import com.bin448.backend.converter.HotelConverter;
+import com.bin448.backend.entity.DTOentity.AddressDTO;
 import com.bin448.backend.entity.DTOentity.HotelDTO;
 import com.bin448.backend.entity.Hotel;
 import com.bin448.backend.exception.ForeignKeyConstraintException;
 import com.bin448.backend.exception.NotFoundException;
+import com.bin448.backend.repository.AddressRepository;
 import com.bin448.backend.repository.HotelRepository;
 import com.bin448.backend.repository.RoomRepository;
 import org.springframework.stereotype.Service;
@@ -19,10 +22,12 @@ public class HotelServiceImpl implements HotelService {
 
     private final HotelRepository hotelRepository;
     private final RoomRepository roomRepository;
+    private final AddressRepository addressRepository;
 
-    public HotelServiceImpl(HotelRepository hotelRepository,RoomRepository roomRepository) {
+    public HotelServiceImpl(HotelRepository hotelRepository, RoomRepository roomRepository, AddressRepository addressRepository) {
         this.hotelRepository = hotelRepository;
-        this.roomRepository=roomRepository;
+        this.roomRepository = roomRepository;
+        this.addressRepository = addressRepository;
     }
 
     @Override
@@ -34,6 +39,13 @@ public class HotelServiceImpl implements HotelService {
     public List<HotelDTO> findAll() {
         return hotelRepository.findByDeleted(false).stream()
                 .map(hotel -> HotelConverter.fromEntity(hotel))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<AddressDTO> findAllAddresses() {
+        return addressRepository.findAll().stream()
+                .map(address -> AddressConverter.fromEntity(address))
                 .collect(Collectors.toList());
     }
 
@@ -87,7 +99,7 @@ public class HotelServiceImpl implements HotelService {
 
     @Override
     public Boolean removeHotel(Long id) {
-        if(roomRepository.findByHotel_IdAndDeleted(id,false).size()==0){
+        if (roomRepository.findByHotel_IdAndDeleted(id, false).size() == 0) {
             Hotel hotel = findHotel(id);
             hotel.setDeleted(true);
             hotelRepository.save(hotel);

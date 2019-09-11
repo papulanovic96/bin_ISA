@@ -1,5 +1,7 @@
 package com.bin448.backend.entity.DTOentity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 import java.util.List;
 
@@ -11,9 +13,9 @@ public class HotelReservationDTO {
 
     private Long roomId;
 
-    private Double roomPrice;
+    private Double sumPrice;
 
-    private Long userId;
+    private String userUsername;
 
     private Date arrivalDate;
 
@@ -21,6 +23,7 @@ public class HotelReservationDTO {
 
     private Integer numberOfGuests;
 
+    @JsonFormat(with = JsonFormat.Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY)
     private List<String> additionalServices;
 
     public Long getId() {
@@ -37,14 +40,6 @@ public class HotelReservationDTO {
 
     public void setHotelId(Long hotelId) {
         this.hotelId = hotelId;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
     }
 
     public Date getArrivalDate() {
@@ -87,11 +82,19 @@ public class HotelReservationDTO {
         this.additionalServices = additionalServices;
     }
 
-    public Double getRoomPrice() {
-        return roomPrice;
+    public Double getSumPrice() {
+        return sumPrice;
     }
 
-    public void setRoomPrice(Double roomPrice) {
-        this.roomPrice = roomPrice;
+    public void setSumPrice(Double sumPrice) {
+        this.sumPrice = sumPrice;
+    }
+
+    public String getUserUsername() {
+        return userUsername;
+    }
+
+    public void setUserUsername(String userUsername) {
+        this.userUsername = userUsername;
     }
 }

@@ -98,8 +98,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/hotel/addMenuItem/**").hasAnyRole("HOTEL_ADMIN")
                 .antMatchers(HttpMethod.GET, "/hotel/removeMenuItem/**").hasAnyRole("HOTEL_ADMIN")
                 .antMatchers(HttpMethod.GET, "/hotel/**").permitAll()
-                .antMatchers(HttpMethod.POST, "/newRoomPrice/checkExistence").hasAnyRole("HOTEL_ADMIN")
                 .antMatchers(HttpMethod.POST, "/newRoomPrice/**").hasAnyRole("HOTEL_ADMIN")
+                .antMatchers(HttpMethod.PUT, "/newRoomPrice/validDiscounts").permitAll()
                 .anyRequest()
                 .fullyAuthenticated()
         ;

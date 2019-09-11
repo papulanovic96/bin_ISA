@@ -12,6 +12,8 @@ public class RoomDTO {
     @NotNull(message = "Price per night required")
     private Double pricePerNight;
 
+    private Double newPrice;
+
     private Integer floor;
 
     @NotNull(message = "Room type is required")
@@ -75,5 +77,13 @@ public class RoomDTO {
 
     public void setReserved(boolean reserved) {
         this.reserved = reserved;
+    }
+
+    public Double getNewPrice() {
+        return newPrice;
+    }
+
+    public void setNewPrice(Double newPrice) {
+        this.newPrice = newPrice;
     }
 }

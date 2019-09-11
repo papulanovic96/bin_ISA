@@ -1,5 +1,6 @@
 package com.bin448.backend.controller;
 
+import com.bin448.backend.entity.DTOentity.FastHotelReservationDTO;
 import com.bin448.backend.entity.DTOentity.HotelReservationDTO;
 import com.bin448.backend.service.HotelReservationService;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +23,12 @@ public class HotelReservationController {
     public ResponseEntity<String> addReservation(@RequestBody HotelReservationDTO reservation) {
         hotelReservationService.addReservation(reservation);
         return ResponseEntity.ok("Successfully added reservation");
+    }
+
+    @PostMapping("/discount")
+    public ResponseEntity<String> addFastReservation(@RequestBody FastHotelReservationDTO reservation) {
+        hotelReservationService.addFastHotelReservation(reservation);
+        return ResponseEntity.ok("Successfully added fast reservation");
     }
 
 }

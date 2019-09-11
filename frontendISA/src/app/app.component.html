@@ -70,13 +70,14 @@
           <li *ngIf="loginService.isUserLoggedIn() && !loginService.isUserAirlineAdmin()" class="nav-item waves-light" mdbWavesEffect><a *ngIf="loginService.isUserLoggedIn() && loginService.isUserADMIN()"  routerLink="/cars" class="nav-link">Cars</a></li>
           <li *ngIf="loginService.isUserLoggedIn() && !loginService.isUserAirlineAdmin()" class="nav-item waves-light" mdbWavesEffect><a *ngIf="loginService.isUserLoggedIn() && loginService.isUserADMIN()"  routerLink="/carServicePR" class="nav-link">Price List</a></li>
           <li class="nav-item waves-light" mdbWavesEffect><a *ngIf="loginService.isUserLoggedIn() && loginService.isUserUSER()"  routerLink="/userHistory" class="nav-link">Profile</a></li>
-          <li class="nav-item waves-light" mdbWavesEffect><a *ngIf="!loginService.isUserLoggedIn()" routerLink="/login" class="nav-link">Login</a></li>
-          <li class="nav-item waves-light" mdbWavesEffect><a *ngIf="loginService.isUserLoggedIn()" routerLink="/logout" class="nav-link">LogOut</a></li>
+
 
         <li class='nav-item'><a class="nav-link" [routerLink]="['/hotels']"  role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >Hotel</a>
         </li>
         <li class='nav-item'><a *ngIf="loginService.isUserHotelAdmin()" class="nav-link" [routerLink]="['/rooms']" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >Room</a>
         </li>
+        <li class="nav-item waves-light" mdbWavesEffect><a *ngIf="!loginService.isUserLoggedIn()" routerLink="/login" class="nav-link">Login</a></li>
+        <li class="nav-item waves-light" mdbWavesEffect><a *ngIf="loginService.isUserLoggedIn()" routerLink="/logout" class="nav-link">LogOut</a></li>
         <div *ngIf="!loginService.isUserLoggedIn()"><li><a  routerLink="/register" class="nav-link">Register</a></li></div>
       </ul>
     </links>
@@ -84,8 +85,8 @@
   <!-- Main -->
   <div class="view intro-2" >
     <div class="full-bg-img">
-      <div class="mask rgba-purple-light flex-center">
-        <div class="container text-center white-text wow fadeInUp">
+      <div class="mask rgba-purple-light flex-center" style=" overflow-y: auto">
+        <div class="container text-center white-text wow fadeInUp" >
           
                 <router-outlet></router-outlet>
         </div>

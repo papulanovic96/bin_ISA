@@ -1,5 +1,6 @@
 package com.bin448.backend.service;
 
+import com.bin448.backend.entity.DTOentity.AddressDTO;
 import com.bin448.backend.entity.DTOentity.HotelDTO;
 
 import java.util.HashMap;
@@ -18,6 +19,8 @@ public interface HotelService {
     void checkIfHotelExists(Long id);
 
     List<HotelDTO> findAll();
+
+    List<AddressDTO> findAllAddresses();
 
     HashMap<String, Double> getMenu(Long hotelId);
 

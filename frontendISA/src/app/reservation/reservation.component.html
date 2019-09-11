@@ -1,4 +1,4 @@
-<div style="margin-top: 3cm">
+<div style="margin-top: 3cm;">
   <form ngNativeValidate>
     <div class="form-group" style="width: 400px;margin: 5px">
       <label>Arrival date<i class="fa fa-calendar"></i></label>
@@ -96,10 +96,11 @@
 </div>
 
 
-<div class="modal" [ngStyle]="{'display':foundRooms}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+<div class="modal" [ngStyle]="{'display':foundRooms}" style="overflow-y: scroll" tabindex="-1" role="dialog"
+     aria-labelledby="exampleModalLabel"
      aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content" style="background-color: rgb(122, 154, 198)">
+  <div class="modal-dialog" role="document" style="margin-left: 150px">
+    <div class="modal-content" style="background-color: rgb(122, 154, 198);width:850px;">
       <div class="modal-header">
         <button type="button" class="close" (click)="closeFoundRoomModal()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
@@ -112,7 +113,7 @@
               <thead>
               <tr>
                 <th scope="col-xs-1">Number</th>
-                <th scope="col-xs-1">Type id</th>
+                <th scope="col-xs-1">Type</th>
                 <th scope="col-xs-1">Floor</th>
                 <th scope="col-1">Price per night</th>
                 <th scope="col-1">Price for all nights</th>
@@ -123,10 +124,12 @@
               <tbody>
               <tr *ngFor='let room of rooms'>
                 <td>{{ room.number }}</td>
-                <td>{{ room.roomType }}</td>
+                <td>{{ getTypeName(room.roomType) }}</td>
                 <td>{{room.floor}}</td>
-                <td>{{ room.pricePerNight}}</td>
-                <td>{{room.pricePerNight * reservation.numberOfNights}}</td>
+                <td *ngIf="room.newPrice==0">{{ room.pricePerNight}} <i class="fa fa-euro"></i></td>
+                <td *ngIf="!room.newPrice==0">{{ room.newPrice}} <i class="fa fa-euro"></i></td>
+                <td *ngIf="room.newPrice==0">{{ room.pricePerNight * reservation.numberOfNights}} <i class="fa fa-euro"></i></td>
+                <td *ngIf="!room.newPrice==0">{{ room.newPrice * reservation.numberOfNights}}</td>
                 <td>{{ room.avgGrade}}</td>
                 <td><input type="radio" name='{{room.roomType}}+{{i}}' value={{room.number}}
                            (click)="choseRooms(room.number,i)"><br></td>
@@ -171,7 +174,7 @@
             <tbody>
             <tr *ngFor='let item of menuNames ; index as i'>
               <td>{{ item }}</td>
-              <td>{{menuPrices[i]}}</td>
+              <td>{{menuPrices[i]}} <i class="fa fa-euro"></i></td>
               <td><input type="checkbox" name="{{item}}" (click)="addAdditionalService(item)"></td>
             </tr>
             </tbody>

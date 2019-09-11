@@ -1,14 +1,12 @@
-export class Reservation {
+export class FastHotelReservation {
   constructor(
     public id: number,
-    public hotelId: number,
-    public roomId: number,
+    public discountId: number,
     public sumPrice: number,
     public userUsername: String,
     public arrivalDate: Date,
     public numberOfNights: number,
-    public numberOfGuests: number,
-    public additionalServices: String[]
+    public destination:String
   ) {
   }
 }

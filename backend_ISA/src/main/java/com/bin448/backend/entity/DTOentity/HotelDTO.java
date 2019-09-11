@@ -10,8 +10,7 @@ public class HotelDTO {
     @NotBlank(message = "Name of hotel is required")
     private String name;
 
-    @NotBlank(message = "Address of hotel is required")
-    private String address;
+    private Long addressId;
 
     private String description;
 
@@ -33,14 +32,6 @@ public class HotelDTO {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
     }
 
     public String getDescription() {
@@ -65,5 +56,13 @@ public class HotelDTO {
 
     public void setAvgGrade(Double avgGrade) {
         this.avgGrade = avgGrade;
+    }
+
+    public Long getAddressId() {
+        return addressId;
+    }
+
+    public void setAddressId(Long addressId) {
+        this.addressId = addressId;
     }
 }
