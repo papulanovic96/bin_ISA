@@ -95,13 +95,10 @@ public class NewRoomPriceServiceImpl implements NewRoomPriceService {
             if (fastHotelReservationDTO.getArrivalDate().compareTo(r.getStartDate()) >= 0 && fastHotelReservationDTO.getArrivalDate().compareTo(r.getEndDate()) < 0) {
                 List<FastHotelReservation> fastResDiscounts = fastHotelReservationRepository.findByDiscount_Id(r.getId());
                 for (FastHotelReservation res : fastResDiscounts) {
-//                    Calendar c = Calendar.getInstance();
-//                    c.setTime(fastHotelReservation.getArrivalDate());
-//                    c.add(Calendar.DATE, 2);
                     if (fastHotelReservation.getArrivalDate().compareTo(res.getArrivalDate()) > 0 && fastHotelReservation.getArrivalDate().compareTo(res.getEndDate()) > 0) {
 
-                    } else if ((res.getArrivalDate().getTime()-fastHotelReservation.getArrivalDate().getTime())/ (24 * 60 * 60 * 1000)>0 && fastHotelReservation.getArrivalDate().compareTo(res.getEndDate()) < 0) {
-                        Long dec = (res.getArrivalDate().getTime()-fastHotelReservation.getArrivalDate().getTime()) / (24 * 60 * 60 * 1000);
+                    } else if ((res.getArrivalDate().getTime() - fastHotelReservation.getArrivalDate().getTime()) / (24 * 60 * 60 * 1000) > 0 && fastHotelReservation.getArrivalDate().compareTo(res.getEndDate()) < 0) {
+                        Long dec = (res.getArrivalDate().getTime() - fastHotelReservation.getArrivalDate().getTime()) / (24 * 60 * 60 * 1000);
                         if (dec.intValue() > 0) {
                             closest.add(dec.intValue());
                         }
@@ -109,11 +106,11 @@ public class NewRoomPriceServiceImpl implements NewRoomPriceService {
                         notValid = true;
                     }
                 }
-            }else{
-                notValid=true;
+            } else {
+                notValid = true;
             }
             if (notValid == false) {
-                if(closest.size()>0) {
+                if (closest.size() > 0) {
                     Integer min = closest.get(0);
                     for (Integer i : closest) {
                         if (i < min) {
