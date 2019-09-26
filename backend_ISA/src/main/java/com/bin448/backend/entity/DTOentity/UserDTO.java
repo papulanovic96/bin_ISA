@@ -16,7 +16,7 @@ public class UserDTO {
     private List<String> usernameOfFriend;
     private List<String> usernameOfRequests;
     private List<Long> planeTicket;
-
+    private boolean activeAdmin;
     public UserDTO() {
     }
 
@@ -122,5 +122,13 @@ public class UserDTO {
 
     public void setPlaneTicket(List<Long> planeTicket) {
         this.planeTicket = planeTicket;
+    }
+
+    public boolean isActiveAdmin() {
+        return activeAdmin;
+    }
+
+    public void setActiveAdmin(boolean activeAdmin) {
+        this.activeAdmin = activeAdmin;
     }
 }

@@ -1,15 +1,15 @@
 import {Component, OnInit} from '@angular/core';
-import {Hotel} from "./hotel";
-import {HotelService} from "./hotel.service";
-import {RoomService} from "../room/room.service";
-import {Room} from "../room/room";
-import {Router} from "@angular/router";
-import {AuthenticationService} from "../service/authentication.service";
-import {FastHotelReservation} from "./fastHotelReservation";
-import {Address} from "./address";
-import {Discount} from "../room/discount";
-import {Type} from "../hotel/type";
-import {DatePipe} from "@angular/common";
+import {Hotel} from './hotel';
+import {HotelService} from './hotel.service';
+import {RoomService} from '../room/room.service';
+import {Room} from '../room/room';
+import {Router} from '@angular/router';
+import {AuthenticationService} from '../service/authentication.service';
+import {FastHotelReservation} from './fastHotelReservation';
+import {Address} from './address';
+import {Discount} from '../room/discount';
+import {Type} from '../hotel/type';
+import {DatePipe} from '@angular/common';
 
 @Component({
   selector: 'app-hotel',
@@ -19,44 +19,50 @@ import {DatePipe} from "@angular/common";
 })
 export class HotelComponent implements OnInit {
 
+
+  constructor(private hotelService: HotelService, private roomService: RoomService, private  router: Router, public loginService: AuthenticationService, private datePipe: DatePipe) {
+    this.router.routeReuseStrategy.shouldReuseRoute = function() {
+      return false;
+    };
+  }
+  public static hotelId = 0;
+  static fastReservation = new FastHotelReservation(0, 0, 0, '', new Date(), 5, 'NS');
+
+  idOfHotel: number;
+  rateOfHotel: number;
+  idOfRoom:number;
+  rateOfRoom:number;
   listOfHotels: Hotel[];
   listOfHotelRooms: Room[];
   displayRooms = 'none';
   displayMenu = 'none';
+  displayRate = 'none';
+  displayRateRoom = 'none';
   displayDescription = 'none';
   displayMenuItem = 'none';
   displayChangeHotelModal = 'none';
   displayFastResNights = 'none';
   menu: Map<String, Number> = new Map<String, Number>();
-  public static hotelId: number = 0;
-  menuItemName: String = "";
-  menuItemPrice: number = 0;
-  hotelId: number = 0;
+  menuItemName: String = '';
+  menuItemPrice = 0;
+  hotelId = 0;
   menuNames: String[] = [];
   menuPrices: number[] = [];
-  description: String = "";
+  description: String = '';
   listOfAddress: Address[] = [];
   listOfRooms: Room[] = [];
   listOfTypes: Type[] = [];
-  findHotelName: String = "";
-  address: String = "";
-  arrival = new Date('2018-11-11')
-  return = new Date('2018-11-11')
+  findHotelName: String = '';
+  address: String = '';
+  arrival = new Date('2018-11-11');
+  return = new Date('2018-11-11');
 
-  changedHotel = new Hotel(0, "", 0, "", 0);
-  static fastReservation = new FastHotelReservation(0, 0, 0, "", new Date(), 5, "NS");
-  /////////////////////////////////////////////////////////////////////////////////////////////////////////promeni gornji det na prazan string
-  destination: String = "";
+  changedHotel = new Hotel(0, '', 0, '', 0);
+  ///////////////////////////////////////////////////////////////////////////////////////////////////////// promeni gornji det na prazan string
+  destination: String = '';
   validDiscounts: Discount[] = [];
   displayDiscountRooms = 'none';
-  fastResNumberOfNights: number = 0;
-
-
-  constructor(private hotelService: HotelService, private roomService: RoomService, private  router: Router, public loginService: AuthenticationService, private datePipe: DatePipe) {
-    this.router.routeReuseStrategy.shouldReuseRoute = function () {
-      return false;
-    }
-  }
+  fastResNumberOfNights = 0;
 
   ngOnInit() {
     this.destination = HotelComponent.fastReservation.destination;
@@ -66,82 +72,123 @@ export class HotelComponent implements OnInit {
     this.hotelService.getAllRoomTypes().subscribe(listOfTypes => this.listOfTypes = listOfTypes);
   }
 
-  find() {
-    /*
-    if (this.findHotelName == "" && this.address == "") {
-      alert("You have to fill hotel name or address")
-    } else if (this.arrival < new Date() || this.return < new Date()) {
-      alert("Both dates are required")
-    } else if (this.return < this.arrival) {
-      alert('Arrival date have to be bigger than return date')
-    } else {
-      if (this.address == "") {
-        this.hotelService.findHotels(this.findHotelName, this.address, this.arrival, this.return).subscribe(
-          hotels => {
-            for (let h of hotels) {
-              console.log(h.name)
-            }
-          }
-        )
-      } else {
-        let found = false;
-        for (let adress of this.listOfAddress) {
-          if (adress.city.toUpperCase() == this.address.toUpperCase()) {
-            found = true;
-          }
-        }
-        if (found == false) {
-          alert("Ther is no hotel in " + this.address);
-        } else {
-          this.hotelService.findHotels(this.findHotelName, this.address, this.arrival, this.return).subscribe(
-            hotels => {
-              for (let h of hotels) {
-                console.log(h.name)
-              }
-            }
-          )
-        }
-      }
-    }
-*/
+  // find() {
+  //   if (this.findHotelName == "" && this.address == "") {
+  //     alert("You have to fill hotel name or address")
+  //   } else if (this.arrival < new Date() || this.return < new Date()) {
+  //     alert("Both dates are required")
+  //   } else if (this.return < this.arrival) {
+  //     alert('Arrival date have to be bigger than return date')
+  //   } else {
+  //     if (this.address == "") {
+  //       this.hotelService.findHotels(this.findHotelName, this.address, this.arrival, this.return).subscribe(
+  //         hotels => {
+  //           for (let h of hotels) {
+  //             console.log(h.name)
+  //           }
+  //         }
+  //       )
+  //     } else {
+  //       let found = false;
+  //       for (let adress of this.listOfAddress) {
+  //         if (adress.city.toUpperCase() == this.address.toUpperCase()) {
+  //           found = true;
+  //         }
+  //       }
+  //       if (found == false) {
+  //         alert("Ther is no hotel in " + this.address);
+  //       } else {
+  //         this.hotelService.findHotels(this.findHotelName, this.address, this.arrival, this.return).subscribe(
+  //           hotels => {
+  //             for (let h of hotels) {
+  //               console.log(h.name)
+  //             }
+  //           }
+  //         )
+  //       }
+  //     }
+  //   }
 
+
+  // }
+
+  preRateHotel(id: number) {
+    this.idOfHotel = id;
+    this.displayRate = 'block';
+  }
+
+  preRateRoom(id: number) {
+    this.idOfRoom = id;
+    this.displayRateRoom = 'block';
+  }
+
+  rateHotel() {
+    return this.hotelService.rateHotel(this.idOfHotel, this.rateOfHotel).subscribe(
+      data => {
+        if (data === false) {
+          alert('You cant rate');
+          this.displayRate = 'none';
+        } else{
+          alert('SUCCESS');
+          this.displayRate = 'none';
+        }
+
+      },
+      error1 => alert('ERROR')
+    );
+  }
+
+  rateRoom() {
+    return this.hotelService.rateRoom(this.idOfRoom, this.rateOfRoom).subscribe(
+      data => {
+        if (data === false) {
+          alert('You cant rate');
+          this.displayRateRoom = 'none';
+        } else{
+          alert('SUCCESS');
+          this.displayRateRoom = 'none';
+        }
+
+      },
+      error1 => alert('ERROR')
+    );
   }
 
   makeFastReservation() {
     if (this.fastResNumberOfNights > 0) {
-      for (let discount of this.validDiscounts) {
+      for (const discount of this.validDiscounts) {
         if (discount.id == HotelComponent.fastReservation.discountId) {
-          let returnDate: Date = new Date((new Date(HotelComponent.fastReservation.arrivalDate)).getTime() + (60 * 60 * 24 * 1000) * this.fastResNumberOfNights);
-          let discountEndDate: Date = new Date((new Date(discount.startDate)).getTime() + (60 * 60 * 24 * 1000) * (discount.duration + 1));
-          let discount2 = new Date((new Date(discount.startDate)).getTime() + (60 * 60 * 24 * 1000) * discount.duration);
+          const returnDate: Date = new Date((new Date(HotelComponent.fastReservation.arrivalDate)).getTime() + (60 * 60 * 24 * 1000) * this.fastResNumberOfNights);
+          const discountEndDate: Date = new Date((new Date(discount.startDate)).getTime() + (60 * 60 * 24 * 1000) * (discount.duration + 1));
+          const discount2 = new Date((new Date(discount.startDate)).getTime() + (60 * 60 * 24 * 1000) * discount.duration);
           if (returnDate < discountEndDate) {
-            let sumPrice: number = HotelComponent.fastReservation.sumPrice * this.fastResNumberOfNights;
+            const sumPrice: number = HotelComponent.fastReservation.sumPrice * this.fastResNumberOfNights;
             HotelComponent.fastReservation.sumPrice = sumPrice;
             HotelComponent.fastReservation.userUsername = this.loginService.getLogged();
             HotelComponent.fastReservation.numberOfNights = this.fastResNumberOfNights;
             this.hotelService.addFastRes(HotelComponent.fastReservation).subscribe(
               fastRes => {
                 this.fastResNumberOfNights = 0;
-                alert("Reservation is successful");
+                alert('Reservation is successful');
                 this.closeFastResNightsModal();
                 this.closeDiscountRoomsModal();
               }
             );
           } else {
-            alert("Discount expires " + this.datePipe.transform(discount2, 'yyyy-MM-dd'));
+            alert('Discount expires ' + this.datePipe.transform(discount2, 'yyyy-MM-dd'));
           }
         }
       }
 
     } else {
-      alert("You have to add number of nights")
+      alert('You have to add number of nights');
     }
-    //FALI NUMBER OF NIGHTS
-    //arrivalDate setuje se kod papule
-    //destination setuje papula
+    // FALI NUMBER OF NIGHTS
+    // arrivalDate setuje se kod papule
+    // destination setuje papula
 
-    //subscribe adding
-    //destination ili ceo fast rez se setuje na nista da u zavisnosti od toga prikazujem dugme za popuste
+    // subscribe adding
+    // destination ili ceo fast rez se setuje na nista da u zavisnosti od toga prikazujem dugme za popuste
   }
 
   returnDate(startDate: Date, duration: number): Date {
@@ -149,21 +196,21 @@ export class HotelComponent implements OnInit {
   }
 
   getToday(): string {
-    return new Date().toISOString().split('T')[0]
+    return new Date().toISOString().split('T')[0];
   }
 
   getTypeName(typeId: number): String {
-    for (let type of this.listOfTypes) {
+    for (const type of this.listOfTypes) {
       if (type.id == typeId) {
-        return type.name
+        return type.name;
       }
     }
   }
 
   getHotelName(roomId: number): String {
-    for (let room of this.listOfRooms) {
+    for (const room of this.listOfRooms) {
       if (roomId == room.number) {
-        for (let hotel of this.listOfHotels) {
+        for (const hotel of this.listOfHotels) {
           if (hotel.hotel_id == room.hotelId) {
             return hotel.name;
           }
@@ -173,13 +220,13 @@ export class HotelComponent implements OnInit {
   }
 
   getHotelAddress(roomId: number): String {
-    for (let room of this.listOfRooms) {
+    for (const room of this.listOfRooms) {
       if (roomId == room.number) {
-        for (let hotel of this.listOfHotels) {
+        for (const hotel of this.listOfHotels) {
           if (hotel.hotel_id == room.hotelId) {
-            for (let addr of this.listOfAddress) {
+            for (const addr of this.listOfAddress) {
               if (addr.id == hotel.addressId) {
-                return addr.cityAddress + ", " + addr.city;
+                return addr.cityAddress + ', ' + addr.city;
               }
             }
           }
@@ -189,14 +236,14 @@ export class HotelComponent implements OnInit {
   }
 
   listAdditionalServices(discountId: number): String {
-    let combined: String = "";
-    for (let discount of this.validDiscounts) {
+    let combined: String = '';
+    for (const discount of this.validDiscounts) {
       if (discountId == discount.id) {
         for (let i = 0; i < discount.additionalServices.length; i++) {
           if (i == 0) {
             combined = combined + ' ' + discount.additionalServices[i];
           } else {
-            combined = combined + ", " + discount.additionalServices[i];
+            combined = combined + ', ' + discount.additionalServices[i];
           }
         }
       }
@@ -207,14 +254,14 @@ export class HotelComponent implements OnInit {
   getValidDiscounts() {
     this.hotelService.getValidDiscounts(HotelComponent.fastReservation).subscribe(
       listOfDiscounts => {
-        this.validDiscounts = listOfDiscounts
-        this.openDiscountRoomsModal()
+        this.validDiscounts = listOfDiscounts;
+        this.openDiscountRoomsModal();
       }
-    )
+    );
   }
 
   findRoomFromDiscount(roomId: number): Room {
-    for (let r of this.listOfRooms) {
+    for (const r of this.listOfRooms) {
       if (r.number == roomId) {
         return r;
       }
@@ -226,85 +273,85 @@ export class HotelComponent implements OnInit {
       deleted => {
         if (deleted == true) {
           this.router.navigated = false;
-          this.router.navigate([this.router.url])
-          alert("Successfully removed hotel!");
+          this.router.navigate([this.router.url]);
+          alert('Successfully removed hotel!');
         } else {
-          alert("Hotel still have rooms! Can't be deleted!");
+          alert('Hotel still have rooms! Can\'t be deleted!');
         }
       }
-    )
+    );
   }
 
   convertAddressIdToName(addressId: number): String {
-    let fullAddress = ""
-    for (let address of this.listOfAddress) {
+    let fullAddress = '';
+    for (const address of this.listOfAddress) {
       if (address.id == addressId) {
-        fullAddress = address.cityAddress + ", " + address.city + ", " + address.country
-        return fullAddress
+        fullAddress = address.cityAddress + ', ' + address.city + ', ' + address.country;
+        return fullAddress;
       }
     }
-    return ""
+    return '';
   }
 
   changeHotel(hotelId: number) {
     this.hotelService.getHotel(hotelId).subscribe(
       changedHotel => {
         this.changedHotel = changedHotel;
-        this.openChangeHotelModal()
+        this.openChangeHotelModal();
       }
-    )
+    );
   }
 
   changeHotelSave() {
     this.hotelService.changeHotel(this.changedHotel.hotel_id, this.changedHotel).subscribe(
       changedHotel => {
         this.router.navigated = false;
-        this.router.navigate([this.router.url])
-        alert("Successfully changed hotel!");
+        this.router.navigate([this.router.url]);
+        alert('Successfully changed hotel!');
       }
-    )
+    );
   }
 
   addMenuItem() {
-    if (this.menuItemName != "" && this.menuItemPrice > 0) {
+    if (this.menuItemName != '' && this.menuItemPrice > 0) {
       this.hotelService.addMenuItem(this.menuItemName, this.menuItemPrice, this.hotelId).subscribe(
         reply => {
-          this.listMenu(this.hotelId)
-          this.closeMenuItemModal()
-          this.menuItemName = ""
-          this.menuItemPrice = 0
+          this.listMenu(this.hotelId);
+          this.closeMenuItemModal();
+          this.menuItemName = '';
+          this.menuItemPrice = 0;
         }
-      )
+      );
     } else {
-      alert('You have to fill required fields')
+      alert('You have to fill required fields');
     }
   }
 
   removeAdditionalService(item: String) {
     this.hotelService.removeMenuItem(item, this.hotelId).subscribe(
       reply => {
-        this.listMenu(this.hotelId)
-        this.closeMenuItemModal()
-        this.menuItemName = ""
-        this.menuItemPrice = 0
+        this.listMenu(this.hotelId);
+        this.closeMenuItemModal();
+        this.menuItemName = '';
+        this.menuItemPrice = 0;
       }
-    )
+    );
   }
 
   openDescription(hotel_id: number) {
     this.hotelService.getDescription(hotel_id).subscribe(
       description => {
         this.description = description;
-        if (description == "") {
-          this.description = "There is no description for this hotel"
+        if (description == '') {
+          this.description = 'There is no description for this hotel';
         }
-        this.displayDescription = 'block'
+        this.displayDescription = 'block';
       }
-    )
+    );
   }
 
   closeDescription() {
-    this.displayDescription = 'none'
+    this.displayDescription = 'none';
   }
 
   numberOnly(event): boolean {
@@ -323,21 +370,21 @@ export class HotelComponent implements OnInit {
   }
 
   listMenu(hotelId: number) {
-    this.hotelId = hotelId
+    this.hotelId = hotelId;
     this.menuNames = [];
     this.menuPrices = [];
     this.hotelService.getMenu(hotelId).subscribe(
       menu => {
-        this.menu = menu
+        this.menu = menu;
         if (menu != null) {
-          for (let item of Object.keys(menu)) {
-            this.menuNames.push(item)
-            this.menuPrices.push(menu[item])
+          for (const item of Object.keys(menu)) {
+            this.menuNames.push(item);
+            this.menuPrices.push(menu[item]);
           }
         }
         this.openModalMenu();
       }
-    )
+    );
   }
 
   openReservationModal(hotelId: number) {
@@ -347,12 +394,12 @@ export class HotelComponent implements OnInit {
   }
 
   openMenuItemModal() {
-    this.displayMenuItem = 'block'
-    this.closeModalMenu()
+    this.displayMenuItem = 'block';
+    this.closeModalMenu();
   }
 
   closeMenuItemModal() {
-    this.displayMenuItem = 'none'
+    this.displayMenuItem = 'none';
   }
 
   openModalRooms() {
@@ -396,6 +443,20 @@ export class HotelComponent implements OnInit {
 
   closeFastResNightsModal() {
     this.displayFastResNights = 'none';
+  }
+
+  openRateModal() {
+    this.displayRate = 'display';
+  }
+  closeRateModal() {
+    this.displayRate = 'none';
+  }
+
+  openRateRoomModal() {
+    this.displayRateRoom = 'block';
+  }
+  closeRateRoomModal() {
+    this.displayRateRoom = 'none';
   }
 
 }

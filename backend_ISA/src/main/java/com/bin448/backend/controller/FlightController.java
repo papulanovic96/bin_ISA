@@ -9,21 +9,23 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping("/flight")
 public class FlightController {
 
     @Autowired
     private FlightService flightService;
+
+    @GetMapping("/rate/{userId},{flightId},{rate}")
+    public boolean rateAirline(@PathVariable Long userId,@PathVariable Long flightId, @PathVariable Double rate){
+        return flightService.rateFlight(userId, flightId, rate);
+    }
 
     @RequestMapping(value = "/create", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> newFlight(@RequestBody FlightDTO f) {
@@ -48,5 +50,11 @@ public class FlightController {
     public  ResponseEntity<List<FlightDTO>> findAll() {
         List<FlightDTO> flightDTOList = flightService.findAll();
         return new ResponseEntity<>(flightDTOList, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
+    public  ResponseEntity<String> delete(@PathVariable Long id) {
+        flightService.delete(flightService.findById(id));
+        return new ResponseEntity<>("Deleted flight: " + id, HttpStatus.OK);
     }
 }

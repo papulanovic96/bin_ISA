@@ -12,5 +12,6 @@ public interface AirlineService {
     void delete(AirlineDTO airline);
     boolean modify(AirlineDTO airline);
     AirlineDTO findById(Long id);
+    Boolean rateAirline(Long userId, Long airlineId, Double rate);
 
 }

@@ -19,13 +19,15 @@ import {HotelComponent} from "./hotel/hotel.component";
 import {RoomComponent} from "./room/room.component";
 import {ReservationComponent} from "./reservation/reservation.component";
 import { FriendInviteComponent } from './friend-invite/friend-invite.component';
+import { PlaneTicketComponent } from './plane-ticket/plane-ticket.component';
+import { TicketFinalizeComponent } from './ticket-finalize/ticket-finalize.component';
 
 const appRoutes: Routes = [
 
   { path: 'login', component: LoginComponent },
   { path: 'userHistory', component: UserHistoryComponent},
-  {path: 'carServiceOffice',component : RentacarOfficesComponent},
-  {path: 'carReservation',component: ReserveCarComponent},
+  { path: 'carServiceOffice',component : RentacarOfficesComponent},
+  { path: 'carReservation',component: ReserveCarComponent},
   { path: 'logout', component: LogoutComponent},
   { path: 'cars', component: CarComponent},
   { path: 'register', component: RegisterComponent },
@@ -35,6 +37,7 @@ const appRoutes: Routes = [
   { path: 'profile', component: FriendshipComponent},
   { path: 'airlines', component: AirlineComponent},
   { path: 'planeseats', component: PlaneSeatComponent},
+  { path: 'tickets', component: PlaneTicketComponent},
   { path: 'flightList', component: FlightListComponent},
   { path: 'flightList/:list', component: FlightListComponent},
   { path: 'hotel', component: HotelComponent },
@@ -44,6 +47,7 @@ const appRoutes: Routes = [
   { path: 'reservations', component: ReservationComponent},
   { path: 'friendinvite', component: FriendInviteComponent},
   { path: 'invite', component: LoginComponent},
+  { path: 'ticketFinale', component: TicketFinalizeComponent},
   { path: '**', component: FlightComponent}
   
 ] ;

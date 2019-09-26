@@ -51,7 +51,7 @@ public class SeatServiceImpl implements SeatService {
         } else if (newSeatForUse.getReserved()) {
             return false;
         }
-        seatRepository.modifySeat(newSeat.getSeatId(), newSeat.getAirline(), newSeat.getTicket());
+        seatRepository.modifySeat(newSeat.getSeatId(), newSeat.getReserved(), newSeat.getAirline(), newSeat.getTicket());
         return true;
 
     }

@@ -2,7 +2,7 @@
 <mdb-navbar SideClass="navbar navbar-expand-lg navbar-dark bg-primary" [containerInside]="false">
 
   <!-- Navbar brand -->
-  <mdb-navbar-brand><a class="navbar-brand" href="#">CARS</a></mdb-navbar-brand>
+  <mdb-navbar-brand><a class="navbar-brand" href="#">CARS</a>
 
   <!-- Collapsible content -->
   <links>
@@ -11,7 +11,7 @@
     <ul class="navbar-nav mr-auto">
 
       <li class="nav-item">
-        <button *ngIf="loginService.isUserLoggedIn() && loginService.isUserUSER()"  (click)="openModalDialog()" rounded="true"  class="btn-outline-info" mdbWavesEffect>Add New Car</button>
+        <button *ngIf="loginService.isUserLoggedIn() && loginService.isUserADMIN()"  (click)="openModalDialog()" rounded="true"  class="btn-outline-info" mdbWavesEffect>Add New Car</button>
       </li>
 
 
@@ -20,20 +20,20 @@
 
     </ul>
     <!-- Links -->
-    <div style="margin-left: 1cm">
+    <div>
       <input  (keyup)="onKey($event)" class="form-control-sm" type="text" placeholder="Search Model">
+      <input  (keyup)="onKey2($event)" class="form-control-sm" type="text" placeholder="Search type">
       <input (keyup)="onKey3($event)" class="form-control-sm" type="number" placeholder="Year from">
       <input (keyup)="onKey4($event)" class="form-control-sm" type="number" placeholder="Year to">
-
-
       <button style="margin-right: 3cm" class="btn btn-outline-success" type="button" (click)="search()">Search</button>
     </div>
     <!-- Search form -->
 
   </links>
   <!-- Collapsible content -->
-
+  </mdb-navbar-brand>
 </mdb-navbar>
+
 
 
 <div class="col-5">
@@ -44,6 +44,7 @@
       <th scope="col-1">MODEL</th>
       <th scope="col-xs-1">YEAR</th>
       <th scope="col-xs-1">SERVICE OWNER</th>
+      <th scope="col-xs-1">TYPE</th>
       <th scope="col-xs-1">CONVERTIBLE</th>
 
 
@@ -55,9 +56,16 @@
       <td>{{ a.model }}</td>
       <td>{{ a.year }}</td>
       <td>{{ a.serviceName}}</td>
+      <td>{{ a.typeC}}</td>
       <td>{{ a.convertible }}</td>
       <td>
         <button *ngIf="!a.reserved && loginService.isUserLoggedIn() && loginService.isUserADMIN()"  (click)="deleteCar(a.regID)" mdbBtn type="button" color="elegant" mdbWavesEffect>DELETE</button>
+      </td>
+      <td>
+        <button *ngIf="loginService.isUserUSER() && loginService.isUserLoggedIn()" type="button" class="btn btn-outline-info" (click)="isUserAbleToUnreserve(a.id)" >Cancel</button>
+      </td>
+      <td>
+        <button *ngIf="loginService.isUserUSER() && loginService.isUserLoggedIn()" type="button" class="btn btn-outline-info" (click)="isUserAbleToRate(a.id)" >Rate</button>
       </td>
       <td>
         <button *ngIf="!a.reserved && loginService.isUserLoggedIn() && loginService.isUserADMIN()" type="button" mdbBtn  (click)="getCarForUpdate(a.regID)" color="success" mdbWavesEffect>CHANGE</button>
@@ -77,7 +85,7 @@
     <div class="modal-content">
       <!-- modal-header -->
       <div class="modal-header ">
-        <p>Add New Car</p>
+        <p style="color: darkslategray">Add New Car</p>
         <button type="button" class="close" aria-label="Close" (click)="closeModalDialog()"><span aria-hidden="true">&times;</span></button>
         <!-- <h4 class="modal-title">Login</h4> -->
       </div>
@@ -86,9 +94,9 @@
       <div class="modal-body" >
         <form  ngNativeValidate (ngSubmit)="addCar()">
           <div class="md-form pb-3">
-            <label>Rent-A-Car Service &nbsp; &nbsp;</label>
+            <label style="color: darkslategray">Rent-A-Car Service &nbsp; &nbsp;</label>
             <select required [(ngModel)]="id"  name="CarServices">
-              <option [selected]="true" required name="serviceName" *ngFor="let service of listOfCServices" [ngValue]="service.id">{{service.carServiceName}}</option>
+              <option  required name="serviceName" *ngFor="let service of listOfCServices" [ngValue]="service.id">{{service.carServiceName}}</option>
             </select>
           </div>
           <div class="md-form pb-3">
@@ -99,15 +107,20 @@
             <input required type="text" class="form-control" name="model" placeholder="Model" [(ngModel)]="car.model" />
           </div>
 
+          <div class="">
+            <label style="color: darkslategray">Car Type &nbsp; &nbsp;</label>
+            <select required [(ngModel)]="tid"  name="Types">
+              <option  required name="typeName" *ngFor="let t of types" [ngValue]="t.id">{{t.name}}</option>
+            </select>
+          </div>
+
           <div class="md-form pb-3">
             <input required type="number" class="form-control" name="year" placeholder="Year" [(ngModel)]="car.year" >
           </div>
-          <div class="md-form pb-3">
-            <input type="text" required class="form-control" name="type" placeholder="Type" [(ngModel)]="car.type" >
-          </div>
+
 
           <div >
-            <label style="margin-left: 1px">Convertible</label>
+            <label style="color: darkslategray">Convertible</label>
           </div>
           <div required="required" class="btn-group">
 
@@ -173,9 +186,6 @@
           <div >
             <label style="margin-left: 1px">Number of seats</label>
           </div>
-          <div class="md-form pb-3">
-            <input required type="number" class="form-control" name="nos"  placeholder="Number of seats" [(ngModel)]="updateCar.nos" >
-          </div>
           <div >
             <label style="margin-left: 1px">Model</label>
           </div>
@@ -191,9 +201,7 @@
           <div >
             <label style="margin-left: 1px">Type</label>
           </div>
-          <div class="md-form pb-3">
-            <input type="text" required class="form-control" name="type" placeholder="Type" [(ngModel)]="updateCar.type" >
-          </div>
+
 
           <div >
             <label style="margin-left: 1px">Convertible</label>

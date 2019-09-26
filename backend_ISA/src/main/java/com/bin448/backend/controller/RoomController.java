@@ -3,6 +3,7 @@ package com.bin448.backend.controller;
 import com.bin448.backend.entity.DTOentity.HotelReservationDTO;
 import com.bin448.backend.entity.DTOentity.RoomDTO;
 import com.bin448.backend.entity.RoomType;
+import com.bin448.backend.service.HotelReservationService;
 import com.bin448.backend.service.RoomService;
 import com.bin448.backend.service.RoomTypeService;
 import org.springframework.http.ResponseEntity;
@@ -13,17 +14,19 @@ import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping("/room")
 public class RoomController {
 
     private static HotelReservationDTO hotelReservationDTO = new HotelReservationDTO();
     private final RoomService roomService;
     private final RoomTypeService roomTypeService;
+    private final HotelReservationService hotelReservationService;
 
-    public RoomController(RoomService roomService, RoomTypeService roomTypeService) {
+    public RoomController(HotelReservationService hotelReservationService,RoomService roomService, RoomTypeService roomTypeService) {
         this.roomService = roomService;
         this.roomTypeService = roomTypeService;
+        this.hotelReservationService = hotelReservationService;
     }
 
     @PostMapping("/addRoom")
@@ -87,5 +90,10 @@ public class RoomController {
     @GetMapping("/roomTypes")
     public ResponseEntity<List<RoomType>> getAllRoomTypes() {
         return ResponseEntity.ok(roomTypeService.findAll());
+    }
+
+    @GetMapping("/rate/{id},{username},{grade}")
+    public boolean rate(@PathVariable Long id,@PathVariable String username, @PathVariable Double grade){
+        return hotelReservationService.rateRoom(id,username,grade);
     }
 }

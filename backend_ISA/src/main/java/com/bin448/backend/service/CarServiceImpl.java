@@ -1,17 +1,15 @@
 package com.bin448.backend.service;
 
 import com.bin448.backend.converter.CarConverter;
+import com.bin448.backend.converter.CarDiscountConverter;
 import com.bin448.backend.converter.CarRateConverter;
 import com.bin448.backend.converter.CarTypeConverter;
-import com.bin448.backend.entity.Car;
-import com.bin448.backend.entity.CarRate;
-import com.bin448.backend.entity.CarType;
+import com.bin448.backend.entity.*;
 import com.bin448.backend.entity.DTOentity.CarDTO;
+import com.bin448.backend.entity.DTOentity.CarDiscountDTO;
 import com.bin448.backend.entity.DTOentity.CarRateDTO;
 import com.bin448.backend.entity.DTOentity.CarTypeDTO;
-import com.bin448.backend.repository.CarRateRepository;
-import com.bin448.backend.repository.CarRepository;
-import com.bin448.backend.repository.CarTypeRepository;
+import com.bin448.backend.repository.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,15 +25,19 @@ import java.util.List;
 
 public class CarServiceImpl implements CarService {
     private CarRepository cr;
-
+    private CarDiscountRepository carDiscountRepository;
     private CarRateRepository crr;
     private CarTypeRepository ctr;
-    public CarServiceImpl(CarTypeRepository ctr, CarRateRepository crr, CarRepository cr)
+    private CarReservationRepository carReservationRepository;
+    private CarServicePriceListRepository servicePriceListRepository;
+    public CarServiceImpl(CarServicePriceListRepository carServicePriceListRepository, CarReservationRepository carReservationRepository, CarDiscountRepository carDiscountRepository, CarTypeRepository ctr, CarRateRepository crr, CarRepository cr)
     {
+        this.carDiscountRepository = carDiscountRepository;
         this.ctr = ctr;
         this.crr=crr;
         this.cr=cr;
-
+        this.carReservationRepository = carReservationRepository;
+        this.servicePriceListRepository = carServicePriceListRepository;
     }
 
     @Override
@@ -43,8 +45,12 @@ public class CarServiceImpl implements CarService {
         String ret = "ERROR";
         try {
             Car c = CarConverter.toEntity(car);
+            CarType ct = ctr.findById(car.getTypeId()).get();
+            c.setType(ct.getName());
+            c.setNumOfSeats(ct.getSeats());
             c.setDeleted(false);
             cr.save(c);
+
             ret = "SUCCESS";
         }
         catch (Exception e){
@@ -196,6 +202,8 @@ public class CarServiceImpl implements CarService {
     public List<CarDTO> getAvailableCars(String type, Integer from, Integer to, String start, String end) {
         try {
 
+
+
             List<Long> ids =  cr.getAvailableCars(type,from,to,start,end);
             List<Car> cars = new ArrayList<>();
             List<CarDTO> out = new ArrayList<>();
@@ -226,4 +234,25 @@ public class CarServiceImpl implements CarService {
         return  out;
     }
 
+    @Override
+    public boolean setDiscount(CarDiscountDTO carDiscountDTO) {
+        carDiscountRepository.save(CarDiscountConverter.toEntity(carDiscountDTO));
+        return true;
+    }
+
+    @Override
+    public List<CarDiscountDTO> getAllCarDiscounts() {
+        List<CarDiscount> carDiscounts = carDiscountRepository.findAll();
+        List<CarReservation> carReservations = carReservationRepository.findAll();
+        List<CarDiscountDTO> carDiscountDTOS = new ArrayList<>();
+        for (CarDiscount carDiscount : carDiscounts) {
+            List<CarReservation> carReservations1 = carReservationRepository.getThem(carDiscount.getStartDate(), carDiscount.getEndDate(), carDiscount.getCar().getCarId());
+            if (carReservations1.size() == 0){
+                CarServicePriceList carServicePriceList = servicePriceListRepository.findByCar_CarId(carDiscount.getCar().getCarId());
+                carDiscount.setPrice(carServicePriceList.getPrice() - (carServicePriceList.getPrice() * carDiscount.getRateOfDiscount()/100));
+                carDiscountDTOS.add(CarDiscountConverter.fromEntity(carDiscount));
+            }
+        }
+        return carDiscountDTOS;
+    }
 }

@@ -2,21 +2,49 @@
 <div class="form-group" style="padding: 25px;border-radius: 1ch; background-color: rgba(156,39,176,.3);">
        
               <form class="form-inline" >
-        <div class="inputWithIcon">
-            <input [(ngModel)]="newFlight.from" name="from" class="form-control" id="iconified" placeholder="From" style="float: left;" type="text" >
-            <i class="fa fa-plane fa-lg fa-fw" aria-hidden="true"></i>
-        </div>
-        <div class="inputWithIcon">
-            <input class="form-control" [(ngModel)]="newFlight.to" name="to" style="float: right;" type="text" placeholder="To">
-            <i class="fa fa-plane fa-lg fa-fw" aria-hidden="true"></i>
-        </div>
-        <div class="inputWithIcon">
-            <input class="form-control" [(ngModel)]="newFlight.datetimetakeoff" name="datetimetakeoff" style="float: right;" type="date">
-        </div>
-        <div class="inputWithIcon">
-            <input class="form-control" [(ngModel)]="newFlight.datetimelanding" name="datetimelanding" style="float: right;" type="date">
-        </div>
-            <input class="form-control btn btn-info" style="float: righ" type="button" (click) = "onTap(newFlight.datetimetakeoff, newFlight.datetimelanding, newFlight.from, newFlight.to)" value="Search">
-        </form>
+                    <div class="container">
+                            <div class="row">
+                                    <div class="col-xs-2 inputWithIcon">
+                                            <select class="form-control" [(ngModel)]="selectedOption" name="so1">
+                                                    <option *ngFor="let o of options">
+                                                       {{o.name}}
+                                                    </option>
+                                            </select>
+                                    </div>
+                                    <div class="col-xs-2 inputWithIcon">
+                                            <select class="form-control" [(ngModel)]="selectedOption2" name="so2">
+                                                    <option *ngFor="let o2 of options2">
+                                                               {{o2.name}}
+                                                    </option>
+                                             </select>
+                                    </div>
+                                    <div class="col-xs-2">
+                                        <input type="text" class="form-control" [(ngModel)]="bagNumber" name="bgNum" placeholder="Bags">
+                                    </div>
+                                                    
+                            </div>
+                            <div class="row">
+                                    <div class="col-xs-2 inputWithIcon">
+                                            <input [(ngModel)]="newFlight.from" name="from" class="clasw form-control" id="iconified" placeholder="From" style="float: left;" type="text" >
+                                            <i class="fa fa-plane fa-lg fa-fw" aria-hidden="true"></i>
+                                        </div>
+                                        <div class="col-xs-2 inputWithIcon">
+                                            <input class="clasw form-control" [(ngModel)]="newFlight.to" name="to" style="float: right;" type="text" placeholder="To">
+                                            <i class="fa fa-plane fa-lg fa-fw" aria-hidden="true"></i>
+                                        </div>
+                                        <div class="col-xs-2 inputWithIcon">
+                                            <input class="clasw form-control" [(ngModel)]="newFlight.datetimetakeoff" name="datetimetakeoff" style="float: right;" type="date">
+                                        </div>
+                                        <div class="col-xs-2 inputWithIcon">
+                                            <input class="clasw form-control" [(ngModel)]="newFlight.datetimelanding" name="datetimelanding" style="float: right;" type="date">
+                                        </div>
+                                            <input class="col-xs-2 btn btn-info" style="margin-left: 20px" type="button" (click) = "onTap(selectedOption, selectedOption2, bagNumber, newFlight.datetimetakeoff, newFlight.datetimelanding, newFlight.from, newFlight.to)" value="Search">
+                                   
+                            </div>
+                          </div>
+
+
+
+ </form>
     </div>
     

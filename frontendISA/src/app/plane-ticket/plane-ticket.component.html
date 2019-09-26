@@ -1,1 +1,30 @@
-<p>plane-ticket works!</p>
+<table class="table" style="background-color: rgba(255, 255, 255, 0.3);">
+        <thead style="background-color: aquamarine">
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Discount</th>
+            <th scope="col">Number of passangers</th>
+            <th scope="col">Trip type</th>
+            <th scope="col">Trip Class</th>
+            <th scope="col">Number of bags</th>
+            <th scope="col">Flight</th>
+            <th scope="col">Seats</th>
+            <th scope="col">Reserved by</th>
+            <th scope="col">Airline</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let x of listOfTickets">
+            <th scope="row"> {{ x.id }} </th>
+            <td>{{ x.discount }}</td>
+            <td>{{ x.userNumber }}</td>
+            <td> {{ x.tripType }}</td>
+            <td> {{ x.tripClass }}</td>
+            <td> {{ x.bag }}</td>
+            <td> {{ x.flight }}</td>
+            <td> {{ x.planeSeatID }}</td>
+            <td> {{ x.reservedBy }}</td>
+            <td> {{ x.airline }}</td>
+          </tr>
+        </tbody>
+</table>

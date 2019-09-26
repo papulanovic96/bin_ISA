@@ -3,6 +3,7 @@ package com.bin448.backend.controller;
 import com.bin448.backend.entity.DTOentity.AddressDTO;
 import com.bin448.backend.entity.DTOentity.HotelDTO;
 import com.bin448.backend.service.HotelService;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +21,7 @@ public class HotelController {
     public HotelController(HotelService hotelService) {
         this.hotelService = hotelService;
     }
+
 
     @GetMapping("/{hotelId}")
     public ResponseEntity<HotelDTO> getHotel(@PathVariable Long hotelId) {

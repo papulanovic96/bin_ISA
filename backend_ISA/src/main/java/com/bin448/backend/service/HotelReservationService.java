@@ -9,4 +9,8 @@ public interface HotelReservationService {
 
     void addFastHotelReservation(FastHotelReservationDTO fastHotelReservationDTO);
 
+    Boolean rateHotel(Long id, String username, Double rate);
+
+    Boolean rateRoom(Long id,String username,Double rate);
+
 }

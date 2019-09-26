@@ -34,6 +34,8 @@ public interface CarServicePriceListRepository extends JpaRepository<CarServiceP
     void modfyCarPriceListItem(Double price, Long id);
 
 
+    CarServicePriceList findByCar_CarId(Long id);
+
     CarServicePriceList findByIdCarServicePriceList(Long id);
 
     @Query(value = "select sum(price) from isa.carpricelist cp  where cp.car_id in :input",nativeQuery = true)

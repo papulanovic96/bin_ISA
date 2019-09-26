@@ -123,7 +123,6 @@ public class UserConverter extends AbstractConverter{
         newUser.setUsername(d.getUsername());
         newUser.setRole(d.getRole());
         newUser.setPassword(d.getPassword());
-
         List<String> listUserNames = d.getUsernameOfFriend();
         List<Friendship> listUser = new ArrayList<>();
         User userFor = new User();

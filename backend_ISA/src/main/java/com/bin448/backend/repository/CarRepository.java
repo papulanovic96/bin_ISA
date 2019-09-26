@@ -57,6 +57,9 @@ public interface CarRepository extends JpaRepository<Car,Long> {
     @Query(value = "select * from cars where model like %?1% and typec like %?2% and year > ?3 and year < ?4 and deleted = 0",nativeQuery = true)
     List<Car> searchWithoutSeats(String model,String typec,Integer from,Integer to);
 
-    @Query(value = "SELECT distinct c.car_id FROM cars c right outer join carpricelist cpl on c.car_id = cpl.car_id right outer join car_reservation cr on cr.car_id = c.car_id right outer join car_type ct on ct.car_id = c.car_id where ct.name like %?1% and c.deleted = 0 and cpl.price > ?2 and cpl.price < ?3 and ((cr.end_date < ?4 and cr.start_date < ?4) or (cr.end_date > ?5 and cr.start_date > ?5))",nativeQuery = true)
+    @Query(value = "SELECT c.car_id FROM cars c right outer join carpricelist cpl on c.car_id = cpl.car_id right outer join car_reservation cr on cr.car_id = c.car_id where c.typec like %?1% and c.deleted = 0 and cpl.price > ?2 and cpl.price < ?3 and ((cr.end_date < 4 and cr.start_date < 4) or (cr.end_date > 5 and cr.start_date > 5)) union SELECT c.car_id FROM cars c right outer join carpricelist cpl on c.car_id = cpl.car_id  where c.typec like %?1%  and c.deleted = 0 and cpl.price > ?2 and cpl.price < ?3",nativeQuery = true)
     List<Long> getAvailableCars(String type, Integer priceFrom, Integer priceTo, String start, String end);
+
+    @Query(value = "SELECT distinct car_id, count(car_id) from car_reservation where (start_date <= ?1 and end_date >= ?1) or (start_date >= ?1 and start_date <= ?2)",nativeQuery = true)
+      public void getProjections(Date start, Date end);
 }

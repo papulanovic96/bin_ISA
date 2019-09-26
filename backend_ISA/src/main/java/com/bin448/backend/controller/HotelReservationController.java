@@ -4,10 +4,7 @@ import com.bin448.backend.entity.DTOentity.FastHotelReservationDTO;
 import com.bin448.backend.entity.DTOentity.HotelReservationDTO;
 import com.bin448.backend.service.HotelReservationService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/reservation")
@@ -18,6 +15,12 @@ public class HotelReservationController {
     public HotelReservationController(HotelReservationService hotelReservationService) {
         this.hotelReservationService = hotelReservationService;
     }
+
+    @GetMapping("/check/{id},{username},{grade}")
+    public boolean check(@PathVariable Long id,@PathVariable String username, @PathVariable Double grade){
+        return hotelReservationService.rateHotel(id,username,grade);
+    }
+
 
     @PostMapping
     public ResponseEntity<String> addReservation(@RequestBody HotelReservationDTO reservation) {

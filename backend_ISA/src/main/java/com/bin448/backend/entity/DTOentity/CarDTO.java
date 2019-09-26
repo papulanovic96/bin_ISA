@@ -6,14 +6,14 @@ public class CarDTO {
     private String serviceName;
     private String model;
     private Integer year;
-    private String type;
+    private String typeC;
     private Boolean convertible;
     private Boolean deleted;
     private Boolean reserved;
     private Long id;
     private Double avgGrade;
     private Integer nos;
-
+    private Long typeId;
 
     public String getRegID() {
         return regID;
@@ -40,14 +40,7 @@ public class CarDTO {
         this.year = year;
     }
 
-   /* public String getType() {
-        return t;
-    }
 
-    public void setType(String type) {
-        this.t = type;
-    }
-*/
     public Boolean isConvertible() {
         return convertible;
     }
@@ -56,13 +49,6 @@ public class CarDTO {
         this.convertible = convertible;
     }
 
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
 
     public Boolean getDeleted() {
         return deleted;
@@ -119,5 +105,21 @@ public class CarDTO {
 
     public void setNos(Integer nos) {
         this.nos = nos;
+    }
+
+    public Long getTypeId() {
+        return typeId;
+    }
+
+    public void setTypeId(Long typeId) {
+        this.typeId = typeId;
+    }
+
+    public String getTypeC() {
+        return typeC;
+    }
+
+    public void setTypeC(String typeC) {
+        this.typeC = typeC;
     }
 }

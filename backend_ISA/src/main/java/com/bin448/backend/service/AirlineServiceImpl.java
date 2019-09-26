@@ -2,8 +2,13 @@ package com.bin448.backend.service;
 
 import com.bin448.backend.converter.AirlineConverter;
 import com.bin448.backend.entity.Airline;
+import com.bin448.backend.entity.AirlineRate;
 import com.bin448.backend.entity.DTOentity.AirlineDTO;
+import com.bin448.backend.entity.PlaneTicket;
+import com.bin448.backend.repository.AirlineRateRepository;
 import com.bin448.backend.repository.AirlineRepository;
+import com.bin448.backend.repository.PlaneTicketRepository;
+import com.bin448.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,6 +20,12 @@ public class AirlineServiceImpl implements AirlineService {
 
     @Autowired
     private AirlineRepository airlineRepository;
+    @Autowired
+    private AirlineRateRepository airlineRateRepository;
+    @Autowired
+    private PlaneTicketRepository planeTicketRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     @Override
     public List<AirlineDTO> findAll() {
@@ -51,5 +62,24 @@ public class AirlineServiceImpl implements AirlineService {
         Airline newAirline = airlineRepository.findById(id).orElse(null);
         AirlineDTO newAirlineDTO = AirlineConverter.fromEntity(newAirline);
         return newAirlineDTO;
+    }
+
+    @Override
+    public Boolean rateAirline(Long userId, Long airlineId, Double rate) {
+        AirlineRate airlineRate = new AirlineRate();
+        airlineRate.setId(null);
+        airlineRate.setAirline(airlineRepository.findById(airlineId).get());
+        airlineRate.setUser(userRepository.findById(userId).get());
+        airlineRate.setRate(rate);
+
+        List<PlaneTicket> tickets = planeTicketRepository.getAllTicketsForAirline(airlineId,userId);
+        List<AirlineRate> airlineRates = airlineRateRepository.findAllByUser_IdAndAirline_Id(userId,airlineId);
+
+        if(tickets.size() != 0 && airlineRates.size() == 0){
+            airlineRateRepository.save(airlineRate);
+            return  true;
+        }
+       return false;
+
     }
 }

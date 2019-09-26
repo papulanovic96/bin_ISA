@@ -8,6 +8,7 @@ import java.util.List;
 
 @Service
 public interface PlaneTicketService {
-    PlaneTicket save(PlaneTicketDTO newTicket);
-    List<PlaneTicket> findAll();
+    void save(PlaneTicketDTO newTicket);
+    List<PlaneTicketDTO> findAll();
+    boolean reserve(PlaneTicketDTO pto);
 }

@@ -31,11 +31,20 @@ public class CarController {
 
     }
 
+    @GetMapping("/getDiscount")
+    public ResponseEntity<List<CarDiscountDTO>> getOnDiscount(){
+        return ResponseEntity.ok(css.getAllCarDiscounts());
+    }
+
     @GetMapping("/types")
     public List<CarTypeDTO>getTypes(){
         return css.getTypes();
     }
 
+    @PostMapping("/setDiscount")
+    public boolean setDiscount(@RequestBody CarDiscountDTO carDiscountDTO){
+        return css.setDiscount(carDiscountDTO);
+    }
 
     @GetMapping("/getAvailable/{ty},{f},{t},{start},{end}")
     public List<CarDTO> getAvailable(@PathVariable String ty, @PathVariable Integer f, @PathVariable Integer t, @PathVariable String start, @PathVariable String end){

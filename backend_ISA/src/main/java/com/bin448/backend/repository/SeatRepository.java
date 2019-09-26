@@ -12,6 +12,6 @@ import org.springframework.stereotype.Repository;
 public interface SeatRepository extends JpaRepository<PlaneSeat, Long> {
 
     @Modifying
-    @Query(value = "UPDATE seats SET ticket_id = ?3, airline_id = ?2 WHERE seat_id = ?1", nativeQuery = true)
-    void modifySeat(Long id, Airline airline, PlaneTicket planeTicket);
+    @Query(value = "UPDATE seats SET reserved = ?2, ticket_id = ?4, airline_id = ?3 WHERE seat_id = ?1", nativeQuery = true)
+    void modifySeat(Long id, boolean reserved, Airline airline, PlaneTicket planeTicket);
 }

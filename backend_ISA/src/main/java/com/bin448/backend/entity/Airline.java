@@ -30,6 +30,21 @@ public class Airline {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "airline_luggage_price", cascade = CascadeType.ALL)
     private Collection<LuggagePrice> luggagePrice;
 
+    public Airline(){}
+
+    public Airline(Long id){
+        this.id = id;
+    }
+
+    public Airline(String name, String address, String description, String officeDestination, Collection<Flight> flightList, Collection<PlaneTicket> discountTicket, Collection<LuggagePrice> luggagePrice) {
+        this.name = name;
+        this.address = address;
+        this.description = description;
+        this.officeDestination = officeDestination;
+        this.flightList = flightList;
+        this.discountTicket = discountTicket;
+        this.luggagePrice = luggagePrice;
+    }
 
     public Long getId() {
         return id;

@@ -14,6 +14,67 @@
   <link href='https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css'>
 
+  <style>
+  section.pricing {
+}
+
+.pricing .card {
+  border: none;
+  border-radius: 1rem;
+  transition: all 0.2s;
+  box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.1);
+}
+
+.pricing hr {
+  margin: 1.5rem 0;
+}
+
+.pricing .card-title {
+  margin: 0.5rem 0;
+  font-size: 0.9rem;
+  letter-spacing: .1rem;
+  font-weight: bold;
+}
+
+.pricing .card-price {
+  font-size: 3rem;
+  margin: 0;
+}
+
+.pricing .card-price .period {
+  font-size: 0.8rem;
+}
+
+.pricing ul li {
+  margin-bottom: 1rem;
+}
+
+.pricing .text-muted {
+  opacity: 0.7;
+}
+
+.pricing .btn {
+  font-size: 80%;
+  border-radius: 5rem;
+  letter-spacing: .1rem;
+  font-weight: bold;
+  padding: 1rem;
+  opacity: 0.7;
+  transition: all 0.2s;
+}
+
+/* Hover Effects on Card */
+
+@media (min-width: 992px) {
+  .pricing .card:hover {
+    margin-top: -.25rem;
+    margin-bottom: .25rem;
+    box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.3);
+  }
+  .pricing .card:hover .btn {
+    opacity: 1;
+  }
+}</style>
 </head>
 
 <body id="page-top">
@@ -27,22 +88,30 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav text-uppercase ml-auto">
+            <li class="nav-item waves-light" mdbWavesEffect *ngIf="loginService.isUserLoggedIn()"><a class="nav-link"  [routerLink]="['/profile']" routerLinkActive="router-link-active" >User profile</a>
+
           <li class='nav-item dropdown waves-light' mdbWavesEffect><a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >Airline</a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" [routerLink]="['/airlines']" routerLinkActive="router-link-active" >Airlines  </a>
-                <a class="dropdown-item" [routerLink]="['/planeseats']" routerLinkActive="router-link-active" >Seats</a>
-                <a class="dropdown-item" [routerLink]="['/flightList']" routerLinkActive="router-link-active">Flights</a> 
+                <a *ngIf="loginService.isUserAirlineAdmin()" class="dropdown-item" [routerLink]="['/airlines']" routerLinkActive="router-link-active" >Airline profile  </a>
+                <a class="dropdown-item" [routerLink]="['/flightList']" routerLinkActive="router-link-active">Flights</a>
+                <a class="dropdown-item" [routerLink]="['/tickets']" routerLinkActive="router-link-active">Tickets</a> 
 
           </div>
-        <li class="nav-item waves-light" mdbWavesEffect><a routerLink="/carServices" class="nav-link">Rent A Car</a></li>
-        <li class="nav-item waves-light" mdbWavesEffect><a  routerLink="/cars" class="nav-link">Cars</a></li>
-        <li class="nav-item waves-light" mdbWavesEffect><a  routerLink="/carServicePR" class="nav-link">Price List</a></li>
-        <li class="nav-item waves-light" mdbWavesEffect><a *ngIf="loginService.isUserLoggedIn() && loginService.isUserUSER()"  routerLink="/carReservation" class="nav-link">Make an reservation</a></li>
-        <li class="nav-item waves-light" mdbWavesEffect><a  routerLink="/carServiceOffice" class="nav-link">Branch Office</a></li>
+          <li class='nav-item dropdown waves-light' mdbWavesEffect><a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >Hotel</a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" [routerLink]="['/hotel']" routerLinkActive="router-link-active" >Hotel  </a>
+                <a *ngIf="loginService.isUserHotelAdmin()" class="dropdown-item" [routerLink]="['/rooms']" routerLinkActive="router-link-active" >Rooms</a>
 
-        <li class='nav-item'><a class="nav-link" [routerLink]="['/hotel']"  role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >Hotel</a></li>
-        <li class='nav-item'><a *ngIf="loginService.isUserHotelAdmin()" class="nav-link" [routerLink]="['/rooms']" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >Room</a> </li>
-        <li class="nav-item waves-light" mdbWavesEffect *ngIf="loginService.isUserLoggedIn()"><a class="nav-link"  [routerLink]="['/profile']" routerLinkActive="router-link-active" >User profile</a>
+          </div>
+          <li class='nav-item dropdown waves-light' mdbWavesEffect><a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >Rent a car</a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" [routerLink]="['/carServices']" routerLinkActive="router-link-active" >Rent a car  </a>
+                <a *ngIf="loginService.isUserLoggedIn() && loginService.isUserADMIN()" class="dropdown-item" [routerLink]="['/cars']" routerLinkActive="router-link-active" >Cars</a>
+                <a class="dropdown-item" [routerLink]="['/carServicePR']" routerLinkActive="router-link-active">Price List</a> 
+                <a *ngIf="loginService.isUserLoggedIn() && loginService.isUserUSER()" class="dropdown-item" [routerLink]="['/carReservation']" routerLinkActive="router-link-active">Make a reservation</a>
+                <a class="dropdown-item" [routerLink]="['/carServiceOffice']" routerLinkActive="router-link-active">Branch Office</a>
+
+          </div>
         <li class="nav-item waves-light" mdbWavesEffect><a *ngIf="!loginService.isUserLoggedIn()" routerLink="/login" class="nav-link">Login</a></li>
         <li class="nav-item waves-light" mdbWavesEffect><a *ngIf="loginService.isUserLoggedIn()" routerLink="/logout" class="nav-link">LogOut</a></li>
         <div class="nav-item" *ngIf="!loginService.isUserLoggedIn()"><li><a  routerLink="/register" class="nav-link">Register</a></li></div>
@@ -60,9 +129,9 @@
     </div>
   </div>
 </header>
+</body>
 
-<!-- Portfolio Grid -->
-<section class="bg-light page-section" id="portfolio">
+<div class="page-section" id="portfolio">
   <div class="container">
     <div class="row">
       <div class="col-lg-12 text-center">
@@ -70,229 +139,45 @@
         <h3 class="section-subheading text-muted">Karte sa popustima za brzu rezervaciju.</h3>
       </div>
     </div>
-    <div class="row">
-      <div class="col-md-4 col-sm-6 portfolio-item">
-        <a class="portfolio-link" data-toggle="modal" href="#portfolioModal1">
-          <div class="portfolio-hover">
-            <div class="portfolio-hover-content">
-              <i class="fas fa-plus fa-3x"></i>
+    <section class="pricing py-5">
+        <div class="container">
+          <div class="row">
+            <!-- Free Tier -->
+            <div class="col-lg-4" *ngFor="let itemX of list">
+              <div class="card mb-5 mb-lg-0"  *ngIf="itemX.discount && !itemX.reservedBy">
+                <div class="card-body">
+                  <h5 class="card-title text-muted text-uppercase text-center">Discount</h5>
+                  <h6 class="card-price text-center">20%<span class="period"></span></h6>
+                  <hr>
+                  <ul class="fa-ul" *ngFor="let item of list2" >
+                    <li *ngIf="itemX.flight == item.id" >Date: {{item.dateAndTimeTakeOff}}</li>
+                    <li *ngIf="itemX.flight == item.id" >From: {{item.fromDest}}</li>
+                    <li *ngIf="itemX.flight == item.id" >To: {{item.toDest}}</li>
+                    <li *ngIf="itemX.flight == item.id" >Price: {{item.ticketPrice}} €</li>
+                    </ul>
+                    <div style="margin-bottom: 100px"></div>
+                  <a href="#" class="btn btn-block btn-primary text-uppercase" (click)="reserve(itemX)">Reserve</a>
+                </div>
+              </div>
             </div>
-            <img class="img-fluid" alt="">
-          </a>
-          <div class="portfolio-caption">
-            <h4>Threads</h4>
-            <p class="text-muted">Illustration</p>
           </div>
-      </div>
-    </div>
+        </div>
+      </section>
+    
   </div>
-</section>
+</div>
+
+
 <!-- Portfolio Modals -->
 
-<!-- Modal 1 -->
-<div class="portfolio-modal modal fade" id="portfolioModal1" tabindex="-1" role="dialog" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="close-modal" data-dismiss="modal">
-        <div class="lr">
-          <div class="rl"></div>
-        </div>
-        <div class="container">
-          <div class="row">
-            <div class="col-lg-8 mx-auto">
-              <div class="modal-body">
-                <!-- Project Details Go Here -->
-                <h2 class="text-uppercase">Project Name</h2>
-                <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>
-                <img class="img-fluid d-block mx-auto"  alt="">
-                <p>Use this area to describe your project. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est blanditiis dolorem culpa incidunt minus dignissimos deserunt repellat aperiam quasi sunt officia expedita beatae cupiditate, maiores repudiandae, nostrum, reiciendis facere nemo!</p>
-                <ul class="list-inline">
-                  <li>Date: January 2017</li>
-                  <li>Client: Threads</li>
-                  <li>Category: Illustration</li>
-                </ul>
-                <button class="btn btn-primary" data-dismiss="modal" type="button">
-                  <i class="fas fa-times"></i>
-                  Close Project</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Modal 2 -->
-<div class="portfolio-modal modal fade" id="portfolioModal2" tabindex="-1" role="dialog" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="close-modal" data-dismiss="modal">
-        <div class="lr">
-          <div class="rl"></div>
-        </div>
-        <div class="container">
-          <div class="row">
-            <div class="col-lg-8 mx-auto">
-              <div class="modal-body">
-                <!-- Project Details Go Here -->
-                <h2 class="text-uppercase">Project Name</h2>
-                <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>
-                <img class="img-fluid d-block mx-auto"  alt="">
-                <p>Use this area to describe your project. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est blanditiis dolorem culpa incidunt minus dignissimos deserunt repellat aperiam quasi sunt officia expedita beatae cupiditate, maiores repudiandae, nostrum, reiciendis facere nemo!</p>
-                <ul class="list-inline">
-                  <li>Date: January 2017</li>
-                  <li>Client: Explore</li>
-                  <li>Category: Graphic Design</li>
-                </ul>
-                <button class="btn btn-primary" data-dismiss="modal" type="button">
-                  <i class="fas fa-times"></i>
-                  Close Project</button>
-              </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Modal 3 -->
-<div class="portfolio-modal modal fade" id="portfolioModal3" tabindex="-1" role="dialog" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="close-modal" data-dismiss="modal">
-        <div class="lr">
-          <div class="rl"></div>
-        </div>
-        <div class="container">
-          <div class="row">
-            <div class="col-lg-8 mx-auto">
-              <div class="modal-body">
-                <!-- Project Details Go Here -->
-                <h2 class="text-uppercase">Project Name</h2>
-                <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>
-                <img class="img-fluid d-block mx-auto"  alt="">
-                <p>Use this area to describe your project. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est blanditiis dolorem culpa incidunt minus dignissimos deserunt repellat aperiam quasi sunt officia expedita beatae cupiditate, maiores repudiandae, nostrum, reiciendis facere nemo!</p>
-                <ul class="list-inline">
-                  <li>Date: January 2017</li>
-                  <li>Client: Finish</li>
-                  <li>Category: Identity</li>
-                </ul>
-                <button class="btn btn-primary" data-dismiss="modal" type="button">
-                  <i class="fas fa-times"></i>
-                  Close Project</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-<!-- Modal 4 -->
-<div class="portfolio-modal modal fade" id="portfolioModal4" tabindex="-1" role="dialog" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="close-modal" data-dismiss="modal">
-        <div class="lr">
-          <div class="rl"></div>
-        </div>
-        <div class="container">
-          <div class="row">
-            <div class="col-lg-8 mx-auto">
-              <div class="modal-body">
-                <!-- Project Details Go Here -->
-                <h2 class="text-uppercase">Project Name</h2>
-                <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>
-                <img class="img-fluid d-block mx-auto" alt="">
-                <p>Use this area to describe your project. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est blanditiis dolorem culpa incidunt minus dignissimos deserunt repellat aperiam quasi sunt officia expedita beatae cupiditate, maiores repudiandae, nostrum, reiciendis facere nemo!</p>
-                <ul class="list-inline">
-                  <li>Date: January 2017</li>
-                  <li>Client: Lines</li>
-                  <li>Category: Branding</li>
-                </ul>
-                <button class="btn btn-primary" data-dismiss="modal" type="button">
-                  <i class="fas fa-times"></i>
-                  Close Project</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Modal 5 -->
-<div class="portfolio-modal modal fade" id="portfolioModal5" tabindex="-1" role="dialog" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="close-modal" data-dismiss="modal">
-        <div class="lr">
-          <div class="rl"></div>
-        </div>
-        <div class="container">
-          <div class="row">
-            <div class="col-lg-8 mx-auto">
-              <div class="modal-body">
-                <!-- Project Details Go Here -->
-                <h2 class="text-uppercase">Project Name</h2>
-                <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>
-                <img class="img-fluid d-block mx-auto"  alt="">
-                <p>Use this area to describe your project. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est blanditiis dolorem culpa incidunt minus dignissimos deserunt repellat aperiam quasi sunt officia expedita beatae cupiditate, maiores repudiandae, nostrum, reiciendis facere nemo!</p>
-                <ul class="list-inline">
-                  <li>Date: January 2017</li>
-                  <li>Client: Southwest</li>
-                  <li>Category: Website Design</li>
-                </ul>
-                <button class="btn btn-primary" data-dismiss="modal" type="button">
-                  <i class="fas fa-times"></i>
-                  Close Project</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Modal 6 -->
-<div class="portfolio-modal modal fade" id="portfolioModal6" tabindex="-1" role="dialog" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="close-modal" data-dismiss="modal">
-        <div class="lr">
-          <div class="rl"></div>
-        </div>
-        <div class="container">
-          <div class="row">
-            <div class="col-lg-8 mx-auto">
-              <div class="modal-body">
-                <!-- Project Details Go Here -->
-                <h2 class="text-uppercase">Project Name</h2>
-                <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>
-                <img class="img-fluid d-block mx-auto" alt="">
-                <p>Use this area to describe your project. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est blanditiis dolorem culpa incidunt minus dignissimos deserunt repellat aperiam quasi sunt officia expedita beatae cupiditate, maiores repudiandae, nostrum, reiciendis facere nemo!</p>
-                <ul class="list-inline">
-                  <li>Date: January 2017</li>
-                  <li>Client: Window</li>
-                  <li>Category: Photography</li>
-                </ul>
-                <button class="btn btn-primary" data-dismiss="modal" type="button">
-                  <i class="fas fa-times"></i>
-                  Close Project</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
+<script>
+$(document).on("click", ".portfolio-link", function () {
+     var myBookId = $(this).data('id');
+     $(".portfolio-modal modal fade #portfolioModal1").val( myBookId );
+     // As pointed out in comments, 
+     // it is unnecessary to have to manually call the modal.
+     // $('#addBookDialog').modal('show');
+});</script>
 <!-- Bootstrap core JavaScript -->
 <script src="vendor/jquery/jquery.min.js"></script>
 <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -306,3 +191,8 @@
 
 <!-- Custom scripts for this template -->
 <script src="js/agency.min.js"></script>
+
+
+
+
+</html>

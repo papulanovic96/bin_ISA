@@ -1,6 +1,7 @@
 package com.bin448.backend.service;
 
 import com.bin448.backend.entity.DTOentity.CarDTO;
+import com.bin448.backend.entity.DTOentity.CarDiscountDTO;
 import com.bin448.backend.entity.DTOentity.CarRateDTO;
 import com.bin448.backend.entity.DTOentity.CarTypeDTO;
 import com.sun.org.apache.xpath.internal.operations.Bool;
@@ -26,6 +27,8 @@ public interface CarService {
     List<CarDTO> getAvailableCars(String type, Integer from, Integer to, String start, String end);
     void updateType(Integer seats,Long sId,Long id);
     List<CarTypeDTO> getTypes();
+    boolean setDiscount(CarDiscountDTO carDiscountDTO);
+    List<CarDiscountDTO> getAllCarDiscounts();
 
 
 }

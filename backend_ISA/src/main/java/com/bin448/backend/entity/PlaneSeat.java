@@ -20,6 +20,18 @@ public class PlaneSeat {
     @ManyToOne
     private PlaneTicket ticket;
 
+    public PlaneSeat(){}
+
+    public PlaneSeat(Long id){
+        this.seatId = id;
+    }
+
+    public PlaneSeat(boolean reserved, Airline airline, PlaneTicket ticket) {
+        this.reserved = reserved;
+        this.airline = airline;
+        this.ticket = ticket;
+    }
+
     public Long getSeatId() {
         return seatId;
     }

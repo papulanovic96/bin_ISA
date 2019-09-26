@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -33,7 +34,7 @@ public interface CarReservationRepository extends JpaRepository<CarReservation,L
     @Query(value = "SELECT cr.car_res_id,cr.car_id,cr.end_date,cr.start_date,cr.user_id FROM car_reservation cr right outer join cars c on c.car_id = cr.car_id right outer join car_service cs on cs.car_service_id = c.id_service where cr.end_date<now() and cs.car_service_id = ?1 and cr.user_id = ?2",nativeQuery = true)
     List<CarReservation> checkIfEverReservedAnyCar(Long serviceId,Long userId);
 
-    
-
+    @Query(value = "SELECT * FROM isa.car_reservation cr  where ((cr.start_date <= ?2 and cr.start_date >= ?1) or (cr.end_date <= ?2 and cr.end_date >= ?1) or (cr.start_date<= ?1 and cr.end_date>= ?2)) and cr.car_id = ?3 ",nativeQuery = true)
+    List<CarReservation> getThem(Date startDate, Date endDate, Long carId);
 }
 

@@ -36,6 +36,27 @@ public class Flight {
     @OneToOne(fetch = FetchType.EAGER, mappedBy = "flight", cascade = CascadeType.ALL)
     private PlaneTicket planeTicket;
 
+    public Flight(){}
+
+    public Flight(Long id){
+        this.id = id;
+    }
+
+    public Flight(Long id, String fromDestination, String toDestination, String dateAndTimeTakeOff, String dateAndTimeLanding, String flightTime, String flightTravelTime, Long transferNumber, String transferLocation, Double ticketPrice, Airline airline, PlaneTicket planeTicket) {
+        this.id = id;
+        this.fromDestination = fromDestination;
+        this.toDestination = toDestination;
+        this.dateAndTimeTakeOff = dateAndTimeTakeOff;
+        this.dateAndTimeLanding = dateAndTimeLanding;
+        this.flightTime = flightTime;
+        this.flightTravelTime = flightTravelTime;
+        this.transferNumber = transferNumber;
+        this.transferLocation = transferLocation;
+        this.ticketPrice = ticketPrice;
+        this.airline = airline;
+        this.planeTicket = planeTicket;
+    }
+
     public Long getId() {
         return id;
     }

@@ -9,6 +9,7 @@ export class FlightService {
 
   private url = 'http://localhost:4200/flight/create';
   private urlSearch = 'http://localhost:4200/flight/check';
+  private urlDelete = 'http://localhost:4200/flight/delete';
 
   constructor(private http: HttpClient) { }
 
@@ -18,5 +19,9 @@ export class FlightService {
 
   search(from: string, to: string, fromDest: string, toDest: string){
     return this.http.get<Flight[]>(this.urlSearch + "/" + from + ", " + to + ", " + fromDest + ", " + toDest);
+  }
+
+  delete(id: number){
+    return this.http.delete(this.urlDelete + "/" + id);
   }
 }

@@ -32,6 +32,7 @@ public class Car {
     private Boolean convertible;
     private Boolean deleted;
 
+
     @ManyToOne
     @JoinColumn(name = "idService", nullable = false)
     private CarService carService;
@@ -126,4 +127,6 @@ public class Car {
     public void setNumOfSeats(Integer numOfSeats) {
         this.numOfSeats = numOfSeats;
     }
+
+
 }

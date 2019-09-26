@@ -11,7 +11,9 @@ public abstract class PlaneSeatConverter extends AbstractConverter {
         PlaneSeatDTO planeSeatDTO = new PlaneSeatDTO();
         planeSeatDTO.setId(e.getSeatId());
         planeSeatDTO.setReserved(e.getReserved());
-        planeSeatDTO.setAirlineID(e.getAirline().getId());
+        if(e.getAirline() != null){
+            planeSeatDTO.setAirlineID(e.getAirline().getId());
+        }
         PlaneTicket newTicket = e.getTicket();
         if(newTicket != null){
             planeSeatDTO.setTicketID(e.getTicket().getId());

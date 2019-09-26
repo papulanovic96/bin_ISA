@@ -9,20 +9,59 @@
             <th scope="col">Tranfer</th>
             <th scope="col">Time</th>
             <th scope="col">Price</th>
+            <th scope="col">Airline</th>
             <th scope="col"></th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let x of lista">
-            <th scope="row"> {{ x.id }} </th>
-            <td>{{ x.fromDest }}</td>
-            <td>{{ x.toDest }}</td>
-            <td> {{ x.dateAndTimeTakeOff }}</td>
-            <td> {{ x.dateAndTimeLanding }}</td>
-            <td> {{ x.transferNumber }} stop {{ x.transferLocation }}</td>
-            <td> {{ x.flightTime }}</td>
-            <td> {{ x.ticketPrice }}</td>
-            <td> <button class="btn btn-success" value="Reserve" (click)="nextPage(x)"></button></td>
+            <th  *ngIf="!x.planeTicket" scope="row"> {{ x.id }} </th>
+            <td  *ngIf="!x.planeTicket">{{ x.fromDest }}</td>
+            <td  *ngIf="!x.planeTicket">{{ x.toDest }}</td>
+            <td  *ngIf="!x.planeTicket"> {{ x.dateAndTimeTakeOff }}</td>
+            <td  *ngIf="!x.planeTicket"> {{ x.dateAndTimeLanding }}</td>
+            <td  *ngIf="!x.planeTicket"> {{ x.transferNumber }} stop {{ x.transferLocation }}</td>
+            <td  *ngIf="!x.planeTicket"> {{ x.flightTime }}</td>
+            <td  *ngIf="!x.planeTicket"> {{ x.ticketPrice }}</td>
+            <td  *ngIf="!x.planeTicket"> {{ x.airline }}</td>
+            <td  *ngIf="!x.planeTicket && loginService.isUserLoggedIn()"> <button class="btn btn-success" value="Reserve" (click)="onTap(x)"></button></td>
+            <td  *ngIf="loginService.isUserUSER() && loginService.isUserLoggedIn()"> <button class="btn btn-success" value="Rate" (click)="preRate(x.id)"></button></td>
+
           </tr>
         </tbody>
 </table>
+
+
+<!-- modal -->
+<div class="modal" tabindex="-1" role="dialog"  [ngStyle]="{'display':display}">
+  <!-- modal-dialog -->
+  <div class="modal-dialog" role="document">
+    <!-- modal-content -->
+    <div class="modal-content">
+      <!-- modal-header -->
+      <div class="modal-header ">
+        <p style="color: dodgerblue">Rating</p>
+        <button type="button" class="close" aria-label="Close" (click)="closeModal()"><span aria-hidden="true">&times;</span></button>
+        <!-- <h4 class="modal-title">Login</h4> -->
+      </div>
+
+      <!-- modal-body -->
+      <div class="modal-body" >
+
+        <div>
+          <rating [max]="10" [(ngModel)]="rateOfFlight" (click)="rateFlight()" [customTemplate]="tt"></rating>
+
+          <ng-template #tt let-i="index" let-v="value">
+            <button class="btn btn-{{i < v ? 'warning' : 'default'}}">
+              {{i < v ? '&#9733;' : '&#9734;'}}
+            </button>
+          </ng-template>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- modal-footer -->
+
+  </div>
+</div>

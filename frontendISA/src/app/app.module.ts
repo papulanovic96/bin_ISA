@@ -29,6 +29,7 @@ import {DatePipe} from "@angular/common";
 import { FriendshipComponent } from './friendship/friendship.component';
 import { FlightListComponent } from './flight/flight-list/flight-list.component';
 import { FriendInviteComponent } from './friend-invite/friend-invite.component';
+import { TicketFinalizeComponent } from './ticket-finalize/ticket-finalize.component';
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import { FriendInviteComponent } from './friend-invite/friend-invite.component';
     FriendshipComponent,
     FlightListComponent,
     FriendInviteComponent,
+    TicketFinalizeComponent,
 
   ],
 

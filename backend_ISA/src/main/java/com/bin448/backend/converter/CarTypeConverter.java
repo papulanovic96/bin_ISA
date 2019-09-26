@@ -19,7 +19,6 @@ public class CarTypeConverter extends AbstractConverter {
 
     public static CarType toEntity(CarTypeDTO c){
         CarType cc = new CarType();
-        cc.setCar(ccr.getCarByCarId(c.getCarId()));
         cc.setSeats(c.getSeats());
         cc.setId(c.getId());
         cc.setName(c.getName());
@@ -28,7 +27,6 @@ public class CarTypeConverter extends AbstractConverter {
 
     public static CarTypeDTO fromEntity(CarType c){
         CarTypeDTO ctt = new CarTypeDTO();
-        ctt.setCarId(c.getCar().getCarId());
         ctt.setId(c.getId());
         ctt.setName(c.getName());
         ctt.setSeats(c.getSeats());

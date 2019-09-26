@@ -8,9 +8,9 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class CarConverter extends AbstractConverter {
-    private static CarServiceRepository cr;
+    public static CarServiceRepository cr;
 
-    private static CarRepository cRep;
+    public static CarRepository cRep;
 
     public CarConverter(CarServiceRepository cr, CarRepository c) {
         cRep = c;
@@ -23,6 +23,8 @@ public class CarConverter extends AbstractConverter {
         cDTO.setModel(c.getModel());
         cDTO.setServiceId(c.getCarService().getCarService_id());
         cDTO.setRegID(c.getRegID());
+        cDTO.setTypeC(c.getType());
+        cDTO.setNos(c.getNumOfSeats());
         cDTO.setConvertible(c.isConvertible());
         cDTO.setYear(c.getYear());
         cDTO.setServiceName(c.getCarService().getCarServiceName());
@@ -34,18 +36,22 @@ public class CarConverter extends AbstractConverter {
     }
 
     public static Car toEntity(CarDTO cDTO) {
+        if(cDTO == null)
+            return new Car();
         Car car = new Car();
         car.setAvgGrade(cDTO.getAvgGrade());
         car.setRegID(cDTO.getRegID());
         car.setModel(cDTO.getModel());
         car.setCarId(cDTO.getId());
-
+        car.setType(cDTO.getTypeC());
         car.setReserved(cDTO.getReserved());
-        car.setReserved(false);
+        car.setReserved(cDTO.getReserved());
+        if (cr == null)
+            car.setCarService(null);
+        else
         car.setCarService(cr.getCarServiceByCarServiceId(cDTO.getServiceId()));
         car.setModel(cDTO.getModel());
         car.setConvertible(cDTO.isConvertible());
-
         car.setYear(cDTO.getYear());
         car.setDeleted(cDTO.getDeleted());
         return car;

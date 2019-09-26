@@ -12,6 +12,7 @@ export class PlaneSeatServiceService {
 
   private getURL : string;
   private createNewURL: string;
+  private modifyUrl = 'http://localhost:4200/seats/modifySeat';
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -34,6 +35,10 @@ export class PlaneSeatServiceService {
     return this.http.post<PlaneSeat>(this.createNewURL, newSeat).pipe(
         catchError(this.handleError)
     );
+  }
+
+  modify(id: number, seat: PlaneSeat) {
+    return this.http.put(this.modifyUrl + "/" + id, seat);
   }
 
   private handleError(err: HttpErrorResponse) {

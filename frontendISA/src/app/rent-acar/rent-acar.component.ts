@@ -9,6 +9,7 @@ import {carRate} from "../car/carRate";
 import {carServiceRate} from "./carServiceRate";
 import {datepickerAnimation} from "ngx-bootstrap/datepicker/datepicker-animations";
 import {CarServiceService} from "../car/car-service.service";
+import {CarDiscount} from './carDiscount';
 
 
 @Component({
@@ -55,6 +56,9 @@ export class RentACarComponent implements OnInit {
   searchFlag:boolean = false;
   today=new Date();
   startDate = new Date();
+  public listOfFastReservations: CarDiscount[] = [];
+  public carFastReservation = new carReservation(null,null,null,0,0);
+  dFast = 'none';
   endDate = new Date();
   public idCar : number =0;
   public CarRate = new carRate(0,0,null,0);
@@ -85,6 +89,37 @@ export class RentACarComponent implements OnInit {
     alert(this.y);
   }
 
+
+  closeFastModal() {
+    this.dFast = 'none';
+  }
+
+  setFastReservation(idCar:number,startDate:Date,endDate:Date){
+    this.carFastReservation.endDate = endDate;
+    this.carFastReservation.startDate = startDate;
+    this.carFastReservation.carId = idCar;
+    this.carFastReservation.id = null;
+    this.carFastReservation.userId = Number(sessionStorage.getItem('id'));
+    this.rentacar.setReservations(this.carFastReservation).subscribe(
+      data=> {
+        alert("SUCCESS!");
+        this.dFast = 'none';
+      },error1 => alert("ERROR")
+      );
+  }
+
+  fastReservation() {
+    this.rentacar.getForFastReservation().subscribe(
+      data => {
+        this.listOfFastReservations = data;
+        this.dFast = 'block';
+      },
+      error1 => alert('ERROR')
+    );
+  }
+
+
+
   searchCars(){
     if(String(this.from)==="")
       this.from = 0;
@@ -96,18 +131,18 @@ export class RentACarComponent implements OnInit {
     this.carservice.search(this.model,this.type,this.from,this.to,this.nos).subscribe(
       data=> {
         this.listOfCars = data;
-           this.cars =[];
+        this.cars =[];
 
 
-          for (let c of data) {
-            if (c.serviceId === this.serviceIDForSearch) {
-              this.cars.push(c);
-            }
+        for (let c of data) {
+          if (c.serviceId === this.serviceIDForSearch) {
+            this.cars.push(c);
           }
-          this.listOfCars = this.cars;
+        }
+        this.listOfCars = this.cars;
 
-          this.display3='none';
-          this.display3='display';
+        this.display3='none';
+        this.display3='display';
 
 
 
@@ -148,10 +183,10 @@ export class RentACarComponent implements OnInit {
     this.rentacar.rateCarService(this.CarServiceRate).subscribe(
       data=> {
 
-          alert(data);
-          this.closeModalDialog7();
-          this.router.navigated = false;
-          this.router.navigate([this.router.url]);
+        alert(data);
+        this.closeModalDialog7();
+        this.router.navigated = false;
+        this.router.navigate([this.router.url]);
 
       },
       error1 => alert(error1)
@@ -168,20 +203,20 @@ export class RentACarComponent implements OnInit {
   }
   isUserAbleToUnreserve(id:number){
     this.rentacar.tryToUnreserve(id).subscribe(
-      
+
     );
   }
 
-rateCar(){
+  rateCar(){
     this.CarRate.userID = Number(sessionStorage.getItem("id"));
-  this.rentacar.rateCar(this.CarRate).subscribe(
-    data=> {
-      alert(data);
-      this.closeModalDialog5();
-      this.router.navigated = false;
-      this.router.navigate([this.router.url]);
+    this.rentacar.rateCar(this.CarRate).subscribe(
+      data=> {
+        alert(data);
+        this.closeModalDialog5();
+        this.router.navigated = false;
+        this.router.navigate([this.router.url]);
 
-    }
+      }
     );
   }
 
@@ -216,41 +251,41 @@ rateCar(){
 
 
 
-showS(){
-  this.show=true;
-}
+  showS(){
+    this.show=true;
+  }
 
-middleWear(id:number){
-  this.idCar = id;
-  this.openModalDialog4();
-}
-getCars(name:string,id:number){
+  middleWear(id:number){
+    this.idCar = id;
+    this.openModalDialog4();
+  }
+  getCars(name:string,id:number){
     this.serviceIDForSearch = id;
-  this.rentacar.getAllCars(name).subscribe(
-    data=> {
-      this.listOfCars = data;
+    this.rentacar.getAllCars(name).subscribe(
+      data=> {
+        this.listOfCars = data;
 
-      this.openModalDialog3();
-    });
-}
+        this.openModalDialog3();
+      });
+  }
 
-openModalDialog3(){
-  this.display3='block'; //Set block css
-}
-
-
-closeModalDialog3(){
-  this.display3='none'; //set none css after close dialog
-}
-
-openModalDialog4(){
-  this.display4='block'; //Set block css
-}
+  openModalDialog3(){
+    this.display3='block'; //Set block css
+  }
 
 
-closeModalDialog4(){
-  this.display4='none'; //set none css after close dialog
-}
+  closeModalDialog3(){
+    this.display3='none'; //set none css after close dialog
+  }
+
+  openModalDialog4(){
+    this.display4='block'; //Set block css
+  }
+
+
+  closeModalDialog4(){
+    this.display4='none'; //set none css after close dialog
+  }
 
   openModalDialog5(){
     this.display5='block'; //Set block css
@@ -281,50 +316,50 @@ closeModalDialog4(){
 
 
   openModalDialog(){
-  this.display='block'; //Set block css
-}
+    this.display='block'; //Set block css
+  }
 
-closeModalDialog(){
-  this.display='none'; //set none css after close dialog
-}
+  closeModalDialog(){
+    this.display='none'; //set none css after close dialog
+  }
 
-openModalDialog2(){
-  this.display2='block'; //Set block css
-}
+  openModalDialog2(){
+    this.display2='block'; //Set block css
+  }
 
-closeModalDialog2(){
-  this.display2='none'; //set none css after close dialog
-}
+  closeModalDialog2(){
+    this.display2='none'; //set none css after close dialog
+  }
 
-addCarService(){
-  this.rentacar.addNewCarService(this.newCarService).subscribe(
-    data=> {alert(data)
-      this.router.navigated = false;
-      this.router.navigate([this.router.url]);
-    },
-    error1 => alert(error1)
-  );
-}
-deleteCarService(id:number){
-  this.rentacar.deleteCarService(id).subscribe(
-    data=> {
-      alert(data);
-      this.router.navigated = false;
-      this.router.navigate([this.router.url]);
-    },
-    error1 => alert(error1)
-  );
-}
+  addCarService(){
+    this.rentacar.addNewCarService(this.newCarService).subscribe(
+      data=> {alert(data)
+        this.router.navigated = false;
+        this.router.navigate([this.router.url]);
+      },
+      error1 => alert(error1)
+    );
+  }
+  deleteCarService(id:number){
+    this.rentacar.deleteCarService(id).subscribe(
+      data=> {
+        alert(data);
+        this.router.navigated = false;
+        this.router.navigate([this.router.url]);
+      },
+      error1 => alert(error1)
+    );
+  }
 
-getCarServiceForUpdate(id:number){
-  this.rentacar.getCarServiceForUpdate(id).subscribe(
-    data => { this.updateCarService = data;
-      this.openModalDialog2();
-    },error => {console.log(error)}
+  getCarServiceForUpdate(id:number){
+    this.rentacar.getCarServiceForUpdate(id).subscribe(
+      data => { this.updateCarService = data;
+        this.openModalDialog2();
+      },error => {console.log(error)}
 
 
-  );
-}
+    );
+  }
 
   getCarService(id:number){
     this.rentacar.getCarServiceForUpdate(id).subscribe(
@@ -336,22 +371,22 @@ getCarServiceForUpdate(id:number){
     );
   }
 
-addCarServiceForUpdate(){
-  this.rentacar.addChangedCarService(this.updateCarService.carServiceName,this.updateCarService.carServiceAddress,this.updateCarService.carServiceDescription,this.updateCarService.carServiceLocation,this.updateCarService.id).subscribe(
-    data => {
-      alert(data);
-      if(data === "Service name is already in use!") {
-       alert(data);
-      }
-      else{
-        this.router.navigated = false;
-        this.router.navigate([this.router.url]);
-      }
-    },error => {console.log(error)}
+  addCarServiceForUpdate(){
+    this.rentacar.addChangedCarService(this.updateCarService.carServiceName,this.updateCarService.carServiceAddress,this.updateCarService.carServiceDescription,this.updateCarService.carServiceLocation,this.updateCarService.id).subscribe(
+      data => {
+        alert(data);
+        if(data === "Service name is already in use!") {
+          alert(data);
+        }
+        else{
+          this.router.navigated = false;
+          this.router.navigate([this.router.url]);
+        }
+      },error => {console.log(error)}
 
 
-  );
-}
+    );
+  }
 
 
 

@@ -38,9 +38,31 @@ public class User implements Serializable {
     private List<Friendship> friends;
     @OneToMany(mappedBy = "receiver", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Friendship> requests;
-    @OneToMany(mappedBy = "reservedBy", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "reservedBy", cascade = CascadeType.ALL)
     private List<PlaneTicket> reservedTicket;
 
+    public User() {
+
+    }
+
+    public User(String username){
+        this.username = username;
+    }
+
+    public User(String name, String lastName, String email, String username, String password, String city, String telephone, String role, boolean active, List<Friendship> friends, List<Friendship> requests, List<PlaneTicket> reservedTicket) {
+        this.name = name;
+        this.lastName = lastName;
+        this.email = email;
+        this.username = username;
+        this.password = password;
+        this.city = city;
+        this.telephone = telephone;
+        this.role = role;
+        this.active = active;
+        this.friends = friends;
+        this.requests = requests;
+        this.reservedTicket = reservedTicket;
+    }
 
     public String getLastName() {
         return lastName;

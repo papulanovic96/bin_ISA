@@ -9,9 +9,6 @@ public class CarType {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @OneToOne
-    @JoinColumn(name = "carId",nullable = false)
-    private Car car;
     private Integer seats;
     private String name;
 
@@ -23,13 +20,6 @@ public class CarType {
         this.id = id;
     }
 
-    public Car getCar() {
-        return car;
-    }
-
-    public void setCar(Car car) {
-        this.car = car;
-    }
 
     public Integer getSeats() {
         return seats;

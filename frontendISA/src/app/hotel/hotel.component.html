@@ -56,6 +56,11 @@
         </button>
       </a></td>
       <td><a>
+        <button *ngIf="loginService.isUserUSER() && loginService.isUserLoggedIn()" type="button" class="btn btn-info" (click)="preRateHotel(hotel.hotel_id)"><i
+          class="fa fa-turkish-lira"></i> Rate
+        </button>
+      </a></td>
+      <td><a>
         <button type="button" class="btn btn-info" (click)="listMenu(hotel.hotel_id)"><i
           class="fa fa-wifi"></i> Additional services
         </button>
@@ -111,6 +116,12 @@
               <td>{{ room.pricePerNight}} <i class="fa fa-euro"></i></td>
               <td>{{room.floor}}</td>
               <td>{{ room.avgGrade}}</td>
+              <td><a>
+                <button *ngIf="loginService.isUserUSER() && loginService.isUserLoggedIn()" type="button" class="btn btn-info"
+                        (click)="preRateRoom(room.number)"><i
+                  class="fa fa-turkish-lira"></i> Rate
+                </button>
+              </a></td>
             </tr>
             </tbody>
           </table>
@@ -352,5 +363,75 @@
         </button>
       </div>
     </div>
+  </div>
+</div>
+
+
+<!-- modal -->
+<div class="modal" tabindex="-1" role="dialog"  [ngStyle]="{'display':displayRate}">
+  <!-- modal-dialog -->
+  <div class="modal-dialog" role="document">
+    <!-- modal-content -->
+    <div class="modal-content">
+      <!-- modal-header -->
+      <div class="modal-header ">
+        <p style="color: dodgerblue">Rating</p>
+        <button type="button" class="close" aria-label="Close" (click)="closeRateModal()"><span aria-hidden="true">&times;</span></button>
+        <!-- <h4 class="modal-title">Login</h4> -->
+      </div>
+
+      <!-- modal-body -->
+      <div class="modal-body" >
+
+        <div>
+          <rating [max]="10" [(ngModel)]="rateOfHotel" (click)="rateHotel()" [customTemplate]="tt"></rating>
+
+          <ng-template #tt let-i="index" let-v="value">
+            <button class="btn btn-{{i < v ? 'warning' : 'default'}}">
+              {{i < v ? '&#9733;' : '&#9734;'}}
+            </button>
+          </ng-template>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- modal-footer -->
+
+  </div>
+</div>
+
+
+<!-- modal -->
+<div class="modal" tabindex="-1" role="dialog"  [ngStyle]="{'display':displayRateRoom}">
+  <!-- modal-dialog -->
+  <div class="modal-dialog" role="document">
+    <!-- modal-content -->
+    <div class="modal-content">
+      <!-- modal-header -->
+      <div class="modal-header ">
+        <p style="color: dodgerblue">Rating</p>
+        <button type="button" class="close" aria-label="Close" (click)="closeRateRoomModal()"><span aria-hidden="true">&times;</span></button>
+        <!-- <h4 class="modal-title">Login</h4> -->
+      </div>
+
+      <!-- modal-body -->
+      <div class="modal-body" >
+
+        <div>
+          <rating [max]="10" [(ngModel)]="rateOfRoom" (click)="rateRoom()" [customTemplate]="tt"></rating>
+
+          <ng-template #tt let-i="index" let-v="value">
+            <button class="btn btn-{{i < v ? 'warning' : 'default'}}">
+              {{i < v ? '&#9733;' : '&#9734;'}}
+            </button>
+          </ng-template>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- modal-footer -->
+
   </div>
 </div>

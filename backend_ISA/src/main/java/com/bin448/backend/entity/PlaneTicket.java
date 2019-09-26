@@ -10,7 +10,6 @@ import java.util.List;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class PlaneTicket {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(nullable = false)
     private Long id;
     @Column
@@ -25,13 +24,14 @@ public class PlaneTicket {
     private String bag;
     @OneToOne
     private Flight flight;
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "ticket", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "ticket", cascade = CascadeType.ALL)
     private List<PlaneSeat> seat;
     @ManyToOne
     private User reservedBy;
     @ManyToOne
     private Airline airline;
 
+    public PlaneTicket() {}
 
     public Long getId() {
         return id;

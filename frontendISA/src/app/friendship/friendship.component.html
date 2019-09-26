@@ -46,7 +46,7 @@
                       <a class="btn btn-info btn-rounded waves-effect waves-light" data-toggle="collapse" href="#svikorisnici" role="button" aria-expanded="false" aria-controls="svikorisnici"> All users</a>
                       <a class="btn btn-info btn-rounded waves-effect waves-light" data-toggle="collapse" href="#zahtjevi" role="button" aria-expanded="false" aria-controls="zahtjevi"> Friend requests</a>
                       <a class="btn btn-info btn-rounded waves-effect waves-light" data-toggle="collapse" href="#uInfo" role="button" aria-controls="uInfo"> User info</a>
-      
+                      <a class="btn btn-info btn-rounded waves-effect waves-light" data-toggle="collapse" href="#reserve" role="button" aria-controls="reserve"> Resrvations</a>
                     </div>
       
                   </div>
@@ -54,6 +54,41 @@
                   <!-- Card -->
       
                 </div>
+                <div class="collapse col-md-8 mb-4" id="reserve" >
+                    <!-- Card -->
+                    <div class="card card-cascade cascading-admin-card user-card scroll " style="margin-top: 100px; background-color: rgba(21, 62, 186, 0.3);">
+                      <!-- Card content -->
+                      <div class="card-body card-body-cascade">
+        
+                            <div class="card-container" >
+                                    <div class="card" style="margin: 20px; border: none; box-shadow: none;">
+                                    <div class= "row" style="margin-bottom: 20px;">
+                                        <!-- new columns -->
+                                        <div class = "col-sm-3" *ngFor = 'let a of friendsList'>
+                                            <div class="card">
+                                                    <img [src]= "userIMG" class="card-img-top" alt="Image not found!" style="border: 1px; ">
+                                                <div class="card-body">
+                                                  <h5 class="card-title" >Banex</h5>
+                                                  <button style="font-size: 10px" class="btn btn-info btn-rounded waves-effect waves-light" id="modalActivate3" type="button" data-toggle="modal" data-target="#unFrend"  (click) = "unfriend(a)"><i class="fa fa-user-times"></i> Unfriend</button>
+                                                </div>
+                                              </div>
+                                              <div id="unFrend" class="modal fade">
+                                                    <div class="modal-dialog modal-confirm">
+                                                        <div class="modal-content">
+                                                            <br><br>
+                                                            <h5>You and {{a}} are not friends anymore!</h5>
+                                                            <div class="swal2-icon swal2-error swal2-animate-error-icon" style="display: flex;"><span class="swal2-x-mark"><span class="swal2-x-mark-line-left"></span><span class="swal2-x-mark-line-right"></span></span></div><br>
+                                                        </div>
+                                                    </div>
+                                                </div>  
+                                        </div>
+                                        <!-- new columns -->
+                                    </div>
+                                </div>
+                            </div>       
+                      </div>
+                    </div>
+                  </div>
 
                 <!-- USER INFO -->
                 <div class="col-md-8 mb-4 " id="uInfo">

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Ticket } from './plane-ticket';
+import { PlaneTicketServiceService } from './plane-ticket-service.service';
 
 @Component({
   selector: 'app-plane-ticket',
@@ -7,9 +9,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PlaneTicketComponent implements OnInit {
 
-  constructor() { }
+  listOfTickets: Ticket[];
+
+  constructor(private ptService: PlaneTicketServiceService) { }
 
   ngOnInit() {
+    this.ptService.returnAll().subscribe(
+      listOfTickets => this.listOfTickets = listOfTickets
+    )
   }
 
 }

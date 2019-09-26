@@ -11,7 +11,10 @@ import java.util.List;
 @Service
 public interface FlightService {
     void save(FlightDTO newFlight);
+    void delete(FlightDTO flightDTO);
+    FlightDTO findById(Long id);
     List<Flight> checkIT(String from, String to, String u1, String u2);
     List<FlightDTO> findAll();
+    Boolean rateFlight(Long userId, Long flightId, Double rate);
 
 }

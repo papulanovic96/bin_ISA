@@ -12,7 +12,7 @@ public class FlightDTO {
     private Long transferNumber;
     private String transferLocation;
     private Double ticketPrice;
-    private String airline;
+    private Long airline;
     private Long planeTicket;
 
     public Long getId() {
@@ -79,11 +79,11 @@ public class FlightDTO {
         this.ticketPrice = ticketPrice;
     }
 
-    public String getAirline() {
+    public Long getAirline() {
         return airline;
     }
 
-    public void setAirline(String airline) {
+    public void setAirline(Long airline) {
         this.airline = airline;
     }
 
