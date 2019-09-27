@@ -45,7 +45,7 @@ public class SeatTesting {
     @Transactional
     @Rollback()
     public void seatCreationAndDelete() {
-        PlaneSeatDTO seatDTO = new PlaneSeatDTO(10L, false, 10L, 13486L, null);
+        PlaneSeatDTO seatDTO = new PlaneSeatDTO(10L, false, 10L, 13486L, null, 1L);
 
         PlaneSeat planeSeat = new PlaneSeat();
         planeSeat.setSeatId(10L);

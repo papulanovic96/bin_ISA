@@ -30,6 +30,8 @@ public class PlaneTicket {
     private User reservedBy;
     @ManyToOne
     private Airline airline;
+    @Version
+    private Integer version;
 
     public PlaneTicket() {}
 

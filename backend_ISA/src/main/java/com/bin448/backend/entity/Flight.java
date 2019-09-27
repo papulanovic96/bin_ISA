@@ -35,6 +35,8 @@ public class Flight {
     private Airline airline;
     @OneToOne(fetch = FetchType.EAGER, mappedBy = "flight", cascade = CascadeType.ALL)
     private PlaneTicket planeTicket;
+    @Version
+    private Integer version;
 
     public Flight(){}
 

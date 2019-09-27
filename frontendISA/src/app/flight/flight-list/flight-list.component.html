@@ -24,8 +24,8 @@
             <td  *ngIf="!x.planeTicket"> {{ x.flightTime }}</td>
             <td  *ngIf="!x.planeTicket"> {{ x.ticketPrice }}</td>
             <td  *ngIf="!x.planeTicket"> {{ x.airline }}</td>
-            <td  *ngIf="!x.planeTicket && loginService.isUserLoggedIn()"> <button class="btn btn-success" value="Reserve" (click)="onTap(x)"></button></td>
-            <td  *ngIf="loginService.isUserUSER() && loginService.isUserLoggedIn()"> <button class="btn btn-success" value="Rate" (click)="preRate(x.id)"></button></td>
+            <td  *ngIf="!x.planeTicket && loginService.isUserLoggedIn()"> <button class="btn btn-success" value="Reserve" (click)="onTap(x)">Reserve</button></td>
+            <td  *ngIf="!x.planeTicket && loginService.isUserLoggedIn()"> <button class="btn btn-success" value="Rate" (click)="preRate(x.id)">Rate</button></td>
 
           </tr>
         </tbody>

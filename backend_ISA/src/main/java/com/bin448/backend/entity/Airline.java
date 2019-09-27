@@ -29,6 +29,8 @@ public class Airline {
     private Collection<PlaneTicket> discountTicket;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "airline_luggage_price", cascade = CascadeType.ALL)
     private Collection<LuggagePrice> luggagePrice;
+    @Version
+    private Integer version;
 
     public Airline(){}
 
