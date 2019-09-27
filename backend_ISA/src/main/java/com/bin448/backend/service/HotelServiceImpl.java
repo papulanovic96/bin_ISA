@@ -6,12 +6,10 @@ import com.bin448.backend.entity.Address;
 import com.bin448.backend.entity.DTOentity.AddressDTO;
 import com.bin448.backend.entity.DTOentity.HotelDTO;
 import com.bin448.backend.entity.Hotel;
+import com.bin448.backend.entity.HotelRate;
 import com.bin448.backend.exception.ForeignKeyConstraintException;
 import com.bin448.backend.exception.NotFoundException;
-import com.bin448.backend.repository.AddressRepository;
-import com.bin448.backend.repository.HotelRepository;
-import com.bin448.backend.repository.HotelReservationRepository;
-import com.bin448.backend.repository.RoomRepository;
+import com.bin448.backend.repository.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
@@ -31,12 +29,14 @@ public class HotelServiceImpl implements HotelService {
     private final RoomRepository roomRepository;
     private final AddressRepository addressRepository;
     private final HotelReservationRepository hotelReservationRepository;
+    private final HotelRateRepository hotelRateRepository;
 
-    public HotelServiceImpl(HotelRepository hotelRepository, RoomRepository roomRepository, AddressRepository addressRepository, HotelReservationRepository hotelReservationRepository) {
+    public HotelServiceImpl(HotelRateRepository hotelRateRepository, HotelRepository hotelRepository, RoomRepository roomRepository, AddressRepository addressRepository, HotelReservationRepository hotelReservationRepository) {
         this.hotelRepository = hotelRepository;
         this.roomRepository = roomRepository;
         this.addressRepository = addressRepository;
         this.hotelReservationRepository = hotelReservationRepository;
+        this.hotelRateRepository = hotelRateRepository;
     }
 
     @Override
@@ -215,4 +215,21 @@ public class HotelServiceImpl implements HotelService {
                 .map(hotel -> HotelConverter.fromEntity(hotel))
                 .collect(Collectors.toList());
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Double getMiddleGrade(Long hotelId) {
+        List<HotelRate> rates = hotelRateRepository.findByHotel_Id(hotelId);
+        if (rates.size() == 0)
+            return 0d;
+        Double sum = 0d;
+        int counter = 0;
+        for (HotelRate hotelRate : rates) {
+            sum += hotelRate.getRate();
+        }
+        Double middle = sum / rates.size();
+        System.out.println("AAAAAAAAAAAAAAAAAAAAA "+middle);
+        return middle;
+    }
+
 }

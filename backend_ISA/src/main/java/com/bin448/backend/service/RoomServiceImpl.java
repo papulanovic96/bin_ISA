@@ -6,8 +6,10 @@ import com.bin448.backend.entity.DTOentity.HotelReservationDTO;
 import com.bin448.backend.entity.DTOentity.RoomDTO;
 import com.bin448.backend.entity.HotelReservation;
 import com.bin448.backend.entity.Room;
+import com.bin448.backend.entity.RoomRate;
 import com.bin448.backend.exception.NotFoundException;
 import com.bin448.backend.repository.HotelReservationRepository;
+import com.bin448.backend.repository.RoomRateRepository;
 import com.bin448.backend.repository.RoomRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -26,12 +28,14 @@ public class RoomServiceImpl implements RoomService {
     private final HotelService hotelService;
     private final HotelReservationRepository hotelReservationRepository;
     private final NewRoomPriceService newRoomPriceService;
+    private final RoomRateRepository roomRateRepository;
 
-    public RoomServiceImpl(RoomRepository roomRepository, NewRoomPriceService newRoomPriceService, HotelService hotelService, HotelReservationRepository hotelReservationRepository) {
+    public RoomServiceImpl(RoomRateRepository roomRateRepository, RoomRepository roomRepository, NewRoomPriceService newRoomPriceService, HotelService hotelService, HotelReservationRepository hotelReservationRepository) {
         this.roomRepository = roomRepository;
         this.hotelService = hotelService;
         this.hotelReservationRepository = hotelReservationRepository;
         this.newRoomPriceService = newRoomPriceService;
+        this.roomRateRepository = roomRateRepository;
     }
 
     @Override
@@ -153,6 +157,7 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public boolean existReservationWithRoomId(Long roomId) {
         return hotelReservationRepository.getByRoom_Number(roomId).size() != 0;
     }
@@ -161,6 +166,21 @@ public class RoomServiceImpl implements RoomService {
         return rooms.stream()
                 .map(room -> RoomConverter.fromEntity(room))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Double getMiddleGrade(Long roomId) {
+        List<RoomRate> rates = roomRateRepository.findByRoom_Number(roomId);
+        if (rates.size() == 0)
+            return 0d;
+        Double sum = 0d;
+        int counter = 0;
+        for (RoomRate roomRate : rates) {
+            sum += roomRate.getRate();
+        }
+        Double middle = sum / rates.size();
+        return middle;
     }
 
 }

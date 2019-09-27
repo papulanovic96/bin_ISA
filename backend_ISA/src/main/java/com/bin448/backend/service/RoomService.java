@@ -29,4 +29,7 @@ public interface RoomService {
     List<List<RoomDTO>> findRoomsFromReservation(List<RoomDTO> rooms, HotelReservationDTO hotelReservationDTO);
 
     boolean existReservationWithRoomId(Long roomId);
+
+    Double getMiddleGrade(Long roomId);
+
 }
