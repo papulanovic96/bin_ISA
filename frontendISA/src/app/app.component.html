@@ -100,7 +100,7 @@
           <li class='nav-item dropdown waves-light' mdbWavesEffect><a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >Hotel</a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <a class="dropdown-item" [routerLink]="['/hotel']" routerLinkActive="router-link-active" >Hotel  </a>
-                <a *ngIf="loginService.isUserHotelAdmin()" class="dropdown-item" [routerLink]="['/rooms']" routerLinkActive="router-link-active" >Rooms</a>
+                <a *ngIf="loginService.isUserHotelAdmin() && loginService.isUserLoggedIn()" class="dropdown-item" [routerLink]="['/rooms']" routerLinkActive="router-link-active" >Rooms</a>
 
           </div>
           <li class='nav-item dropdown waves-light' mdbWavesEffect><a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >Rent a car</a>
@@ -131,6 +131,14 @@
 </header>
 </body>
 
+
+
+<div style="padding: 10px 0">
+  <input type="text" placeholder="Search places..." [(ngModel)]="query" />
+  <button (click)="map.places(query)">Search</button>
+</div>
+<here-map #map appId="z4uBvylckk0iL8obeuYx" appCode="HhwIurZWYvQFZSFAECTNhQ" lat="45.267136" lng="19.833549" width="1700px" height="400px"></here-map>
+
 <div class="page-section" id="portfolio">
   <div class="container">
     <div class="row">
@@ -156,7 +164,7 @@
                     <li *ngIf="itemX.flight == item.id" >Price: {{item.ticketPrice}} €</li>
                     </ul>
                     <div style="margin-bottom: 100px"></div>
-                  <a href="#" class="btn btn-block btn-primary text-uppercase" (click)="reserve(itemX)">Reserve</a>
+                  <a *ngIf="loginService.isUserLoggedIn() && loginService.isUserUSER()" href="#" class="btn btn-block btn-primary text-uppercase" (click)="reserve(itemX)">Reserve</a>
                 </div>
               </div>
             </div>

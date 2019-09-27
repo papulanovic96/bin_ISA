@@ -12,15 +12,12 @@ import com.bin448.backend.entity.DTOentity.CarServicePriceListDTO;
 import com.bin448.backend.entity.DTOentity.CarServiceRateDTO;
 import com.bin448.backend.entity.DTOentity.RentACarBranchOfficeDTO;
 import com.bin448.backend.repository.*;
-import org.hibernate.annotations.OptimisticLock;
 import org.hibernate.service.spi.InjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import org.springframework.data.jpa.repository.Lock;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.LockModeType;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -226,8 +223,6 @@ public class CarServiceServiceImpl implements CarServiceService {
     }
 
     @Override
-    @Transactional
-    @Lock(value = LockModeType.PESSIMISTIC_WRITE)
     public String carServiceRate(CarServiceRateDTO csrDTO) {
         String ret = "ERROR!";
         try {
@@ -281,8 +276,6 @@ public class CarServiceServiceImpl implements CarServiceService {
     }
 
     @Override
-    @Transactional
-    @Lock(value = LockModeType.PESSIMISTIC_READ)
     public boolean isUserAbleToRateService(Long userID, Long serviceID) {
 
         List<CarReservation> carReservations = crr.checkIfEverReservedAnyCar(serviceID, userID);

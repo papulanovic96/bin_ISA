@@ -59,8 +59,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/Car/rateCar").hasAnyRole("CAR_ADMIN", "SYSTEM_ADMIN", "USER")
                 .antMatchers("/Car/reserve").hasAnyRole("USER", "CAR_ADMIN")
                 .antMatchers("/Car/tryToUnreserve/**").hasAnyRole("CAR_ADMIN", "USER")
-                .antMatchers("/Car/getDiscount").hasAnyRole("CAR_ADMIN", "USER", "SYSTEM_ADMIN")
-
                 .antMatchers("/Car/deleteRes/**").hasAnyRole("CAR_ADMIN", "USER")
                 .antMatchers("/Car/modifyCar/**").hasAnyRole("CAR_ADMIN", "SYSTEM_ADMIN")
                 .antMatchers("/Car/setDiscount").hasAnyRole("CAR_ADMIN", "SYSTEM_ADMIN")
@@ -109,20 +107,24 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/flight/create").permitAll()
                 .antMatchers("/flight/delete/**").permitAll()
                 .antMatchers("/flight/check/**").permitAll()
-                .antMatchers("/reservation").hasAnyRole("USER")
+
+                
                 .antMatchers("/reservation/check/**").hasAnyRole("USER")
-                .antMatchers(HttpMethod.DELETE, "/room/**").hasAnyRole("HOTEL_ADMIN")
-                .antMatchers(HttpMethod.POST, "/room/setReservation").permitAll()
-                .antMatchers(HttpMethod.PUT, "/room/**").hasAnyRole("HOTEL_ADMIN")
                 .antMatchers(HttpMethod.GET, "/room/rate/**").hasRole("USER")
-                .antMatchers(HttpMethod.GET, "/room/**").permitAll()
-                .antMatchers(HttpMethod.POST, "/room/addRoom").hasAnyRole("HOTEL_ADMIN")
-                .antMatchers(HttpMethod.POST, "/hotel/**").hasAnyRole("HOTEL_ADMIN")
-                .antMatchers(HttpMethod.PUT, "/hotel/**").hasAnyRole("HOTEL_ADMIN")
-                .antMatchers(HttpMethod.GET, "/hotel/addMenuItem/**").hasAnyRole("HOTEL_ADMIN")
-                .antMatchers(HttpMethod.GET, "/hotel/removeMenuItem/**").hasAnyRole("HOTEL_ADMIN")
-                .antMatchers(HttpMethod.POST, "/newRoomPrice/**").hasAnyRole("HOTEL_ADMIN")
-                .antMatchers(HttpMethod.PUT, "/newRoomPrice/validDiscounts").permitAll()
+            
+
+//                .antMatchers("/reservation").hasAnyRole("USER")
+//                .antMatchers(HttpMethod.DELETE, "/room/**").hasAnyRole("HOTEL_ADMIN")
+//                .antMatchers(HttpMethod.POST, "/room/setReservation").permitAll()
+//                .antMatchers(HttpMethod.PUT, "/room/**").hasAnyRole("HOTEL_ADMIN")
+//                .antMatchers(HttpMethod.POST, "/room/addRoom").hasAnyRole("HOTEL_ADMIN")
+//                .antMatchers(HttpMethod.POST, "/hotel/**").hasAnyRole("HOTEL_ADMIN")
+//                .antMatchers(HttpMethod.PUT, "/hotel/**").hasAnyRole("HOTEL_ADMIN")
+//                .antMatchers(HttpMethod.GET, "/hotel/addMenuItem/**").hasAnyRole("HOTEL_ADMIN")
+//                .antMatchers(HttpMethod.GET, "/hotel/removeMenuItem/**").hasAnyRole("HOTEL_ADMIN")
+//                .antMatchers(HttpMethod.POST, "/newRoomPrice/**").hasAnyRole("HOTEL_ADMIN")
+//                .antMatchers(HttpMethod.PUT, "/newRoomPrice/validDiscounts").permitAll()
+
                 .anyRequest()
                 .fullyAuthenticated();
 
@@ -151,9 +153,19 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         web.ignoring().antMatchers("/user/confirm-account?**");
         web.ignoring().antMatchers("/user/confirm-account**");
         web.ignoring().antMatchers(HttpMethod.GET, "/hotel/**");
-//        web.ignoring().antMatchers(HttpMethod.PUT, "/hotel/findHotels/**");
-//        web.ignoring().antMatchers(HttpMethod.PUT, "/hotel/date");
-
+        web.ignoring().antMatchers(HttpMethod.GET, "/room/**");
+        web.ignoring().antMatchers("/reservation");
+        web.ignoring().antMatchers(HttpMethod.DELETE, "/room/**");
+        web.ignoring().antMatchers(HttpMethod.POST, "/room/setReservation");
+        web.ignoring().antMatchers(HttpMethod.PUT, "/room/**");
+        web.ignoring().antMatchers(HttpMethod.POST, "/room/addRoom");
+        web.ignoring().antMatchers(HttpMethod.POST, "/hotel/**");
+        web.ignoring().antMatchers(HttpMethod.PUT, "/hotel/**");
+        web.ignoring().antMatchers(HttpMethod.GET, "/hotel/addMenuItem/**");
+        web.ignoring().antMatchers(HttpMethod.GET, "/hotel/removeMenuItem/**");
+        web.ignoring().antMatchers(HttpMethod.POST, "/newRoomPrice/**");
+        web.ignoring().antMatchers(HttpMethod.PUT, "/newRoomPrice/validDiscounts");
+        web.ignoring().antMatchers(HttpMethod.PUT, "/hotel/search/**");
     }
 
     @Bean

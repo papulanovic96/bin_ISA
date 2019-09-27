@@ -15,6 +15,25 @@ public class FlightDTO {
     private Long airline;
     private Long planeTicket;
 
+    public FlightDTO() {
+
+    }
+
+    public FlightDTO(Long id, String fromDest, String toDest, String dateAndTimeTakeOff, String dateAndTimeLanding, String flightTime, String flightTravelTime, Long transferNumber, String transferLocation, Double ticketPrice, Long airline, Long planeTicket) {
+        this.id = id;
+        this.fromDest = fromDest;
+        this.toDest = toDest;
+        this.dateAndTimeTakeOff = dateAndTimeTakeOff;
+        this.dateAndTimeLanding = dateAndTimeLanding;
+        this.flightTime = flightTime;
+        this.flightTravelTime = flightTravelTime;
+        this.transferNumber = transferNumber;
+        this.transferLocation = transferLocation;
+        this.ticketPrice = ticketPrice;
+        this.airline = airline;
+        this.planeTicket = planeTicket;
+    }
+
     public Long getId() {
         return id;
     }

@@ -16,6 +16,14 @@ public class AirlineDTO {
         super();
     }
 
+    public AirlineDTO(Long id, String name, String address, String description, String officeDestination) {
+        this.id = id;
+        this.name = name;
+        this.address = address;
+        this.description = description;
+        this.officeDestination = officeDestination;
+    }
+
     public Long getId() {
         return id;
     }

@@ -16,15 +16,17 @@ public class SeatServiceImpl implements SeatService {
     public SeatRepository seatRepository;
 
     @Override
-    public PlaneSeat save(PlaneSeatDTO seat) {
+    public String save(PlaneSeatDTO seat) {
         PlaneSeat seatNew = PlaneSeatConverter.toEntity(seat);
-        return seatRepository.save(seatNew);
+        seatRepository.save(seatNew);
+        return "Seat added!";
     }
 
     @Override
-    public void delete(PlaneSeatDTO seat) {
+    public String delete(PlaneSeatDTO seat) {
         PlaneSeat newSeat = PlaneSeatConverter.toEntity(seat);
         seatRepository.deleteById(newSeat.getSeatId());
+        return "Seat deleted!";
     }
 
     @Override

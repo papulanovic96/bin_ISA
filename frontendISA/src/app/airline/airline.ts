@@ -4,6 +4,6 @@ export class Airline{
         public address: string,
         public description: string,
         public name: string,
-        public office_destination: string
+        public officeDestination: string
     ){}
 }

@@ -19,10 +19,10 @@ public class User implements Serializable {
     @Column
     private String email;
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-    @Column(name = "id" , nullable = false)
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id", nullable = false)
     private Long id;
-    @Column(nullable = false,name = "username")
+    @Column(nullable = false, name = "username")
     private String username;
     @Column(nullable = false)
     private String password;
@@ -51,7 +51,7 @@ public class User implements Serializable {
 
     }
 
-    public User(String username){
+    public User(String username) {
         this.username = username;
     }
 

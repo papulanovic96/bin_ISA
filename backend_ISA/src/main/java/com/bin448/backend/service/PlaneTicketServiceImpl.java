@@ -20,8 +20,9 @@ public class PlaneTicketServiceImpl implements PlaneTicketService{
     private PlaneTicketRepository planeTicketRepository;
 
     @Override
-    public void save(PlaneTicketDTO newTicket) {
+    public String save(PlaneTicketDTO newTicket) {
         planeTicketRepository.save(PlaneTicketConverter.toEntity(newTicket));
+        return "Ticket added!";
     }
 
     @Override

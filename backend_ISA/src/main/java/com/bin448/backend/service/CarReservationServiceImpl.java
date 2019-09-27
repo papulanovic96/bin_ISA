@@ -10,6 +10,9 @@ import com.bin448.backend.repository.CarRateRepository;
 import com.bin448.backend.repository.CarRepository;
 import com.bin448.backend.repository.CarReservationRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.text.SimpleDateFormat;
 import java.time.Period;
@@ -31,56 +34,40 @@ public class CarReservationServiceImpl implements CarReservationService{
     }
 
     @Override
+    @Transactional(readOnly = true)
     public CarReservation findByUserId(Long id) {
         return crr.findByUserId(id);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public CarReservation findBycarId(Long id) {
         return crr.findByCarId(id);
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW, isolation = Isolation.SERIALIZABLE)
     public void addReservation(CarReservationDTO crrr) {
-          CarReservation cr = CarReservationConverter.toEntity(crrr);
+        CarReservation cr = CarReservationConverter.toEntity(crrr);
 
         crr.save(cr);
     }
 
 
 
-
     @Override
+    @Transactional(readOnly = true)
     public boolean IsDeleteReservationPosible(Long id, Long userId) {
         CarReservation carReservation = crr.checkCanceling(id,userId);
         if(carReservation==null)
             return false;
-            else
-                return  true;
-   /*    List<CarReservation> carRes = crr.findAllByCarIdAndUserId(id, userId);
-        Car c = carRepository.getCarByCarId(id);
-        if (carRes.size() !=0  && c!=null && c.isReserved()) {
-            for (CarReservation carR : carRes) {
-                Date start = carR.getStartDate();
-                Date date = new Date(System.currentTimeMillis());
-                if (start.getTime() > date.getTime()) {
-                    long secs = (start.getTime() - date.getTime()) / 1000;
-                    long hours = secs / 3600;
-                    if (hours >= 24) {
+        else
+            return  true;
 
-                        return true;
-                    } else {
-                        return false;
-                    }
-                } else
-                    return false;
-            }
-            return false;
-        }
-        return false;*/
     }
 
     @Override
+    @Transactional(readOnly = true)
     public boolean isUserAbleToRate(Long id, Long userId) {
         List<CarReservation> reservations= crr.findAllByCarIdAndUserId(id,userId);
         List<CarRate> rates = carRateRep.findAllByCar_CarIdAndUser_Id(id,userId);
@@ -88,48 +75,18 @@ public class CarReservationServiceImpl implements CarReservationService{
             return true;
         else
             return false;
-        /*
-        Date date = new Date();
-        boolean finded = false;
 
-        if(reservations!=null) {
-            if(reservations.size()==0)
-                return false;
-            else {
-                for (CarReservation reservation : reservations) {
-                    if (date.compareTo(reservation.getEndDate()) > 0) {
-                        finded = true;
-                        break;
-                    }
-                }
-            }
-
-
-            if (finded == true) {
-                if (rates != null || rates.size()>0) {
-                    for (CarRate rate : rates) {
-                        if (rate.getRate() != null) {
-                            return false;
-                        }
-                    }
-                    return true;
-                } else return true;
-            }
-            else return false;
-
-        }
-
-        else return false;*/
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW, isolation = Isolation.SERIALIZABLE)
     public String removeReservation(Long id, Long userId) {
         String ret= "ERROR";
         try {
             CarReservation carR = crr.findByCarIdAndUserId(id,userId);
             crr.deleteAllByCarIdAndUserId(id,userId);
             carRepository.modifyReserved(false, id);
-        ret = "SUCCESS";
+            ret = "SUCCESS";
         }catch (Exception e){
             e.printStackTrace();
         }finally {
@@ -138,23 +95,14 @@ public class CarReservationServiceImpl implements CarReservationService{
     }
 
     @Override
+    @Transactional(readOnly = true)
     public boolean IsUserReservedCar(Long id, Long userId) {
         List<CarReservation> reservations = crr.findAllByCarIdAndUserId(id,userId);
-     /*   Date date = new Date();
 
-        if(reservations.size()>0){
-            for(CarReservation reservation:reservations){
-                if(date.compareTo(reservation.getEndDate()) < 0){
-                    return true;
-                }
-            }
-        }
-        return false;
-    */
-    if (reservations.size()==0)
-        return false;
-    else
-        return true;
+        if (reservations.size()==0)
+            return false;
+        else
+            return true;
     }
 
 }

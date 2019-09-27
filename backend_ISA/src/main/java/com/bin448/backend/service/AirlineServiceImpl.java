@@ -35,15 +35,17 @@ public class AirlineServiceImpl implements AirlineService {
     }
 
     @Override
-    public void save(AirlineDTO airline) {
+    public String save(AirlineDTO airline) {
         Airline newAirline = AirlineConverter.toEntity(airline);
         airlineRepository.save(newAirline);
+        return "Airline added!";
     }
 
     @Override
-    public void delete(AirlineDTO airline) {
+    public String delete(AirlineDTO airline) {
         Airline newAirline = AirlineConverter.toEntity(airline);
         airlineRepository.deleteById(newAirline.getId());
+        return "Airline deleted!";
     }
 
     @Transactional
@@ -53,7 +55,7 @@ public class AirlineServiceImpl implements AirlineService {
         if(a == null) {
             return false;
         }
-        airlineRepository.modifyAirline(a.getId(), a.getAddress(), a.getDescription(), a.getLuggagePrice(), a.getName(), a.getOfficeDestination());
+        airlineRepository.modifyAirline(a.getId(), a.getAddress(), a.getDescription(), a.getName(), a.getOfficeDestination());
         return true;
     }
 

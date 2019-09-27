@@ -5,6 +5,10 @@ import { User } from '../register/user';
 import { Observable } from 'rxjs';
 import { FriendshipService } from './friendship.service';
 import { ActivatedRoute } from '@angular/router';
+import { PlaneTicketServiceService } from '../plane-ticket/plane-ticket-service.service';
+import { Ticket } from '../plane-ticket/plane-ticket';
+import { FlightListService } from '../flight/flight-list/flight-list.service';
+import { Flight } from '../flight/flight';
 
 @Component({
   selector: 'app-friendship',
@@ -16,19 +20,29 @@ export class FriendshipComponent implements OnInit {
   
   public userIMG = 'assets/user.png'
   public user1 = 'assets/user1.png'
+  public reservedIS = 'assets/reserve.jpg'
 
-  loginService : AuthenticationService;
   a = new User('Meho','Sulejmani','Sarajevo', 'superMeho@narcis.com', '066 928 123', 'superMeho', '1232sd', 'ROLE_USER', 2);
   friendsList: String[];
   usersList: User[];
   requestsList: String[];
+  reservationList: Ticket[];
+  flightList: Flight[];
+  newList: Ticket[];
 
-  constructor(loginService:AuthenticationService, private serviceUser: GetUserService, 
-    private friendshipService: FriendshipService, private _route: ActivatedRoute){
-    this.loginService = loginService;
+  constructor(private loginService: AuthenticationService, private serviceUser: GetUserService, 
+    private friendshipService: FriendshipService, private _route: ActivatedRoute,
+    private reservationService: PlaneTicketServiceService, private flightService: FlightListService){    
   }
 
   ngOnInit() {
+    this.reservationService.returnAll().subscribe(
+      reservationList => {this.reservationList = reservationList}
+      
+      )
+    this.flightService.pronadjiSve().subscribe(
+      flightList => this.flightList = flightList
+    )
     this.friendshipService.getUsersFriends().subscribe(
       friendsList => this.friendsList = friendsList
     );
@@ -39,6 +53,7 @@ export class FriendshipComponent implements OnInit {
       requestsList => this.requestsList = requestsList
     )
       this.getLoggedUser(this.loginService.getLogged());
+
   }
 
   save() {
@@ -69,9 +84,10 @@ export class FriendshipComponent implements OnInit {
 
   unfriend(username : string){
     return this.friendshipService.unfriend(username).subscribe(
-      response =>  this.friendsList = response
     )
   }
+
+
 
   reload() {  
     window.location.reload();

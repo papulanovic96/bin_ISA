@@ -17,11 +17,11 @@ public interface CarServicePriceListRepository extends JpaRepository<CarServiceP
     List<CarServicePriceList> findAllByCarS_CarServiceName(String name);
     List<CarServicePriceList> findAllByCarS_CarServiceId(Long id);
     CarServicePriceList findByCarS_CarServiceIdAndCar_CarId(Long sId,Long cId);
-/*
-    @Transactional
-    @Modifying
-    void deleteByName(String name);
-*/
+    /*
+        @Transactional
+        @Modifying
+        void deleteByName(String name);
+    */
     @Transactional
     @Modifying
     void deleteByIdCarServicePriceList(Long id);

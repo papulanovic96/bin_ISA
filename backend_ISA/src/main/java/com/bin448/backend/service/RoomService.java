@@ -8,11 +8,11 @@ import java.util.List;
 
 public interface RoomService {
 
-    void addRoom(RoomDTO roomDTO);
+    String addRoom(RoomDTO roomDTO);
 
-    void removeRoom(Long id);
+    String removeRoom(Long id);
 
-    void changeRoom(RoomDTO roomDTO, Long id);
+    String changeRoom(RoomDTO roomDTO, Long id);
 
     void changeRoomReserved(RoomDTO roomDTO, Long id);
 

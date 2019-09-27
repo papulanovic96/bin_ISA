@@ -10,7 +10,7 @@ import { GetUserService } from '../service/get-user.service';
 export class FriendInviteService {
 
   private url = 'http://localhost:4200/user/getFriends';
-  private urlInvite = 'http://localhost:4200/user/invite';
+  private urlInvite = 'http://localhost:4200/user/friendinvite';
 
   constructor(private http: HttpClient, private getgets: AuthenticationService,
     private getUserService: GetUserService) { }

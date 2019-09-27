@@ -9,6 +9,7 @@ import { HttpClient } from '@angular/common/http';
 export class AirlineServiceService {
 
   private getURL : string;
+  private modifyURL = 'http://localhost:4200/airline/modify';
 
   constructor(private http: HttpClient) { 
     this.getURL = 'http://localhost:4200/airline/findAll';
@@ -16,5 +17,9 @@ export class AirlineServiceService {
 
   getAllAirlines() : Observable<Airline[]> {
     return this.http.get<Airline[]>(this.getURL);
+  }
+
+  changeIT(id: number, airline: Airline) {
+    return this.http.put(this.modifyURL + "/" + id, airline);
   }
 }

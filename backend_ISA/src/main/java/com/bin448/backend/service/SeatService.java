@@ -6,9 +6,9 @@ import com.bin448.backend.entity.PlaneSeat;
 import java.util.List;
 
 public interface SeatService {
-    PlaneSeat save(PlaneSeatDTO seat);
+    String save(PlaneSeatDTO seat);
 
-    void delete(PlaneSeatDTO seat);
+    String delete(PlaneSeatDTO seat);
 
     List<PlaneSeatDTO> findAll();
 

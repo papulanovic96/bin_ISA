@@ -14,6 +14,7 @@ import { IfStmt } from '@angular/compiler';
 
 export class AppComponent implements OnInit{
 
+  public query: string;
 
   title = 'MegaTravel';
   public vin = 'assets/binairlines.jpg';
@@ -24,6 +25,7 @@ export class AppComponent implements OnInit{
   constructor(loginService: AuthenticationService, private serviceTicket: PlaneTicketServiceService,
     private serviceFlight: FlightListService){
     this.loginService = loginService;
+    this.query = "starbucks";
   }
 
   ngOnInit(): void {

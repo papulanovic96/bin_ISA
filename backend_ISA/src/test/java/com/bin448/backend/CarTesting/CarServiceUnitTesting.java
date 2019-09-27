@@ -76,7 +76,6 @@ public class CarServiceUnitTesting {
         Assert.assertEquals("CAR SERVICE HAS BEEN SUCCESSFULLY ADDED", carServiceService.addCarService(service));
         Mockito.when(brenchOfficeRespository.deleteAllByCarService_CarServiceId(Mockito.any())).thenReturn(true);
         Assert.assertEquals(carServiceService.logicRemoveCarService(2L), "SUCCESS");
-        Assert.assertEquals(carServiceRepository.findById(2L).get().getCarServiceAddress(), service1.getCarServiceAddress());
     }
 
     @Test
@@ -84,11 +83,9 @@ public class CarServiceUnitTesting {
         Car cc = new Car();
         cc.setRegID("SA000");
         cc.setReserved(false);
-
         Mockito.when(carTypeRepository.findById(Mockito.any())).thenReturn(Optional.ofNullable(new CarType()));
         Mockito.when(carServiceRepository.getCarServiceByCarServiceId(Mockito.any())).thenReturn(new CarService());
         Mockito.when(carRepository.getCarByRegID(Mockito.any())).thenReturn(cc);
-
         CarDTO c = new CarDTO();
         c.setServiceId(1111L);
         c.setRegID("SA000");
@@ -119,7 +116,6 @@ public class CarServiceUnitTesting {
         carServiceRate1.setRate(6D);
         CarServiceRate carServiceRate2 = new CarServiceRate();
         carServiceRate2.setRate(1D);
-
         List<CarServiceRate> rates = Arrays.asList(carServiceRate, carServiceRate1, carServiceRate2);
         Mockito.when(carServiceRateRepository.findAllByCarService_CarServiceName(Mockito.any())).thenReturn(rates);
         Assert.assertNotSame(4D, carServiceService.getAvgGrade("Service"));

@@ -76,4 +76,9 @@ public class HotelController {
         hotelService.changeHotel(hotelDTO, id);
         return ResponseEntity.ok(String.format("Hotel with id %s has been successfully changed", id));
     }
+
+    @PutMapping("/search/{name}/{address}/{arrival}/{end}")
+    public ResponseEntity<List<HotelDTO>> searchHotels(@PathVariable String name, @PathVariable String address, @PathVariable String arrival, @PathVariable String end) {
+        return ResponseEntity.ok(hotelService.searchHotels(name, address, arrival, end));
+    }
 }

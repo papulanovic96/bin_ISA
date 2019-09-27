@@ -11,6 +11,8 @@ import com.bin448.backend.entity.DTOentity.CarRateDTO;
 import com.bin448.backend.entity.DTOentity.CarTypeDTO;
 import com.bin448.backend.repository.*;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.text.ParseException;
@@ -30,17 +32,18 @@ public class CarServiceImpl implements CarService {
     private CarTypeRepository ctr;
     private CarReservationRepository carReservationRepository;
     private CarServicePriceListRepository servicePriceListRepository;
-    public CarServiceImpl(CarServicePriceListRepository carServicePriceListRepository, CarReservationRepository carReservationRepository, CarDiscountRepository carDiscountRepository, CarTypeRepository ctr, CarRateRepository crr, CarRepository cr)
-    {
+
+    public CarServiceImpl(CarServicePriceListRepository carServicePriceListRepository, CarReservationRepository carReservationRepository, CarDiscountRepository carDiscountRepository, CarTypeRepository ctr, CarRateRepository crr, CarRepository cr) {
         this.carDiscountRepository = carDiscountRepository;
         this.ctr = ctr;
-        this.crr=crr;
-        this.cr=cr;
+        this.crr = crr;
+        this.cr = cr;
         this.carReservationRepository = carReservationRepository;
         this.servicePriceListRepository = carServicePriceListRepository;
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW, isolation = Isolation.SERIALIZABLE)
     public String addCar(CarDTO car) {
         String ret = "ERROR";
         try {
@@ -52,45 +55,43 @@ public class CarServiceImpl implements CarService {
             cr.save(c);
 
             ret = "SUCCESS";
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-        }finally {
-            return  ret;
+        } finally {
+            return ret;
         }
-        }
+    }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW, isolation = Isolation.SERIALIZABLE)
     public String removeCar(String reg) {
 
         String ret = "ERROR";
         try {
             Car c = cr.getCarByRegID(reg);
-            if(!c.isReserved()) {
+            if (!c.isReserved()) {
                 cr.deleteSelectedCar(true, reg);
                 ret = "SUCCESS";
-            }
-            else
+            } else
                 ret = "CAR IS RESERVED!";
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-        }finally {
-            return  ret;
+        } finally {
+            return ret;
         }
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<CarDTO> search(String model, String type, Integer from, Integer to, Integer nos) {
-        if(nos!=-5) {
+        if (nos != -5) {
             List<Car> cars = cr.search(model, type, from, to, nos);
             List<CarDTO> carDTOS = new ArrayList<>();
             for (Car c : cars)
                 carDTOS.add(CarConverter.fromEntity(c));
             return carDTOS;
 
-        }
-        else{
+        } else {
             List<Car> cars = cr.searchWithoutSeats(model, type, from, to);
             List<CarDTO> carDTOS = new ArrayList<>();
             for (Car c : cars)
@@ -98,158 +99,167 @@ public class CarServiceImpl implements CarService {
             return carDTOS;
 
         }
-        }
+    }
 
     @Override
+    @Transactional(readOnly = true)
     public CarDTO getCar(String reg) {
         CarDTO c = CarConverter.fromEntity(cr.getCarByRegID(reg));
         return c;
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<CarDTO> findAll(String serviceName) {
-        List <Car> auti = cr.findAllByCarService_CarServiceName(serviceName);
+        List<Car> auti = cr.findAllByCarService_CarServiceName(serviceName);
         List<CarDTO> cardto = new ArrayList<>();
 
-            for (int i = 0; i < auti.size(); i++) {
+        for (int i = 0; i < auti.size(); i++) {
 
-                    cardto.add(CarConverter.fromEntity(auti.get(i)));
+            cardto.add(CarConverter.fromEntity(auti.get(i)));
 
 
-            }
-                return cardto;
+        }
+        return cardto;
 
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW, isolation = Isolation.SERIALIZABLE)
     public String modifyReserved(boolean r, Long id) {
         String ret = "ERROR";
         try {
-            cr.modifyReserved(r,id);
+            cr.modifyReserved(r, id);
             ret = "SUCCESS";
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             return ret;
         }
     }
 
     @Override
-    public String modifyCar(String model, String type, Integer year, Boolean convert, String regID,Long serviceID,Long carID) {
+    @Transactional(propagation = Propagation.REQUIRES_NEW, isolation = Isolation.SERIALIZABLE)
+    public String modifyCar(String model, String type, Integer year, Boolean convert, String regID, Long serviceID, Long carID) {
         String ret = "ERROR!";
         try {
-            cr.modifyCar(model,type,year,convert,regID,serviceID,carID);
+            cr.modifyCar(model, type, year, convert, regID, serviceID, carID);
             ret = "SUCCESS";
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-        }finally {
-            return  ret;
+        } finally {
+            return ret;
         }
 
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW, isolation = Isolation.SERIALIZABLE)
     public String rateCar(CarRateDTO cra) {
         String ret = "ERROR!";
         try {
             CarRate crA = CarRateConverter.toEntity(cra);
             crr.save(crA);
             Double avg = crr.getAvgRate(cra.getCarID());
-            cr.rateSelectedCar(avg,cra.getCarID());
+            cr.rateSelectedCar(avg, cra.getCarID());
 
             ret = "SUCCESS!";
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-        }
-        finally {
+        } finally {
             return ret;
         }
 
 
-
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<CarDTO> getAllCars() {
         List<Car> all = cr.findAll();
         List<CarDTO> allDTO = new ArrayList<>();
-        for(Car c : all) {
+        for (Car c : all) {
 
-                allDTO.add(CarConverter.fromEntity(c));
+            allDTO.add(CarConverter.fromEntity(c));
         }
-    return  allDTO;
+        return allDTO;
     }
 
     @Override
+    @Transactional(readOnly = true)
     public boolean isUserRated(Long id, Long userId) {
-        List<CarRate> rates = crr.findAllByCar_CarIdAndUser_Id(id,userId);
-        if (rates.size()>0)
+        List<CarRate> rates = crr.findAllByCar_CarIdAndUser_Id(id, userId);
+        if (rates.size() > 0)
             return true;
-      return false;
+        return false;
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<CarDTO> getAllReservedCars(Long userID) {
         List<Car> cars = cr.getReservedCars(userID);
         List<CarDTO> carsDTO = new ArrayList<>();
-        for(int i=0;i<cars.size();i++){
+        for (int i = 0; i < cars.size(); i++) {
             carsDTO.add(CarConverter.fromEntity(cars.get(i)));
         }
         return carsDTO;
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<CarDTO> getAvailableCars(String type, Integer from, Integer to, String start, String end) {
         try {
 
 
-
-            List<Long> ids =  cr.getAvailableCars(type,from,to,start,end);
+            List<Long> ids = cr.getAvailableCars(type, from, to, start, end);
             List<Car> cars = new ArrayList<>();
             List<CarDTO> out = new ArrayList<>();
             for (Long id : ids)
                 cars.add(cr.getCarByCarId(id));
-            for (Car c:cars)
+            for (Car c : cars)
                 out.add(CarConverter.fromEntity(c));
             return out;
         } catch (Exception e) {
             e.printStackTrace();
-            return  null;
+            return null;
         }
 
 
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW, isolation = Isolation.SERIALIZABLE)
     public void updateType(Integer seats, Long sId, Long id) {
-     ctr.update(seats, sId, id);
+        ctr.update(seats, sId, id);
     }
 
     @Override
     public List<CarTypeDTO> getTypes() {
         List<CarType> types = ctr.findAll();
         List<CarTypeDTO> out = new ArrayList<>();
-        for(CarType c:types)
+        for (CarType c : types)
             out.add(CarTypeConverter.fromEntity(c));
-        return  out;
+        return out;
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW, isolation = Isolation.SERIALIZABLE)
     public boolean setDiscount(CarDiscountDTO carDiscountDTO) {
         carDiscountRepository.save(CarDiscountConverter.toEntity(carDiscountDTO));
         return true;
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<CarDiscountDTO> getAllCarDiscounts() {
         List<CarDiscount> carDiscounts = carDiscountRepository.findAll();
         List<CarReservation> carReservations = carReservationRepository.findAll();
         List<CarDiscountDTO> carDiscountDTOS = new ArrayList<>();
         for (CarDiscount carDiscount : carDiscounts) {
             List<CarReservation> carReservations1 = carReservationRepository.getThem(carDiscount.getStartDate(), carDiscount.getEndDate(), carDiscount.getCar().getCarId());
-            if (carReservations1.size() == 0){
+            if (carReservations1.size() == 0) {
                 CarServicePriceList carServicePriceList = servicePriceListRepository.findByCar_CarId(carDiscount.getCar().getCarId());
-                carDiscount.setPrice(carServicePriceList.getPrice() - (carServicePriceList.getPrice() * carDiscount.getRateOfDiscount()/100));
+                carDiscount.setPrice(carServicePriceList.getPrice() - (carServicePriceList.getPrice() * carDiscount.getRateOfDiscount() / 100));
                 carDiscountDTOS.add(CarDiscountConverter.fromEntity(carDiscount));
             }
         }

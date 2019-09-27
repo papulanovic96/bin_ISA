@@ -1,28 +1,117 @@
-<div class="text-center">
-    <table class="table table-fixed table-hover">
-        <thead>
-          <tr>
-            <th scope="col-xs-1">id</th>
-            <th scope="col-1">address</th>
-            <th scope="col-xs-1">description</th>
-            <th scope="col-1">name</th>
-            <th scope="col-1">office_destination</th>
-            <th scope="col-xs-1" colspan="2"></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor = 'let a of listOfAirline'>
-            <td>{{ a.id }}</td>
-            <td>{{ a.address }}</td>
-            <td>{{ a.description }}</td>
-            <td>{{ a.name }}</td>
-            <td>{{ a.office_destination }}</td>
-            <td><a><button class="btn btn-outline-warning"><i class="fa fa-edit"></i> Modify</button></a></td>
-            <td><button type="button" class="btn btn-outline-danger"><i class="fa fa-close"></i> Delete</button></td>
-          </tr>
-        </tbody>
-      </table>
+<div class="col-md-8 mb-4 " id="uInfo">
 
-      
+  <!-- Card -->
+  <div class="card card-cascade cascading-admin-card user-card" style="margin-top: 100px; background-color: rgba(21, 62, 186, 0.3);" >
+    
+    <!-- Card Data -->
+    <div class="admin-up d-flex justify-content-start">
+        <i class="fa fa-plane info-color py-4 mr-3 z-depth-2"></i>
+        <div class="data">
+          <h5 class="font-weight-bold dark-grey-text" style="color: aquamarine;">Edit Profile</h5>
+        </div>
+      </div>
+    <!-- Card Data -->
+
+    <!-- Card content -->
+    <div class="card-body card-body-cascade">
+
+      <!-- Grid row -->
+      <div class="row">
+
+        <!-- Grid column -->
+        <div class="col-lg-4">
+
+          <div class="md-form form-sm mb-0">
+            <input type="text" id="form12" class="form-control form-control-sm" [(ngModel)]="airline.id" disabled>
+            <label for="form12" class="teXt">ID</label>
+          </div>
+
+        </div>
+        <!-- Grid column -->
+
+        <!-- Grid column -->
+        <div class="col-lg-4">
+
+          <div class="md-form form-sm mb-0">
+            <input type="text" id="form3" class="form-control form-control-sm" [(ngModel)]="airline.address">
+            <label for="form3" class="teXt">Address</label>
+          </div>
+
+        </div>
+        <!-- Grid column -->
+
+        <!-- Grid column -->
+        <div class="col-lg-4">
+
+          <div class="md-form form-sm mb-0">
+            <input type="text" id="form4" class="form-control form-control-sm" [(ngModel)]="airline.description">
+            <label for="form4" class="teXt">Description</label>
+          </div>
+
+        </div>
+        <!-- Grid column -->
+
+      </div>
+      <!-- Grid row -->
+
+      <!-- Grid row -->
+      <div class="row">
+
+        <!-- Grid column -->
+        <div class="col-md-6">
+
+          <div class="md-form form-sm mb-0">
+            <input type="text" id="form5" class="form-control form-control-sm" [(ngModel)]="airline.name">
+            <label for="form5" class="teXt">Name</label>
+          </div>
+
+        </div>
+        <!-- Grid column -->
+
+        <!-- Grid column -->
+        <div class="col-md-6">
+
+          <div class="md-form form-sm mb-0">
+            <input type="text" id="form5" class="form-control form-control-sm" [(ngModel)]="airline.officeDestination">
+            <label for="form5" class="teXt">Office destination</label>
+          </div>
+
+        </div>
+        <!-- Grid column -->
+
+      </div>
+      <!-- Grid row -->
+
+      <!-- Grid row -->
+     
+      <!-- Grid row -->
+
+      <!-- Grid row -->
+      <div class="row">
+
+
+
+      </div>
+      <!-- Grid row -->
+
+      <!-- Grid row -->
+      <div class="row">
+
+        <!-- Grid column -->
+        <div class="col-md-12">
+
+          <button class="btn btn-info btn-rounded waves-effect waves-light" (click) = "change(airline)"><i class="fa fa-save"></i> Save</button>
+
+        </div>
+        <!-- Grid column -->
+
+      </div>
+      <!-- Grid row -->
+
+    </div>
+    <!-- Card content -->
+
+  </div>
+  <!-- Card -->
+
 </div>
-   
