@@ -7,7 +7,6 @@ import com.bin448.backend.service.HotelReservationService;
 import com.bin448.backend.service.RoomService;
 import com.bin448.backend.service.RoomTypeService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -23,7 +22,7 @@ public class RoomController {
     private final RoomTypeService roomTypeService;
     private final HotelReservationService hotelReservationService;
 
-    public RoomController(HotelReservationService hotelReservationService,RoomService roomService, RoomTypeService roomTypeService) {
+    public RoomController(HotelReservationService hotelReservationService, RoomService roomService, RoomTypeService roomTypeService) {
         this.roomService = roomService;
         this.roomTypeService = roomTypeService;
         this.hotelReservationService = hotelReservationService;
@@ -93,7 +92,12 @@ public class RoomController {
     }
 
     @GetMapping("/rate/{id},{username},{grade}")
-    public boolean rate(@PathVariable Long id,@PathVariable String username, @PathVariable Double grade){
-        return hotelReservationService.rateRoom(id,username,grade);
+    public boolean rate(@PathVariable Long id, @PathVariable String username, @PathVariable Double grade) {
+        return hotelReservationService.rateRoom(id, username, grade);
+    }
+
+    @GetMapping("/middleGrade/{roomId}")
+    public ResponseEntity<Double> getMiddleGrade(@PathVariable Long roomId) {
+        return ResponseEntity.ok(roomService.getMiddleGrade(roomId));
     }
 }

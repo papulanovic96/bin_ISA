@@ -5,8 +5,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-@Repository
-public interface HotelRateRepository extends JpaRepository<HotelRate,Long> {
 
-    List<HotelRate> findAllByUser_IdAndHotel_Id(Long userID,Long hotelID);
+@Repository
+public interface HotelRateRepository extends JpaRepository<HotelRate, Long> {
+
+    List<HotelRate> findAllByUser_IdAndHotel_Id(Long userID, Long hotelID);
+
+    List<HotelRate> findByHotel_Id(Long hotelId);
 }
