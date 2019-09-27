@@ -133,6 +133,7 @@ export class CarComponent implements OnInit {
       this.updateCar.convertible = false;
     }
     this.carService.addModifiedCar(this.updateCar.model, this.updateCar.typeC, this.updateCar.year, this.updateCar.convertible, this.updateCar.regID, this.updateCar.serviceId, this.updateCar.id).subscribe(
+
       data => {
         alert(data);
         this.router.navigated = false;

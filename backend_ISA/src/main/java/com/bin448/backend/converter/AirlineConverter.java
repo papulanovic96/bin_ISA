@@ -23,32 +23,30 @@ public class AirlineConverter extends AbstractConverter {
 
         Collection<Flight> flightsSet = e.getFlightList();
         List<Long> flightsID = new ArrayList<>();
-        for (Flight f : flightsSet) {
-            flightsID.add(f.getId());
+        if(flightsSet != null){
+            for (Flight f : flightsSet) {
+                flightsID.add(f.getId());
+            }
         }
         airlineDTO.setFlightListID(flightsID);
 
         Collection<PlaneTicket> planeTickets = e.getDicountTicket();
         List<Long> ticketsID = new ArrayList<>();
-        for (PlaneTicket pt : planeTickets) {
-            if(pt.isDiscount()) {
-                ticketsID.add(pt.getId());
+        if(planeTickets != null) {
+            for (PlaneTicket pt : planeTickets) {
+                if(pt.isDiscount()) {
+                    ticketsID.add(pt.getId());
+                }
             }
         }
         airlineDTO.setDiscountTicketListID(ticketsID);
 
-        Collection<Flight> flights = e.getFlightList();
-        List<Long> fIds = new ArrayList<>();
-        for (Flight ps : flights) {
-            fIds.add(ps.getId());
-        }
-        airlineDTO.setFlightListID(fIds);
-
-
         Collection<LuggagePrice> luggagePrices = e.getLuggagePrice();
         List<Long> luggageID = new ArrayList<>();
-        for(LuggagePrice lg : luggagePrices) {
-            luggageID.add(lg.getId());
+        if(luggagePrices != null) {
+            for(LuggagePrice lg : luggagePrices) {
+                luggageID.add(lg.getId());
+            }
         }
         airlineDTO.setLuggageID(luggageID);
 
@@ -61,9 +59,10 @@ public class AirlineConverter extends AbstractConverter {
         airline.setId(d.getId());
         airline.setAddress(d.getAddress());
         airline.setDescription(d.getDescription());
+        airline.setOfficeDestination(d.getOfficeDestination());
         airline.setName(d.getName());
 
-        Collection<Flight> flights = null;
+        Collection<Flight> flights = new ArrayList<>();
         List<Long> flightsID = d.getFlightListID();
         Flight newFlight = new Flight();
         if (flightsID != null) {
@@ -74,7 +73,7 @@ public class AirlineConverter extends AbstractConverter {
         }
         airline.setFlightList(flights);
 
-        Collection<PlaneTicket> tickets = null;
+        Collection<PlaneTicket> tickets = new ArrayList<>();
         List<Long> ticketsID = d.getDiscountTicketListID();
         PlaneTicket newTicket = new PlaneTicket();
         if (ticketsID != null) {
@@ -85,7 +84,7 @@ public class AirlineConverter extends AbstractConverter {
         }
         airline.setDicountTicket(tickets);
 
-        Collection<Flight> flights1 = null;
+        Collection<Flight> flights1 = new ArrayList<>();
         List<Long> flLongList = d.getFlightListID();
         Flight flight2 = new Flight();
         if (flLongList != null) {
@@ -96,7 +95,7 @@ public class AirlineConverter extends AbstractConverter {
         }
         airline.setFlightList(flights1);
 
-        Collection<LuggagePrice> luggagePrices = null;
+        Collection<LuggagePrice> luggagePrices = new ArrayList<>();
         List<Long> luggageID = d.getLuggageID();
         LuggagePrice newLuggage = new LuggagePrice();
         if(luggageID != null) {

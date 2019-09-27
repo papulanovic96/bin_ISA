@@ -19,13 +19,13 @@
         <i class="fa fa-arrow-left fa-lg fa-fw" aria-hidden="true"></i>
         <input class="form-control" name="end" [min]="getToday()" style="float: right;" [(ngModel)]="return" type="date">
       </div>
-      <input class="form-control btn btn-info" style="float: right;margin-left: 2px" type="button" value="Search">
+      <input class="form-control btn btn-info" style="float: right;margin-left: 2px" type="button" value="Search" (click)="find()">
     </form>
   </div>
   <table style="width: 210%; margin-top: 0cm;margin-left: 0px;margin-right: 0px;" class="table table-fixed table-hover">
     <thead>
     <tr>
-      <th scope="col-xs-1" *ngIf="loginService.isUserHotelAdmin()">Hotel id</th>
+      <th scope="col-xs-1" *ngIf="loginService.isUserHotelAdmin() && loginService.isUserLoggedIn()">Hotel id</th>
       <th scope="col-1">Name</th>
       <th scope="col-1">Address</th>
       <th scope="col-xs-1">Description</th>
@@ -42,7 +42,7 @@
     </thead>
     <tbody>
     <tr *ngFor='let hotel of listOfHotels'>
-      <td *ngIf="loginService.isUserHotelAdmin()">{{ hotel.hotel_id }}</td>
+      <td *ngIf="loginService.isUserHotelAdmin() && loginService.isUserLoggedIn()">{{ hotel.hotel_id }}</td>
       <td>{{ hotel.name }}</td>
       <td>{{ convertAddressIdToName(hotel.addressId) }}</td>
       <td>
@@ -66,13 +66,13 @@
         </button>
       </a></td>
       <td><a>
-        <button *ngIf="loginService.isUserHotelAdmin()" type="button" class="btn btn-info"
+        <button *ngIf="loginService.isUserHotelAdmin() && loginService.isUserLoggedIn()" type="button" class="btn btn-info"
                 (click)="changeHotel(hotel.hotel_id)"><i
           class="fa fa-refresh"></i> Change
         </button>
       </a></td>
       <td><a>
-        <button *ngIf="loginService.isUserHotelAdmin()" type="button" class="btn btn-info"
+        <button *ngIf="loginService.isUserHotelAdmin() && loginService.isUserLoggedIn()" type="button" class="btn btn-info"
                 (click)="removeHotel(hotel.hotel_id)"><i
           class="fa fa-remove"></i> Remove
         </button>
@@ -159,7 +159,7 @@
               <td>{{ item }}</td>
               <td>{{menuPrices[i]}} <i class="fa fa-euro"></i></td>
               <td>
-                <button *ngIf="loginService.isUserHotelAdmin()" type="button" class="close" data-dismiss="modal"
+                <button *ngIf="loginService.isUserHotelAdmin() && loginService.isUserLoggedIn()" type="button" class="close" data-dismiss="modal"
                         aria-label="Close"
                         (click)="removeAdditionalService(item)">
                   <span aria-hidden="true">&times;</span>
@@ -170,7 +170,7 @@
           </table>
         </div>
         <div class="modal-footer">
-          <button *ngIf="loginService.isUserHotelAdmin()" type="button" class="btn btn-info"
+          <button *ngIf="loginService.isUserHotelAdmin() && loginService.isUserLoggedIn()" type="button" class="btn btn-info"
                   (click)="openMenuItemModal()">Add menu item
           </button>
           <button type="button" class="btn btn-info" (click)="closeModalMenu()"><i

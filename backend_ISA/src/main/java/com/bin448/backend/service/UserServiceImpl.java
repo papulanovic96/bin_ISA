@@ -64,19 +64,11 @@ public class UserServiceImpl implements UserService {
         User receiver = ur.findByUsername(usernameReceiver);
         User sender = ur.findByUsername(usernameSender);
         for(Friendship f: friendships) {
-            if(f.getReceiver() == (sender)) {
+            if(f.getReceiver() == (sender) && f.getSender() == receiver) {
                 f.setAreFriends(true);
                 friendshipService.save(f);
                 break;
-            } else if(f.getReceiver() == receiver) {
-                f.setAreFriends(true);
-                friendshipService.save(f);
-                break;
-            } else if(f.getSender() == receiver) {
-                f.setAreFriends(true);
-                friendshipService.save(f);
-                break;
-            } else if(f.getSender() == sender) {
+            } else if(f.getReceiver() == receiver && f.getSender() == sender) {
                 f.setAreFriends(true);
                 friendshipService.save(f);
                 break;
@@ -190,17 +182,21 @@ public class UserServiceImpl implements UserService {
         User newUser = ur.findByUsername(username);
         UserDTO userDTO = UserConverter.fromEntity(newUser);
         List<String> listaFrsh = userDTO.getUsernameOfFriend();
-        if(listaFrsh.isEmpty()){
+        if(listaFrsh == null || listaFrsh.isEmpty()) {
             return dtoList;
         }
         Iterator<UserDTO> i = dtoList.iterator();
-        while(i.hasNext()) {
-            for(String un: listaFrsh) {
-                if(i.next().getUsername() == un) {
-                    i.remove();
+        if(listaFrsh != null) {
+            while(i.hasNext()) {
+                for(String un: listaFrsh) {
+                    if(i.next().getUsername() == un) {
+                        i.remove();
+                        break;
+                    }
                 }
             }
         }
+
 
         return dtoList;
     }

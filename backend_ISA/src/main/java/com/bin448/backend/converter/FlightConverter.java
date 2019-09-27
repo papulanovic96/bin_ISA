@@ -19,7 +19,9 @@ public abstract class FlightConverter extends AbstractConverter{
         newFlight.setTicketPrice(e.getTicketPrice());
         newFlight.setTransferLocation(e.getTransferLocation());
         newFlight.setTransferNumber(e.getTransferNumber());
-        newFlight.setAirline(e.getAirline().getId());
+        if(e.getAirline() != null) {
+            newFlight.setAirline(e.getAirline().getId());
+        }
         PlaneTicket newTicket = e.getPlaneTicket();
         if(newTicket != null) {
         newFlight.setPlaneTicket(e.getPlaneTicket().getId());}

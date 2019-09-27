@@ -15,6 +15,23 @@ public class PlaneTicketDTO {
     private String reservedBy;
     private Long airline;
 
+    public PlaneTicketDTO() {
+
+    }
+
+    public PlaneTicketDTO(Long id, boolean discount, Long userNumber, String tripType, String tripClass, String bag, List<Long> seat, Long flight, String reservedBy, Long airline) {
+        this.id = id;
+        this.discount = discount;
+        this.userNumber = userNumber;
+        this.tripType = tripType;
+        this.tripClass = tripClass;
+        this.bag = bag;
+        this.seat = seat;
+        this.flight = flight;
+        this.reservedBy = reservedBy;
+        this.airline = airline;
+    }
+
     public Long getId() {
         return id;
     }

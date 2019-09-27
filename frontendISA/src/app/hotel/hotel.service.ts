@@ -12,16 +12,19 @@ import {Discount} from '../room/discount';
 })
 export class HotelService {
 
-  private getUrlHotels = 'http://localhost:4200/hotel';
-  private getUrlRoomTypes = 'http://localhost:4200/room/roomTypes';
-  private getMenuUrl = 'http://localhost:4200/hotel/getMenu';
-  private addMenuItemUrl = 'http://localhost:4200/hotel/addMenuItem';
-  private removeMenuItemUrl = 'http://localhost:4200/hotel/removeMenuItem';
-  private getDescriptionUrl = 'http://localhost:4200/hotel/getDescription';
-  private getValidDiscountsUrl = 'http://localhost:4200/newRoomPrice/validDiscounts';
-  private addFastResUrl = 'http://localhost:4200/reservation/discount';
+
+  private getUrlHotels = 'http://localhost:4200/hotel'
+  private getUrlRoomTypes = 'http://localhost:4200/room/roomTypes'
+  private getMenuUrl = 'http://localhost:4200/hotel/getMenu'
+  private addMenuItemUrl = 'http://localhost:4200/hotel/addMenuItem'
+  private removeMenuItemUrl = 'http://localhost:4200/hotel/removeMenuItem'
+  private getDescriptionUrl = 'http://localhost:4200/hotel/getDescription'
+  private getValidDiscountsUrl = 'http://localhost:4200/newRoomPrice/validDiscounts'
+  private addFastResUrl = 'http://localhost:4200/reservation/discount'
+  private searchHotelsUrl = 'http://localhost:4200/hotel/search'
   private rateHotelUrl = 'http://localhost:4200/reservation/check';
   private rateRoomUrl = 'http://localhost:4200/room/rate';
+
 
 
   private username = sessionStorage.getItem('username');
@@ -39,6 +42,7 @@ export class HotelService {
 
   constructor(private http: HttpClient) {
   }
+
 
   rateRoom(idRoom: number, rate: number): Observable<boolean> {
     const username = sessionStorage.getItem('username');
@@ -78,54 +82,64 @@ export class HotelService {
     return this.http.get<boolean>(this.rateHotelUrl + '/' + idHotel + ',' + sessionStorage.getItem('username') + ',' + rate, httpOptions);
   }
 
-  addFastRes(fastRes: FastHotelReservation): Observable<FastHotelReservation> {
-    console.log(fastRes);
-    return this.http.post<FastHotelReservation>(this.addFastResUrl, fastRes, this.httpOptionsWithDataTypes);
+
+    findHotels(name: String, address: String, arrival: String, end: String): Observable<Hotel[]> {
+      if(name=="")
+    name=" "
+    if(address==""){
+      address=" "
+    }
+    return this.http.put<Hotel[]>(this.searchHotelsUrl + '/' + name + '/' + address + '/' + arrival + '/' + end, this.httpOptionsWithDataTypes);
   }
 
-  getValidDiscounts(fastReservation: FastHotelReservation): Observable<Discount[]> {
-    return this.http.put<Discount[]>(this.getValidDiscountsUrl, fastReservation, this.httpOptions);
+    addFastRes(fastRes: FastHotelReservation): Observable<FastHotelReservation> {
+
+      return this.http.post<FastHotelReservation>(this.addFastResUrl, fastRes, this.httpOptionsWithDataTypes);
   }
 
-  getAllAddresses(): Observable<Address[]> {
-    return this.http.get<Address[]>(this.getUrlHotels + '/addresses', this.httpOptions);
+    getValidDiscounts(fastReservation: FastHotelReservation): Observable<Discount[]> {
+      return this.http.put<Discount[]>(this.getValidDiscountsUrl, fastReservation, this.httpOptions);
   }
 
-  removeHotel(hotelId: number): Observable<Boolean> {
-    return this.http.put<Boolean>(this.getUrlHotels + '/remove/' + hotelId, this.httpOptionsWithDataTypes);
+    getAllAddresses(): Observable<Address[]> {
+      return this.http.get<Address[]>(this.getUrlHotels + '/addresses', this.httpOptions);
   }
 
-  getHotel(hotelId: number): Observable<Hotel> {
-    return this.http.get<Hotel>(this.getUrlHotels + '/' + hotelId, this.httpOptions);
+    removeHotel(hotelId: number): Observable<Boolean> {
+      return this.http.put<Boolean>(this.getUrlHotels + '/remove/' + hotelId, this.httpOptionsWithDataTypes);
   }
 
-  changeHotel(hotelId: number, hotel: Hotel): Observable<Hotel> {
-    return this.http.put<Hotel>(this.getUrlHotels + '/' + hotelId, hotel, this.httpOptionsWithDataTypes);
+    getHotel(hotelId: number): Observable<Hotel> {
+      return this.http.get<Hotel>(this.getUrlHotels + '/' + hotelId, this.httpOptions);
   }
 
-  getDescription(hotelId: number): Observable<String> {
-    console.log(this.httpOptionsWithDataTypes);
+    changeHotel(hotelId: number, hotel: Hotel): Observable<Hotel> {
+      return this.http.put<Hotel>(this.getUrlHotels + '/' + hotelId, hotel, this.httpOptionsWithDataTypes);
+  }
+
+    getDescription(hotelId: number): Observable<String> {
+      console.log(this.httpOptionsWithDataTypes);
     return this.http.get<String>(this.getDescriptionUrl + '/' + hotelId, this.httpOptionsWithDataTypes);
   }
 
-  getMenu(hotelId: number): Observable<Map<String, Number>> {
-    return this.http.get<Map<String, Number>>(this.getMenuUrl + '/' + hotelId, this.httpOptions);
+    getMenu(hotelId: number): Observable<Map<String, Number>> {
+      return this.http.get<Map<String, Number>>(this.getMenuUrl + '/' + hotelId, this.httpOptions);
   }
 
-  addMenuItem(name: String, price: number, hotelId: number): Observable<Object> {
-    return this.http.get<Object>(this.addMenuItemUrl + '/' + name + '/' + price + '/' + hotelId, this.httpOptionsWithDataTypes);
+    addMenuItem(name: String, price: number, hotelId: number): Observable<Object> {
+      return this.http.get<Object>(this.addMenuItemUrl + '/' + name + '/' + price + '/' + hotelId, this.httpOptionsWithDataTypes);
   }
 
-  removeMenuItem(name: String, hotelId: number): Observable<Object> {
-    return this.http.get<Object>(this.removeMenuItemUrl + '/' + name + '/' + hotelId, this.httpOptionsWithDataTypes);
+    removeMenuItem(name: String, hotelId: number): Observable<Object> {
+      return this.http.get<Object>(this.removeMenuItemUrl + '/' + name + '/' + hotelId, this.httpOptionsWithDataTypes);
   }
 
-  getAllHotels(): Observable<Hotel[]> {
-    return this.http.get<Hotel[]>(this.getUrlHotels, this.httpOptions);
+    getAllHotels(): Observable<Hotel[]> {
+      return this.http.get<Hotel[]>(this.getUrlHotels, this.httpOptions);
   }
 
-  getAllRoomTypes(): Observable<Type[]> {
-    return this.http.get<Type[]>(this.getUrlRoomTypes, this.httpOptions);
+    getAllRoomTypes(): Observable<Type[]> {
+      return this.http.get<Type[]>(this.getUrlRoomTypes, this.httpOptions);
   }
 
-}
+  }

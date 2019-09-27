@@ -42,11 +42,13 @@
                       <h3 class="mb-3 font-weight-bold"><strong>{{loginService.getLogged()}}</strong></h3>
                       <h6 class="font-weight-bold cyan-text mb-4">{{loginService.getRole()}}</h6>
       
-                      <a class="btn btn-info btn-rounded waves-effect waves-light" data-toggle="collapse" href="#prijatelji" role="button" aria-expanded="false" aria-controls="prijatelji"> Friends</a>
+                      <a *ngIf="!loginService.isUserAirlineAdmin()" class="btn btn-info btn-rounded waves-effect waves-light" data-toggle="collapse" href="#prijatelji" role="button" aria-expanded="false" aria-controls="prijatelji"> Friends</a>
                       <a class="btn btn-info btn-rounded waves-effect waves-light" data-toggle="collapse" href="#svikorisnici" role="button" aria-expanded="false" aria-controls="svikorisnici"> All users</a>
-                      <a class="btn btn-info btn-rounded waves-effect waves-light" data-toggle="collapse" href="#zahtjevi" role="button" aria-expanded="false" aria-controls="zahtjevi"> Friend requests</a>
+                      <a *ngIf="!loginService.isUserAirlineAdmin()" class="btn btn-info btn-rounded waves-effect waves-light" data-toggle="collapse" href="#zahtjevi" role="button" aria-expanded="false" aria-controls="zahtjevi"> Friend requests</a>
                       <a class="btn btn-info btn-rounded waves-effect waves-light" data-toggle="collapse" href="#uInfo" role="button" aria-controls="uInfo"> User info</a>
-                      <a class="btn btn-info btn-rounded waves-effect waves-light" data-toggle="collapse" href="#reserve" role="button" aria-controls="reserve"> Resrvations</a>
+                      <a *ngIf="!loginService.isUserAirlineAdmin()"class="btn btn-info btn-rounded waves-effect waves-light" data-toggle="collapse" href="#reserve" role="button" aria-controls="reserve"> Flight resrvations</a>
+                      <a *ngIf="loginService.isUserAirlineAdmin()" class="btn btn-info btn-rounded waves-effect waves-light" data-toggle="collapse" href="#bRepo" role="button" aria-controls="bRepo">Airline rating </a>
+                      <a *ngIf="loginService.isUserAirlineAdmin()" class="btn btn-info btn-rounded waves-effect waves-light" data-toggle="collapse" href="#fRepo" role="button" aria-controls="fRepo">Flight rating </a>
                     </div>
       
                   </div>
@@ -54,6 +56,61 @@
                   <!-- Card -->
       
                 </div>
+                <div class="collapse col-md-8 mb-4" id="fRepo" >
+                  <!-- Card -->
+                  <div class="card card-cascade cascading-admin-card user-card scroll " style="margin-top: 100px; background-color: rgba(21, 62, 186, 0.3);">
+                    <!-- Card content -->
+                    <div class="card-body card-body-cascade">
+      
+                          <div class="card-container" >
+                                  <div class="card" style="margin: 20px; border: none; box-shadow: none;">
+                                  <div class= "row" style="margin-bottom: 20px;">
+                                      <!-- new columns -->
+                                      <div class = "col-4">
+                                                  <h1>Flight rating</h1>
+                                              <div class="card-body">
+                                                <p><i class="fa fa-star"></i> 9.4</p>  
+                                            </div>
+                                      
+                                      </div>
+                                      <div class = "col-4">
+                                          <div id="barChart"></div>
+                                      </div>
+                                      <!-- new columns -->
+                                  </div>
+                              </div>
+                          </div>       
+                    </div>
+                  </div>
+                </div>
+                <div class="collapse col-md-8 mb-4" id="bRepo" >
+                  <!-- Card -->
+                  <div class="card card-cascade cascading-admin-card user-card scroll " style="margin-top: 100px; background-color: rgba(21, 62, 186, 0.3);">
+                    <!-- Card content -->
+                    <div class="card-body card-body-cascade">
+      
+                          <div class="card-container" >
+                                  <div class="card" style="margin: 20px; border: none; box-shadow: none;">
+                                  <div class= "row" style="margin-bottom: 20px;">
+                                      <!-- new columns -->
+                                      <div class = "col-4">
+                                                  <h1>Airline rating</h1>
+                                              <div class="card-body">
+                                                <p><i class="fa fa-star"></i> 9.4</p>  
+                                            </div>
+                                      
+                                      </div>
+                                      <div class = "col-4">
+                                          <div id="barChart"></div>
+                                      </div>
+                                      <!-- new columns -->
+                                  </div>
+                              </div>
+                          </div>       
+                    </div>
+                  </div>
+                </div>
+                <!--Reservations by USER-->
                 <div class="collapse col-md-8 mb-4" id="reserve" >
                     <!-- Card -->
                     <div class="card card-cascade cascading-admin-card user-card scroll " style="margin-top: 100px; background-color: rgba(21, 62, 186, 0.3);">
@@ -64,23 +121,33 @@
                                     <div class="card" style="margin: 20px; border: none; box-shadow: none;">
                                     <div class= "row" style="margin-bottom: 20px;">
                                         <!-- new columns -->
-                                        <div class = "col-sm-3" *ngFor = 'let a of friendsList'>
-                                            <div class="card">
-                                                    <img [src]= "userIMG" class="card-img-top" alt="Image not found!" style="border: 1px; ">
+                                        <div class = "col-sm-3" *ngFor = 'let a of reservationList'>
+                                            <div class="card" *ngIf="a.reservedBy == loginService.getLogged()">
+                                                    <img [src]= "reservedIS" class="card-img-top" alt="Image not found!" style="border: 1px; ">
                                                 <div class="card-body">
-                                                  <h5 class="card-title" >Banex</h5>
-                                                  <button style="font-size: 10px" class="btn btn-info btn-rounded waves-effect waves-light" id="modalActivate3" type="button" data-toggle="modal" data-target="#unFrend"  (click) = "unfriend(a)"><i class="fa fa-user-times"></i> Unfriend</button>
+                                                  <h5 class="card-title" >{{a.id}}</h5>
+                                                  <button style="font-size: 10px" class="btn btn-info btn-rounded waves-effect waves-light" id="modalActivate3" type="button" data-toggle="modal" data-target="#unFrend"><i class="fa fa-open"></i> Open</button>
                                                 </div>
-                                              </div>
                                               <div id="unFrend" class="modal fade">
                                                     <div class="modal-dialog modal-confirm">
                                                         <div class="modal-content">
-                                                            <br><br>
-                                                            <h5>You and {{a}} are not friends anymore!</h5>
-                                                            <div class="swal2-icon swal2-error swal2-animate-error-icon" style="display: flex;"><span class="swal2-x-mark"><span class="swal2-x-mark-line-left"></span><span class="swal2-x-mark-line-right"></span></span></div><br>
+
+                                                                <div class="list-group" *ngFor="let item of flightList">
+                                                                    <button *ngIf="a.flight == item.id" type="button" class="list-group-item list-group-item-action active"> {{item.id}} </button>
+                                                                    <button *ngIf="a.flight == item.id" type="button" class="list-group-item list-group-item-action">Date: {{item.dateAndTimeTakeOff}}</button>
+                                                                    <button *ngIf="a.flight == item.id" type="button" class="list-group-item list-group-item-action">From: {{item.fromDest}}</button>
+                                                                    <button *ngIf="a.flight == item.id" type="button" class="list-group-item list-group-item-action">To: {{item.toDest}}</button>
+                                                                    <button *ngIf="a.flight == item.id" type="button" class="list-group-item list-group-item-action">Take off: {{item.flightTime}}</button>
+                                                                    <button *ngIf="a.flight == item.id" type="button" class="list-group-item list-group-item-action">Flight travel time: {{item.flightTravelTime}}</button>
+                                                                    <button *ngIf="a.flight == item.id" type="button" class="list-group-item list-group-item-action">Number of stops: {{item.transferNumber}}</button>
+                                                                    <button *ngIf="a.flight == item.id" type="button" class="list-group-item list-group-item-action">Stops location: {{item.transferLocation}}</button>
+                                                                    <button *ngIf="a.flight == item.id" type="button" class="list-group-item list-group-item-action">Price: {{item.ticketPrice}} € </button>
+                                                                  </div>
+
                                                         </div>
                                                     </div>
                                                 </div>  
+                                              </div>
                                         </div>
                                         <!-- new columns -->
                                     </div>
@@ -277,14 +344,14 @@
                                                     <div class="card-body" style=" border: 2px; border-color: slateblue; background-color: rgba(21, 62, 186, 0.3); box-shadow: none;">
                                                       <h5 class="card-title" > {{ a.username }} </h5>
                                                       <div *ngIf="loginService.getLogged() !== a.username">
-                                                      <button style="font-size: 10px" id="modalActivate2" type="button" data-toggle="modal" data-target="#poslato" class="btn btn-info btn-rounded waves-effect waves-light" (click) = "sendRequest(a.username)"><i class="fa fa-user-plus"></i> Add Friend</button></div>
+                                                      <button *ngIf="!loginService.isUserAirlineAdmin()" style="font-size: 10px" id="modalActivate2" type="button" data-toggle="modal" data-target="#poslato" class="btn btn-info btn-rounded waves-effect waves-light" (click) = "sendRequest(a.username)"><i class="fa fa-user-plus"></i> Add Friend</button></div>
                                                     </div>
                                                   </div>
                                                   <div id="poslato" class="modal fade">
                                                         <div class="modal-dialog modal-confirm">
                                                             <div class="modal-content">
                                                                 <br><br>
-                                                                <h5>Request sent successfully to {{a.username}}</h5>
+                                                                <h5>Request sent successfully!</h5>
                                                                     <div class="swal2-icon swal2-success swal2-animate-success-icon" style="display: flex;">
                                                                             <div class="swal2-success-circular-line-left" style="background-color: rgb(255, 255, 255);"></div>
                                                                               <span class="swal2-success-line-tip"></span>
@@ -398,6 +465,45 @@
             minScrollbarLength: 20
           });
       
+
+          //bar
+var ctxB = document.getElementById("barChart").getContext('2d');
+var myBarChart = new Chart(ctxB, {
+type: 'bar',
+data: {
+labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+datasets: [{
+label: '# of Votes',
+data: [12, 19, 3, 5, 2, 3],
+backgroundColor: [
+'rgba(255, 99, 132, 0.2)',
+'rgba(54, 162, 235, 0.2)',
+'rgba(255, 206, 86, 0.2)',
+'rgba(75, 192, 192, 0.2)',
+'rgba(153, 102, 255, 0.2)',
+'rgba(255, 159, 64, 0.2)'
+],
+borderColor: [
+'rgba(255,99,132,1)',
+'rgba(54, 162, 235, 1)',
+'rgba(255, 206, 86, 1)',
+'rgba(75, 192, 192, 1)',
+'rgba(153, 102, 255, 1)',
+'rgba(255, 159, 64, 1)'
+],
+borderWidth: 1
+}]
+},
+options: {
+scales: {
+yAxes: [{
+ticks: {
+beginAtZero: true
+}
+}]
+}
+}
+});
         </script><div class="drag-target" style="left: 0px;"></div>
       
       

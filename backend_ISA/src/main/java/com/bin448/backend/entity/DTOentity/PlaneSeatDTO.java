@@ -5,9 +5,18 @@ public class PlaneSeatDTO {
     private boolean reserved;
     private Long airline;
     private Long ticket;
+    private String username;
 
     public PlaneSeatDTO() {
         super();
+    }
+
+    public PlaneSeatDTO(Long seatId, boolean reserved, Long airline, Long ticket, String username) {
+        this.seatId = seatId;
+        this.reserved = reserved;
+        this.airline = airline;
+        this.ticket = ticket;
+        this.username = username;
     }
 
     public Long getId() {
@@ -40,5 +49,13 @@ public class PlaneSeatDTO {
 
     public void setTicketID(Long ticketID) {
         this.ticket = ticketID;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

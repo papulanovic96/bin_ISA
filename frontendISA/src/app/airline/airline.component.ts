@@ -16,8 +16,16 @@ export class AirlineComponent implements OnInit {
 
   ngOnInit() {
     this.airlineService.getAllAirlines().subscribe(
-      listOfAirline => this.listOfAirline = listOfAirline
+      listOfAirline => {this.listOfAirline = listOfAirline,
+        this.listOfAirline.forEach(element => {
+          this.airline = element;
+        });}
     );
+    
+  }
+
+  change(airlineNew: Airline) {
+    return this.airlineService.changeIT(airlineNew.id, airlineNew).subscribe();
   }
 
 }

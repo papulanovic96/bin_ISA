@@ -65,7 +65,6 @@ public class CarServiceController {
     }
 
 
-
     @GetMapping("/getPrice/{id}")
     public Integer getTotal(@PathVariable Long id){
         return css.getPrice(id);

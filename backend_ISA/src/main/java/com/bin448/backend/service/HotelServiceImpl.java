@@ -2,6 +2,7 @@ package com.bin448.backend.service;
 
 import com.bin448.backend.converter.AddressConverter;
 import com.bin448.backend.converter.HotelConverter;
+import com.bin448.backend.entity.Address;
 import com.bin448.backend.entity.DTOentity.AddressDTO;
 import com.bin448.backend.entity.DTOentity.HotelDTO;
 import com.bin448.backend.entity.Hotel;
@@ -9,12 +10,14 @@ import com.bin448.backend.exception.ForeignKeyConstraintException;
 import com.bin448.backend.exception.NotFoundException;
 import com.bin448.backend.repository.AddressRepository;
 import com.bin448.backend.repository.HotelRepository;
+import com.bin448.backend.repository.HotelReservationRepository;
 import com.bin448.backend.repository.RoomRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -23,11 +26,13 @@ public class HotelServiceImpl implements HotelService {
     private final HotelRepository hotelRepository;
     private final RoomRepository roomRepository;
     private final AddressRepository addressRepository;
+    private final HotelReservationRepository hotelReservationRepository;
 
-    public HotelServiceImpl(HotelRepository hotelRepository, RoomRepository roomRepository, AddressRepository addressRepository) {
+    public HotelServiceImpl(HotelRepository hotelRepository, RoomRepository roomRepository, AddressRepository addressRepository, HotelReservationRepository hotelReservationRepository) {
         this.hotelRepository = hotelRepository;
         this.roomRepository = roomRepository;
         this.addressRepository = addressRepository;
+        this.hotelReservationRepository = hotelReservationRepository;
     }
 
     @Override
@@ -124,5 +129,73 @@ public class HotelServiceImpl implements HotelService {
     private Hotel findHotel(Long hotelId) {
         return hotelRepository.findByIdAndDeleted(hotelId, false)
                 .orElseThrow(() -> new NotFoundException(String.format("Hotel with id %s not found", hotelId)));
+    }
+
+    @Override
+    public List<HotelDTO> searchHotels(String name, String address, String arrival, String end) {
+        List<Hotel> hotels = hotelRepository.findByDeleted(false);
+        List<Hotel> addressHotels = new ArrayList<>();
+        List<Address> addresses = addressRepository.findAll();
+        List<Address> suitableAddresses = new ArrayList<>();
+        for (Address ad : addresses) {
+            if (ad.getCity().toUpperCase().equals(address.toUpperCase())) {
+                suitableAddresses.add(ad);
+            }
+        }
+
+        for (Hotel hotel : hotels) {
+            for (Address ad : suitableAddresses) {
+                if (hotel.getAddress().getId() == ad.getId()) {
+                    addressHotels.add(hotel);
+                }
+            }
+        }
+        List<Hotel> nameAndAddressesHotels = new ArrayList<>();
+
+        List<Hotel> nameHotels = hotelRepository.searchHotelName(name);
+        if (nameHotels.size() == 0) {
+            nameAndAddressesHotels = addressHotels;
+        } else if (addressHotels.size() == 0) {
+            nameAndAddressesHotels = nameHotels;
+        } else {
+            for (Hotel hotel : nameHotels) {
+                for (Hotel hotel1 : addressHotels) {
+                    if (hotel.getId().equals(hotel1.getId())) {
+                        nameAndAddressesHotels.add(hotel);
+                    }
+                }
+            }
+        }
+
+        Date arrivalDate = new Date();
+        Date endDate = new Date();
+        DateFormat formatter = new SimpleDateFormat("yyyy-mm-dd");
+
+        try {
+            arrivalDate = formatter.parse(arrival);
+            endDate = formatter.parse(end);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        List<Hotel> endHotels = new ArrayList<>();
+        List<Hotel> all = hotelRepository.searchHotelByDate(arrival, end);
+        for (Hotel h : nameAndAddressesHotels) {
+            boolean added = false;
+            for (Hotel hotel : all) {
+                if (h.getId() == hotel.getId()) {
+                    endHotels.add(h);
+                    added = true;
+                }
+            }
+            if (added == false) {
+                if (hotelReservationRepository.getByRoom_Hotel_Id(h.getId()).size() == 0) {
+                    endHotels.add(h);
+                }
+            }
+        }
+
+        return endHotels.stream()
+                .map(hotel -> HotelConverter.fromEntity(hotel))
+                .collect(Collectors.toList());
     }
 }

@@ -2,10 +2,12 @@ package com.bin448.backend.converter;
 
 import com.bin448.backend.entity.DTOentity.UserDTO;
 import com.bin448.backend.entity.Friendship;
+import com.bin448.backend.entity.PlaneSeat;
 import com.bin448.backend.entity.PlaneTicket;
 import com.bin448.backend.entity.User;
 import com.bin448.backend.repository.FriendshipRepository;
 import com.bin448.backend.repository.PlaneTicketRepository;
+import com.bin448.backend.repository.SeatRepository;
 import com.bin448.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -17,10 +19,12 @@ public class UserConverter extends AbstractConverter{
 
     private static FriendshipRepository fr;
     private static PlaneTicketRepository tr;
+    private static SeatRepository sr;
 
-    public UserConverter(FriendshipRepository f, PlaneTicketRepository t){
+    public UserConverter(FriendshipRepository f, PlaneTicketRepository t, SeatRepository s){
         this.fr = f;
         this.tr = t;
+        this.sr = s;
     }
 
     public static UserDTO fromEntity(User e) {
@@ -39,6 +43,7 @@ public class UserConverter extends AbstractConverter{
 
         List<Friendship> listUser = fr.findAll();
         List<String> listUserNames = new ArrayList<>();
+        List<Friendship> novaList = new ArrayList<>();
         for(Friendship fp : listUser) {
             List<Friendship> nova = fp.getReceiver().getFriends();
             List<Friendship> nova2 = fp.getSender().getRequests();
@@ -58,46 +63,39 @@ public class UserConverter extends AbstractConverter{
             while(i2.hasNext()){
                 if(i2.next().isAreFriends()){
                     i2.remove();
+
                 }
-            }
+                e.setRequests(nova2);
+                e.setFriends(nova);
+            } break;
         }
         User newUser;
         User newUser2;
-        for(Friendship f: listUser) {
-            if(f.isAreFriends()){
-                newUser = f.getReceiver();
-                newUser2 = f.getSender();
-                if(newUser.getUsername() != e.getUsername()) {
-                    listUserNames.add(newUser.getUsername());
+        List<Friendship> listOfFriendsFromUser = e.getFriends();
+
+        if(listOfFriendsFromUser != null) {
+            for(Friendship f: listOfFriendsFromUser) {
+                if(f.getSender().getUsername() != e.getUsername()){
+                    listUserNames.add(f.getSender().getUsername());
                 } else {
-                    if(newUser2.getUsername() != e.getUsername()){
-                        listUserNames.add(newUser2.getUsername());
-                    }
+                    listUserNames.add(f.getReceiver().getUsername());
                 }
             }
         }
         newDTOUser.setUsernameOfFriend(listUserNames);
-
-        List<Friendship> listUserRequests = fr.findAll();
-        List<String> listUserReq = new ArrayList<>();
-        User newUserR;
-        User newUserR2;
-        for(Friendship f: listUserRequests) {
-            if(!f.isAreFriends()){
-                newUserR = f.getSender();
-                newUserR2 = f.getReceiver();
-                if(newUserR.getUsername() != e.getUsername()) {
-                    listUserReq.add(newUserR.getUsername());
-                } else
-                {
-                    if(newUserR2.getUsername() != e.getUsername()){
-                        listUserReq.add(newUserR2.getUsername());
-                    }
-
+        List<Friendship> listUserReq = e.getRequests();
+        List<String> newRequests = new ArrayList<>();
+        if(listUserReq != null) {
+            for(Friendship f: listUserReq) {
+                if(f.getSender().getUsername() != e.getUsername()){
+                    newRequests.add(f.getSender().getUsername());
+                } else {
+                    newRequests.add(f.getReceiver().getUsername());
                 }
             }
         }
-        newDTOUser.setUsernameOfRequests(listUserReq);
+
+        newDTOUser.setUsernameOfRequests(newRequests);
 
         List<Long> rezervisaneKarte = new ArrayList<>();
         List<PlaneTicket> karte = e.getReservedTicket();
@@ -107,6 +105,9 @@ public class UserConverter extends AbstractConverter{
             rezervisaneKarte.add(newTicket);
         }
         newDTOUser.setPlaneTicket(rezervisaneKarte);
+        if(e.getSeatForUser() != null) {
+            newDTOUser.setSeat(e.getSeatForUser().getSeatId());
+        }
         return newDTOUser;
     }
 
@@ -123,6 +124,7 @@ public class UserConverter extends AbstractConverter{
         newUser.setUsername(d.getUsername());
         newUser.setRole(d.getRole());
         newUser.setPassword(d.getPassword());
+
         List<String> listUserNames = d.getUsernameOfFriend();
         List<Friendship> listUser = new ArrayList<>();
         User userFor = new User();
@@ -160,7 +162,10 @@ public class UserConverter extends AbstractConverter{
                 newReserved.add(newTicket);
             }
         }
-
+        if(d.getSeat() != null) {
+            PlaneSeat nSeat = sr.getOne(d.getId());
+            newUser.setSeatForUser(nSeat);
+        }
         newUser.setReservedTicket(newReserved);
         return newUser;
 

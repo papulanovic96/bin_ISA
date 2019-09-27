@@ -29,4 +29,7 @@ public interface HotelService {
     void removeMenuItem(String name, Long hotelId);
 
     String getDescription(Long hotelId);
+
+    List<HotelDTO> searchHotels(String name, String address, String arrival, String end);
+
 }

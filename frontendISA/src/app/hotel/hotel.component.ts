@@ -1,4 +1,5 @@
-import {Component, OnInit} from '@angular/core';
+import {from} from "rxjs";
+
 import {Hotel} from './hotel';
 import {HotelService} from './hotel.service';
 import {RoomService} from '../room/room.service';
@@ -10,6 +11,7 @@ import {Address} from './address';
 import {Discount} from '../room/discount';
 import {Type} from '../hotel/type';
 import {DatePipe} from '@angular/common';
+import {Component, OnInit} from "@angular/core";
 
 @Component({
   selector: 'app-hotel',
@@ -72,45 +74,45 @@ export class HotelComponent implements OnInit {
     this.hotelService.getAllRoomTypes().subscribe(listOfTypes => this.listOfTypes = listOfTypes);
   }
 
-  // find() {
-  //   if (this.findHotelName == "" && this.address == "") {
-  //     alert("You have to fill hotel name or address")
-  //   } else if (this.arrival < new Date() || this.return < new Date()) {
-  //     alert("Both dates are required")
-  //   } else if (this.return < this.arrival) {
-  //     alert('Arrival date have to be bigger than return date')
-  //   } else {
-  //     if (this.address == "") {
-  //       this.hotelService.findHotels(this.findHotelName, this.address, this.arrival, this.return).subscribe(
-  //         hotels => {
-  //           for (let h of hotels) {
-  //             console.log(h.name)
-  //           }
-  //         }
-  //       )
-  //     } else {
-  //       let found = false;
-  //       for (let adress of this.listOfAddress) {
-  //         if (adress.city.toUpperCase() == this.address.toUpperCase()) {
-  //           found = true;
-  //         }
-  //       }
-  //       if (found == false) {
-  //         alert("Ther is no hotel in " + this.address);
-  //       } else {
-  //         this.hotelService.findHotels(this.findHotelName, this.address, this.arrival, this.return).subscribe(
-  //           hotels => {
-  //             for (let h of hotels) {
-  //               console.log(h.name)
-  //             }
-  //           }
-  //         )
-  //       }
-  //     }
-  //   }
+  find() {
+    if (this.findHotelName == "" && this.address == "") {
+      alert("You have to fill hotel name or address")
+    } else if (this.arrival < new Date() || this.return < new Date()) {
+      alert("Both dates are required")
+    } else if (this.return < this.arrival) {
+      alert('Arrival date have to be bigger than return date')
+    } else {
+      if (this.address == "") {
+        this.hotelService.findHotels(this.findHotelName, this.address, new Date(this.arrival).toISOString().split('T')[0], new Date(this.return).toISOString().split('T')[0]).subscribe(
+          hotels => {
+            this.listOfHotels = hotels;
+            this.router.navigated = false;
+            this.router.navigate([this.router.url])
+          }
+        )
+      } else {
+        let found = false;
+        for (let adress of this.listOfAddress) {
+          if (adress.city.toUpperCase() == this.address.toUpperCase()) {
+            found = true;
+          }
+        }
+        if (found == false) {
+          alert("There is no hotel in " + this.address);
+        } else {
+          this.hotelService.findHotels(this.findHotelName, this.address, new Date(this.arrival).toISOString().split('T')[0], new Date(this.return).toISOString().split('T')[0]).subscribe(
+            hotels => {
+              this.listOfHotels = hotels;
+              this.router.navigated = false;
+              this.router.navigate([this.router.url])
+            }
+          )
+        }
+      }
+    }
 
 
-  // }
+  }
 
   preRateHotel(id: number) {
     this.idOfHotel = id;

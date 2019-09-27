@@ -8,8 +8,8 @@ import java.util.List;
 
 public interface AirlineService {
     List<AirlineDTO> findAll();
-    void save(AirlineDTO airline);
-    void delete(AirlineDTO airline);
+    String save(AirlineDTO airline);
+    String delete(AirlineDTO airline);
     boolean modify(AirlineDTO airline);
     AirlineDTO findById(Long id);
     Boolean rateAirline(Long userId, Long airlineId, Double rate);

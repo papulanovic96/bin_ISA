@@ -4,8 +4,18 @@ import com.bin448.backend.entity.Airline;
 import com.bin448.backend.entity.DTOentity.PlaneSeatDTO;
 import com.bin448.backend.entity.PlaneSeat;
 import com.bin448.backend.entity.PlaneTicket;
+import com.bin448.backend.entity.User;
+import com.bin448.backend.repository.UserRepository;
+import org.springframework.stereotype.Component;
 
-public abstract class PlaneSeatConverter extends AbstractConverter {
+@Component
+public class PlaneSeatConverter extends AbstractConverter {
+
+    private static UserRepository ur;
+
+    public PlaneSeatConverter(UserRepository r) {
+        this.ur = r;
+    }
 
     public static PlaneSeatDTO fromEntity(PlaneSeat e) {
         PlaneSeatDTO planeSeatDTO = new PlaneSeatDTO();
@@ -17,6 +27,9 @@ public abstract class PlaneSeatConverter extends AbstractConverter {
         PlaneTicket newTicket = e.getTicket();
         if(newTicket != null){
             planeSeatDTO.setTicketID(e.getTicket().getId());
+        }
+        if(e.getInSeat() != null) {
+            planeSeatDTO.setUsername(e.getInSeat().getUsername());
         }
         return planeSeatDTO;
     }
@@ -31,6 +44,10 @@ public abstract class PlaneSeatConverter extends AbstractConverter {
         PlaneTicket planeTicket = new PlaneTicket();
         planeTicket.setId(d.getTicketID());
         planeSeat.setTicket(planeTicket);
+        if(d.getUsername() != null){
+            User newUser = ur.findByUsername(d.getUsername());
+            planeSeat.setInSeat(newUser);
+        }
         return planeSeat;
     }
 }

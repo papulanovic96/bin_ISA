@@ -13,6 +13,6 @@ import java.util.Collection;
 public interface AirlineRepository extends JpaRepository<Airline, Long> {
 
     @Modifying
-    @Query(value = "UPDATE airline SET office_destination = ?6, name = ?5, luggage_price = ?4, description = ?3, address = ?2 WHERE id = ?1", nativeQuery = true)
-    void modifyAirline(Long id, String address, String description, Collection<LuggagePrice> luggage_price, String name, String office_destination);
+    @Query(value = "UPDATE isa.airline SET address = ?2, description = ?3, name = ?4, office_destination = ?5 WHERE id = ?1", nativeQuery = true)
+    void modifyAirline(Long id, String address, String description, String name, String office_destination);
 }

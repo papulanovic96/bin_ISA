@@ -19,6 +19,8 @@ public class PlaneSeat {
     private Airline airline;
     @ManyToOne
     private PlaneTicket ticket;
+    @OneToOne
+    private User inSeat;
 
     public PlaneSeat(){}
 
@@ -62,5 +64,13 @@ public class PlaneSeat {
 
     public void setReserved(boolean reserved) {
         this.reserved = reserved;
+    }
+
+    public User getInSeat() {
+        return inSeat;
+    }
+
+    public void setInSeat(User inSeat) {
+        this.inSeat = inSeat;
     }
 }

@@ -29,15 +29,17 @@ public class FlightServiceImpl implements FlightService {
     private PlaneTicketRepository planeTicketRepository;
 
     @Override
-    public void save(FlightDTO newFlight) {
+    public String save(FlightDTO newFlight) {
         Flight nf = FlightConverter.toEntity(newFlight);
         flightRepository.save(nf);
+        return "Flight added!";
     }
 
     @Override
-    public void delete(FlightDTO flightDTO) {
+    public String delete(FlightDTO flightDTO) {
         Flight nf = FlightConverter.toEntity(flightDTO);
         flightRepository.delete(nf);
+        return "Flight deleted!";
     }
 
     @Override

@@ -40,6 +40,8 @@ public class User implements Serializable {
     private List<Friendship> requests;
     @OneToMany(mappedBy = "reservedBy", cascade = CascadeType.ALL)
     private List<PlaneTicket> reservedTicket;
+    @OneToOne(mappedBy = "inSeat", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private PlaneSeat seatForUser;
 
     public User() {
 
@@ -167,5 +169,13 @@ public class User implements Serializable {
 
     public void setReservedTicket(List<PlaneTicket> reservedTicket) {
         this.reservedTicket = reservedTicket;
+    }
+
+    public PlaneSeat getSeatForUser() {
+        return seatForUser;
+    }
+
+    public void setSeatForUser(PlaneSeat seatForUser) {
+        this.seatForUser = seatForUser;
     }
 }
