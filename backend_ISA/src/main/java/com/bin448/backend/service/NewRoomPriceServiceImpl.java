@@ -13,6 +13,9 @@ import com.bin448.backend.repository.DiscountRepository;
 import com.bin448.backend.repository.FastHotelReservationRepository;
 import com.bin448.backend.repository.NewRoomPriceRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -21,6 +24,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional(readOnly = false)
 public class NewRoomPriceServiceImpl implements NewRoomPriceService {
 
     private final NewRoomPriceRepository newRoomPriceRepository;
@@ -34,6 +38,7 @@ public class NewRoomPriceServiceImpl implements NewRoomPriceService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Boolean checkIfPricesAlreadyExist(NewRoomPriceDTO newRoomPriceDTO) {
         NewRoomPrice newPrice = NewRoomPriceConverter.toEntity(newRoomPriceDTO);
 
@@ -54,6 +59,7 @@ public class NewRoomPriceServiceImpl implements NewRoomPriceService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Boolean checkIfDiscountAlreadyExist(Date start, Date end, Long roomId) {
 
         List<Discount> newPrices = discountRepository.findByRoom_Number(roomId);
@@ -73,16 +79,19 @@ public class NewRoomPriceServiceImpl implements NewRoomPriceService {
     }
 
     @Override
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW, isolation = Isolation.SERIALIZABLE)
     public void addNewPrice(NewRoomPriceDTO newRoomPriceDTO) {
         newRoomPriceRepository.save(NewRoomPriceConverter.toEntity(newRoomPriceDTO));
     }
 
     @Override
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW, isolation = Isolation.SERIALIZABLE)
     public void addDiscount(DiscountDTO discountDTO) {
         discountRepository.save(DiscountConverter.toEntity(discountDTO));
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<DiscountDTO> getValidDiscounts(FastHotelReservationDTO fastHotelReservationDTO) {
         FastHotelReservation fastHotelReservation = FastHotelReservationConverter.toEntity(fastHotelReservationDTO);
         List<Discount> discounts = discountRepository.findByDestination(fastHotelReservationDTO.getDestination());

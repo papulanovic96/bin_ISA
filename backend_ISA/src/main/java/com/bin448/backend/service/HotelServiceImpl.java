@@ -13,6 +13,9 @@ import com.bin448.backend.repository.HotelRepository;
 import com.bin448.backend.repository.HotelReservationRepository;
 import com.bin448.backend.repository.RoomRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -21,6 +24,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional(readOnly = false)
 public class HotelServiceImpl implements HotelService {
 
     private final HotelRepository hotelRepository;
@@ -41,6 +45,7 @@ public class HotelServiceImpl implements HotelService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<HotelDTO> findAll() {
         return hotelRepository.findByDeleted(false).stream()
                 .map(hotel -> HotelConverter.fromEntity(hotel))
@@ -48,6 +53,7 @@ public class HotelServiceImpl implements HotelService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<AddressDTO> findAllAddresses() {
         return addressRepository.findAll().stream()
                 .map(address -> AddressConverter.fromEntity(address))
@@ -55,15 +61,18 @@ public class HotelServiceImpl implements HotelService {
     }
 
     @Override
-    public void addHotel(HotelDTO hotelDTO) {
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW, isolation = Isolation.SERIALIZABLE)
+    public String addHotel(HotelDTO hotelDTO) {
         hotelDTO.setAvgGrade(0d);
         Hotel newHotel = HotelConverter.toEntity(hotelDTO);
         newHotel.setDeleted(false);
         hotelRepository.save(newHotel);
+        return "SUCCESS";
     }
 
     @Override
-    public void addMenuItem(String name, Double price, Long hotelId) {
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW, isolation = Isolation.SERIALIZABLE)
+    public String addMenuItem(String name, Double price, Long hotelId) {
         Hotel hotel = findHotel(hotelId);
         if (hotel.getMenu() == null) {
             HashMap<String, Double> menu = new HashMap<>();
@@ -73,10 +82,12 @@ public class HotelServiceImpl implements HotelService {
             hotel.getMenu().put(name, price);
         }
         hotelRepository.save(hotel);
+        return "SUCCESS";
     }
 
     @Override
-    public void removeMenuItem(String name, Long hotelId) {
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW, isolation = Isolation.SERIALIZABLE)
+    public String removeMenuItem(String name, Long hotelId) {
         Hotel hotel = findHotel(hotelId);
         if (hotel.getMenu() != null) {
             HashMap<String, Double> newMenu = hotel.getMenu();
@@ -90,6 +101,7 @@ public class HotelServiceImpl implements HotelService {
             hotel.setMenu(newMenu);
             hotelRepository.save(hotel);
         }
+        return "SUCCESS";
     }
 
     @Override
@@ -103,6 +115,7 @@ public class HotelServiceImpl implements HotelService {
     }
 
     @Override
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW, isolation = Isolation.SERIALIZABLE)
     public Boolean removeHotel(Long id) {
         if (roomRepository.findByHotel_IdAndDeleted(id, false).size() == 0) {
             Hotel hotel = findHotel(id);
@@ -114,13 +127,16 @@ public class HotelServiceImpl implements HotelService {
     }
 
     @Override
-    public void changeHotel(HotelDTO hotelDTO, Long id) {
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW, isolation = Isolation.SERIALIZABLE)
+    public String changeHotel(HotelDTO hotelDTO, Long id) {
         hotelDTO.setHotel_id(id);
         Hotel hotel = findHotel(id);
         hotelRepository.save(HotelConverter.toEntity(hotelDTO));
+        return "SUCCESS";
     }
 
     @Override
+    @Transactional(readOnly = true)
     public void checkIfHotelExists(Long id) {
         hotelRepository.findByIdAndDeleted(id, false)
                 .orElseThrow(() -> new ForeignKeyConstraintException(String.format("Hotel with id %s not found", id)));
@@ -132,6 +148,7 @@ public class HotelServiceImpl implements HotelService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<HotelDTO> searchHotels(String name, String address, String arrival, String end) {
         List<Hotel> hotels = hotelRepository.findByDeleted(false);
         List<Hotel> addressHotels = new ArrayList<>();

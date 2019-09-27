@@ -10,12 +10,16 @@ import com.bin448.backend.exception.NotFoundException;
 import com.bin448.backend.repository.HotelReservationRepository;
 import com.bin448.backend.repository.RoomRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional(readOnly = false)
 public class RoomServiceImpl implements RoomService {
 
     private final RoomRepository roomRepository;
@@ -31,45 +35,54 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<RoomDTO> findAll() {
         return changeListOfRoomToRoomDTO(roomRepository.findByDeleted(false));
     }
 
     @Override
-    public void addRoom(RoomDTO roomDTO) {
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW, isolation = Isolation.SERIALIZABLE)
+    public String addRoom(RoomDTO roomDTO) {
         hotelService.checkIfHotelExists(roomDTO.getHotelId());
         roomDTO.setNewPrice(0d);
         roomDTO.setAvgGrade(0d);
         roomDTO.setReserved(false);
         roomRepository.save(RoomConverter.toEntity(roomDTO));
+        return "SUCCESS";
     }
 
     @Override
-    public void removeRoom(Long id) {
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW, isolation = Isolation.SERIALIZABLE)
+    public String removeRoom(Long id) {
         Room room = findRoomById(id);
         if (!existReservationWithRoomId(id)) {
             room.setDeleted(true);
             roomRepository.save(room);
         }
+        return "SUCCESS";
     }
 
     @Override
-    public void changeRoom(RoomDTO roomDTO, Long id) {
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW, isolation = Isolation.SERIALIZABLE)
+    public String changeRoom(RoomDTO roomDTO, Long id) {
         roomDTO.setNumber(id);
         Room room = findRoomById(id);
         hotelService.checkIfHotelExists(roomDTO.getHotelId());
         if (!existReservationWithRoomId(id)) {
             roomRepository.save(RoomConverter.toEntity(roomDTO));
         }
+        return "SUCCESS";
     }
 
     @Override
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW, isolation = Isolation.SERIALIZABLE)
     public void changeRoomReserved(RoomDTO roomDTO, Long id) {
         roomDTO.setNumber(id);
         roomRepository.save(RoomConverter.toEntity(roomDTO));
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Room findRoomById(Long id) {
         return roomRepository.findByNumberAndDeleted(id, false)
                 .orElseThrow(() -> new NotFoundException(String.format("Room with id %s not found", id)));
@@ -81,11 +94,13 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<RoomDTO> findRoomsByHotelId(Long hotelId) {
         return changeListOfRoomToRoomDTO(roomRepository.findByHotel_IdAndDeleted(hotelId, false));
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<List<RoomDTO>> findRoomsFromReservation(List<RoomDTO> rooms, HotelReservationDTO hotelReservationDTO) {
         HotelReservation hotelReservation = HotelReservationConverter.toEntity(hotelReservationDTO);
         List<List<RoomDTO>> allRooms = new ArrayList<>();
@@ -117,6 +132,7 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public boolean checkIfThereIsAvailableRoom(RoomDTO room, HotelReservationDTO hotelReservationDTO) {
         HotelReservation hotelReservation = HotelReservationConverter.toEntity(hotelReservationDTO);
 
