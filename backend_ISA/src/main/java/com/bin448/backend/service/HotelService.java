@@ -8,13 +8,13 @@ import java.util.List;
 
 public interface HotelService {
 
-    void addHotel(HotelDTO hotelDTO);
+    String addHotel(HotelDTO hotelDTO);
 
     HotelDTO getHotel(Long hotelId);
 
     Boolean removeHotel(Long id);
 
-    void changeHotel(HotelDTO hotelDTO, Long id);
+    String changeHotel(HotelDTO hotelDTO, Long id);
 
     void checkIfHotelExists(Long id);
 
@@ -24,9 +24,9 @@ public interface HotelService {
 
     HashMap<String, Double> getMenu(Long hotelId);
 
-    void addMenuItem(String name, Double price, Long hotelId);
+    String addMenuItem(String name, Double price, Long hotelId);
 
-    void removeMenuItem(String name, Long hotelId);
+    String removeMenuItem(String name, Long hotelId);
 
     String getDescription(Long hotelId);
 
