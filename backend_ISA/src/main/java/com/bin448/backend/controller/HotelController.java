@@ -3,7 +3,6 @@ package com.bin448.backend.controller;
 import com.bin448.backend.entity.DTOentity.AddressDTO;
 import com.bin448.backend.entity.DTOentity.HotelDTO;
 import com.bin448.backend.service.HotelService;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -80,5 +79,10 @@ public class HotelController {
     @PutMapping("/search/{name}/{address}/{arrival}/{end}")
     public ResponseEntity<List<HotelDTO>> searchHotels(@PathVariable String name, @PathVariable String address, @PathVariable String arrival, @PathVariable String end) {
         return ResponseEntity.ok(hotelService.searchHotels(name, address, arrival, end));
+    }
+
+    @GetMapping("/middleGrade/{hotelId}")
+    public ResponseEntity<Double> getMiddleGrade(@PathVariable Long hotelId) {
+        return ResponseEntity.ok(hotelService.getMiddleGrade(hotelId));
     }
 }

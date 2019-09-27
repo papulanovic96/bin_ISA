@@ -32,4 +32,6 @@ public interface HotelService {
 
     List<HotelDTO> searchHotels(String name, String address, String arrival, String end);
 
+    Double getMiddleGrade(Long hotelId);
+
 }
