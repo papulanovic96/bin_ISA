@@ -11,12 +11,16 @@ import com.bin448.backend.repository.PlaneTicketRepository;
 import com.bin448.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @Service
+@Transactional
 public class FlightServiceImpl implements FlightService {
 
     @Autowired
@@ -29,6 +33,7 @@ public class FlightServiceImpl implements FlightService {
     private PlaneTicketRepository planeTicketRepository;
 
     @Override
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW, isolation = Isolation.SERIALIZABLE)
     public String save(FlightDTO newFlight) {
         Flight nf = FlightConverter.toEntity(newFlight);
         flightRepository.save(nf);
@@ -36,6 +41,7 @@ public class FlightServiceImpl implements FlightService {
     }
 
     @Override
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW, isolation = Isolation.SERIALIZABLE)
     public String delete(FlightDTO flightDTO) {
         Flight nf = FlightConverter.toEntity(flightDTO);
         flightRepository.delete(nf);
@@ -43,6 +49,7 @@ public class FlightServiceImpl implements FlightService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public FlightDTO findById(Long id) {
         Flight nf = flightRepository.findById(id).orElse(null);
         FlightDTO nfDTO = FlightConverter.fromEntity(nf);
@@ -50,6 +57,7 @@ public class FlightServiceImpl implements FlightService {
     }
 
     @Override
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW, isolation = Isolation.SERIALIZABLE)
     public List<Flight> checkIT(String from, String to, String u1, String u2) {
         List<Flight> newList;
         newList = flightRepository.checkAvailability(from, to, u1, u2);
@@ -57,6 +65,7 @@ public class FlightServiceImpl implements FlightService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<FlightDTO> findAll() {
         List<Flight> list = flightRepository.findAll();
         List<FlightDTO> listDTO = FlightConverter.fromEntityList(list, e -> FlightConverter.fromEntity(e));
@@ -64,6 +73,7 @@ public class FlightServiceImpl implements FlightService {
     }
 
     @Override
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW, isolation = Isolation.SERIALIZABLE)
     public Boolean rateFlight(Long userId, Long flightId, Double rate) {
         FlightRate flightRate = new FlightRate();
         flightRate.setId(null);

@@ -11,11 +11,14 @@ import com.bin448.backend.repository.PlaneTicketRepository;
 import com.bin448.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
+@Transactional
 public class AirlineServiceImpl implements AirlineService {
 
     @Autowired
@@ -28,6 +31,7 @@ public class AirlineServiceImpl implements AirlineService {
     private UserRepository userRepository;
 
     @Override
+    @Transactional(readOnly = true)
     public List<AirlineDTO> findAll() {
         List<Airline> oldList = airlineRepository.findAll();
         List<AirlineDTO> newList = AirlineConverter.fromEntityList(oldList, e -> AirlineConverter.fromEntity(e));
@@ -35,6 +39,7 @@ public class AirlineServiceImpl implements AirlineService {
     }
 
     @Override
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW, isolation = Isolation.SERIALIZABLE)
     public String save(AirlineDTO airline) {
         Airline newAirline = AirlineConverter.toEntity(airline);
         airlineRepository.save(newAirline);
@@ -42,14 +47,15 @@ public class AirlineServiceImpl implements AirlineService {
     }
 
     @Override
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW, isolation = Isolation.SERIALIZABLE)
     public String delete(AirlineDTO airline) {
         Airline newAirline = AirlineConverter.toEntity(airline);
         airlineRepository.deleteById(newAirline.getId());
         return "Airline deleted!";
     }
 
-    @Transactional
     @Override
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW, isolation = Isolation.SERIALIZABLE)
     public boolean modify(AirlineDTO airline) {
         Airline a = AirlineConverter.toEntity(airline);
         if(a == null) {
@@ -60,6 +66,7 @@ public class AirlineServiceImpl implements AirlineService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public AirlineDTO findById(Long id) {
         Airline newAirline = airlineRepository.findById(id).orElse(null);
         AirlineDTO newAirlineDTO = AirlineConverter.fromEntity(newAirline);
@@ -67,6 +74,7 @@ public class AirlineServiceImpl implements AirlineService {
     }
 
     @Override
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW, isolation = Isolation.SERIALIZABLE)
     public Boolean rateAirline(Long userId, Long airlineId, Double rate) {
         AirlineRate airlineRate = new AirlineRate();
         airlineRate.setId(null);
