@@ -31,6 +31,7 @@ import { FlightListComponent } from './flight/flight-list/flight-list.component'
 import { FriendInviteComponent } from './friend-invite/friend-invite.component';
 import { TicketFinalizeComponent } from './ticket-finalize/ticket-finalize.component';
 import { HereMapComponent } from "./here-map/here-map.component";
+import {AgmCoreModule} from '@agm/core'
 
 @NgModule({
   declarations: [
@@ -60,6 +61,9 @@ import { HereMapComponent } from "./here-map/here-map.component";
   ],
 
   imports: [
+    AgmCoreModule.forRoot({
+      apiKey:'AIzaSyBW8y1TKmDMuPY2d-t0oP2sJaXYOfZFVmo'
+    }),
     FormsModule,
     BrowserModule,
     BrowserAnimationsModule,

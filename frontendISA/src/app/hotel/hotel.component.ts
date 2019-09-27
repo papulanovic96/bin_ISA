@@ -1,5 +1,3 @@
-import {from} from "rxjs";
-
 import {Hotel} from './hotel';
 import {HotelService} from './hotel.service';
 import {RoomService} from '../room/room.service';
@@ -23,17 +21,18 @@ export class HotelComponent implements OnInit {
 
 
   constructor(private hotelService: HotelService, private roomService: RoomService, private  router: Router, public loginService: AuthenticationService, private datePipe: DatePipe) {
-    this.router.routeReuseStrategy.shouldReuseRoute = function() {
+    this.router.routeReuseStrategy.shouldReuseRoute = function () {
       return false;
     };
   }
+
   public static hotelId = 0;
   static fastReservation = new FastHotelReservation(0, 0, 0, '', new Date(), 5, 'NS');
 
   idOfHotel: number;
   rateOfHotel: number;
-  idOfRoom:number;
-  rateOfRoom:number;
+  idOfRoom: number;
+  rateOfRoom: number;
   listOfHotels: Hotel[];
   listOfHotelRooms: Room[];
   displayRooms = 'none';
@@ -44,7 +43,7 @@ export class HotelComponent implements OnInit {
   displayMenuItem = 'none';
   displayChangeHotelModal = 'none';
   displayFastResNights = 'none';
-  displayLocation='none';
+  displayLocation = 'none';
   menu: Map<String, Number> = new Map<String, Number>();
   menuItemName: String = '';
   menuItemPrice = 0;
@@ -60,6 +59,10 @@ export class HotelComponent implements OnInit {
   arrival = new Date('2018-11-11');
   return = new Date('2018-11-11');
 
+  city: String = "";
+  street: String = "";
+  latitude: number = 44.799443
+  longitude: number = 20.477962
   changedHotel = new Hotel(0, '', 0, '', 0);
   ///////////////////////////////////////////////////////////////////////////////////////////////////////// promeni gornji det na prazan string
   destination: String = '';
@@ -73,6 +76,34 @@ export class HotelComponent implements OnInit {
     this.hotelService.getAllAddresses().subscribe(listOfAddresses => this.listOfAddress = listOfAddresses);
     this.roomService.getAllRooms().subscribe(listOfRooms => this.listOfRooms = listOfRooms);
     this.hotelService.getAllRoomTypes().subscribe(listOfTypes => this.listOfTypes = listOfTypes);
+  }
+
+  location(id: number) {
+    for (let address of this.listOfAddress) {
+      if (address.id == id) {
+        this.city = address.city;
+        this.street = address.cityAddress;
+      }
+    }
+
+    if (this.city.toUpperCase() == "NS" && this.street == "Puskinova 19") {
+      this.latitude = 45.244813
+      this.longitude = 19.834277
+    } else if (this.city.toUpperCase() == "BG" && this.street == "Topolska 18") {
+      this.latitude = 44.799443
+      this.longitude = 20.477962
+    } else if (this.city.toUpperCase() == "NS" && this.street == "Zeleznicka 46") {
+      this.latitude = 45.249048
+      this.longitude = 19.840239
+    } else if (this.city == "Paris" && this.street == "Rue Watt 36") {
+      this.latitude = 48.827501
+      this.longitude = 2.380737
+    } else if (this.city == "Rome" && this.street == "Via Dei Campani 108") {
+      this.latitude = 41.895054
+      this.longitude = 12.516619
+    }
+
+
   }
 
   find() {
@@ -131,7 +162,7 @@ export class HotelComponent implements OnInit {
         if (data === false) {
           alert('You cant rate');
           this.displayRate = 'none';
-        } else{
+        } else {
           alert('SUCCESS');
           this.displayRate = 'none';
         }
@@ -147,7 +178,7 @@ export class HotelComponent implements OnInit {
         if (data === false) {
           alert('You cant rate');
           this.displayRateRoom = 'none';
-        } else{
+        } else {
           alert('SUCCESS');
           this.displayRateRoom = 'none';
         }
@@ -448,17 +479,19 @@ export class HotelComponent implements OnInit {
     this.displayFastResNights = 'none';
   }
 
-  openLocationDialog(){
-    this.displayLocation='block';
+  openLocationDialog(id: number) {
+    this.location(id);
+    this.displayLocation = 'block';
   }
 
-  closeLocationDialog(){
-    this.displayLocation='none';
+  closeLocationDialog() {
+    this.displayLocation = 'none';
   }
 
   openRateModal() {
     this.displayRate = 'display';
   }
+
   closeRateModal() {
     this.displayRate = 'none';
   }
@@ -466,6 +499,7 @@ export class HotelComponent implements OnInit {
   openRateRoomModal() {
     this.displayRateRoom = 'block';
   }
+
   closeRateRoomModal() {
     this.displayRateRoom = 'none';
   }
