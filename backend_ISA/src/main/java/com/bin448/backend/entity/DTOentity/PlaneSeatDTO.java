@@ -12,6 +12,15 @@ public class PlaneSeatDTO {
         super();
     }
 
+    public PlaneSeatDTO(Long seatId, boolean reserved, Long airline, Long ticket, String user, Long invitation) {
+        this.seatId = seatId;
+        this.reserved = reserved;
+        this.airline = airline;
+        this.ticket = ticket;
+        this.user = user;
+        this.invitation = invitation;
+    }
+
     public Long getId() {
         return seatId;
     }

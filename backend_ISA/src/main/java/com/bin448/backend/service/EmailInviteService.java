@@ -9,11 +9,15 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.UUID;
 
 @Service
+@Transactional
 public class EmailInviteService {
     private JavaMailSender javaMailSender;
     private UserService us;
@@ -31,6 +35,7 @@ public class EmailInviteService {
         javaMailSender.send(email);
     }
 
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW, isolation = Isolation.SERIALIZABLE)
     public boolean mailForInvitation(ModelAndView modelAndView, UserDTO user){
 
         User existingUser = us.getUserByUsername(user.getUsername());
@@ -63,38 +68,5 @@ public class EmailInviteService {
 
 
 
-    }
-    public ModelAndView accountConfimation(ModelAndView modelAndView, String tokenConf){
-
-        UserDTO newUser = new UserDTO();
-        String []parts = tokenConf.split("'");
-
-        String Token =parts[0];
-        newUser.setCity(parts[1]);
-        newUser.setActive(true);
-        newUser.setPassword(parts[5]);
-        newUser.setRole("ROLE_USER");
-        newUser.setEmail(parts[2]);
-        newUser.setLastName(parts[3]);
-        newUser.setName(parts[4]);
-        newUser.setTelephone(parts[7]);
-        newUser.setUsername(parts[8]);
-
-
-        if(Token != null)
-        {
-            us.addUser(newUser);
-            User baseUser = us.getUserByUsername(newUser.getUsername());
-            ConfirmationToken ct = new ConfirmationToken(baseUser);
-            confirmationTokenRepository.save(ct);
-            modelAndView.setViewName("accountVerified");
-        }
-        else
-        {
-            modelAndView.addObject("message","The link is invalid or broken!");
-            // modelAndView.setViewName("error");
-        }
-
-        return modelAndView;
     }
 }

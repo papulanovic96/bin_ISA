@@ -17,6 +17,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
@@ -25,8 +27,8 @@ import java.util.Iterator;
 import java.util.List;
 
 @Service
+@Transactional(readOnly = false)
 public class UserServiceImpl implements UserService {
-
 
     @Autowired
     private FriendshipService friendshipService;
@@ -43,8 +45,9 @@ public class UserServiceImpl implements UserService {
         this.sr = sr;
     }
 
-    @Transactional
+
     @Override
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW, isolation = Isolation.SERIALIZABLE)
     public boolean modify(UserDTO oldUser) {
         User newUserUseIt = UserConverter.toEntity(oldUser);
         if(newUserUseIt == null) {
@@ -57,8 +60,8 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    @Transactional
     @Override
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW, isolation = Isolation.SERIALIZABLE)
     public void sendRequest(String usernameSender, String usernameReceiver) {
         Friendship newFriendShip = new Friendship();
         newFriendShip.setReceiver(ur.findByUsername(usernameReceiver));
@@ -66,8 +69,9 @@ public class UserServiceImpl implements UserService {
         newFriendShip.setAreFriends(false);
         friendshipService.save(newFriendShip);
     }
-    @Transactional
+
     @Override
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW, isolation = Isolation.SERIALIZABLE)
     public void invitation(String usernameSender, String usernameReceiver, Long seat) {
         Invitation newInvitation = new Invitation();
         newInvitation.setInviting(ur.findByUsername(usernameSender));
@@ -76,8 +80,9 @@ public class UserServiceImpl implements UserService {
         newInvitation.setInvitationStatus(false);
         invitationService.saveInivitation(newInvitation);
     }
-    @Transactional
+
     @Override
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW, isolation = Isolation.SERIALIZABLE)
     public void declineInvitation(String usernameReceiver) {
         List<InvitationDTO> invitations = invitationService.findAll();
         for(InvitationDTO a: invitations) {
@@ -87,8 +92,9 @@ public class UserServiceImpl implements UserService {
             }
         }
     }
-    @Transactional
+
     @Override
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW, isolation = Isolation.SERIALIZABLE)
     public void acceptInvitation(String usernameReceiver) {
         List<InvitationDTO> invitations = invitationService.findAll();
         for(InvitationDTO a: invitations) {
@@ -103,8 +109,8 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    @Transactional
     @Override
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW, isolation = Isolation.SERIALIZABLE)
     public void acceptFriendship(String usernameSender, String usernameReceiver) {
         List<Friendship> friendships = friendshipService.findAllEntities();
         User receiver = ur.findByUsername(usernameReceiver);
@@ -121,8 +127,9 @@ public class UserServiceImpl implements UserService {
             }
         }
     }
-    @Transactional
+
     @Override
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW, isolation = Isolation.SERIALIZABLE)
     public void declineFriendship(String usernameSender, String usernameReceiver) {
         List<Friendship> friendships = friendshipService.findAllEntities();
         User receiver = ur.findByUsername(usernameReceiver);
@@ -143,8 +150,9 @@ public class UserServiceImpl implements UserService {
             }
         }
     }
-    @Transactional
+
     @Override
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW, isolation = Isolation.SERIALIZABLE)
     public void deleteFriendship(String usernameSender, String usernameReceiver) {
         List<Friendship> list = friendshipService.findAllEntities();
         User u = ur.findByUsername(usernameSender);
@@ -166,12 +174,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public User getUserByUsername(String username) {
         return ur.getUserByUsername(username);
 
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<String> getMyReceivedRequests(String username){
         User newUser = ur.findByUsername(username);
         List<Friendship> listRequests = newUser.getRequests();
@@ -190,6 +200,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW, isolation = Isolation.SERIALIZABLE)
     public String addUser(UserDTO u) {
         User user = UserConverter.toEntity(u);
         user.setRole("ROLE_USER");
@@ -210,6 +221,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW, isolation = Isolation.SERIALIZABLE)
     public boolean logIn(String username, String password) {
         PasswordEncoder pe = new BCryptPasswordEncoder();
         String pass = pe.encode(password);
@@ -222,6 +234,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<UserDTO> findAll(String username) {
         List<User> novaLista = ur.findAll();
         List<UserDTO> dtoList = UserConverter.fromEntityList(novaLista, e -> UserConverter.fromEntity(e));
@@ -248,16 +261,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public User getByEmail(String mail) {
         return null;
     }
 
     @Override
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW, isolation = Isolation.SERIALIZABLE)
     public void modifyUser(boolean active,String user) {
       ur.modifyByUsername(active,user);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public User getById(Long id) {
         return ur.getUserById(id);
     }
