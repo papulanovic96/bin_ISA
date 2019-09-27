@@ -30,6 +30,7 @@ import { FriendshipComponent } from './friendship/friendship.component';
 import { FlightListComponent } from './flight/flight-list/flight-list.component';
 import { FriendInviteComponent } from './friend-invite/friend-invite.component';
 import { TicketFinalizeComponent } from './ticket-finalize/ticket-finalize.component';
+import { HereMapComponent } from "./here-map/here-map.component";
 
 @NgModule({
   declarations: [
@@ -54,6 +55,7 @@ import { TicketFinalizeComponent } from './ticket-finalize/ticket-finalize.compo
     FlightListComponent,
     FriendInviteComponent,
     TicketFinalizeComponent,
+    HereMapComponent
 
   ],
 

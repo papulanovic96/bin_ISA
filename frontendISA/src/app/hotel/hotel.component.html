@@ -66,6 +66,11 @@
         </button>
       </a></td>
       <td><a>
+        <button type="button" class="btn btn-info" (click)="openLocationDialog()"><i
+          class="fa fa-location-arrow"></i> Location
+        </button>
+      </a></td>
+      <td><a>
         <button *ngIf="loginService.isUserHotelAdmin() && loginService.isUserLoggedIn()" type="button" class="btn btn-info"
                 (click)="changeHotel(hotel.hotel_id)"><i
           class="fa fa-refresh"></i> Change
@@ -340,6 +345,29 @@
     </div>
   </div>
 </div>
+
+
+<div class="modal" [ngStyle]="{'display':displayLocation}" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content" style="background-color: rgb(122, 154, 198)">
+      <div class="modal-header">
+        <h4 class="label label-default"><u><b>Hotel location</b></u></h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeLocationDialog()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form ngNativeValidate>
+        <div class="modal-body">
+          <div class="form-group">
+
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
 
 
 <div class="modal" [ngStyle]="{'display':displayFastResNights}" tabindex="-1" role="dialog">

@@ -131,6 +131,14 @@
 </header>
 </body>
 
+
+
+<div style="padding: 10px 0">
+  <input type="text" placeholder="Search places..." [(ngModel)]="query" />
+  <button (click)="map.places(query)">Search</button>
+</div>
+<here-map #map appId="z4uBvylckk0iL8obeuYx" appCode="HhwIurZWYvQFZSFAECTNhQ" lat="45.267136" lng="19.833549" width="1700px" height="400px"></here-map>
+
 <div class="page-section" id="portfolio">
   <div class="container">
     <div class="row">

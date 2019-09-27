@@ -21,6 +21,7 @@ import {ReservationComponent} from "./reservation/reservation.component";
 import { FriendInviteComponent } from './friend-invite/friend-invite.component';
 import { PlaneTicketComponent } from './plane-ticket/plane-ticket.component';
 import { TicketFinalizeComponent } from './ticket-finalize/ticket-finalize.component';
+import {HereMapComponent} from "./here-map/here-map.component";
 
 const appRoutes: Routes = [
 

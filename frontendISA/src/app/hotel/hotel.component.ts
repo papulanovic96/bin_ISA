@@ -44,6 +44,7 @@ export class HotelComponent implements OnInit {
   displayMenuItem = 'none';
   displayChangeHotelModal = 'none';
   displayFastResNights = 'none';
+  displayLocation='none';
   menu: Map<String, Number> = new Map<String, Number>();
   menuItemName: String = '';
   menuItemPrice = 0;
@@ -445,6 +446,14 @@ export class HotelComponent implements OnInit {
 
   closeFastResNightsModal() {
     this.displayFastResNights = 'none';
+  }
+
+  openLocationDialog(){
+    this.displayLocation='block';
+  }
+
+  closeLocationDialog(){
+    this.displayLocation='none';
   }
 
   openRateModal() {
