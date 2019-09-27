@@ -4,6 +4,7 @@ import com.bin448.backend.entity.Airline;
 import com.bin448.backend.entity.DTOentity.PlaneSeatDTO;
 import com.bin448.backend.entity.PlaneSeat;
 import com.bin448.backend.entity.PlaneTicket;
+import com.bin448.backend.entity.User;
 
 public abstract class PlaneSeatConverter extends AbstractConverter {
 
@@ -18,6 +19,10 @@ public abstract class PlaneSeatConverter extends AbstractConverter {
         if(newTicket != null){
             planeSeatDTO.setTicketID(e.getTicket().getId());
         }
+        User newUser = e.getUser();
+        if(newUser != null){
+            planeSeatDTO.setUser(newUser.getUsername());
+        }
         return planeSeatDTO;
     }
 
@@ -31,6 +36,9 @@ public abstract class PlaneSeatConverter extends AbstractConverter {
         PlaneTicket planeTicket = new PlaneTicket();
         planeTicket.setId(d.getTicketID());
         planeSeat.setTicket(planeTicket);
+        User userOld = new User();
+        userOld.setUsername(d.getUser());
+        planeSeat.setUser(userOld);
         return planeSeat;
     }
 }

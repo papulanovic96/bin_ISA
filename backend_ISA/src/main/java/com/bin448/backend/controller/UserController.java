@@ -7,10 +7,7 @@ import com.bin448.backend.entity.DTOentity.UserDTO;
 import com.bin448.backend.entity.Friendship;
 import com.bin448.backend.entity.User;
 import com.bin448.backend.repository.ConfirmationTokenRepository;
-import com.bin448.backend.service.AirlineService;
-import com.bin448.backend.service.EmailInviteService;
-import com.bin448.backend.service.EmailSenderService;
-import com.bin448.backend.service.UserService;
+import com.bin448.backend.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -36,6 +33,8 @@ public class UserController {
     private EmailSenderService emailSenderService;
     @Autowired
     private EmailInviteService emailInviteService;
+    @Autowired
+    private InvitationService invitationService;
 
 
     public UserController(AirlineService as, UserService us,EmailSenderService em,ConfirmationTokenRepository c) {
@@ -68,11 +67,24 @@ public class UserController {
 
     }
 
-    @RequestMapping(value = "/invite/{username}", method = POST)
-    public boolean inviteUser(ModelAndView modelAndView, @PathVariable String username) {
+    @RequestMapping(value = "/invite/{username1},{username},{seat}", method = POST)
+    public boolean inviteUser(ModelAndView modelAndView, @PathVariable String username, @PathVariable String username1, @PathVariable Long seat) {
         User newUser = us.getUserByUsername(username);
         UserDTO user = UserConverter.fromEntity(newUser);
+        us.invitation(username1, username, seat);
         return emailInviteService.mailForInvitation(modelAndView, user);
+    }
+
+    @RequestMapping(value = "/acceptInvitation/{username2}", method = POST)
+    public ResponseEntity<String> acceptInvite(@PathVariable String username2){
+        us.acceptInvitation(username2);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/declineInvitation/{username2}", method = POST)
+    public ResponseEntity<String> declineInvite(@PathVariable String username2){
+        us.declineInvitation(username2);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("/get/{username}")

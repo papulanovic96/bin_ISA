@@ -19,6 +19,10 @@ public class PlaneSeat {
     private Airline airline;
     @ManyToOne
     private PlaneTicket ticket;
+    @OneToOne
+    private User user;
+    @OneToOne(mappedBy = "seat", cascade = CascadeType.ALL)
+    private Invitation invitation;
 
     public PlaneSeat(){}
 
@@ -62,5 +66,21 @@ public class PlaneSeat {
 
     public void setReserved(boolean reserved) {
         this.reserved = reserved;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Invitation getInvitation() {
+        return invitation;
+    }
+
+    public void setInvitation(Invitation invitation) {
+        this.invitation = invitation;
     }
 }

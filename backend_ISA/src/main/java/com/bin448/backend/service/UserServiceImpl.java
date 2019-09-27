@@ -1,13 +1,17 @@
 package com.bin448.backend.service;
 
 import com.bin448.backend.converter.FriendshipConverter;
+import com.bin448.backend.converter.InvitationConverter;
 import com.bin448.backend.converter.UserConverter;
 import com.bin448.backend.entity.DTOentity.FrendshipDTO;
 
+import com.bin448.backend.entity.DTOentity.InvitationDTO;
 import com.bin448.backend.entity.DTOentity.UserDTO;
 import com.bin448.backend.entity.Friendship;
+import com.bin448.backend.entity.Invitation;
 import com.bin448.backend.entity.User;
 import com.bin448.backend.repository.FriendshipRepository;
+import com.bin448.backend.repository.SeatRepository;
 import com.bin448.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -27,10 +31,16 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private FriendshipService friendshipService;
 
+    @Autowired
+    private InvitationService invitationService;
+
+    private SeatRepository sr;
+
     private UserRepository ur;
 
-    public UserServiceImpl(UserRepository ur){
+    public UserServiceImpl(UserRepository ur, SeatRepository sr){
         this.ur = ur;
+        this.sr = sr;
     }
 
     @Transactional
@@ -47,7 +57,7 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-
+    @Transactional
     @Override
     public void sendRequest(String usernameSender, String usernameReceiver) {
         Friendship newFriendShip = new Friendship();
@@ -55,6 +65,42 @@ public class UserServiceImpl implements UserService {
         newFriendShip.setSender(ur.findByUsername(usernameSender));
         newFriendShip.setAreFriends(false);
         friendshipService.save(newFriendShip);
+    }
+    @Transactional
+    @Override
+    public void invitation(String usernameSender, String usernameReceiver, Long seat) {
+        Invitation newInvitation = new Invitation();
+        newInvitation.setInviting(ur.findByUsername(usernameSender));
+        newInvitation.setReceiving(ur.findByUsername(usernameReceiver));
+        newInvitation.setSeat(sr.getOne(seat));
+        newInvitation.setInvitationStatus(false);
+        invitationService.saveInivitation(newInvitation);
+    }
+    @Transactional
+    @Override
+    public void declineInvitation(String usernameReceiver) {
+        List<InvitationDTO> invitations = invitationService.findAll();
+        for(InvitationDTO a: invitations) {
+            if(a.getUserReceive().equals(usernameReceiver)) {
+                invitationService.delete(a);
+                break;
+            }
+        }
+    }
+    @Transactional
+    @Override
+    public void acceptInvitation(String usernameReceiver) {
+        List<InvitationDTO> invitations = invitationService.findAll();
+        for(InvitationDTO a: invitations) {
+            if(a.getUserReceive().equals(usernameReceiver)) {
+                a.setStatus(true);
+                a.setUserReceive(usernameReceiver);
+                a.setUserInivte(a.getUserInivte());
+                a.setSeatId(a.getSeatId());
+                invitationService.delete(a);
+                invitationService.saveInivitation(InvitationConverter.toEntity(a));
+            }
+        }
     }
 
     @Transactional
@@ -83,7 +129,7 @@ public class UserServiceImpl implements UserService {
             }
         }
     }
-
+    @Transactional
     @Override
     public void declineFriendship(String usernameSender, String usernameReceiver) {
         List<Friendship> friendships = friendshipService.findAllEntities();
@@ -105,7 +151,7 @@ public class UserServiceImpl implements UserService {
             }
         }
     }
-
+    @Transactional
     @Override
     public void deleteFriendship(String usernameSender, String usernameReceiver) {
         List<Friendship> list = friendshipService.findAllEntities();

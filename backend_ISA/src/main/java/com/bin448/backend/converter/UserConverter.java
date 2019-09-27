@@ -1,9 +1,7 @@
 package com.bin448.backend.converter;
 
+import com.bin448.backend.entity.*;
 import com.bin448.backend.entity.DTOentity.UserDTO;
-import com.bin448.backend.entity.Friendship;
-import com.bin448.backend.entity.PlaneTicket;
-import com.bin448.backend.entity.User;
 import com.bin448.backend.repository.FriendshipRepository;
 import com.bin448.backend.repository.PlaneTicketRepository;
 import com.bin448.backend.repository.UserRepository;
@@ -107,6 +105,11 @@ public class UserConverter extends AbstractConverter{
             rezervisaneKarte.add(newTicket);
         }
         newDTOUser.setPlaneTicket(rezervisaneKarte);
+
+        PlaneSeat ps = e.getPs();
+        if(ps != null) {
+            newDTOUser.setPlaneSeat(ps.getSeatId());
+        }
         return newDTOUser;
     }
 
@@ -162,6 +165,13 @@ public class UserConverter extends AbstractConverter{
         }
 
         newUser.setReservedTicket(newReserved);
+
+        PlaneSeat newSeat = new PlaneSeat();
+        newSeat.setSeatId(d.getPlaneSeat());
+        newUser.setPs(newSeat);
+
+
+
         return newUser;
 
     }

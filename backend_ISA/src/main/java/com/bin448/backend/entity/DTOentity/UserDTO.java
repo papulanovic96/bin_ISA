@@ -17,6 +17,10 @@ public class UserDTO {
     private List<String> usernameOfRequests;
     private List<Long> planeTicket;
     private boolean activeAdmin;
+    private Long planeSeat;
+    private List<Long> invites;
+    private List<Long> receiveInivite;
+
     public UserDTO() {
     }
 
@@ -130,5 +134,29 @@ public class UserDTO {
 
     public void setActiveAdmin(boolean activeAdmin) {
         this.activeAdmin = activeAdmin;
+    }
+
+    public Long getPlaneSeat() {
+        return planeSeat;
+    }
+
+    public void setPlaneSeat(Long planeSeat) {
+        this.planeSeat = planeSeat;
+    }
+
+    public List<Long> getReceiveInivite() {
+        return receiveInivite;
+    }
+
+    public void setReceiveInivite(List<Long> receiveInivite) {
+        this.receiveInivite = receiveInivite;
+    }
+
+    public List<Long> getInvites() {
+        return invites;
+    }
+
+    public void setInvites(List<Long> invites) {
+        this.invites = invites;
     }
 }

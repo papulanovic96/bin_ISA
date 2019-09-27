@@ -5,6 +5,8 @@ public class PlaneSeatDTO {
     private boolean reserved;
     private Long airline;
     private Long ticket;
+    private String user;
+    private Long invitation;
 
     public PlaneSeatDTO() {
         super();
@@ -40,5 +42,21 @@ public class PlaneSeatDTO {
 
     public void setTicketID(Long ticketID) {
         this.ticket = ticketID;
+    }
+
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
+    }
+
+    public Long getInvitation() {
+        return invitation;
+    }
+
+    public void setInvitation(Long invitation) {
+        this.invitation = invitation;
     }
 }

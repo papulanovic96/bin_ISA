@@ -48,7 +48,7 @@ public class EmailInviteService {
             mailMessage.setSubject("You've been invited to travel with a friend!");
             mailMessage.setFrom("goodbyetravelagency.com");
             mailMessage.setText("Hi "+user.getName()+", to confirm your invitation, please click here : "
-                    +"http://localhost:4200/#/invite"
+                    +"http://localhost:4200/#/invite/"
             );
 
             sendEmail(mailMessage);
